@@ -112,9 +112,6 @@ class LocalEmbeddings:
         return [{**ref, 'embedding': vector.tolist()} for ref, vector in zip(refs, vectors)]
 
 
-def parse_scanned_image(path: Path):
-    from paddleocr import PaddleOCR
-    model = PaddleOCR(use_doc_orientation_classify=False, use_doc_unwarping=False,
-                      use_textline_orientation=False, lang='ch', device='cpu')
-    # OCR is an observation, never a verified financial field.
-    return {'status': 'requires_field_verification', 'pages': [r.json for r in model.predict(str(path))]}
+def parse_scanned_image(path: Path, *, model_root: Path, cache_dir: Path):
+    from .ocr_observations import LocalOCR
+    return LocalOCR(model_root, cache_dir).parse(path)

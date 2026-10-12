@@ -1,0 +1,48 @@
+{
+  "schema_version": "ocr-synthetic-summary-v1",
+  "report_sha256": "ea746075a483e7c53fe4e22df90cb9c2ea15b8a0a21454b96e9fef590247f6ca",
+  "dataset_sha256": "4a6153865158757b09238344d99203dfd7b24b0396d2ea47012f59614c5e7f72",
+  "source_sha256": {
+    "benchmarks\\ocr_images.py": "145331873f851bd2e563bc7a75b33961bbde58274ab6433c9c84fa65111220a8",
+    "backend\\app\\ocr_observations.py": "253bc8f25c8e2310c1976cf7d08dcfeb06d0c21366b7e27da0b5175c9e2a3876",
+    "docs\\ocr-model-sources.json": "98830626d48543261d9fabc89ab6ec31ba1c666d78b4b02960842fba5f6b2632"
+  },
+  "status": "completed",
+  "cases": 6,
+  "failed_cases": 0,
+  "totals": {
+    "literal_hits": 23,
+    "literal_total": 24,
+    "line_hits": 28,
+    "line_total": 35,
+    "blank_correct": 1
+  },
+  "engine": {
+    "paddleocr": "3.7.0",
+    "paddlepaddle": "3.3.1",
+    "paddlex": "3.7.2",
+    "models_sha256": "3308911c08f709a8a4334a85f139ba4d4345a6f8af7dbb9f0c0758543d523879",
+    "model_files": {
+      "PP-OCRv5_mobile_det_infer/inference.json": "05feef1acb00aa4cd7362b15f7f501fc4f99d7b1fa73c1c871e0c7b1504b0f5c",
+      "PP-OCRv5_mobile_det_infer/inference.pdiparams": "afa1820cb16c1fd0dad589d0f8b389139061c1ef6d68019685fd07be997dda5b",
+      "PP-OCRv5_mobile_det_infer/inference.yml": "98069072e1b6b37d727fd9d9f11725faa46d6ea0de012f2ed26caea011c37699",
+      "PP-OCRv5_mobile_rec_infer/inference.json": "24587345250c7332d0fc6f9a44e794d078cdaeb64c302fef906f325619de2569",
+      "PP-OCRv5_mobile_rec_infer/inference.pdiparams": "2460da90875937c94db97eba74ae3d9e5d4c4c57c42f1f41531c09a26bcc771a",
+      "PP-OCRv5_mobile_rec_infer/inference.yml": "5dfeb2777f6d0db8177d8128a8acfcf6e6276dc4ac73ea3bf0dc06d6a5e85d8e"
+    },
+    "device": "cpu",
+    "document_transforms": false
+  },
+  "duration_seconds": 23.554827299900353,
+  "network_attempts_blocked": 0,
+  "external_model_requests": 0,
+  "ledger_writes": 0,
+  "scope": "synthetic_printed_scans_not_real_documents_or_verified_fields",
+  "limitations": [
+    "Six public synthetic printed scan fixtures, not independent real-document accuracy.",
+    "Exact text matching ignores whitespace only; no punctuation or digit error correction.",
+    "Literal-token presence does not prove field assignment or financial facts.",
+    "No automatic ledger import, human review workflow, scanned PDF or handwriting acceptance.",
+    "All text, including high confidence output, remains unconfirmed."
+  ]
+}

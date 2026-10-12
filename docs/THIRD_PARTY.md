@@ -19,6 +19,8 @@
 
 BAAI/bge-small-zh-v1.5与PaddleOCR为可选模型/组件，未打包权重。启用前读取该版本模型卡及依赖许可。DeepSeek是配置的外部模型服务，不随开源代码分发模型权重。
 
+2026-10-12已在独立`.local/ocr-env`核验并实跑PaddleOCR 3.7.0／PaddlePaddle 3.3.1／PaddleX 3.7.2（Apache-2.0），采用官方PP-OCRv5 mobile检测/识别权重，模型卡Apache-2.0，来源与文件哈希见[OCR模型登记](ocr-model-sources.json)。[可选依赖清单](dependencies-ocr.json)记录72个包及随包许可文件哈希，`python-bidi`的LGPL与`crc32c`的LGPL-2.1-or-later等许可单独保留；未复制或改写第三方源码许可。合成图仅本机使用Windows字体，不分发字体或OCR权重，复现说明见[OCR验证](OCR_VALIDATION.md)。
+
 公开准则、年报、案例、BPI/FinQA各自保留来源和数据许可。可公开读取不等于许可再次打包发布；默认只提交清单、程序和自建合成数据生成器。
 
 ## 本轮实际采用的评测工具与公开数据

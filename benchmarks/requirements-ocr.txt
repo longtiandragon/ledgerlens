@@ -1,0 +1,5 @@
+# Optional isolated CPU environment; not part of the API/runtime image.
+# PaddlePaddle/PaddleOCR official PyPI packages, Apache-2.0.
+paddleocr==3.7.0
+paddlepaddle==3.3.1
+paddlex==3.7.2
