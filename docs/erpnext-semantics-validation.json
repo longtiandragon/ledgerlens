@@ -1,0 +1,98 @@
+{
+  "schema_version": "erpnext-semantic-summary-v1",
+  "status": "completed",
+  "synthetic": true,
+  "model_requests": 0,
+  "erpnext_image": "frappe/erpnext:v16.50.0",
+  "report_sha256": {
+    "erpnext-semantics-v5-evidence.json": "262d182ac886975df0df9815d8fb12eefd646b207b5a2d858bd8c336bc6b2bb2",
+    "erpnext-procurement-v4-fixed-date.json": "5eedc832a5c7153bb94a019906ea735a8a76785cc897b8b15708d99d0d601b72",
+    "erpnext-procurement-v5-replay.json": "4fec7fbaf0b38b5286bed99cbba5c7436e119e17655587fef1b68c7dc1412894"
+  },
+  "source_sha256": {
+    "scripts/validate_erpnext_procurement.py": "c2702c0701be1a8e8e65e467dff9e25fa27109e45d0561c4a16445d75728e78b",
+    "scripts/validate_erpnext_semantics.py": "a5c09b60c08cd073426b1d1200e98cea1fb2e623cb5e03afc8db463a798dab0f",
+    "backend/app/connectors.py": "a44f809a827f85e85a32241a62f86001785f1709cd059c4dce1bab1537c07627"
+  },
+  "currency_stock_checks": {
+    "foreign_account_explicit_usd": true,
+    "a_matches_manual_totals": true,
+    "a_matches_erp_trial_balance": true,
+    "a_normal_import_preview": true,
+    "a_import_amounts_unchanged": true,
+    "b_matches_manual_totals": true,
+    "b_matches_erp_trial_balance": true,
+    "b_normal_import_preview": true,
+    "b_import_amounts_unchanged": true,
+    "companies_have_disjoint_vouchers": true,
+    "a_has_only_three_expected_vouchers": true,
+    "b_has_only_its_one_voucher": true,
+    "raw_usd_amount_123_45_base_cny_888_84": true,
+    "adapter_exports_base_currency_not_account_amount": true,
+    "two_stock_ledger_lines_link_to_documents": true,
+    "receipt_10_units_123_40": true,
+    "issue_3_units_37_02_remaining_7_and_86_38": true,
+    "stock_detail_link_receipt": true,
+    "stock_detail_link_issue": true,
+    "gl_does_not_invent_procurement_evidence": true,
+    "usd_company_rejected_without_inferred_conversion": true
+  },
+  "procurement_checks": {
+    "all_posting_dates_preserved": true,
+    "four_submitted_same_company_and_supplier": true,
+    "po_twenty_units_246_80": true,
+    "po_received_twelve_units_sixty_percent": true,
+    "po_billed_sixty_percent": true,
+    "receipt_links_exact_order_and_line": true,
+    "receipt_twelve_units_148_08": true,
+    "invoice_links_order_receipt_and_child_lines": true,
+    "invoice_148_08_outstanding_48_08": true,
+    "payment_allocates_100_to_exact_invoice": true,
+    "payment_100_no_unallocated_or_difference": true,
+    "gl_totals_match_handwritten_expectations": true,
+    "gl_totals_match_erp_trial_balance": true,
+    "only_receipt_invoice_payment_have_gl": true,
+    "order_does_not_post_gl": true,
+    "six_gl_lines_three_balanced_vouchers": true,
+    "normal_preview_preserves_all_six_gl_amounts": true,
+    "gl_export_never_invents_purchase_records": true,
+    "only_receipt_moves_stock": true,
+    "stock_twelve_units_value_148_08": true,
+    "stock_gl_value_agrees": true
+  },
+  "procurement_replay_identical_gl_stock_and_document_ids": true,
+  "foreign_currency": {
+    "account_currency": "USD",
+    "account_credit": "123.45",
+    "fixed_exchange_rate": "7.20",
+    "export_currency": "CNY",
+    "export_credit": "888.84"
+  },
+  "stock_movement": {
+    "received_quantity": "10",
+    "issued_quantity": "3",
+    "remaining_quantity": "7",
+    "remaining_value_cny": "86.38"
+  },
+  "procurement": {
+    "ordered_quantity": "20",
+    "received_quantity": "12",
+    "not_received_quantity": "8",
+    "invoice_cny": "148.08",
+    "paid_cny": "100.00",
+    "outstanding_cny": "48.08"
+  },
+  "durations_seconds": [
+    13.795964299933985,
+    7.951048000017181,
+    5.077986499993131
+  ],
+  "limits": [
+    "Local hand-authored synthetic fixtures, not real-company or expert acceptance.",
+    "CNY company GL only; USD company remains explicitly unsupported.",
+    "USD account is exported in existing ERP company currency; no inferred conversion.",
+    "Procurement source documents are compared here, not imported as runtime facts from GL.",
+    "No tax, return, cancellation chain, landed cost, exchange gain/loss or concurrent posting acceptance.",
+    "Historical failed fixtures and reports are retained; their submitted documents were not rewritten."
+  ]
+}
