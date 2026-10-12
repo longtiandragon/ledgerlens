@@ -1,0 +1,27 @@
+{
+  "schema_version": "reference-retrieval-queries-v1",
+  "authorship": "Manually written from six verified source originals before retrieval results; synthetic research queries, not independent professional labels or held-out business cases.",
+  "period": "2026-10",
+  "queries": [
+    {"id":"inventory-abnormal","framework":"CAS","text":"生产中发生非正常损耗的材料和人工，能不能加到存货成本里？"},
+    {"id":"inventory-cost-method","framework":"CAS","text":"发出存货的实际成本可以选用哪些计价方法？"},
+    {"id":"inventory-nrv","framework":"CAS","text":"期末商品预计卖价不足以覆盖成本，存货账面金额怎样确定？"},
+    {"id":"assets-no-depreciation","framework":"CAS","text":"已经折旧完但还在用的机器，以及单独入账的土地，还要计提折旧吗？"},
+    {"id":"assets-review","framework":"CAS","text":"固定资产的年限、残值和折旧方式需要在什么时候重新检查？"},
+    {"id":"assets-base","framework":"CAS","text":"机器计提过减值准备，应计折旧额是否还按原价减残值算？"},
+    {"id":"revenue-control","framework":"CAS","text":"销售合同确认收入的时点，与客户取得商品控制权有什么关系？"},
+    {"id":"revenue-return","framework":"CAS","text":"卖出的货预计有一部分会退回，确认收入时要怎样处理退款部分？"},
+    {"id":"revenue-conditional-right","framework":"CAS","text":"一部分货已经交付，但必须交完另一部分才能收款，这项权利列作应收款还是合同资产？"},
+    {"id":"lease-recognition","framework":"CAS","text":"承租人在租赁期开始当天，一般应确认哪两项资产负债表项目？"},
+    {"id":"lease-rate","framework":"CAS","text":"承租人算不出租赁内含利率，应当用什么利率折现未来租金？"},
+    {"id":"lease-short-purchase","framework":"CAS","text":"只有十个月的租约，但附带购买选择权，是否属于短期租赁？"},
+    {"id":"small-bad-debt","framework":"SCAS","text":"小企业的应收账款发生坏账损失，在哪个时点确认，并冲减什么？"},
+    {"id":"small-cost-method","framework":"SCAS","text":"小企业如何选择发出存货的成本计价方法，选定后能否随意更改？"},
+    {"id":"small-error","framework":"SCAS","text":"小企业改会计政策或者纠正过去的会计差错，采用追溯调整还是未来适用？"},
+    {"id":"software-auto-review","framework":"CAS","text":"会计软件自动审核的规则需要满足哪些可检查要求，自动审签是否需要用户授权？"},
+    {"id":"software-log","framework":"SCAS","text":"会计系统需要记录哪些用户操作信息，怎样查询操作日志？"},
+    {"id":"software-backup","framework":"CAS","text":"怎样避免误操作、系统故障和自然灾害造成会计资料丢失？"},
+    {"id":"absent-weather","framework":"CAS","text":"深圳明天下午会不会下雨？"},
+    {"id":"absent-cas-tax-rate","framework":"CAS","text":"查询本月餐饮业增值税适用税率的完整税法条文。"}
+  ]
+}

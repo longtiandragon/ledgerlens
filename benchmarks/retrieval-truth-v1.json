@@ -1,0 +1,26 @@
+{
+  "schema_version": "reference-retrieval-truth-v1",
+  "match_rule": "Expected source AND complete manually selected clause anchor, ignoring whitespace only. Labels are evaluator-only; never passed to encoder/index/search.",
+  "labels": [
+    {"id":"inventory-abnormal","source_id":"cas1-inventory","anchor":"非正常消耗的直接材料、直接人工和制造费用"},
+    {"id":"inventory-cost-method","source_id":"cas1-inventory","anchor":"企业应当采用先进先出法、加权平均法或者个别计价法确定发出存货的实际成本"},
+    {"id":"inventory-nrv","source_id":"cas1-inventory","anchor":"存货应当按照成本与可变现净值孰低计量"},
+    {"id":"assets-no-depreciation","source_id":"cas4-fixed-assets","anchor":"已提足折旧仍继续使用的固定资产和单独计价入账的土地除外"},
+    {"id":"assets-review","source_id":"cas4-fixed-assets","anchor":"于每年年度终了，对固定资产的使用寿命、预计净残值和折旧方法进行复核"},
+    {"id":"assets-base","source_id":"cas4-fixed-assets","anchor":"已计提减值准备的固定资产，还应当扣除已计提的固定资产减值准备累计金额"},
+    {"id":"revenue-control","source_id":"cas14-revenue","anchor":"企业应当在履行了合同中的履约义务，即在客户取得相关商品控制权时确认收入"},
+    {"id":"revenue-return","source_id":"cas14-revenue","anchor":"按照预期因销售退回将退还的金额确认负债"},
+    {"id":"revenue-conditional-right","source_id":"cas14-revenue","anchor":"合同资产，是指企业已向客户转让商品而有权收取对价的权利，且该权利取决于时间流逝之外的其他因素"},
+    {"id":"lease-recognition","source_id":"cas21-leases","anchor":"在租赁期开始日，承租人应当对租赁确认使用权资产和租赁负债"},
+    {"id":"lease-rate","source_id":"cas21-leases","anchor":"无法确定租赁内含利率的，应当采用承租人增量借款利率作为折现率"},
+    {"id":"lease-short-purchase","source_id":"cas21-leases","anchor":"包含购买选择权的租赁不属于短期租赁"},
+    {"id":"small-bad-debt","source_id":"scas-full","anchor":"坏账损失应当于实际发生时计入营业外支出，同时冲减应收及预付款项"},
+    {"id":"small-cost-method","source_id":"scas-full","anchor":"计价方法一经选用，不得随意变更"},
+    {"id":"small-error","source_id":"scas-full","anchor":"小企业对会计政策变更、会计估计变更和会计差错更正应当采用未来适用法进行会计处理"},
+    {"id":"software-auto-review","source_id":"software-specification","anchor":"会计软件的自动审核规则应当可查询、可校验、可追溯"},
+    {"id":"software-log","source_id":"software-specification","anchor":"会计软件应当能够记录用户操作日志"},
+    {"id":"software-backup","source_id":"software-specification","anchor":"能够支持数据容灾和备份功能"},
+    {"id":"absent-weather","source_id":null,"anchor":null},
+    {"id":"absent-cas-tax-rate","source_id":null,"anchor":null}
+  ]
+}

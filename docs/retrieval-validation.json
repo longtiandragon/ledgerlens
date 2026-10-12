@@ -1,0 +1,521 @@
+{
+  "schema_version": "reference-retrieval-summary-v1",
+  "report_sha256": "0f647833d0d30cb1ac7d8a89d589d31e53fc5c721c77d3a31620efbbfe8583ba",
+  "status": "completed",
+  "input_sha256": {
+    "queries": "b748bda3cd7dd69494345d54cfaeb1532ea056ba8501f8dbfa1286fdc13e1b70",
+    "truth": "ac7ceba5daad409d6996f808c9d1da0985cbb4ccc157aad9b9dab624ff0db7d8",
+    "corpus": "c98585a2ac90627199e56e8a82d5bdee596757b58672a4e2ca6914c9e9a1e1d9",
+    "registry": "473012feccb6f74a3001e97c50d1453ca187e70f41696b96d235a1de7ec66741"
+  },
+  "source_sha256": {
+    "benchmarks/reference_retrieval.py": "19ab9be02e4f1867cfa5867bbd1c9f5082877668a7218cc019fac66b4fe43d52",
+    "backend/app/retrieval_vectors.py": "3894894ff0afb5753e0d99eee8c9ba8d131a6d8bc880f5fbe481e55e96c0bbd6",
+    "backend/app/knowledge.py": "f68a5c41fd0074f0dadaf12207808306f8a069b4b88bcfa1c844e9f0962e6825",
+    "backend/app/reference_sources.py": "8c6e3fc4711e80d876a327dc54864f77d0ffd664424eeef220e857c8cce6466e",
+    "docs/retrieval-model-v1.json": "588ee2f1da01c50d4f19a3b9bfa847b67e22c8af2623c08843e5b10c2e7c94e3"
+  },
+  "engine": {
+    "model": "BAAI/bge-small-zh-v1.5",
+    "revision": "7999e1d3359715c523056ef9478215996d62a620",
+    "manifest_sha256": "588ee2f1da01c50d4f19a3b9bfa847b67e22c8af2623c08843e5b10c2e7c94e3",
+    "packages": {
+      "sentence-transformers": "6.1.0",
+      "torch": "2.14.1",
+      "transformers": "5.19.0",
+      "tokenizers": "0.23.3"
+    },
+    "dimensions": 512,
+    "window_tokens": 480,
+    "stride_tokens": 400,
+    "query_prefix": "为这个句子生成表示以用于检索相关文章：",
+    "device": "cpu",
+    "normalized": true
+  },
+  "config": {
+    "top_k": 6,
+    "vector_threshold": null,
+    "keyword_min_score": "strictly greater than 0",
+    "same_segments": true,
+    "exact_search": true
+  },
+  "parent_chunks": 94,
+  "segments": 156,
+  "source_chunk_counts": {
+    "cas1-inventory": 5,
+    "cas14-revenue": 19,
+    "cas21-leases": 21,
+    "cas4-fixed-assets": 5,
+    "scas-full": 33,
+    "software-specification": 11
+  },
+  "postgres_version": "17.10 (Debian 17.10-1.pgdg12+1)",
+  "pgvector_version": "0.8.2",
+  "totals": {
+    "keyword": {
+      "answerable_count": 18,
+      "unanswerable_count": 2,
+      "failed_queries": 0,
+      "hit_at_1": 0.6666666666666666,
+      "hit_at_3": 0.8333333333333334,
+      "hit_at_6": 0.8888888888888888,
+      "reciprocal_rank_at_6": 0.7453703703703703,
+      "no_answer_returned_candidates": 2,
+      "no_answer_successful_empty_results": 0
+    },
+    "bge_pgvector": {
+      "answerable_count": 18,
+      "unanswerable_count": 2,
+      "failed_queries": 0,
+      "hit_at_1": 0.4444444444444444,
+      "hit_at_3": 0.7222222222222222,
+      "hit_at_6": 0.8333333333333334,
+      "reciprocal_rank_at_6": 0.5898148148148148,
+      "no_answer_returned_candidates": 2,
+      "no_answer_successful_empty_results": 0
+    }
+  },
+  "duration_seconds": 72.74596659990493,
+  "corpus_encoding_seconds": 9.908322500064969,
+  "cases": [
+    {
+      "query_id": "inventory-abnormal",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 2,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 0.5
+      },
+      "keyword_seconds": 0.016961899935267866,
+      "bge_pgvector_seconds": 0.027379699982702732
+    },
+    {
+      "query_id": "inventory-cost-method",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "keyword_seconds": 0.013553200056776404,
+      "bge_pgvector_seconds": 0.02061329991556704
+    },
+    {
+      "query_id": "inventory-nrv",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": null,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_6": false,
+        "reciprocal_rank_at_6": 0
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": null,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_6": false,
+        "reciprocal_rank_at_6": 0
+      },
+      "keyword_seconds": 0.01420140010304749,
+      "bge_pgvector_seconds": 0.02226570004131645
+    },
+    {
+      "query_id": "assets-no-depreciation",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "keyword_seconds": 0.01577759999781847,
+      "bge_pgvector_seconds": 0.02166860003490001
+    },
+    {
+      "query_id": "assets-review",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "keyword_seconds": 0.015484499977901578,
+      "bge_pgvector_seconds": 0.024079299997538328
+    },
+    {
+      "query_id": "assets-base",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 5,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 0.2
+      },
+      "keyword_seconds": 0.014405900030396879,
+      "bge_pgvector_seconds": 0.023232199950143695
+    },
+    {
+      "query_id": "revenue-control",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": null,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_6": false,
+        "reciprocal_rank_at_6": 0
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": null,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_6": false,
+        "reciprocal_rank_at_6": 0
+      },
+      "keyword_seconds": 0.01429750001989305,
+      "bge_pgvector_seconds": 0.01818400004412979
+    },
+    {
+      "query_id": "revenue-return",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 3,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 0.3333333333333333
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 2,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 0.5
+      },
+      "keyword_seconds": 0.013332300004549325,
+      "bge_pgvector_seconds": 0.01843379996716976
+    },
+    {
+      "query_id": "revenue-conditional-right",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 2,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 0.5
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "keyword_seconds": 0.014195799943991005,
+      "bge_pgvector_seconds": 0.021861999994143844
+    },
+    {
+      "query_id": "lease-recognition",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": null,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_6": false,
+        "reciprocal_rank_at_6": 0
+      },
+      "keyword_seconds": 0.014928099932149053,
+      "bge_pgvector_seconds": 0.021256100037135184
+    },
+    {
+      "query_id": "lease-rate",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 4,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 0.25
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "keyword_seconds": 0.013553400058299303,
+      "bge_pgvector_seconds": 0.016248299973085523
+    },
+    {
+      "query_id": "lease-short-purchase",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "keyword_seconds": 0.014768299995921552,
+      "bge_pgvector_seconds": 0.019535900093615055
+    },
+    {
+      "query_id": "small-bad-debt",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 3,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 0.3333333333333333
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 2,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 0.5
+      },
+      "keyword_seconds": 0.007249000016599894,
+      "bge_pgvector_seconds": 0.026774499914608896
+    },
+    {
+      "query_id": "small-cost-method",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 3,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 0.3333333333333333
+      },
+      "keyword_seconds": 0.007193800061941147,
+      "bge_pgvector_seconds": 0.025774899986572564
+    },
+    {
+      "query_id": "small-error",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "keyword_seconds": 0.006894499994814396,
+      "bge_pgvector_seconds": 0.018906100071035326
+    },
+    {
+      "query_id": "software-auto-review",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "keyword_seconds": 0.01401889999397099,
+      "bge_pgvector_seconds": 0.020868999999947846
+    },
+    {
+      "query_id": "software-log",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 3,
+        "hit_at_1": false,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 0.3333333333333333
+      },
+      "keyword_seconds": 0.005958399968221784,
+      "bge_pgvector_seconds": 0.01582069997675717
+    },
+    {
+      "query_id": "software-backup",
+      "no_answer": false,
+      "keyword_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 1,
+        "hit_at_1": true,
+        "hit_at_3": true,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 1.0
+      },
+      "bge_pgvector_scores": {
+        "no_answer": false,
+        "first_relevant_rank": 4,
+        "hit_at_1": false,
+        "hit_at_3": false,
+        "hit_at_6": true,
+        "reciprocal_rank_at_6": 0.25
+      },
+      "keyword_seconds": 0.011548600043170154,
+      "bge_pgvector_seconds": 0.017842300003394485
+    },
+    {
+      "query_id": "absent-weather",
+      "no_answer": true,
+      "keyword_scores": {
+        "no_answer": true,
+        "returned_count": 6,
+        "empty_result": false
+      },
+      "bge_pgvector_scores": {
+        "no_answer": true,
+        "returned_count": 6,
+        "empty_result": false
+      },
+      "keyword_seconds": 0.011559000005945563,
+      "bge_pgvector_seconds": 0.013933700043708086
+    },
+    {
+      "query_id": "absent-cas-tax-rate",
+      "no_answer": true,
+      "keyword_scores": {
+        "no_answer": true,
+        "returned_count": 6,
+        "empty_result": false
+      },
+      "bge_pgvector_scores": {
+        "no_answer": true,
+        "returned_count": 6,
+        "empty_result": false
+      },
+      "keyword_seconds": 0.01262930000666529,
+      "bge_pgvector_seconds": 0.017759900074452162
+    }
+  ],
+  "ledger_writes": 0,
+  "external_model_requests": 0,
+  "pg_numpy_verified_queries": 20,
+  "limitations": [
+    "Exploratory queries handwritten by implementer; not blind expert or real-user evaluation.",
+    "No answer threshold calibrated; both methods return candidates for absent answers.",
+    "Six verified original sources; two acquisition failures retained.",
+    "Reference effectivity is not certified; no executable rule or business fact is created.",
+    "Connection-local temporary pgvector index; persistent product integration not performed.",
+    "All parameters and labels frozen before results; no tuning on this query set."
+  ]
+}

@@ -1,0 +1,7 @@
+# Optional offline CPU retrieval environment. Full tested pins are in requirements-retrieval-lock.txt.
+sentence-transformers==6.1.0
+torch==2.14.1
+psycopg[binary]==3.3.6
+pgvector==0.5.1
+beautifulsoup4==4.15.0
+pdfplumber==0.11.10

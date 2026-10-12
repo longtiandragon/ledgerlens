@@ -1,0 +1,94 @@
+{
+  "version": "retrieval-reference-v1",
+  "sources": [
+    {
+      "id": "cas1-inventory",
+      "title": "企业会计准则第1号——存货",
+      "url": "https://www.mof.gov.cn/zhengwuxinxi/zhengcefabu/2006zcfb/200805/t20080519_23107.htm",
+      "framework": "CAS",
+      "kind": "policy",
+      "publisher": "财政部",
+      "redistribution": "source_manifest_only",
+      "effective_from": null,
+      "required_text": "存货"
+    },
+    {
+      "id": "cas4-fixed-assets",
+      "title": "企业会计准则第4号——固定资产",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/kuaijizhunzeshishi/200806/t20080618_46213.htm",
+      "framework": "CAS",
+      "kind": "policy",
+      "publisher": "财政部",
+      "redistribution": "source_manifest_only",
+      "effective_from": null,
+      "required_text": "使用寿命"
+    },
+    {
+      "id": "cas14-revenue",
+      "title": "企业会计准则第14号——收入",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/kuaijizhunzeshishi/201709/t20170907_2694006.htm",
+      "framework": "CAS",
+      "kind": "policy",
+      "publisher": "财政部",
+      "redistribution": "source_manifest_only",
+      "effective_from": null,
+      "required_text": "履约义务"
+    },
+    {
+      "id": "cas17-borrowing",
+      "title": "企业会计准则第17号——借款费用",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/kuaijizhunzeshishi/200806/t20080618_46231.htm",
+      "framework": "CAS",
+      "kind": "policy",
+      "publisher": "财政部",
+      "redistribution": "source_manifest_only",
+      "effective_from": null,
+      "required_text": "资本化"
+    },
+    {
+      "id": "cas21-leases",
+      "title": "企业会计准则第21号——租赁",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/kuaijizhunzeshishi/201910/t20191028_3411190.htm",
+      "framework": "CAS",
+      "kind": "policy",
+      "publisher": "财政部",
+      "redistribution": "source_manifest_only",
+      "effective_from": null,
+      "required_text": "使用权资产"
+    },
+    {
+      "id": "cas28-changes",
+      "title": "企业会计准则第28号——会计政策、会计估计变更和差错更正",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/kuaijizhunzeshishi/200806/t20080618_46220.htm",
+      "framework": "CAS",
+      "kind": "policy",
+      "publisher": "财政部",
+      "redistribution": "source_manifest_only",
+      "effective_from": null,
+      "required_text": "追溯"
+    },
+    {
+      "id": "scas-full",
+      "title": "小企业会计准则",
+      "url": "https://kjs.mof.gov.cn/zhengcefabu/201111/P020111118325852319878.pdf",
+      "framework": "SCAS",
+      "kind": "policy",
+      "publisher": "财政部",
+      "redistribution": "source_manifest_only",
+      "effective_from": null,
+      "required_text": "第十一条"
+    },
+    {
+      "id": "software-specification",
+      "title": "会计软件基本功能和服务规范",
+      "url": "https://www.mof.gov.cn/jrttts/202408/P020240809318551591785.pdf",
+      "framework": "BOTH",
+      "kind": "policy",
+      "publisher": "财政部",
+      "redistribution": "source_manifest_only",
+      "effective_from": null,
+      "required_text": "会计软件基本功能和服务规范"
+    }
+  ],
+  "note": "Independent retrieval corpus registry. Archived full standards only, no QA/evaluator answers. Effective periods and later replacements unverified; never executable rules."
+}
