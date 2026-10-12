@@ -170,6 +170,8 @@ def confirm_import(s, batch):
     s.refresh(batch)
     if batch.status == 'confirmed':
         return {'snapshot_id': batch.snapshot_id, 'imported': batch.imported, 'duplicate_count': batch.duplicate_count}
+    from .ocr_workflow import require_current_review
+    require_current_review(s, batch)
     if batch.errors:
         raise HTTPException(422, {'message': '修复或重新映射错误行后才能确认，未静默丢弃任何行', 'errors': batch.errors[:100]})
     book = s.get(Book, batch.book_id)

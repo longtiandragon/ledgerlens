@@ -93,9 +93,9 @@ test('真实上传校验：缺失金额错误隔离，合法 CSV 导入及来源
  const created=await request.post('/api/v1/books',{data:{name:`上传集成 ${Date.now()}`,framework:'SCAS',period:'2026-09',currency:'CNY',accounts:['1002','1405','2202'],locked_periods:[]}});expect(created.ok()).toBeTruthy();const book=await created.json()
  await page.goto('/');await page.evaluate(id=>localStorage.setItem('ledgerlens.book',id),book.id);await page.reload();await page.locator('nav').getByRole('button',{name:/数据接入/}).click()
  const fields='source_id,kind,business_date,period,currency,amount,counterparty,order_id\n'
- await page.locator('input[type=file]').setInputFiles({name:'invalid.csv',mimeType:'text/csv',buffer:Buffer.from(fields+'UPLOAD-1,invoice,2026-09-15,2026-09,CNY,,测试主体,ORDER-1\n')})
+ await page.getByLabel('业务资料文件',{exact:true}).setInputFiles({name:'invalid.csv',mimeType:'text/csv',buffer:Buffer.from(fields+'UPLOAD-1,invoice,2026-09-15,2026-09,CNY,,测试主体,ORDER-1\n')})
  await page.getByRole('button',{name:'解析与预览'}).click();await expect(page.locator('.validation-errors')).toBeVisible();await expect(page.getByRole('button',{name:'确认导入并建立快照'})).toBeDisabled()
- await page.locator('input[type=file]').setInputFiles({name:'valid.csv',mimeType:'text/csv',buffer:Buffer.from(fields+'UPLOAD-1,invoice,2026-09-15,2026-09,CNY,12345.67,测试主体,ORDER-1\n')})
+ await page.getByLabel('业务资料文件',{exact:true}).setInputFiles({name:'valid.csv',mimeType:'text/csv',buffer:Buffer.from(fields+'UPLOAD-1,invoice,2026-09-15,2026-09,CNY,12345.67,测试主体,ORDER-1\n')})
  await page.getByRole('button',{name:'解析与预览'}).click();await expect(page.getByRole('button',{name:'确认导入并建立快照'})).toBeEnabled();await page.getByRole('button',{name:'确认导入并建立快照'}).click();await expect(page.getByText('成功导入 1 条记录，跳过 0 条重复来源。')).toBeVisible()
  const records=await (await request.get(`/api/v1/books/${book.id}/records`)).json();expect(records).toHaveLength(1);expect(records[0].amount).toBe('12345.67')
  await page.locator('nav').getByRole('button',{name:/证据浏览/}).click();const downloadWait=page.waitForEvent('download');await page.getByRole('row').filter({hasText:'valid.csv'}).filter({hasNotText:'invalid.csv'}).getByRole('button',{name:/下载原文件/}).click();const dl=await downloadWait;expect(dl.suggestedFilename()).toBe('valid.csv')

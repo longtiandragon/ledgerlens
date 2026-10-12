@@ -24,6 +24,7 @@ from .evidence_requests import router as evidence_requests_router
 from .statement_api import router as statement_router
 from .policy_api import router as policy_router
 from .policy_context_contract import InvestigationPolicyContextResponse
+from .ocr_api import router as ocr_router
 
 
 def get(s, cls, identity):
@@ -52,6 +53,9 @@ def require_case_rules(s, item):
 @asynccontextmanager
 async def lifespan(app):
     Base.metadata.create_all(engine)
+    from .ocr_workflow import recover
+    with Session() as s:
+        recover(s)
     # Recover queued/interrupted local work after a single-process local server restart.
     recovery = []
     if settings.task_mode == 'local':
@@ -78,6 +82,7 @@ app.include_router(root_cause_results_router)
 app.include_router(evidence_requests_router)
 app.include_router(statement_router)
 app.include_router(policy_router)
+app.include_router(ocr_router)
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=['127.0.0.1', 'localhost', 'testserver', 'api'])
 app.add_middleware(CORSMiddleware, allow_origins=['http://127.0.0.1:5188', 'http://localhost:5188',
                                                 'http://127.0.0.1:8080', 'http://localhost:8080'],
@@ -221,6 +226,9 @@ def zipfile_error():
 @app.put('/api/v1/imports/{identity}/mapping')
 def remap(identity: str, body: dict, s=Depends(session)):
     batch = get(s, ImportBatch, identity)
+    from .db import OcrReview
+    if s.scalar(select(OcrReview.id).where(OcrReview.import_id == batch.id)) is not None:
+        raise HTTPException(409, 'OCR人工核实预览不能重新映射；请新增字段复核版本')
     if batch.status == 'confirmed':
         raise HTTPException(409, '已确认导入不可重写')
     doc = get(s, Document, batch.document_id)

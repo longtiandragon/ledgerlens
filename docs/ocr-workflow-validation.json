@@ -1,0 +1,103 @@
+{
+  "schema_version": "ocr-product-validation-v1",
+  "date": "2026-10-13",
+  "scope": "Synthetic scans, real local CPU OCR, human-entered fields, snapshot import. Not real-document accuracy or business validation.",
+  "paid_model_calls": 0,
+  "backend": {
+    "passed": 1917,
+    "skipped": 2,
+    "duration_seconds": "111.10",
+    "skip_reason": "Windows file-link creation permission"
+  },
+  "targeted_workflow_and_migrations": {
+    "passed": 28
+  },
+  "cases": [
+    {
+      "source": ".local/ocr-scans-v1/images/scan-001.png",
+      "source_sha256": "f4f78cc9489fdfc40fa55e88c4e7dc189ef10ce834a082290bd1714f22a65c1b",
+      "media_type": "image/png",
+      "book_id": "d0eb9e6a-dad4-413c-a8a8-677f23429817",
+      "run_id": "502b18cc-e923-45ea-bf76-cb66bfcf52fa",
+      "document_id": "61403b63-d9ce-4d5c-99ab-28792c62d5e3",
+      "result_digest": "b6686cd90204ff327234093e47aef98fbe76da83a605dcf72d92a6b847f501d3",
+      "page_count": 1,
+      "observation_count": 7,
+      "record_count": 1,
+      "amount": "1394.99",
+      "business_date": "2026-09-12",
+      "snapshot_id": "3e246aab-6f9b-4e22-afd1-8bb04cbd7692",
+      "ocr_confirmation": "unconfirmed",
+      "human_review_versions": 1,
+      "evidence_path": "runtime/ocr-all-e2e-v5/ocr-可选本地真实-OCR-产品流程（合成扫描件）-image-原件定位、人工字段确认、导入及移动布局/ocr-product-evidence.json",
+      "evidence_sha256": "3de9d7c44f4ba681db2a31a8824bcc1c89205c815432d2fbf21c2a9960fdedf4",
+      "raw_response_path": "runtime/ocr-all-e2e-v5/ocr-可选本地真实-OCR-产品流程（合成扫描件）-image-原件定位、人工字段确认、导入及移动布局/ocr-run-response.json",
+      "raw_response_sha256": "12c0016479ed88432fb09b7216545252261b2e9b389793ca3cb9611eb5901caf",
+      "screenshots_sha256": {
+        "image-desktop.png": "cb9a09938af5c43e89c543497a4fdc3ebf4fa9333075966a119a71cb31e9846d",
+        "image-mobile.png": "fa14249c50b62094cd9ed9046283be49998a61f6db47485e173b660b9e0a2f01"
+      }
+    },
+    {
+      "source": ".local/ocr-pdf-v1/synthetic-scans.pdf",
+      "source_sha256": "ed064f7c84ef7ef1e701441e180622475bb3fa5c077311b3fc08d2151647956e",
+      "media_type": "application/pdf",
+      "book_id": "d401d15d-5c2b-49ff-857b-df42bf297ba9",
+      "run_id": "7c976308-5f7c-4fcb-ad34-dfa087315950",
+      "document_id": "7db93129-5f44-489b-9799-ce7381902579",
+      "result_digest": "eb220d166c355f2cf79054b7415508a1c11686428c6ea969c18b38b0a6ce5b83",
+      "page_count": 6,
+      "observation_count": 35,
+      "record_count": 1,
+      "amount": "1394.99",
+      "business_date": "2026-09-12",
+      "snapshot_id": "f81390da-0956-42e2-8900-a1cfb2b90a36",
+      "ocr_confirmation": "unconfirmed",
+      "human_review_versions": 1,
+      "evidence_path": "runtime/ocr-all-e2e-v5/ocr-可选本地真实-OCR-产品流程（合成扫描件）-pdf-原件定位、人工字段确认、导入及移动布局/ocr-product-evidence.json",
+      "evidence_sha256": "ace20e309ad788eece769c20193cfd3337edd2ddf47c4311c2e0d15ec73f3456",
+      "raw_response_path": "runtime/ocr-all-e2e-v5/ocr-可选本地真实-OCR-产品流程（合成扫描件）-pdf-原件定位、人工字段确认、导入及移动布局/ocr-run-response.json",
+      "raw_response_sha256": "c1c3ff5710911670aaa342f4a2d3ba99127db2277584ec3e1a7426b410cb62e0",
+      "screenshots_sha256": {
+        "pdf-desktop.png": "ffdb976830fc2b06366cac3c6ebc045bd70f6a1f11c462ea646b7b1613bc1c88",
+        "pdf-mobile.png": "9932cca47f56165f4df5fe395112b7f30ede11ea0b9fcaafcc58afc07337bfef"
+      }
+    }
+  ],
+  "source_sha256_by_file": {
+    "backend/app/ocr_workflow.py": "d3a6221ab8df55390fb4a505b11a95146209f197523b2ba0a222ecb4d8b74442",
+    "backend/app/ocr_api.py": "6d32fe7c7f9d32b1737655c1b6b34148be7903ef55eb1fccfd84598624f5a413",
+    "backend/app/ocr_contract.py": "df3514b6d13977f91bee927cca6316b56e432e8c554af9fc8300db5c28b159fe",
+    "backend/app/imports.py": "3a0ab711b6cea803b075369b794165ed791b8d9085ebd9dd0ba380bf2d87bfc9",
+    "backend/app/main.py": "bab83d52ab7af3f29c5c5b59bfd5907017292562f36feb467391603621cac2da",
+    "backend/migrations/versions/0005_ocr_reviews.py": "796b87890519e43119443ac7ccb2f35e8c2285ef266c3c42a286a22c891dbbf5",
+    "frontend/src/App.vue": "0289997d7bba9894c8d7364f560d587656038c2a6273f0bec92f9e07d1a5d313",
+    "frontend/src/components/OcrReviewPanel.vue": "7ec243960a7a7176fed476d95e58c7e2de8bb019ceebb9e847585d2b7ae6ff7f",
+    "frontend/src/components/OcrSourcePreview.vue": "a2f633aa85d2f810cdaf25d57a5ed6a735a16296e2c632b58b5c7f16ca3e0097",
+    "frontend/tests/ocr.spec.ts": "b0903aef008686adbb3c482c280998627947b84619e8d9092f3178d34908bec0",
+    "backend/tests/test_ocr_workflow.py": "7057a409371dc5878bff210d39cf84f69d8c08cd4ff0b3e791369842fcedc7ec"
+  },
+  "evidence_capture_note": "Raw API response sidecars re-read after browser completion and verified against original result digests; JS-parsed UI artifacts alone do not preserve numeric tokens for canonical hashes. Test updated to preserve raw response on future runs.",
+  "retained_failures": [
+    "runtime/ocr-e2e-v1: flat record API misread in test; PDF selector lacked explicit name",
+    "runtime/ocr-e2e-v2: stopped local services, connections refused",
+    "runtime/ocr-all-e2e-v4: 41 passed, 1 ambiguous file-selector test failed; original assertions preserved"
+  ],
+  "browser": {
+    "passed": 42,
+    "skipped": 0,
+    "duration_display": "2.2m",
+    "output_dir": "runtime/ocr-all-e2e-v5",
+    "enabled_optional_suites": [
+      "OCR_LOCAL_TESTS",
+      "PROCESS_DATASET_TESTS",
+      "STATEMENT_DATASET_TESTS"
+    ]
+  },
+  "build": {
+    "typecheck_and_production_build": "passed",
+    "vite_duration_seconds": "11.92",
+    "ruff": "passed",
+    "generated_contracts": "consistent"
+  }
+}

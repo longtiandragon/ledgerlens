@@ -27,7 +27,7 @@ def test_empty_upgrade_has_exact_tables_columns_constraints_and_indexes(tmp_path
         config = configuration()
         config.attributes['connection'] = connection
         command.upgrade(config, 'head')
-        assert connection.scalar(text('SELECT version_num FROM alembic_version')) == '0004'
+        assert connection.scalar(text('SELECT version_num FROM alembic_version')) == '0005'
         context = MigrationContext.configure(connection, opts={'compare_type': True})
         assert compare_metadata(context, Base.metadata) == []
         assert set(inspect(connection).get_table_names()) == set(Base.metadata.tables) | {'alembic_version'}
@@ -67,7 +67,7 @@ def test_destructive_downgrade_is_refused_and_existing_data_survives(tmp_path):
         command.upgrade(config, 'head')
         with pytest.raises(RuntimeError, match='destroy evidence'):
             command.downgrade(config, 'base')
-        assert connection.scalar(text('SELECT version_num FROM alembic_version')) == '0004'
+        assert connection.scalar(text('SELECT version_num FROM alembic_version')) == '0005'
         assert 'documents' in inspect(connection).get_table_names()
     engine.dispose()
 
@@ -91,4 +91,20 @@ def test_langgraph_checkpoint_tables_are_not_reported_as_drops_but_strays_are(tm
         connection.execute(text('CREATE TABLE unexpected_stray (id TEXT)'))
         diffs = compare_metadata(filtered, Base.metadata)
         assert [diff[1].name for diff in diffs if diff[0] == 'remove_table'] == ['unexpected_stray']
+    engine.dispose()
+
+
+def test_ocr_forward_migration_preserves_existing_source_rows(tmp_path):
+    engine = create_engine(f'sqlite:///{tmp_path / "forward.sqlite"}')
+    with engine.begin() as connection:
+        config = configuration()
+        config.attributes['connection'] = connection
+        command.upgrade(config, '0004')
+        connection.execute(text("INSERT INTO documents (id,created_at,book_id,name,sha256,storage_path,synthetic,media_type,extracted) "
+                                "VALUES ('original','2026','book','invoice.pdf','unchanged','source',0,'application/pdf','[]')"))
+        before = connection.execute(text('SELECT * FROM documents')).all()
+        command.upgrade(config, 'head')
+        assert connection.execute(text('SELECT * FROM documents')).all() == before
+        assert {'ocr_runs', 'ocr_reviews'}.issubset(inspect(connection).get_table_names())
+        assert compare_metadata(MigrationContext.configure(connection), Base.metadata) == []
     engine.dispose()

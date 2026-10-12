@@ -16,6 +16,9 @@ class Settings(BaseSettings):
     process_datasets_dir: Path = Path('.local/bpi2019/process-events')
     statement_datasets_dir: Path = Path('.local/annual-reports/statement-snapshots')
     annual_reports_dir: Path = Path('.local/annual-reports')
+    ocr_python: Path | None = None
+    ocr_models_dir: Path | None = None
+    ocr_timeout_seconds: int = 180
 
 
 settings = Settings()

@@ -60,6 +60,33 @@ class ImportBatch(Entity):
     duplicate_count: Mapped[int] = mapped_column(default=0)
 
 
+class OcrRun(Entity):
+    __tablename__ = 'ocr_runs'
+    book_id: Mapped[str] = mapped_column(index=True)
+    document_id: Mapped[str]
+    status: Mapped[str] = mapped_column(default='queued')
+    worker_token: Mapped[str | None]
+    book_version: Mapped[int]
+    period: Mapped[str]
+    result: Mapped[dict] = mapped_column(JSON, default=dict)
+    result_digest: Mapped[str | None]
+    error: Mapped[str | None]
+
+
+class OcrReview(Entity):
+    __tablename__ = 'ocr_reviews'
+    __table_args__ = (UniqueConstraint('run_id', 'version'), UniqueConstraint('parent_id'),)
+    book_id: Mapped[str] = mapped_column(index=True)
+    run_id: Mapped[str] = mapped_column(index=True)
+    version: Mapped[int]
+    parent_id: Mapped[str | None]
+    book_revision: Mapped[int]
+    book_version: Mapped[int]
+    payload: Mapped[dict] = mapped_column(JSON)
+    digest: Mapped[str]
+    import_id: Mapped[str] = mapped_column(unique=True)
+
+
 class Record(Entity):
     __tablename__ = 'records'
     __table_args__ = (UniqueConstraint('book_id', 'kind', 'source_id'),)

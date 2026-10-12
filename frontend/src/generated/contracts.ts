@@ -8,6 +8,7 @@ export type CheckInput = { "book_id": string; "snapshot_id": string }
 export type InvestigateInput = { "mode"?: "rules" | "single" | "multi" | "active" }
 export type SimulationInput = { "case_id": string; "adjustments": Array<Record<string, unknown>> }
 export type ReviewInput = { "case_id": string; "expected_snapshot_id": string; "decision": "accepted" | "returned" | "reserved"; "comment"?: string }
+export type OcrReviewInput = { "expected_parent_id"?: string | null; "expected_result_digest": string; "expected_book_revision": number; "record": LedgerInput; "field_evidence": Record<string, Array<string>>; "confirmed": true; "comment": string }
 export type TextLine = { "line": number; "text": string; "bbox": Array<number> }
 export type SourceLine = { "line": number; "text": string; "bbox": Array<number>; "pdf_page": number }
 export type LabelFragment = { "table_row": number; "table_column_zero_based": number; "text": string; "bbox": Array<number> }

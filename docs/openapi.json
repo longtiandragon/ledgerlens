@@ -1799,6 +1799,210 @@
         }
       }
     },
+    "/api/v1/ocr/capabilities": {
+      "get": {
+        "tags": [
+          "OCR人工核实"
+        ],
+        "summary": "Capabilities",
+        "operationId": "capabilities_api_v1_ocr_capabilities_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ocr/runs": {
+      "post": {
+        "tags": [
+          "OCR人工核实"
+        ],
+        "summary": "Start",
+        "operationId": "start_api_v1_ocr_runs_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_start_api_v1_ocr_runs_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "OCR人工核实"
+        ],
+        "summary": "Runs",
+        "operationId": "runs_api_v1_ocr_runs_get",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ocr/runs/{identity}": {
+      "get": {
+        "tags": [
+          "OCR人工核实"
+        ],
+        "summary": "Detail",
+        "operationId": "detail_api_v1_ocr_runs__identity__get",
+        "parameters": [
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          },
+          {
+            "name": "book_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ocr/runs/{identity}/reviews": {
+      "post": {
+        "tags": [
+          "OCR人工核实"
+        ],
+        "summary": "Review",
+        "operationId": "review_api_v1_ocr_runs__identity__reviews_post",
+        "parameters": [
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          },
+          {
+            "name": "book_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OcrReviewInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/health": {
       "get": {
         "summary": "Health",
@@ -3081,6 +3285,25 @@
         ],
         "title": "BalanceObservation"
       },
+      "Body_start_api_v1_ocr_runs_post": {
+        "properties": {
+          "book_id": {
+            "type": "string",
+            "title": "Book Id"
+          },
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "book_id",
+          "file"
+        ],
+        "title": "Body_start_api_v1_ocr_runs_post"
+      },
       "Body_upload_api_v1_imports_post": {
         "properties": {
           "book_id": {
@@ -3619,6 +3842,196 @@
           "bbox"
         ],
         "title": "LabelFragment"
+      },
+      "LedgerInput": {
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Source Id"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "journal",
+              "bank",
+              "order",
+              "receipt",
+              "invoice",
+              "opening",
+              "trial_balance"
+            ],
+            "title": "Kind"
+          },
+          "business_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Business Date"
+          },
+          "period": {
+            "type": "string",
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+            "title": "Period"
+          },
+          "currency": {
+            "type": "string",
+            "const": "CNY",
+            "title": "Currency",
+            "default": "CNY"
+          },
+          "counterparty": {
+            "type": "string",
+            "maxLength": 200,
+            "title": "Counterparty",
+            "default": ""
+          },
+          "reference": {
+            "type": "string",
+            "maxLength": 200,
+            "title": "Reference",
+            "default": ""
+          },
+          "order_id": {
+            "type": "string",
+            "maxLength": 200,
+            "title": "Order Id",
+            "default": ""
+          },
+          "invoice_id": {
+            "type": "string",
+            "maxLength": 200,
+            "title": "Invoice Id",
+            "default": ""
+          },
+          "voucher_id": {
+            "type": "string",
+            "maxLength": 200,
+            "title": "Voucher Id",
+            "default": ""
+          },
+          "account": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "Account",
+            "default": ""
+          },
+          "debit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Debit"
+          },
+          "credit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Credit"
+          },
+          "amount": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 4000,
+            "title": "Description",
+            "default": ""
+          },
+          "direction": {
+            "type": "string",
+            "maxLength": 50,
+            "title": "Direction",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source_id",
+          "kind",
+          "business_date",
+          "period"
+        ],
+        "title": "LedgerInput"
+      },
+      "OcrReviewInput": {
+        "properties": {
+          "expected_parent_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Parent Id"
+          },
+          "expected_result_digest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Expected Result Digest"
+          },
+          "expected_book_revision": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Expected Book Revision"
+          },
+          "record": {
+            "$ref": "#/components/schemas/LedgerInput"
+          },
+          "field_evidence": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "maxProperties": 20,
+            "title": "Field Evidence"
+          },
+          "confirmed": {
+            "type": "boolean",
+            "const": true,
+            "title": "Confirmed"
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Comment"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_result_digest",
+          "expected_book_revision",
+          "record",
+          "field_evidence",
+          "confirmed",
+          "comment"
+        ],
+        "title": "OcrReviewInput"
       },
       "PolicyAnnotationEnvelope": {
         "properties": {
