@@ -1,0 +1,19 @@
+{
+  "schema_version": "local-observability-acceptance-v1",
+  "checks": {
+    "live_rule_run_completed": true,
+    "original_records_unchanged": true,
+    "one_real_sdk_span": true,
+    "duration_positive": true,
+    "zero_model_calls": true,
+    "known_zero_cost": true
+  },
+  "duration_ns": 88445300,
+  "source_report_sha256": "c680942254b434cd80801acfd48b2891b20efb23802bc375b7af0ab1ed895024",
+  "model_requests": 0,
+  "limitations": [
+    "Rule-only live acceptance; model usage tested offline with controlled events.",
+    "Per worker lease duration; resumed usage is cumulative, not additive.",
+    "Local JSON exporter only; no collector or Langfuse service."
+  ]
+}

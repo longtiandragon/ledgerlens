@@ -1,0 +1,49 @@
+{
+  "schema_version": "reference-provenance-validation-v1",
+  "checked_at": "2026-10-09T08:11:14.246219+00:00",
+  "prompt_version": "investigation-v20",
+  "tool_version": "snapshot-tools-v10",
+  "sources": [
+    {
+      "source_id": "accounting-software-2024",
+      "kind": "policy_notice",
+      "sha256": "4610634a9c9779defbfe874cc016f922b6778d2e507f596c80c6a43cb49232ba",
+      "parsed_sha256": "1d05ec429a259af4be85bb3e75a513a6fbb1ccacf9f3d63fbd63f066476f5161",
+      "framework": "BOTH"
+    },
+    {
+      "source_id": "accounting-software-2024-full",
+      "kind": "policy",
+      "sha256": "bc4c523bf025684f373100f6b0dac0a4d9cd8191b04adda7f5e67ba6a9dbcb34",
+      "parsed_sha256": "4f8a748e0cb63157223ec580fcc8805098d0dd3c984f0b17f2e4ccfb69998426",
+      "framework": "BOTH"
+    }
+  ],
+  "source_count": 2,
+  "corpus_chunks": 13,
+  "frozen_live_references": 10,
+  "source_tests": 80,
+  "runtime_tests": 25,
+  "backend_passed": 1506,
+  "backend_skipped": 2,
+  "browser_passed": 31,
+  "live_checks_passed": 11,
+  "model_requests": 0,
+  "ledger_rule_identity": {
+    "version": "0.1.0",
+    "source_sha256": "68feb372169d79ad1af4cf996639e4794b73daafe66bfa817adda4736b5fe729"
+  },
+  "corpus_sha256": "86914d7f45da5cc034e385813fcda4256738a196c58a69ef63bf4f1cf4cd06fc",
+  "registry_sha256": "f0c4cb33b2929709acf00ade9960e596315743d29ac04436c557263f6eaf7869",
+  "workspace_report_sha256": "7c19a954fb756c3cf54650785760b5a022845bf8d2515e726c2120eac2f14bde",
+  "limitations": [
+    "Real v20 model completion, fixed Multi-Agent stability and comparative benefit",
+    "Professional, real enterprise and full CAS/SCAS business correctness",
+    "Reference legal expiry/replacement/current validity and independent historical known-at",
+    "Policy module integration into Agent, simulation and professional review",
+    "PostgreSQL Redis Celery real container operation, OCR embeddings and real ERPNext differential",
+    "Operating-system protection against an actor rewriting registry originals and all hashes"
+  ],
+  "windows_link_detection": "host_creation_denied; explicitly simulated detection branches, not OS containment proof",
+  "scope": "reference_integrity_and_local_engineering_not_accounting_accuracy_or_model_performance"
+}

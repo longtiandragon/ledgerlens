@@ -1,0 +1,390 @@
+{
+  "schema_version": "beancount-basic-differential-v1",
+  "run_at": "2026-10-08T05:38:19.348386+00:00",
+  "scope": "single_CNY_explicit_postings_signed_debit_minus_credit_without_cost_or_price",
+  "source_urls": {
+    "repository": "https://github.com/beancount/beancount",
+    "package": "https://pypi.org/project/beancount/3.2.3/",
+    "license": "https://raw.githubusercontent.com/beancount/beancount/v3/COPYING"
+  },
+  "fixture_origin": "independently_handwritten_two_representations_not_production_generated",
+  "accounting_standard_oracle": false,
+  "real_business_accuracy_measured": null,
+  "limitations": [
+    "No CAS/SCAS recognition, importance, period correction or business validity oracle.",
+    "Balance_by_account cutoff is exclusive; production fixture supplies explicit carryforward.",
+    "Zero tolerance and exact cents; no currency conversions, costs, prices or auto postings.",
+    "Balanced wrong account fixture passes arithmetic deliberately and shows this limitation.",
+    "No third-party source code copied or dependency bundled into application runtime."
+  ],
+  "status": "passed",
+  "packages": [
+    {
+      "name": "beancount",
+      "version": "3.2.3",
+      "license_metadata": "GPL-2.0-only",
+      "source_url": "https://pypi.org/project/beancount/3.2.3/"
+    },
+    {
+      "name": "regex",
+      "version": "2026.9.29",
+      "license_metadata": "Apache-2.0 AND CNRI-Python",
+      "source_url": "https://pypi.org/project/regex/2026.9.29/"
+    },
+    {
+      "name": "click",
+      "version": "8.5.0",
+      "license_metadata": "BSD-3-Clause",
+      "source_url": "https://pypi.org/project/click/8.5.0/"
+    },
+    {
+      "name": "python-dateutil",
+      "version": "2.9.0.post0",
+      "license_metadata": "Dual License",
+      "source_url": "https://pypi.org/project/python-dateutil/2.9.0.post0/"
+    }
+  ],
+  "production_rule_identity": {
+    "version": "0.1.0",
+    "source_sha256": "68feb372169d79ad1af4cf996639e4794b73daafe66bfa817adda4736b5fe729"
+  },
+  "cases": [
+    {
+      "id": "exact-cents",
+      "description": "Exact 0.10 + 0.20 postings and explicit 0.30 credit",
+      "status": "passed",
+      "source_sha256": "fb3327f4da691c7b7d0e8ea874b6510f836dd8c8acbda7fafd8a8b168f73cd94",
+      "record_sha256": "e07819e5614cd0a425795861ddc753d0b9f261f110cde5f02a99f0e708bf42ce",
+      "oracle": {
+        "valid": true,
+        "error_types": [],
+        "other_error_types": [],
+        "imbalance_vouchers": [],
+        "balances": {
+          "Assets:Bank": "0.30",
+          "Equity:Capital": "-0.30"
+        },
+        "api": [
+          "loader.load_string",
+          "ops.validation.validate",
+          "ops.summarize.balance_by_account",
+          "core.inventory.Inventory.get_currency_units"
+        ],
+        "cutoff_exclusive": "2026-02-01"
+      },
+      "actual_balances": {
+        "Assets:Bank": "0.30",
+        "Equity:Capital": "-0.30"
+      },
+      "balance_agrees": true,
+      "differences": [],
+      "production_imbalance_vouchers": [],
+      "validation_classification_agrees": true,
+      "original_records_unchanged": true,
+      "business_error_detection": "not_evaluated"
+    },
+    {
+      "id": "normal-split-payment",
+      "description": "One purchase settled with normal 60000 + 40000 payments",
+      "status": "passed",
+      "source_sha256": "ff9af968c9ba208e083fe1bc562592dbd580b24630be888782482d241599ab0c",
+      "record_sha256": "0a77bde8bc4b203e45e9d18cfb7d087bf2a2bfea7032756b8ec92f0f9e126c9d",
+      "oracle": {
+        "valid": true,
+        "error_types": [],
+        "other_error_types": [],
+        "imbalance_vouchers": [],
+        "balances": {
+          "Assets:Bank": "20000.00",
+          "Equity:Capital": "-120000.00",
+          "Assets:Inventory": "100000.00",
+          "Liabilities:Payable": "0.00"
+        },
+        "api": [
+          "loader.load_string",
+          "ops.validation.validate",
+          "ops.summarize.balance_by_account",
+          "core.inventory.Inventory.get_currency_units"
+        ],
+        "cutoff_exclusive": "2026-02-01"
+      },
+      "actual_balances": {
+        "Assets:Bank": "20000.00",
+        "Assets:Inventory": "100000.00",
+        "Liabilities:Payable": "0.00",
+        "Equity:Capital": "-120000.00"
+      },
+      "balance_agrees": true,
+      "differences": [],
+      "production_imbalance_vouchers": [],
+      "validation_classification_agrees": true,
+      "original_records_unchanged": true,
+      "business_error_detection": "not_evaluated"
+    },
+    {
+      "id": "refund-reversal",
+      "description": "Opposite debit/credit reversal; zero expense account retained",
+      "status": "passed",
+      "source_sha256": "2796ec545c3db447274c39a4d3da7c8da59d926f74ba1899bd37780761cc9bd4",
+      "record_sha256": "a3c3dfa8bdffc8bf248c93992abcfecc989d7a42bcb1118fde5b6a0c1e3d2609",
+      "oracle": {
+        "valid": true,
+        "error_types": [],
+        "other_error_types": [],
+        "imbalance_vouchers": [],
+        "balances": {
+          "Assets:Bank": "1000.00",
+          "Equity:Capital": "-1000.00",
+          "Expenses:Administration": "0.00"
+        },
+        "api": [
+          "loader.load_string",
+          "ops.validation.validate",
+          "ops.summarize.balance_by_account",
+          "core.inventory.Inventory.get_currency_units"
+        ],
+        "cutoff_exclusive": "2026-02-01"
+      },
+      "actual_balances": {
+        "Assets:Bank": "1000.00",
+        "Equity:Capital": "-1000.00",
+        "Expenses:Administration": "0.00"
+      },
+      "balance_agrees": true,
+      "differences": [],
+      "production_imbalance_vouchers": [],
+      "validation_classification_agrees": true,
+      "original_records_unchanged": true,
+      "business_error_detection": "not_evaluated"
+    },
+    {
+      "id": "large-exact-cent",
+      "description": "Supported maximum balance with one-cent addition",
+      "status": "passed",
+      "source_sha256": "f8acad2a8cf388f90000e0939dafef63b79766177c4370b85c107b28b5c48a87",
+      "record_sha256": "24e34e45dd5f95643e07bd112b6ce65ebe27bedec93d9aae9764d6ca8858e9d2",
+      "oracle": {
+        "valid": true,
+        "error_types": [],
+        "other_error_types": [],
+        "imbalance_vouchers": [],
+        "balances": {
+          "Assets:Bank": "999999999999.99",
+          "Equity:Capital": "-999999999999.99"
+        },
+        "api": [
+          "loader.load_string",
+          "ops.validation.validate",
+          "ops.summarize.balance_by_account",
+          "core.inventory.Inventory.get_currency_units"
+        ],
+        "cutoff_exclusive": "2026-02-01"
+      },
+      "actual_balances": {
+        "Assets:Bank": "999999999999.99",
+        "Equity:Capital": "-999999999999.99"
+      },
+      "balance_agrees": true,
+      "differences": [],
+      "production_imbalance_vouchers": [],
+      "validation_classification_agrees": true,
+      "original_records_unchanged": true,
+      "business_error_detection": "not_evaluated"
+    },
+    {
+      "id": "multi-month-january",
+      "description": "Historical source as of February versus January opening + movement",
+      "status": "passed",
+      "source_sha256": "80ac3495818953d94d61599b9a9f77375e3aa5bf77558f70caa60c3af9c2f6bf",
+      "record_sha256": "02109174b6c884c86d811050a69976fa19c3486da3eaca33b8723a4d3cb278e1",
+      "oracle": {
+        "valid": true,
+        "error_types": [],
+        "other_error_types": [],
+        "imbalance_vouchers": [],
+        "balances": {
+          "Assets:Bank": "1050.00",
+          "Assets:Receivable": "150.00",
+          "Equity:Capital": "-1100.00",
+          "Income:Sales": "-200.00",
+          "Expenses:Administration": "100.00"
+        },
+        "api": [
+          "loader.load_string",
+          "ops.validation.validate",
+          "ops.summarize.balance_by_account",
+          "core.inventory.Inventory.get_currency_units"
+        ],
+        "cutoff_exclusive": "2026-02-01"
+      },
+      "actual_balances": {
+        "Assets:Bank": "1050.00",
+        "Assets:Receivable": "150.00",
+        "Equity:Capital": "-1100.00",
+        "Income:Sales": "-200.00",
+        "Expenses:Administration": "100.00"
+      },
+      "balance_agrees": true,
+      "differences": [],
+      "production_imbalance_vouchers": [],
+      "validation_classification_agrees": true,
+      "original_records_unchanged": true,
+      "business_error_detection": "not_evaluated"
+    },
+    {
+      "id": "multi-month-february",
+      "description": "Historical source as of March versus independent February carryforward",
+      "status": "passed",
+      "source_sha256": "80ac3495818953d94d61599b9a9f77375e3aa5bf77558f70caa60c3af9c2f6bf",
+      "record_sha256": "6fefbee71ac2c25251f5aebb3fbb4f03f2ecc1dd142da3780ca793b34919d9b1",
+      "oracle": {
+        "valid": true,
+        "error_types": [],
+        "other_error_types": [],
+        "imbalance_vouchers": [],
+        "balances": {
+          "Assets:Bank": "1000.00",
+          "Assets:Receivable": "150.00",
+          "Equity:Capital": "-1100.00",
+          "Income:Sales": "-150.00",
+          "Expenses:Administration": "100.00"
+        },
+        "api": [
+          "loader.load_string",
+          "ops.validation.validate",
+          "ops.summarize.balance_by_account",
+          "core.inventory.Inventory.get_currency_units"
+        ],
+        "cutoff_exclusive": "2026-03-01"
+      },
+      "actual_balances": {
+        "Assets:Bank": "1000.00",
+        "Assets:Receivable": "150.00",
+        "Equity:Capital": "-1100.00",
+        "Income:Sales": "-150.00",
+        "Expenses:Administration": "100.00"
+      },
+      "balance_agrees": true,
+      "differences": [],
+      "production_imbalance_vouchers": [],
+      "validation_classification_agrees": true,
+      "original_records_unchanged": true,
+      "business_error_detection": "not_evaluated"
+    },
+    {
+      "id": "multi-month-march",
+      "description": "Historical source as of April versus independent March carryforward",
+      "status": "passed",
+      "source_sha256": "80ac3495818953d94d61599b9a9f77375e3aa5bf77558f70caa60c3af9c2f6bf",
+      "record_sha256": "909f11a8b6f13f9d6b54411b12605da54e273036cb1235e74c808edad3fc5665",
+      "oracle": {
+        "valid": true,
+        "error_types": [],
+        "other_error_types": [],
+        "imbalance_vouchers": [],
+        "balances": {
+          "Assets:Bank": "1000.30",
+          "Assets:Receivable": "150.00",
+          "Equity:Capital": "-1100.30",
+          "Income:Sales": "-150.00",
+          "Expenses:Administration": "100.00"
+        },
+        "api": [
+          "loader.load_string",
+          "ops.validation.validate",
+          "ops.summarize.balance_by_account",
+          "core.inventory.Inventory.get_currency_units"
+        ],
+        "cutoff_exclusive": "2026-04-01"
+      },
+      "actual_balances": {
+        "Assets:Bank": "1000.30",
+        "Assets:Receivable": "150.00",
+        "Equity:Capital": "-1100.30",
+        "Income:Sales": "-150.00",
+        "Expenses:Administration": "100.00"
+      },
+      "balance_agrees": true,
+      "differences": [],
+      "production_imbalance_vouchers": [],
+      "validation_classification_agrees": true,
+      "original_records_unchanged": true,
+      "business_error_detection": "not_evaluated"
+    },
+    {
+      "id": "balanced-wrong-account-boundary",
+      "description": "Balanced but wrong account cannot be detected by this oracle",
+      "status": "passed",
+      "source_sha256": "e9d149a38460f72dfe4d1234d775896ad0ea808b13581f2c3f1407e574ed3338",
+      "record_sha256": "7e04aa68eccec7c70e0658cce7a6163fd633962b7f7019c45ecb21d8380d9145",
+      "oracle": {
+        "valid": true,
+        "error_types": [],
+        "other_error_types": [],
+        "imbalance_vouchers": [],
+        "balances": {
+          "Expenses:Administration": "100.00",
+          "Assets:Bank": "-100.00"
+        },
+        "api": [
+          "loader.load_string",
+          "ops.validation.validate",
+          "ops.summarize.balance_by_account",
+          "core.inventory.Inventory.get_currency_units"
+        ],
+        "cutoff_exclusive": "2026-02-01"
+      },
+      "actual_balances": {
+        "Assets:Bank": "-100.00",
+        "Expenses:Administration": "100.00"
+      },
+      "balance_agrees": true,
+      "differences": [],
+      "production_imbalance_vouchers": [],
+      "validation_classification_agrees": true,
+      "original_records_unchanged": true,
+      "business_error_detection": "outside_oracle_capability"
+    },
+    {
+      "id": "unbalanced-one-cent",
+      "description": "One-cent imbalance rejected by both validation subsets",
+      "status": "passed",
+      "source_sha256": "a38616da65d1cbc5053d222d6b7d5c6cbec0eea4caa16718857068a2f74ea3c9",
+      "record_sha256": "34bc3c91a67f9916ca16f011e6b3f98033735738e44a32c7ab4c90cab50c1428",
+      "oracle": {
+        "valid": false,
+        "error_types": [
+          "ValidationError"
+        ],
+        "balances": null,
+        "imbalance_vouchers": [
+          "V-ONE-CENT-GAP"
+        ],
+        "other_error_types": [],
+        "api": [
+          "loader.load_string",
+          "ops.validation.validate",
+          "ops.validation.validate_check_transaction_balances"
+        ]
+      },
+      "actual_balances": {
+        "Assets:Bank": "-99.99",
+        "Expenses:Administration": "100.00"
+      },
+      "balance_agrees": null,
+      "differences": [],
+      "production_imbalance_vouchers": [
+        "V-ONE-CENT-GAP"
+      ],
+      "validation_classification_agrees": true,
+      "original_records_unchanged": true,
+      "business_error_detection": "not_evaluated"
+    }
+  ],
+  "case_count": 9,
+  "passed": 9,
+  "failed": 0,
+  "valid_balance_comparisons": 8,
+  "negative_imbalance_checks": 1,
+  "balance_difference_count": 0
+}

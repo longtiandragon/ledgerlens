@@ -1,0 +1,270 @@
+{
+  "schema_version": "root-cause-results-v1",
+  "created_at": "2026-10-12T01:07:06.625718+00:00",
+  "track_version": "root-cause-track-v2",
+  "dataset_version": "root-cause-v2.0.0",
+  "runs": [
+    {
+      "id": "v2-baselines-development",
+      "label": "v2 确定性基线 · 开发集",
+      "split": "development",
+      "role": "baseline",
+      "validity": "有效",
+      "report": "root-cause-v2-baselines-development.json",
+      "report_sha256": "fdb811824aa888d14c0fdf5a84b8154993f847c20db647307d1d754e954664cb",
+      "prompt_version": null,
+      "runner_version": null,
+      "repeat": 1,
+      "paid_requests": 0,
+      "offpeak_cost_cny_estimate": null,
+      "status": "completed",
+      "methods": {
+        "rule_only": {
+          "samples": 90,
+          "failures": 0,
+          "category_macro_f1": 0.1458,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "0/60"
+        },
+        "rule_fixed_request": {
+          "samples": 90,
+          "failures": 0,
+          "category_macro_f1": 0.5625,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "30/60"
+        },
+        "keyword_request": {
+          "samples": 90,
+          "failures": 0,
+          "category_macro_f1": 0.9779,
+          "conclusion_accuracy": 1.0,
+          "decisive_evidence_obtained": "57/60"
+        }
+      }
+    },
+    {
+      "id": "v2-baselines-validation",
+      "label": "v2 确定性基线 · 验证集",
+      "split": "validation",
+      "role": "baseline",
+      "validity": "有效",
+      "report": "root-cause-v2-baselines-validation.json",
+      "report_sha256": "89fee70654469913869b5c3b58e1af784715db9b49fa84629abc408ae99564a2",
+      "prompt_version": null,
+      "runner_version": null,
+      "repeat": 1,
+      "paid_requests": 0,
+      "offpeak_cost_cny_estimate": null,
+      "status": "completed",
+      "methods": {
+        "rule_only": {
+          "samples": 90,
+          "failures": 0,
+          "category_macro_f1": 0.1458,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "0/60"
+        },
+        "rule_fixed_request": {
+          "samples": 90,
+          "failures": 0,
+          "category_macro_f1": 0.5625,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "30/60"
+        },
+        "keyword_request": {
+          "samples": 90,
+          "failures": 0,
+          "category_macro_f1": 0.6253,
+          "conclusion_accuracy": 0.8111,
+          "decisive_evidence_obtained": "33/60"
+        }
+      }
+    },
+    {
+      "id": "v2-smoke-validation-v24",
+      "label": "单Agent冒烟 · 验证集",
+      "split": "validation",
+      "role": "smoke",
+      "validity": "作废：补证释放规则缺陷，按相关单据编号提出的请求未能释放资料",
+      "report": "root-cause-v2-smoke-v24.json",
+      "report_sha256": "7049cbe92347783a685f5fbcdb990c306d85fa0be2204ff707fed07ef5d157be",
+      "prompt_version": "investigation-v24",
+      "runner_version": null,
+      "repeat": 1,
+      "paid_requests": 60,
+      "offpeak_cost_cny_estimate": "0.822",
+      "status": "completed_with_failures",
+      "methods": {
+        "rule_only": {
+          "samples": 9,
+          "failures": 0,
+          "category_macro_f1": 0.1458,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "0/6"
+        },
+        "rule_fixed_request": {
+          "samples": 9,
+          "failures": 0,
+          "category_macro_f1": 0.5625,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "3/6"
+        },
+        "keyword_request": {
+          "samples": 9,
+          "failures": 0,
+          "category_macro_f1": 0.5625,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "3/6"
+        },
+        "single": {
+          "samples": 9,
+          "failures": 1,
+          "category_macro_f1": 0.2083,
+          "conclusion_accuracy": 0.2222,
+          "decisive_evidence_obtained": "1/6"
+        }
+      }
+    },
+    {
+      "id": "v2-smoke-development-v25",
+      "label": "单Agent冒烟 · 开发集",
+      "split": "development",
+      "role": "smoke",
+      "validity": "有效；仅用于开发集调整",
+      "report": "root-cause-v2-dev-smoke-v25.json",
+      "report_sha256": "f57e682897bbcb5407a715497d5e58c59a4b609f6053d3185a5c856a87b83500",
+      "prompt_version": "investigation-v25",
+      "runner_version": null,
+      "repeat": 1,
+      "paid_requests": 57,
+      "offpeak_cost_cny_estimate": "0.838",
+      "status": "completed_with_failures",
+      "methods": {
+        "rule_only": {
+          "samples": 9,
+          "failures": 0,
+          "category_macro_f1": 0.1458,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "0/6"
+        },
+        "rule_fixed_request": {
+          "samples": 9,
+          "failures": 0,
+          "category_macro_f1": 0.5625,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "3/6"
+        },
+        "keyword_request": {
+          "samples": 9,
+          "failures": 0,
+          "category_macro_f1": 1.0,
+          "conclusion_accuracy": 1.0,
+          "decisive_evidence_obtained": "6/6"
+        },
+        "single": {
+          "samples": 9,
+          "failures": 2,
+          "category_macro_f1": 0.4167,
+          "conclusion_accuracy": 0.5556,
+          "decisive_evidence_obtained": "5/6"
+        }
+      }
+    },
+    {
+      "id": "v2-smoke-development-runner2",
+      "label": "单Agent冒烟（第二轮显示补证）· 开发集",
+      "split": "development",
+      "role": "smoke",
+      "validity": "有效；仅用于开发集调整",
+      "report": "root-cause-v2-dev-smoke-runner2.json",
+      "report_sha256": "db5ff2b32c09d8891de3231a40bd703c29943aac1bfa28e70f003536b5864aa3",
+      "prompt_version": "investigation-v25",
+      "runner_version": "rc2-runner-v2",
+      "repeat": 1,
+      "paid_requests": 58,
+      "offpeak_cost_cny_estimate": "0.907",
+      "status": "completed_with_failures",
+      "methods": {
+        "rule_only": {
+          "samples": 9,
+          "failures": 0,
+          "category_macro_f1": 0.1458,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "0/6"
+        },
+        "rule_fixed_request": {
+          "samples": 9,
+          "failures": 0,
+          "category_macro_f1": 0.5625,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "3/6"
+        },
+        "keyword_request": {
+          "samples": 9,
+          "failures": 0,
+          "category_macro_f1": 1.0,
+          "conclusion_accuracy": 1.0,
+          "decisive_evidence_obtained": "6/6"
+        },
+        "single": {
+          "samples": 9,
+          "failures": 1,
+          "category_macro_f1": 0.625,
+          "conclusion_accuracy": 0.5556,
+          "decisive_evidence_obtained": "5/6"
+        }
+      }
+    },
+    {
+      "id": "v2-sealed-final",
+      "label": "最终对比 · 封存测试集",
+      "split": "sealed_test",
+      "role": "final",
+      "validity": "有效；冻结配置；重复2次（规划要求3次）",
+      "report": "root-cause-v2-sealed-final.json",
+      "report_sha256": "c7c4d3772cdfe7ab35b97bacaa7dbdf9c91e9264703505f7c887140cc3079a83",
+      "prompt_version": "investigation-v25",
+      "runner_version": "rc2-runner-v2",
+      "repeat": 2,
+      "paid_requests": 103,
+      "offpeak_cost_cny_estimate": "1.547",
+      "status": "completed_with_failures",
+      "methods": {
+        "rule_only": {
+          "samples": 18,
+          "failures": 0,
+          "category_macro_f1": 0.1458,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "0/12"
+        },
+        "rule_fixed_request": {
+          "samples": 18,
+          "failures": 0,
+          "category_macro_f1": 0.5625,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "6/12"
+        },
+        "keyword_request": {
+          "samples": 18,
+          "failures": 0,
+          "category_macro_f1": 0.6875,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "8/12"
+        },
+        "single": {
+          "samples": 18,
+          "failures": 6,
+          "category_macro_f1": 0.4375,
+          "conclusion_accuracy": 0.3889,
+          "decisive_evidence_obtained": "5/12"
+        }
+      }
+    }
+  ],
+  "conclusion": "在封存测试集上，单Agent（原因F1 0.438、结论38.9%、6/18输出失败）低于同预算确定性基线（关键词补证0.688／77.8%）；主动补证与模型优于确定性方法的主张未获支持。",
+  "limitations": [
+    "合成数据，为检验补证与文字理解能力而设计，不能外推为真实账套效果。",
+    "封存集仅9个场景族、2次重复，低于规划的3次。",
+    "费用为按官方低谷价的列表价估算，不是账单。"
+  ]
+}

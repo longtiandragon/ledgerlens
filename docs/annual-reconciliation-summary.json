@@ -1,0 +1,73 @@
+{
+  "schema_version": "annual-reconciliation-v1",
+  "created_at": "2026-10-11T17:25:46.711169+00:00",
+  "parser_source_sha256": "702365c7554a0dbabb68393b7a53a0bbbb3eacf6adda94010677f831d5a3aa1c",
+  "reports_total": 30,
+  "reports_observed": 23,
+  "balance_counts": {
+    "consistent": 46
+  },
+  "continuity_counts": {
+    "consistent": 42,
+    "needs_review": 3
+  },
+  "model_requests": 0,
+  "scope": "internal consistency of located totals; not audited financial truth or accuracy",
+  "needs_review": [
+    {
+      "company_code": "600729",
+      "item": "total_assets",
+      "later_report": "annual-600729-2024",
+      "earlier_report": "annual-600729-2023",
+      "status": "needs_review",
+      "difference_cny": "508586461.37",
+      "interpretation": "restatement_or_extraction_error_to_review"
+    },
+    {
+      "company_code": "600729",
+      "item": "total_liabilities",
+      "later_report": "annual-600729-2024",
+      "earlier_report": "annual-600729-2023",
+      "status": "needs_review",
+      "difference_cny": "-6388511.76",
+      "interpretation": "restatement_or_extraction_error_to_review"
+    },
+    {
+      "company_code": "600729",
+      "item": "total_equity",
+      "later_report": "annual-600729-2024",
+      "earlier_report": "annual-600729-2023",
+      "status": "needs_review",
+      "difference_cny": "514974973.13",
+      "interpretation": "restatement_or_extraction_error_to_review"
+    }
+  ],
+  "manual_verification": {
+    "report": "annual-600729-2024",
+    "raw_sha256": "86838272f893e88a0b046bd16cac9d1db40cb2f38442f3b1b13a9e78b2542d0c",
+    "source_url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223152819.PDF",
+    "locators": [
+      {
+        "pdf_page": 9,
+        "text_lines": [
+          4,
+          15,
+          16,
+          17
+        ]
+      },
+      {
+        "pdf_page": 183,
+        "text_lines": [
+          16,
+          17,
+          18,
+          19,
+          24
+        ]
+      }
+    ],
+    "finding": "Report discloses retrospective adjustment of prior-period figures after a business combination under common control (商社集团 consolidated); the continuity differences are a disclosed restatement.",
+    "verified_by": "manual reading of located source text; not model output"
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "method": "deterministic_rules",
+  "metric_scope": "synthetic injected rule-label detection, not real accounting accuracy or LLM cause classification",
+  "created_at": "2026-10-07T20:20:05.885575+00:00",
+  "dataset_version": "1.0.0",
+  "split": "all",
+  "case_count": 480,
+  "failures": 0,
+  "exact_label_match_rate": 1.0,
+  "macro_rule_f1": 1.0,
+  "per_rule": {
+    "ACCOUNT_VALIDITY": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0,
+      "f1": 1.0
+    },
+    "DUPLICATE_INVOICE": {
+      "tp": 90,
+      "fp": 0,
+      "fn": 0,
+      "f1": 1.0
+    },
+    "INVOICE_CONFLICT": {
+      "tp": 30,
+      "fp": 0,
+      "fn": 0,
+      "f1": 1.0
+    },
+    "INVOICE_EVIDENCE": {
+      "tp": 10,
+      "fp": 0,
+      "fn": 0,
+      "f1": 1.0
+    },
+    "INVOICE_OVERBOOKED": {
+      "tp": 10,
+      "fp": 0,
+      "fn": 0,
+      "f1": 1.0
+    },
+    "OPENING_REQUIRED": {
+      "tp": 10,
+      "fp": 0,
+      "fn": 0,
+      "f1": 1.0
+    },
+    "PERIOD_CUTOFF": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0,
+      "f1": 1.0
+    },
+    "RECEIPT_EXCESS": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0,
+      "f1": 1.0
+    },
+    "RECEIPT_GAP": {
+      "tp": 90,
+      "fp": 0,
+      "fn": 0,
+      "f1": 1.0
+    },
+    "TRIAL_BALANCE": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0,
+      "f1": 1.0
+    },
+    "VOUCHER_BALANCE": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0,
+      "f1": 1.0
+    }
+  },
+  "frameworks": {
+    "CAS": {
+      "cases": 240,
+      "exact_matches": 240
+    },
+    "SCAS": {
+      "cases": 240,
+      "exact_matches": 240
+    }
+  },
+  "duration_seconds": 5.035499899997376,
+  "model_calls": 0,
+  "multi_agent_comparison": "not_run"
+}

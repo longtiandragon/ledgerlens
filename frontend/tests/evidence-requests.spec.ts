@@ -1,0 +1,33 @@
+import { test, expect } from '@playwright/test'
+
+test('补证事项：登记后经新快照出现候选，必须人工确认，确认后不可改写',async({page,request})=>{
+ const book=await (await request.post('/api/v1/books',{data:{name:'补证闭环 · 合成演示',framework:'CAS',period:'2026-09'}})).json()
+ const demo=await (await request.post(`/api/v1/books/${book.id}/demo`)).json()
+ const cases=(await (await request.post('/api/v1/check-runs',{data:{book_id:book.id,snapshot_id:demo.snapshot_id}})).json()).cases
+ const gap=cases.find((item:{rule_id:string})=>item.rule_id==='RECEIPT_GAP')
+ await request.post(`/api/v1/cases/${gap.id}/investigate`,{data:{mode:'rules'}})
+ await page.goto(`/?book=${book.id}&case=${gap.id}`)
+ const panel=page.getByLabel('补证事项')
+ await expect(panel).toContainText('建议的资料种类为收货单')
+ await expect(panel).toContainText('调查中提出的待补资料')
+ await panel.getByRole('button',{name:'采用'}).first().click()
+ await expect(panel.getByLabel('补证说明')).not.toHaveValue('')
+ expect((await (await request.get(`/api/v1/cases/${gap.id}/evidence-requests`)).json()).requests).toEqual([])
+ await panel.getByLabel('补证关联编号').selectOption('PO-001')
+ await panel.getByLabel('补证说明').fill('订单剩余部分的收货单')
+ await panel.getByRole('button',{name:'登记补证事项'}).click()
+ await expect(panel).toContainText('待取得')
+ await expect(panel).toContainText('尚未在较新快照中发现符合的记录')
+ await request.post(`/api/v1/books/${book.id}/supplement-demo`)
+ await request.post('/api/v1/snapshots',{data:{book_id:book.id}})
+ await page.reload()
+ await expect(panel).toContainText('较新快照中出现 1 条候选记录')
+ await expect(panel).toContainText('RCV-002')
+ await panel.getByPlaceholder('例如：已核对原件与订单编号').fill('已核对迟到收货单')
+ await panel.getByRole('button',{name:'确认这些记录即所需资料'}).click()
+ await expect(panel).toContainText('已人工确认取得')
+ await expect(panel.getByRole('button',{name:'确认这些记录即所需资料'})).toHaveCount(0)
+ const state=(await (await request.get(`/api/v1/cases/${gap.id}/evidence-requests`)).json()).requests[0]
+ expect(state.status).toBe('fulfilled')
+ expect(state.events[0].comment).toBe('已核对迟到收货单')
+})

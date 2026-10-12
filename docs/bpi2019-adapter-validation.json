@@ -1,0 +1,17 @@
+{
+  "status": "verified",
+  "snapshots": [
+    {
+      "status": "verified",
+      "verified_at": "2026-10-08T12:08:01.710316+00:00",
+      "dataset_scope_id": "process_dataset_2f12c82ada9654869b7e6f5ed6063a6acd763759b82169ebdcb11cc116f6e072",
+      "snapshot_id": "process_snapshot_51f479a4225941332a4474892621835c118e797a0cfba287b3ee95285bb0830a",
+      "trace_locators": 1000,
+      "event_locators": 15351,
+      "field_pointers": 92755,
+      "source_subset_sha256": "0175894689d7f93ae104fbdafb0fd4033654e2930fc6bd6bce20fd8f317cf248",
+      "new_model_requests": 0,
+      "scope": "All stored source fields and JSONL locators; not accounting or anomaly correctness."
+    }
+  ]
+}

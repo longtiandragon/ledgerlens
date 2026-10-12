@@ -1,0 +1,2697 @@
+{
+  "schema_version": "annual-report-coverage-v1",
+  "updated_at": "2026-10-08T16:57:46.933912+00:00",
+  "scope": {
+    "companies": 10,
+    "years": [
+      2023,
+      2024,
+      2025
+    ],
+    "target_reports": 30,
+    "selection": "deliberate retail/trade and software/services convenience sample",
+    "representative_industry_sample": false
+  },
+  "target_reports": 30,
+  "verified_full_reports": 30,
+  "downloaded_but_unverified": 0,
+  "failed_or_pending": 0,
+  "total_verified_bytes": 119925019,
+  "total_verified_pdf_pages": 7204,
+  "complete_three_year_companies": 10,
+  "source_manifest_sha256": "53752e5b6345adf1cc91645ec866bdb2702c7892be4f42a1d4044d0102f75238",
+  "max_download_workers": 2,
+  "offline": true,
+  "reports_requested_in_this_run": 0,
+  "license_status": "unspecified",
+  "original_pdf_location": ".local/annual-reports/raw",
+  "original_pdfs_in_git": false,
+  "financial_amount_accuracy_verified": false,
+  "accounting_rules_or_models_evaluated": false,
+  "limitations": [
+    "Convenience sample, not industry-representative",
+    "Only PDF identity, full-report title and actual basic-statement pages screened",
+    "No professional accounting-rule, amount, anomaly-cause or model-accuracy validation",
+    "Public disclosure does not establish redistribution permission"
+  ],
+  "companies": [
+    {
+      "code": "002697",
+      "company_name": "成都红旗连锁股份有限公司",
+      "short_name": "红旗连锁",
+      "sector": "retail",
+      "verified_years": [
+        2023,
+        2024,
+        2025
+      ],
+      "missing_or_unverified_years": []
+    },
+    {
+      "code": "002024",
+      "company_name": "苏宁易购集团股份有限公司",
+      "short_name": "苏宁易购",
+      "sector": "retail",
+      "verified_years": [
+        2023,
+        2024,
+        2025
+      ],
+      "missing_or_unverified_years": []
+    },
+    {
+      "code": "601933",
+      "company_name": "永辉超市股份有限公司",
+      "short_name": "永辉超市",
+      "sector": "retail",
+      "verified_years": [
+        2023,
+        2024,
+        2025
+      ],
+      "missing_or_unverified_years": []
+    },
+    {
+      "code": "600859",
+      "company_name": "王府井集团股份有限公司",
+      "short_name": "王府井",
+      "sector": "retail",
+      "verified_years": [
+        2023,
+        2024,
+        2025
+      ],
+      "missing_or_unverified_years": []
+    },
+    {
+      "code": "600729",
+      "company_name": "重庆百货大楼股份有限公司",
+      "short_name": "重庆百货",
+      "sector": "retail",
+      "verified_years": [
+        2023,
+        2024,
+        2025
+      ],
+      "missing_or_unverified_years": []
+    },
+    {
+      "code": "600415",
+      "company_name": "浙江中国小商品城集团股份有限公司",
+      "short_name": "小商品城",
+      "sector": "retail_trade_services",
+      "verified_years": [
+        2023,
+        2024,
+        2025
+      ],
+      "missing_or_unverified_years": []
+    },
+    {
+      "code": "600588",
+      "company_name": "用友网络科技股份有限公司",
+      "short_name": "用友网络",
+      "sector": "software_services",
+      "verified_years": [
+        2023,
+        2024,
+        2025
+      ],
+      "missing_or_unverified_years": []
+    },
+    {
+      "code": "600570",
+      "company_name": "恒生电子股份有限公司",
+      "short_name": "恒生电子",
+      "sector": "software_services",
+      "verified_years": [
+        2023,
+        2024,
+        2025
+      ],
+      "missing_or_unverified_years": []
+    },
+    {
+      "code": "688111",
+      "company_name": "北京金山办公软件股份有限公司",
+      "short_name": "金山办公",
+      "sector": "software_services",
+      "verified_years": [
+        2023,
+        2024,
+        2025
+      ],
+      "missing_or_unverified_years": []
+    },
+    {
+      "code": "002410",
+      "company_name": "广联达科技股份有限公司",
+      "short_name": "广联达",
+      "sector": "software_services",
+      "verified_years": [
+        2023,
+        2024,
+        2025
+      ],
+      "missing_or_unverified_years": []
+    }
+  ],
+  "reports": [
+    {
+      "id": "annual-002697-2023",
+      "company_code": "002697",
+      "company_name": "成都红旗连锁股份有限公司",
+      "company_short_name": "红旗连锁",
+      "sector": "retail",
+      "report_year": 2023,
+      "license_status": "unspecified",
+      "announcement_title": "2023年年度报告",
+      "published_on": "2024-04-02",
+      "url": "https://static.cninfo.com.cn/finalpage/2024-04-02/1219489390.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=002697&announcementId=1219489390",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "133679da9adbf3c935f7db04a7ac17539c1ecddc99a52fef199d8f82b7d73c29",
+      "bytes": 3993058,
+      "downloaded_at": "2026-10-08T13:51:05.202135+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2024-04-02/1219489390.PDF",
+      "local_relative_path": "raw/002697/2023/133679da9adbf3c935f7db04a7ac17539c1ecddc99a52fef199d8f82b7d73c29.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:55:13.333780+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 139,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 54,
+          "income_statement": 58,
+          "cash_flow_statement": 61
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "1、合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              54
+            ]
+          },
+          "income_statement": {
+            "heading": "3、合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              58
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "5、合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              61,
+              62
+            ]
+          }
+        },
+        "pages_text_checked": 34,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:55:20.208219+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-002697-2024",
+      "company_code": "002697",
+      "company_name": "成都红旗连锁股份有限公司",
+      "company_short_name": "红旗连锁",
+      "sector": "retail",
+      "report_year": 2024,
+      "license_status": "unspecified",
+      "announcement_title": "2024年年度报告",
+      "published_on": "2025-04-19",
+      "url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223142268.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=002697&announcementId=1223142268",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "397dbb5aefc22aa8646e01b0723dd197d7f546f603877e32d49ac45b3746ac67",
+      "bytes": 3897185,
+      "downloaded_at": "2026-10-08T13:51:07.986080+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223142268.PDF",
+      "local_relative_path": "raw/002697/2024/397dbb5aefc22aa8646e01b0723dd197d7f546f603877e32d49ac45b3746ac67.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:55:13.334781+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 139,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 58,
+          "income_statement": 62,
+          "cash_flow_statement": 66
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "1、合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              58
+            ]
+          },
+          "income_statement": {
+            "heading": "3、合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              62
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "5、合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              66
+            ]
+          }
+        },
+        "pages_text_checked": 38,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:55:20.919148+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-002697-2025",
+      "company_code": "002697",
+      "company_name": "成都红旗连锁股份有限公司",
+      "company_short_name": "红旗连锁",
+      "sector": "retail",
+      "report_year": 2025,
+      "license_status": "unspecified",
+      "announcement_title": "2025年年度报告",
+      "published_on": "2026-04-09",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-09/1225084036.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=002697&announcementId=1225084036",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "e8a4288cee95363a3c6a5faf5e4790998fa969a6bde07df1a164ef78625e656f",
+      "bytes": 4057855,
+      "downloaded_at": "2026-10-08T13:51:14.487173+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-04-09/1225084036.PDF",
+      "local_relative_path": "raw/002697/2025/e8a4288cee95363a3c6a5faf5e4790998fa969a6bde07df1a164ef78625e656f.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:55:20.946157+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 141,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 54,
+          "income_statement": 58,
+          "cash_flow_statement": 62
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "1、合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              54
+            ]
+          },
+          "income_statement": {
+            "heading": "3、合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本",
+              "净利润"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              58,
+              59
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "5、合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              62
+            ]
+          }
+        },
+        "pages_text_checked": 33,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:55:25.414050+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-002024-2023",
+      "company_code": "002024",
+      "company_name": "苏宁易购集团股份有限公司",
+      "company_short_name": "苏宁易购",
+      "sector": "retail",
+      "report_year": 2023,
+      "license_status": "unspecified",
+      "announcement_title": "2023年年度报告",
+      "published_on": "2024-03-30",
+      "url": "https://static.cninfo.com.cn/finalpage/2024-03-30/1219473986.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=002024&announcementId=1219473986",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "e06c813538de45ed6a55153d397c341111f9d8cd82764350b9b8b78b2c7ae2ad",
+      "bytes": 10138348,
+      "downloaded_at": "2026-10-08T13:51:19.984179+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2024-03-30/1219473986.PDF",
+      "local_relative_path": "raw/002024/2023/e06c813538de45ed6a55153d397c341111f9d8cd82764350b9b8b78b2c7ae2ad.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:55:21.008406+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 348,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 124,
+          "income_statement": 126,
+          "cash_flow_statement": 127
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "2023年12月31日合并及公司资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              124
+            ]
+          },
+          "income_statement": {
+            "heading": "2023年度合并及公司利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              126
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "2023年度合并及公司现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              127
+            ]
+          }
+        },
+        "pages_text_checked": 46,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:55:33.125802+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-002024-2024",
+      "company_code": "002024",
+      "company_name": "苏宁易购集团股份有限公司",
+      "company_short_name": "苏宁易购",
+      "sector": "retail",
+      "report_year": 2024,
+      "license_status": "unspecified",
+      "announcement_title": "2024年年度报告",
+      "published_on": "2025-03-29",
+      "url": "https://static.cninfo.com.cn/finalpage/2025-03-29/1222950703.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=002024&announcementId=1222950703",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "ad6635b3abaece497d6cd2a1ca2edb86ef9f51045d3da5b4284f07ec164116fa",
+      "bytes": 5836541,
+      "downloaded_at": "2026-10-08T13:51:37.290306+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2025-03-29/1222950703.PDF",
+      "local_relative_path": "raw/002024/2024/ad6635b3abaece497d6cd2a1ca2edb86ef9f51045d3da5b4284f07ec164116fa.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:55:25.479726+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 255,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 109,
+          "income_statement": 113,
+          "cash_flow_statement": 115
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              109
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本",
+              "净利润"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              113
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              115
+            ]
+          }
+        },
+        "pages_text_checked": 58,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:55:39.690950+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-002024-2025",
+      "company_code": "002024",
+      "company_name": "苏宁易购集团股份有限公司",
+      "company_short_name": "苏宁易购",
+      "sector": "retail",
+      "report_year": 2025,
+      "license_status": "unspecified",
+      "announcement_title": "2025年年度报告",
+      "published_on": "2026-03-31",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225064473.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=002024&announcementId=1225064473",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "2ab6216190ce0602fdf17526b5178a74d5d2372127ea47efc4b81a0487bde0b6",
+      "bytes": 1429106,
+      "downloaded_at": "2026-10-08T13:52:28.288678+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225064473.PDF",
+      "local_relative_path": "raw/002024/2025/2ab6216190ce0602fdf17526b5178a74d5d2372127ea47efc4b81a0487bde0b6.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:55:33.666635+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 260,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 100,
+          "income_statement": 104,
+          "cash_flow_statement": 106
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              100
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本",
+              "净利润"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              104
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              106
+            ]
+          }
+        },
+        "pages_text_checked": 106,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:55:49.999760+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-601933-2023",
+      "company_code": "601933",
+      "company_name": "永辉超市股份有限公司",
+      "company_short_name": "永辉超市",
+      "sector": "retail",
+      "report_year": 2023,
+      "license_status": "unspecified",
+      "announcement_title": "永辉超市股份有限公司2023年年度报告",
+      "published_on": "2024-04-27",
+      "url": "https://static.cninfo.com.cn/finalpage/2024-04-27/1219878384.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=601933&announcementId=1219878384",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "e42dc09dd459be4b3b3f5b99915add27be9ea0b0c94cb55bf82b590538b5669e",
+      "bytes": 5730057,
+      "downloaded_at": "2026-10-08T13:53:04.260959+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2024-04-27/1219878384.PDF",
+      "local_relative_path": "raw/601933/2023/e42dc09dd459be4b3b3f5b99915add27be9ea0b0c94cb55bf82b590538b5669e.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:55:39.746207+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 292,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 118,
+          "income_statement": 123,
+          "cash_flow_statement": 127
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              118
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              123
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              127
+            ]
+          }
+        },
+        "pages_text_checked": 60,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:56:04.950794+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-601933-2024",
+      "company_code": "601933",
+      "company_name": "永辉超市股份有限公司",
+      "company_short_name": "永辉超市",
+      "sector": "retail",
+      "report_year": 2024,
+      "license_status": "unspecified",
+      "announcement_title": "永辉超市股份有限公司2024年年度报告",
+      "published_on": "2025-04-26",
+      "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223319424.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=601933&announcementId=1223319424",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "236f6dee2ca9ef7d355e2fa2654e071a9a18ad7c358167a9864a878c95722eac",
+      "bytes": 1788312,
+      "downloaded_at": "2026-10-08T13:53:12.655990+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223319424.PDF",
+      "local_relative_path": "raw/601933/2024/236f6dee2ca9ef7d355e2fa2654e071a9a18ad7c358167a9864a878c95722eac.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:55:50.042213+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 285,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 110,
+          "income_statement": 115,
+          "cash_flow_statement": 119
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              110
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本",
+              "净利润"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              115,
+              116
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              119
+            ]
+          }
+        },
+        "pages_text_checked": 54,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:56:03.585947+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-601933-2025",
+      "company_code": "601933",
+      "company_name": "永辉超市股份有限公司",
+      "company_short_name": "永辉超市",
+      "sector": "retail",
+      "report_year": 2025,
+      "license_status": "unspecified",
+      "announcement_title": "永辉超市股份有限公司2025年年度报告",
+      "published_on": "2026-04-17",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-17/1225113031.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=601933&announcementId=1225113031",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "8911349483454b538fe505e669a05bb4110c84e053ab74eeb9a04f8a607c9e9c",
+      "bytes": 2109350,
+      "downloaded_at": "2026-10-08T13:53:18.050494+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-04-17/1225113031.PDF",
+      "local_relative_path": "raw/601933/2025/8911349483454b538fe505e669a05bb4110c84e053ab74eeb9a04f8a607c9e9c.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:56:04.288913+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 262,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 106,
+          "income_statement": 109,
+          "cash_flow_statement": 112
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              106
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本",
+              "净利润"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              109,
+              110
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              112
+            ]
+          }
+        },
+        "pages_text_checked": 53,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:56:10.497288+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-600859-2023",
+      "company_code": "600859",
+      "company_name": "王府井集团股份有限公司",
+      "company_short_name": "王府井",
+      "sector": "retail",
+      "report_year": 2023,
+      "license_status": "unspecified",
+      "announcement_title": "王府井2023年年度报告",
+      "published_on": "2024-04-20",
+      "url": "https://static.cninfo.com.cn/finalpage/2024-04-20/1219698702.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600859&announcementId=1219698702",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "64ac089b365f448ddba97463aa991852b5bc34a95290952e6ecb0a868ae6034c",
+      "bytes": 5201866,
+      "downloaded_at": "2026-10-08T13:53:26.778618+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2024-04-20/1219698702.PDF",
+      "local_relative_path": "raw/600859/2023/64ac089b365f448ddba97463aa991852b5bc34a95290952e6ecb0a868ae6034c.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:56:05.012896+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 232,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 81,
+          "income_statement": 85,
+          "cash_flow_statement": 87
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              81
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              85
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              87
+            ]
+          }
+        },
+        "pages_text_checked": 35,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:56:16.803819+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-600859-2024",
+      "company_code": "600859",
+      "company_name": "王府井集团股份有限公司",
+      "company_short_name": "王府井",
+      "sector": "retail",
+      "report_year": 2024,
+      "license_status": "unspecified",
+      "announcement_title": "王府井2024年年度报告",
+      "published_on": "2025-04-26",
+      "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223313058.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600859&announcementId=1223313058",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "55e2e53cbbc3e7a590affc9a15b0e84365ab06ffe35ea6bb518de5cad8940f69",
+      "bytes": 1610824,
+      "downloaded_at": "2026-10-08T13:53:30.281587+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223313058.PDF",
+      "local_relative_path": "raw/600859/2024/55e2e53cbbc3e7a590affc9a15b0e84365ab06ffe35ea6bb518de5cad8940f69.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:56:10.537864+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 246,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 87,
+          "income_statement": 91,
+          "cash_flow_statement": 95
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              87
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              91
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              95
+            ]
+          }
+        },
+        "pages_text_checked": 40,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:56:19.755617+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-600859-2025",
+      "company_code": "600859",
+      "company_name": "王府井集团股份有限公司",
+      "company_short_name": "王府井",
+      "sector": "retail",
+      "report_year": 2025,
+      "license_status": "unspecified",
+      "announcement_title": "王府井2025年年度报告",
+      "published_on": "2026-04-23",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225156521.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600859&announcementId=1225156521",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "e9d746bc70fa3d4b0c1ca6e866868be86bfc90ae1110918c4e0d5c04c88c98ca",
+      "bytes": 1767276,
+      "downloaded_at": "2026-10-08T13:53:36.002114+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225156521.PDF",
+      "local_relative_path": "raw/600859/2025/e9d746bc70fa3d4b0c1ca6e866868be86bfc90ae1110918c4e0d5c04c88c98ca.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:56:17.367882+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 257,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 94,
+          "income_statement": 99,
+          "cash_flow_statement": 102
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              94
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              99
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              102,
+              103
+            ]
+          }
+        },
+        "pages_text_checked": 45,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:56:24.572840+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-600729-2023",
+      "company_code": "600729",
+      "company_name": "重庆百货大楼股份有限公司",
+      "company_short_name": "重庆百货",
+      "sector": "retail",
+      "report_year": 2023,
+      "license_status": "unspecified",
+      "announcement_title": "重庆百货大楼股份有限公司2023年年度报告",
+      "published_on": "2024-04-19",
+      "url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219673639.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600729&announcementId=1219673639",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "5ef3d48b04c4a306688c4fd78d7882c19a5c0ab494e82d91a494079434afe9a7",
+      "bytes": 4599252,
+      "downloaded_at": "2026-10-08T13:53:41.208388+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219673639.PDF",
+      "local_relative_path": "raw/600729/2023/5ef3d48b04c4a306688c4fd78d7882c19a5c0ab494e82d91a494079434afe9a7.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:56:19.926298+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 227,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 90,
+          "income_statement": 94,
+          "cash_flow_statement": 98
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              90
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              94
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              98
+            ]
+          }
+        },
+        "pages_text_checked": 48,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:56:35.578309+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-600729-2024",
+      "company_code": "600729",
+      "company_name": "重庆百货大楼股份有限公司",
+      "company_short_name": "重庆百货",
+      "sector": "retail",
+      "report_year": 2024,
+      "license_status": "unspecified",
+      "announcement_title": "重庆百货大楼股份有限公司2024年年度报告",
+      "published_on": "2025-04-19",
+      "url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223152819.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600729&announcementId=1223152819",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "86838272f893e88a0b046bd16cac9d1db40cb2f38442f3b1b13a9e78b2542d0c",
+      "bytes": 1728965,
+      "downloaded_at": "2026-10-08T13:53:47.454832+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223152819.PDF",
+      "local_relative_path": "raw/600729/2024/86838272f893e88a0b046bd16cac9d1db40cb2f38442f3b1b13a9e78b2542d0c.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:56:24.604768+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 229,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 86,
+          "income_statement": 90,
+          "cash_flow_statement": 93
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              86
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              90
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              93,
+              94
+            ]
+          }
+        },
+        "pages_text_checked": 43,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:56:34.517604+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-600729-2025",
+      "company_code": "600729",
+      "company_name": "重庆百货大楼股份有限公司",
+      "company_short_name": "重庆百货",
+      "sector": "retail",
+      "report_year": 2025,
+      "license_status": "unspecified",
+      "announcement_title": "重庆百货大楼股份有限公司2025年年度报告",
+      "published_on": "2026-04-18",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225117270.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600729&announcementId=1225117270",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "be991a51ef7d36fe3670141ba490086b070f44c99662528a732b5c8149e9b492",
+      "bytes": 2253383,
+      "downloaded_at": "2026-10-08T13:53:52.606796+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225117270.PDF",
+      "local_relative_path": "raw/600729/2025/be991a51ef7d36fe3670141ba490086b070f44c99662528a732b5c8149e9b492.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:56:35.342968+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 222,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 85,
+          "income_statement": 89,
+          "cash_flow_statement": 93
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              85
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              89
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              93
+            ]
+          }
+        },
+        "pages_text_checked": 44,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:56:39.955294+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-600415-2023",
+      "company_code": "600415",
+      "company_name": "浙江中国小商品城集团股份有限公司",
+      "company_short_name": "小商品城",
+      "sector": "retail_trade_services",
+      "report_year": 2023,
+      "license_status": "unspecified",
+      "announcement_title": "2023年年度报告",
+      "published_on": "2024-04-17",
+      "url": "https://static.cninfo.com.cn/finalpage/2024-04-17/1219636094.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600415&announcementId=1219636094",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "1351d1bc10f561dabc32a585dfeccc780974358d5083121b2064a72b98862d63",
+      "bytes": 5202100,
+      "downloaded_at": "2026-10-08T13:53:59.498453+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2024-04-17/1219636094.PDF",
+      "local_relative_path": "raw/600415/2023/1351d1bc10f561dabc32a585dfeccc780974358d5083121b2064a72b98862d63.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:56:36.076655+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 229,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 97,
+          "income_statement": 101,
+          "cash_flow_statement": 103
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              97
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本",
+              "净利润"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              101
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              103
+            ]
+          }
+        },
+        "pages_text_checked": 52,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:56:45.945225+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-600415-2024",
+      "company_code": "600415",
+      "company_name": "浙江中国小商品城集团股份有限公司",
+      "company_short_name": "小商品城",
+      "sector": "retail_trade_services",
+      "report_year": 2024,
+      "license_status": "unspecified",
+      "announcement_title": "2024年年度报告",
+      "published_on": "2025-03-27",
+      "url": "https://static.cninfo.com.cn/finalpage/2025-03-27/1222910290.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600415&announcementId=1222910290",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "202fc9bba88d5ba6d4b57f700b774e326e790fbe1dd7f8970610f37bbe21103f",
+      "bytes": 5384654,
+      "downloaded_at": "2026-10-08T13:54:05.156448+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2025-03-27/1222910290.PDF",
+      "local_relative_path": "raw/600415/2024/202fc9bba88d5ba6d4b57f700b774e326e790fbe1dd7f8970610f37bbe21103f.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:56:40.061722+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 239,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 97,
+          "income_statement": 101,
+          "cash_flow_statement": 104
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              97
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本",
+              "净利润"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              101
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              104
+            ]
+          }
+        },
+        "pages_text_checked": 51,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:56:54.678841+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-600415-2025",
+      "company_code": "600415",
+      "company_name": "浙江中国小商品城集团股份有限公司",
+      "company_short_name": "小商品城",
+      "sector": "retail_trade_services",
+      "report_year": 2025,
+      "license_status": "unspecified",
+      "announcement_title": "2025年年度报告",
+      "published_on": "2026-04-09",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-09/1225085392.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600415&announcementId=1225085392",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "e7cb54f27212eec7fdeb817e15ab06b8c768700f2432dc572d53c635d360053a",
+      "bytes": 2354487,
+      "downloaded_at": "2026-10-08T13:54:10.393718+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-04-09/1225085392.PDF",
+      "local_relative_path": "raw/600415/2025/e7cb54f27212eec7fdeb817e15ab06b8c768700f2432dc572d53c635d360053a.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:56:45.996700+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 217,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 84,
+          "income_statement": 88,
+          "cash_flow_statement": 90
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              84
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本",
+              "净利润"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              88
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              90
+            ]
+          }
+        },
+        "pages_text_checked": 42,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:56:55.142461+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-600588-2023",
+      "company_code": "600588",
+      "company_name": "用友网络科技股份有限公司",
+      "company_short_name": "用友网络",
+      "sector": "software_services",
+      "report_year": 2023,
+      "license_status": "unspecified",
+      "announcement_title": "用友网络2023年年度报告",
+      "published_on": "2024-03-30",
+      "url": "https://static.cninfo.com.cn/finalpage/2024-03-30/1219465845.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600588&announcementId=1219465845",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "0a78f501c4d3ab8ee6c78ca4c0adc936613f3df5eb3326696a0c2feeb10d5749",
+      "bytes": 4814950,
+      "downloaded_at": "2026-10-08T13:54:15.934742+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2024-03-30/1219465845.PDF",
+      "local_relative_path": "raw/600588/2023/0a78f501c4d3ab8ee6c78ca4c0adc936613f3df5eb3326696a0c2feeb10d5749.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:56:55.180983+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 279,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 96,
+          "income_statement": 100,
+          "cash_flow_statement": 105
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              96
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              100
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              105
+            ]
+          }
+        },
+        "pages_text_checked": 42,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:57:02.820437+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-600588-2024",
+      "company_code": "600588",
+      "company_name": "用友网络科技股份有限公司",
+      "company_short_name": "用友网络",
+      "sector": "software_services",
+      "report_year": 2024,
+      "license_status": "unspecified",
+      "announcement_title": "用友网络2024年年度报告",
+      "published_on": "2025-03-29",
+      "url": "https://static.cninfo.com.cn/finalpage/2025-03-29/1222946316.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600588&announcementId=1222946316",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "3d057dc1334f65dbc18c34501eb0145df75a2b9d86fb8f49d9075b657b8e3c66",
+      "bytes": 4729534,
+      "downloaded_at": "2026-10-08T13:54:31.300693+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2025-03-29/1222946316.PDF",
+      "local_relative_path": "raw/600588/2024/3d057dc1334f65dbc18c34501eb0145df75a2b9d86fb8f49d9075b657b8e3c66.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:56:55.190595+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 261,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 85,
+          "income_statement": 89,
+          "cash_flow_statement": 93
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              85
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              89
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              93
+            ]
+          }
+        },
+        "pages_text_checked": 34,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:57:02.673440+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-600588-2025",
+      "company_code": "600588",
+      "company_name": "用友网络科技股份有限公司",
+      "company_short_name": "用友网络",
+      "sector": "software_services",
+      "report_year": 2025,
+      "license_status": "unspecified",
+      "announcement_title": "用友网络2025年年度报告",
+      "published_on": "2026-04-18",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225120765.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600588&announcementId=1225120765",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "04af3511b61d5c22cad4cfcca68bc9da88eb5144d6c22c6ee87e79c32f5c1052",
+      "bytes": 1648221,
+      "downloaded_at": "2026-10-08T13:55:03.189920+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225120765.PDF",
+      "local_relative_path": "raw/600588/2025/04af3511b61d5c22cad4cfcca68bc9da88eb5144d6c22c6ee87e79c32f5c1052.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:57:02.961720+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 261,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 89,
+          "income_statement": 93,
+          "cash_flow_statement": 96
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              89
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              93
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              96,
+              97
+            ]
+          }
+        },
+        "pages_text_checked": 38,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:57:06.078603+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-600570-2023",
+      "company_code": "600570",
+      "company_name": "恒生电子股份有限公司",
+      "company_short_name": "恒生电子",
+      "sector": "software_services",
+      "report_year": 2023,
+      "license_status": "unspecified",
+      "announcement_title": "恒生电子股份有限公司2023年年度报告",
+      "published_on": "2024-03-25",
+      "url": "https://static.cninfo.com.cn/finalpage/2024-03-25/1219392177.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600570&announcementId=1219392177",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "191752cdc76bffb08b013700782e728f85a5c3fb05a62df5de95c315630159cd",
+      "bytes": 4717911,
+      "downloaded_at": "2026-10-08T13:55:44.615249+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2024-03-25/1219392177.PDF",
+      "local_relative_path": "raw/600570/2023/191752cdc76bffb08b013700782e728f85a5c3fb05a62df5de95c315630159cd.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:57:02.982261+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 226,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 73,
+          "income_statement": 77,
+          "cash_flow_statement": 81
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              73
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              77
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              81
+            ]
+          }
+        },
+        "pages_text_checked": 31,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:57:09.566621+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-600570-2024",
+      "company_code": "600570",
+      "company_name": "恒生电子股份有限公司",
+      "company_short_name": "恒生电子",
+      "sector": "software_services",
+      "report_year": 2024,
+      "license_status": "unspecified",
+      "announcement_title": "恒生电子股份有限公司2024年年度报告",
+      "published_on": "2025-03-29",
+      "url": "https://static.cninfo.com.cn/finalpage/2025-03-29/1222946269.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600570&announcementId=1222946269",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "771c7cfe4d8c133991af831eeebb99d14bffdfb0ed8b55e1c091d5eba8fd5eff",
+      "bytes": 4552771,
+      "downloaded_at": "2026-10-08T13:55:54.056246+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2025-03-29/1222946269.PDF",
+      "local_relative_path": "raw/600570/2024/771c7cfe4d8c133991af831eeebb99d14bffdfb0ed8b55e1c091d5eba8fd5eff.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:57:06.145231+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 222,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 68,
+          "income_statement": 72,
+          "cash_flow_statement": 76
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              68
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              72
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              76
+            ]
+          }
+        },
+        "pages_text_checked": 27,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:57:16.185026+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-600570-2025",
+      "company_code": "600570",
+      "company_name": "恒生电子股份有限公司",
+      "company_short_name": "恒生电子",
+      "sector": "software_services",
+      "report_year": 2025,
+      "license_status": "unspecified",
+      "announcement_title": "恒生电子股份有限公司2025年年度报告",
+      "published_on": "2026-03-28",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-03-28/1225046858.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600570&announcementId=1225046858",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "e2b084183d2061001e76fb87b9d60d9fa27a4a51939a70721746f678c0ecfedc",
+      "bytes": 1579440,
+      "downloaded_at": "2026-10-08T13:55:57.819809+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-03-28/1225046858.PDF",
+      "local_relative_path": "raw/600570/2025/e2b084183d2061001e76fb87b9d60d9fa27a4a51939a70721746f678c0ecfedc.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:57:09.599365+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 238,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 87,
+          "income_statement": 91,
+          "cash_flow_statement": 94
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              87
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              91
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              94,
+              95
+            ]
+          }
+        },
+        "pages_text_checked": 42,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:57:16.559346+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-688111-2023",
+      "company_code": "688111",
+      "company_name": "北京金山办公软件股份有限公司",
+      "company_short_name": "金山办公",
+      "sector": "software_services",
+      "report_year": 2023,
+      "license_status": "unspecified",
+      "announcement_title": "金山办公2023年年度报告",
+      "published_on": "2024-03-21",
+      "url": "https://static.cninfo.com.cn/finalpage/2024-03-21/1219361803.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688111&announcementId=1219361803",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "e07701bbf871a58308efc05126c25377e37f8cc917fbec6ab52530c557829dce",
+      "bytes": 5997926,
+      "downloaded_at": "2026-10-08T13:56:03.391840+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2024-03-21/1219361803.PDF",
+      "local_relative_path": "raw/688111/2023/e07701bbf871a58308efc05126c25377e37f8cc917fbec6ab52530c557829dce.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:57:16.598720+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 305,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 117,
+          "income_statement": 121,
+          "cash_flow_statement": 125
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              117
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              121
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              125,
+              126
+            ]
+          }
+        },
+        "pages_text_checked": 56,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:57:28.692791+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-688111-2024",
+      "company_code": "688111",
+      "company_name": "北京金山办公软件股份有限公司",
+      "company_short_name": "金山办公",
+      "sector": "software_services",
+      "report_year": 2024,
+      "license_status": "unspecified",
+      "announcement_title": "金山办公2024年年度报告",
+      "published_on": "2025-03-20",
+      "url": "https://static.cninfo.com.cn/finalpage/2025-03-20/1222847501.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688111&announcementId=1222847501",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "168fb9dcaaedb27756391912837ddb96098726829305d251a8f8bd64ee908848",
+      "bytes": 5081954,
+      "downloaded_at": "2026-10-08T13:56:08.937047+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2025-03-20/1222847501.PDF",
+      "local_relative_path": "raw/688111/2024/168fb9dcaaedb27756391912837ddb96098726829305d251a8f8bd64ee908848.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:57:16.598720+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 296,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 126,
+          "income_statement": 130,
+          "cash_flow_statement": 134
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              126
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              130
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              134
+            ]
+          }
+        },
+        "pages_text_checked": 66,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:57:28.091416+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-688111-2025",
+      "company_code": "688111",
+      "company_name": "北京金山办公软件股份有限公司",
+      "company_short_name": "金山办公",
+      "sector": "software_services",
+      "report_year": 2025,
+      "license_status": "unspecified",
+      "announcement_title": "金山办公2025年年度报告",
+      "published_on": "2026-03-26",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-03-26/1225032227.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688111&announcementId=1225032227",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "bf6ade124527896edb1c1be6af04a7d6b4c0eb964de42a96a77db7dbc6cee281",
+      "bytes": 1867850,
+      "downloaded_at": "2026-10-08T13:56:15.440042+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-03-26/1225032227.PDF",
+      "local_relative_path": "raw/688111/2025/bf6ade124527896edb1c1be6af04a7d6b4c0eb964de42a96a77db7dbc6cee281.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:57:28.712767+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 262,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 105,
+          "income_statement": 109,
+          "cash_flow_statement": 113
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              105
+            ]
+          },
+          "income_statement": {
+            "heading": "合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              109
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              113
+            ]
+          }
+        },
+        "pages_text_checked": 54,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:57:33.588118+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-002410-2023",
+      "company_code": "002410",
+      "company_name": "广联达科技股份有限公司",
+      "company_short_name": "广联达",
+      "sector": "software_services",
+      "report_year": 2023,
+      "license_status": "unspecified",
+      "announcement_title": "2023年年度报告",
+      "published_on": "2024-03-26",
+      "url": "https://static.cninfo.com.cn/finalpage/2024-03-26/1219402662.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=002410&announcementId=1219402662",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "af170641d8b7cc8dbbb5384dacc235e7c387749f371115ac11ac7ec9b4875b2d",
+      "bytes": 5486488,
+      "downloaded_at": "2026-10-08T13:56:20.807997+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2024-03-26/1219402662.PDF",
+      "local_relative_path": "raw/002410/2023/af170641d8b7cc8dbbb5384dacc235e7c387749f371115ac11ac7ec9b4875b2d.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:57:28.750762+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 236,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 90,
+          "income_statement": 94,
+          "cash_flow_statement": 98
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "1、合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              90
+            ]
+          },
+          "income_statement": {
+            "heading": "3、合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本",
+              "净利润"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              94,
+              95
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "5、合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              98
+            ]
+          }
+        },
+        "pages_text_checked": 45,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:57:38.601390+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-002410-2024",
+      "company_code": "002410",
+      "company_name": "广联达科技股份有限公司",
+      "company_short_name": "广联达",
+      "sector": "software_services",
+      "report_year": 2024,
+      "license_status": "unspecified",
+      "announcement_title": "2024年年度报告",
+      "published_on": "2025-03-25",
+      "url": "https://static.cninfo.com.cn/finalpage/2025-03-25/1222881520.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=002410&announcementId=1222881520",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "455610c72c2920ed7d29740f13ccd9062b156cb82380eeb3b25a1067cd9ab2c2",
+      "bytes": 5129301,
+      "downloaded_at": "2026-10-08T13:56:26.695058+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2025-03-25/1222881520.PDF",
+      "local_relative_path": "raw/002410/2024/455610c72c2920ed7d29740f13ccd9062b156cb82380eeb3b25a1067cd9ab2c2.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:57:33.647251+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 209,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 73,
+          "income_statement": 77,
+          "cash_flow_statement": 81
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "1、合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              73
+            ]
+          },
+          "income_statement": {
+            "heading": "3、合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              77
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "5、合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              81
+            ]
+          }
+        },
+        "pages_text_checked": 35,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:57:43.096780+00:00",
+      "error_code": null
+    },
+    {
+      "id": "annual-002410-2025",
+      "company_code": "002410",
+      "company_name": "广联达科技股份有限公司",
+      "company_short_name": "广联达",
+      "sector": "software_services",
+      "report_year": 2025,
+      "license_status": "unspecified",
+      "announcement_title": "2025年年度报告",
+      "published_on": "2026-03-24",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-03-24/1225024978.PDF",
+      "official_announcement_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=002410&announcementId=1225024978",
+      "publication_date_timezone": "UTC+08:00",
+      "status": "verified_full_report",
+      "parser_version": "annual-report-pages-v2",
+      "pdfplumber_version": "0.11.10",
+      "sha256": "2822b9d65947985e610ba4d316623cadb54b79ecd9fe82e36543e8746710b717",
+      "bytes": 5236054,
+      "downloaded_at": "2026-10-08T13:56:31.707241+00:00",
+      "final_url": "https://static.cninfo.com.cn/finalpage/2026-03-24/1225024978.PDF",
+      "local_relative_path": "raw/002410/2025/2822b9d65947985e610ba4d316623cadb54b79ecd9fe82e36543e8746710b717.pdf",
+      "http_status": 200,
+      "reused_downloaded_bytes": true,
+      "cache_reused_at": "2026-10-08T16:57:38.655558+00:00",
+      "network_requested": false,
+      "validation": {
+        "valid": true,
+        "pages": 190,
+        "company_confirmed": true,
+        "year_confirmed": true,
+        "summary_cover": false,
+        "statement_pages": {
+          "balance_sheet": 65,
+          "income_statement": 69,
+          "cash_flow_statement": 73
+        },
+        "statement_evidence": {
+          "balance_sheet": {
+            "heading": "1、合并资产负债表",
+            "numeric_row_markers": [
+              "货币资金",
+              "应收账款",
+              "流动资产合计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              65
+            ]
+          },
+          "income_statement": {
+            "heading": "3、合并利润表",
+            "numeric_row_markers": [
+              "营业收入",
+              "营业成本"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              69
+            ]
+          },
+          "cash_flow_statement": {
+            "heading": "5、合并现金流量表",
+            "numeric_row_markers": [
+              "销售商品",
+              "购买商品",
+              "经营活动现金流入小计"
+            ],
+            "integer_or_decimal_cells": true,
+            "amount_values_verified": false,
+            "checked_pdf_pages": [
+              73
+            ]
+          }
+        },
+        "pages_text_checked": 32,
+        "error_code": null,
+        "validation_scope": "cover/company/year plus standalone consolidated statement headings and numeric rows",
+        "amounts_or_rule_accuracy_verified": false
+      },
+      "validated_at": "2026-10-08T16:57:46.928403+00:00",
+      "error_code": null
+    }
+  ]
+}

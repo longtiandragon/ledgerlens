@@ -1,0 +1,85 @@
+# Local-only ERPNext test service for the read-only GL adapter (scripts/export_erpnext.py).
+# ERPNext/Frappe (GPLv3) run here as an independent service; no ERPNext code is copied
+# into this repository. Passwords are throwaway local demo values; ports bind to 127.0.0.1.
+# Layout follows the official frappe_docker single-host example.
+name: ledgerlens-erpnext
+
+x-erpnext: &erpnext
+  image: frappe/erpnext:v16.50.0
+  volumes:
+    - sites:/home/frappe/frappe-bench/sites
+  depends_on:
+    configurator:
+      condition: service_completed_successfully
+
+services:
+  db:
+    image: mariadb:11.8
+    command: [--character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci, --skip-character-set-client-handshake]
+    environment:
+      MYSQL_ROOT_PASSWORD: local-erpnext-root
+      MARIADB_AUTO_UPGRADE: "1"
+    healthcheck:
+      test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
+      interval: 5s
+      retries: 40
+    volumes:
+      - db-data:/var/lib/mysql
+  redis-cache:
+    image: redis:6.2-alpine
+  redis-queue:
+    image: redis:6.2-alpine
+  configurator:
+    image: frappe/erpnext:v16.50.0
+    volumes:
+      - sites:/home/frappe/frappe-bench/sites
+    entrypoint: [bash, -c]
+    command:
+      - >
+        ls -1 apps > sites/apps.txt;
+        bench set-config -g db_host db;
+        bench set-config -gp db_port 3306;
+        bench set-config -g redis_cache "redis://redis-cache:6379";
+        bench set-config -g redis_queue "redis://redis-queue:6379";
+        bench set-config -g redis_socketio "redis://redis-queue:6379";
+        bench set-config -gp socketio_port 9000;
+  create-site:
+    <<: *erpnext
+    entrypoint: [bash, -c]
+    command:
+      - >
+        wait-for-it -t 180 db:3306;
+        wait-for-it -t 120 redis-cache:6379;
+        wait-for-it -t 120 redis-queue:6379;
+        if [ ! -d sites/frontend ]; then bench new-site --mariadb-user-host-login-scope='%' --admin-password=local-erpnext-admin --db-root-username=root --db-root-password=local-erpnext-root --install-app erpnext --set-default frontend; fi
+    depends_on:
+      configurator:
+        condition: service_completed_successfully
+      db:
+        condition: service_healthy
+  backend:
+    <<: *erpnext
+  frontend:
+    image: frappe/erpnext:v16.50.0
+    command: [nginx-entrypoint.sh]
+    environment:
+      BACKEND: backend:8000
+      FRAPPE_SITE_NAME_HEADER: frontend
+      SOCKETIO: websocket:9000
+      UPSTREAM_REAL_IP_ADDRESS: 127.0.0.1
+      UPSTREAM_REAL_IP_HEADER: X-Forwarded-For
+      UPSTREAM_REAL_IP_RECURSIVE: "off"
+      PROXY_READ_TIMEOUT: 120
+      CLIENT_MAX_BODY_SIZE: 50m
+    volumes:
+      - sites:/home/frappe/frappe-bench/sites
+    ports:
+      - 127.0.0.1:${ERPNEXT_PORT:-8090}:8080
+    depends_on: [backend, websocket]
+  websocket:
+    <<: *erpnext
+    command: [node, /home/frappe/frappe-bench/apps/frappe/socketio.js]
+
+volumes:
+  db-data:
+  sites:

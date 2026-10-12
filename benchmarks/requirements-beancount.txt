@@ -1,0 +1,3 @@
+# Optional evaluator-only tool; not an application dependency or bundled code.
+beancount==3.2.3
+regex==2026.9.29

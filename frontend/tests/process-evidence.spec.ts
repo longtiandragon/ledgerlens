@@ -1,0 +1,131 @@
+import { test, expect } from '@playwright/test'
+
+test('未导入流程资料时显示独立空状态，页面不需要会计账套',async({page})=>{
+ await page.route('**/api/v1/process-datasets',route=>route.fulfill({json:{snapshots:[],read_only:true,scope:'process_events'}}))
+ const writes:string[]=[]
+ page.on('request',request=>{if(!['GET','HEAD'].includes(request.method()))writes.push(request.url())})
+ await page.goto('/')
+ await page.getByRole('button',{name:'采购流程证据',exact:true}).click()
+ await expect(page.getByRole('heading',{name:'先导入已校验的流程数据'})).toBeVisible()
+ await expect(page.locator('.workspace-bar')).toHaveCount(0)
+ await expect(page.getByLabel('已导入的数据快照')).toBeDisabled()
+ expect(writes).toEqual([])
+})
+
+test('真实采购事件可分页和回查来源，桌面与手机页面保持只读',async({page,request})=>{
+ test.skip(!process.env.PROCESS_DATASET_TESTS,'显式 PROCESS_DATASET_TESTS=1 才读取本机真实BPI数据')
+ const listing=await request.get('/api/v1/process-datasets')
+ expect(listing.ok()).toBe(true)
+ const dataset=(await listing.json()).snapshots[0]
+ expect(dataset.trace_count).toBeGreaterThan(0)
+ const prefix=`/api/v1/process-datasets/${dataset.dataset_scope_id}/snapshots/${dataset.snapshot_id}`
+ const indexResponse=await request.get(`${prefix}/traces?limit=200`)
+ expect(indexResponse.ok()).toBe(true)
+ const candidates=(await indexResponse.json()).items as {source_trace_id:string;event_count:number}[]
+ const trace=candidates.find(item=>item.event_count>50)
+ expect(trace).toBeTruthy()
+ const traceResponse=await request.get(`${prefix}/trace?${new URLSearchParams({source_trace_id:trace!.source_trace_id,limit:'50'})}`)
+ const original=(await traceResponse.json()).events.items[0]
+ const errors:string[]=[],writes:string[]=[]
+ page.on('pageerror',error=>errors.push(error.message))
+ page.on('request',request=>{if(!['GET','HEAD'].includes(request.method()))writes.push(request.url())})
+ await page.goto('/')
+ await page.getByRole('button',{name:'采购流程证据',exact:true}).click()
+ await expect(page.locator('.process-counts')).toContainText(Number(dataset.event_count).toLocaleString())
+ await page.getByLabel('查找采购项').fill(trace!.source_trace_id)
+ await page.getByRole('button',{name:'查找',exact:true}).click()
+ await expect(page.locator('.process-table tbody tr')).toHaveCount(50)
+ await expect(page.locator('.process-table tbody tr').first()).toContainText(original.activity_raw)
+ const reviewResponse=await request.get(`${prefix}/trace-review?${new URLSearchParams({source_trace_id:trace!.source_trace_id})}`)
+ expect(reviewResponse.ok()).toBe(true)
+ const ruleReview=await reviewResponse.json()
+ for(const result of ruleReview.results)for(const ref of result.evidence_ids)expect((await request.get(`${prefix}/evidence/${encodeURIComponent(ref)}`)).ok()).toBe(true)
+ await expect(page.getByLabel('流程规则观察').locator('li')).toHaveCount(ruleReview.results.length)
+ await page.locator('.process-table tbody tr').first().getByRole('button',{name:'定位'}).click()
+ const source=page.getByLabel('流程证据定位')
+ await expect(source).toContainText(original.evidence_id)
+ await expect(source).toContainText('"source_event_ordinal": 1')
+ await expect(source).toContainText(`"Cumulative net worth (EUR)": "${original.source_numeric_text}"`)
+ await page.screenshot({path:'../runtime/process-evidence-desktop.png',fullPage:true})
+ await page.screenshot({path:'../runtime/process-evidence-desktop-top.png'})
+ await page.getByRole('button',{name:'关闭证据',exact:true}).click()
+ await expect(source).toHaveCount(0)
+ await page.getByLabel('采购事件时间线').getByRole('button',{name:'下一页',exact:true}).click()
+ await expect(page.locator('.process-table tbody tr').first().locator('.event-ordinal')).toHaveText('51')
+ await expect(source).toHaveCount(0)
+ await page.setViewportSize({width:390,height:844})
+ await expect.poll(()=>page.locator('.sidebar').evaluate(element=>element.getBoundingClientRect().right)).toBeLessThanOrEqual(0)
+ await expect(page.locator('.process-table')).toBeVisible()
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1)).toBe(true)
+ await page.screenshot({path:'../runtime/process-evidence-mobile.png',fullPage:true})
+ await page.screenshot({path:'../runtime/process-evidence-mobile-top.png'})
+ expect(errors).toEqual([])
+ expect(writes).toEqual([])
+})
+
+test('流程规则观察：按结论筛选、引用回查与底稿导出均绑定当前快照',async({page})=>{
+ const scope='/api/v1/process-datasets/scope-a/snapshots/snap-a'
+ const dataset={dataset_scope_id:'scope-a',snapshot_id:'snap-a',title:'Fixture-only process',trace_count:2,event_count:3,observed_at:'2026-10-08T00:00:00Z',source_license:'CC BY 4.0'}
+ const item=(id:string,rule_conclusion:string)=>({source_trace_id:id,trace_alias:`alias-${id}`,event_count:1,classification:'three_way_invoice_before_gr_allowed',policy_status:'classified',rule_conclusion})
+ const event={evidence_id:'ev-clear',source_event_ordinal:1,activity_raw:'Clear Invoice',phase:'clearing',occurred_at_raw:'2018-01-01T00:00:00.000Z',source_numeric_text:'42.0',source_numeric_status:'valid',causal_order_status:'not_established',quality_issues:[]}
+ const traceQueries:string[]=[],exports:string[]=[]
+ await page.route('**/api/v1/process-datasets',route=>route.fulfill({json:{snapshots:[dataset]}}))
+ await page.route(url=>url.pathname===`${scope}/rule-summary`,route=>route.fulfill({json:{trace_count:2,rule_pack:{version:'bpi2019-process-rules-v1'},conclusion_counts:{compatible:1,needs_review:1,insufficient:0,out_of_scope:0}}}))
+ await page.route(url=>url.pathname===`${scope}/traces`,route=>{const url=new URL(route.request().url());traceQueries.push(url.search);const filtered=url.searchParams.get('conclusion')==='needs_review';const items=filtered?[item('t2','needs_review')]:[item('t1','compatible'),item('t2','needs_review')];route.fulfill({json:{items,total:items.length,offset:0,limit:30,next_offset:null}})})
+ await page.route(url=>url.pathname===`${scope}/trace`,route=>{const id=new URL(route.request().url()).searchParams.get('source_trace_id');route.fulfill({json:{trace:{trace_alias:`alias-${id}`,source_trace_id:id,policy:{classification:'three_way_invoice_before_gr_allowed',status:'classified',issues:[]},observations:{},trace_attributes:{}},events:{items:[event],total:1,offset:0,limit:50,next_offset:null}}})})
+ await page.route(url=>url.pathname===`${scope}/trace-review`,route=>{const id=new URL(route.request().url()).searchParams.get('source_trace_id');const flagged=id==='t2';route.fulfill({json:{conclusion:flagged?'needs_review':'compatible',trace_evidence_id:'ev-trace',rule_pack:{version:'bpi2019-process-rules-v1',source_sha256:'f'.repeat(64)},unsupported_checks:['clearing_as_bank_payment'],results:[{rule_id:'BPI2019_PROCESS.CLEARING_AFTER_GOODS_RECEIPT',title:'三方匹配的首次清账不早于首次收货',status:flagged?'needs_review':'compatible',reason:flagged?'记录了清账但日志未见收货；过程差异待核实。':'首次清账晚于首次收货。',evidence_ids:['ev-trace','ev-clear'],cited_event_total:1,cited_events_truncated:false,observed:{}}]}})})
+ await page.route(url=>url.pathname.startsWith(`${scope}/evidence/`),route=>{const id=decodeURIComponent(route.request().url().split('/evidence/')[1]);route.fulfill({json:{evidence_id:id,locator:{jsonl_line:2,source_event_ordinal:1},event_attributes:{'concept:name':'Clear Invoice'}}})})
+ await page.route(url=>url.pathname===`${scope}/trace-review/export`,route=>{exports.push(new URL(route.request().url()).search);route.fulfill({body:'# fixture',contentType:'text/markdown'})})
+ const writes:string[]=[]
+ page.on('request',request=>{if(!['GET','HEAD'].includes(request.method()))writes.push(request.url())})
+ await page.goto('/')
+ await page.getByRole('button',{name:'采购流程证据',exact:true}).click()
+ await expect(page.getByLabel('流程观察结论分布')).toContainText('待核实过程差异')
+ await expect(page.getByLabel('流程规则观察')).toContainText('源策略相容')
+ await page.getByLabel('流程观察结论',{exact:true}).selectOption('needs_review')
+ await expect(page.locator('.process-item')).toHaveCount(1)
+ expect(traceQueries.at(-1)).toContain('conclusion=needs_review')
+ const panel=page.getByLabel('流程规则观察')
+ await expect(panel).toContainText('记录了清账但日志未见收货')
+ await panel.getByRole('button',{name:'定位规则引用 事件1'}).click()
+ await expect(page.getByLabel('流程证据定位')).toContainText('ev-clear')
+ await page.getByRole('button',{name:'关闭证据',exact:true}).click()
+ const downloadPromise=page.waitForEvent('download')
+ await panel.getByRole('button',{name:'导出 Markdown 底稿'}).click()
+ expect((await downloadPromise).suggestedFilename()).toBe('process-review-alias-t2.md')
+ expect(exports.at(-1)).toContain('source_trace_id=t2')
+ expect(exports.at(-1)).toContain('format=markdown')
+ await page.setViewportSize({width:390,height:844})
+ await expect(panel).toBeVisible()
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1)).toBe(true)
+ expect(writes).toEqual([])
+})
+
+test('模型解释需两步确认，轮询完成后以未经核验意见展示并可回查引用，失败不显示为成功',async({page})=>{
+ const scope='/api/v1/process-datasets/scope-a/snapshots/snap-a'
+ const dataset={dataset_scope_id:'scope-a',snapshot_id:'snap-a',title:'Fixture-only process',trace_count:1,event_count:1,observed_at:'2026-10-08T00:00:00Z',source_license:'CC BY 4.0'}
+ const statement={text:'基于收货验票的分类中先记录了收票。',evidence_ids:['ev-inv'],rule_id:'BPI2019_PROCESS.GR_BASED_INVOICE_ORDER'}
+ let posts=0,polls=0
+ const runs=()=>posts===0?[]:polls<2?[{id:'process-run-1',status:'running',created_at:'2026-10-12T00:00:00Z'}]:[{id:'process-run-1',status:'complete',created_at:'2026-10-12T00:00:00Z',result:{proposal:{conclusion:'needs_review',explanations:[statement],counter_evidence:[],missing_information:['收票早于收货的原因说明']}}},{id:'process-run-0',status:'budget_exhausted',created_at:'2026-10-11T00:00:00Z',result:{proposal:null,error:{code:'budget_exhausted',message:'模型请求次数达到上限'}}}]
+ await page.route('**/api/v1/process-datasets',route=>route.fulfill({json:{snapshots:[dataset]}}))
+ await page.route(url=>url.pathname===`${scope}/rule-summary`,route=>route.fulfill({json:{trace_count:1,rule_pack:{version:'bpi2019-process-rules-v1'},conclusion_counts:{compatible:0,needs_review:1,insufficient:0,out_of_scope:0}}}))
+ await page.route(url=>url.pathname===`${scope}/traces`,route=>route.fulfill({json:{items:[{source_trace_id:'t1',trace_alias:'alias-t1',event_count:1,classification:'three_way_gr_based_invoice_verification',policy_status:'classified',rule_conclusion:'needs_review'}],total:1,offset:0,limit:30,next_offset:null}}))
+ await page.route(url=>url.pathname===`${scope}/trace`,route=>route.fulfill({json:{trace:{trace_alias:'alias-t1',source_trace_id:'t1',policy:{classification:'three_way_gr_based_invoice_verification',status:'classified',issues:[]},observations:{},trace_attributes:{}},events:{items:[],total:0,offset:0,limit:50,next_offset:null}}}))
+ await page.route(url=>url.pathname===`${scope}/trace-review`,route=>route.fulfill({json:{conclusion:'needs_review',trace_evidence_id:'ev-trace',rule_pack:{version:'bpi2019-process-rules-v1',source_sha256:'f'.repeat(64)},unsupported_checks:[],results:[]}}))
+ await page.route(url=>url.pathname===`${scope}/trace-investigations`,route=>{if(route.request().method()==='POST'){posts++;route.fulfill({status:202,json:{id:'process-run-1',status:'running'}})}else{if(posts)polls++;route.fulfill({json:{runs:runs()}})}})
+ await page.route(url=>url.pathname.startsWith(`${scope}/evidence/`),route=>route.fulfill({json:{evidence_id:'ev-inv',locator:{jsonl_line:1,source_event_ordinal:1},event_attributes:{'concept:name':'Record Invoice Receipt'}}}))
+ await page.goto('/')
+ await page.getByRole('button',{name:'采购流程证据',exact:true}).click()
+ const panel=page.getByLabel('模型解释')
+ await panel.getByRole('button',{name:'启动模型解释'}).click()
+ await expect(panel).toContainText('将调用付费模型服务')
+ expect(posts).toBe(0)
+ await panel.getByRole('button',{name:'确认调用付费模型'}).click()
+ await expect(panel).toContainText('模型结论：待核实过程差异',{timeout:15000})
+ expect(posts).toBe(1)
+ await expect(panel).toContainText('未经核验的意见')
+ await expect(panel).toContainText('预算耗尽')
+ await expect(panel).toContainText('模型请求次数达到上限')
+ await panel.getByRole('button',{name:'定位模型引用 ev-inv'}).click()
+ await expect(page.getByLabel('流程证据定位')).toContainText('ev-inv')
+})

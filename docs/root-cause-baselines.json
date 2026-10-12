@@ -1,0 +1,123 @@
+{
+  "schema_version": "root-cause-track-v1",
+  "model_requests": 0,
+  "splits": {
+    "development": {
+      "rule_only": {
+        "samples": 300,
+        "main_metric_samples": 300,
+        "category_macro_f1": 0.8744588744588744,
+        "per_category_f1": {
+          "normal_business": 0.9523809523809523,
+          "duplicate_posting": 1.0,
+          "late_document": 0.0,
+          "posting_omission": 1.0,
+          "account_mapping": 1.0,
+          "period_misstatement": 1.0,
+          "source_conflict": 1.0,
+          "receipt_excess": 1.0,
+          "booking_amount": 0.6666666666666666,
+          "invoice_missing": 1.0,
+          "balance_inconsistency": 1.0
+        },
+        "conclusion_accuracy": 0.9666666666666667,
+        "withheld_evidence_cases": 40,
+        "withheld_evidence_obtained": 0,
+        "indeterminate_family": {
+          "samples": 0,
+          "conclusion_insufficient": 0
+        },
+        "family_bootstrap_conclusion_accuracy": {
+          "families": 30,
+          "lower": 0.9,
+          "upper": 1.0
+        }
+      },
+      "rule_fixed_request": {
+        "samples": 300,
+        "main_metric_samples": 300,
+        "category_macro_f1": 0.9653679653679653,
+        "per_category_f1": {
+          "normal_business": 0.9523809523809523,
+          "duplicate_posting": 1.0,
+          "late_document": 1.0,
+          "posting_omission": 1.0,
+          "account_mapping": 1.0,
+          "period_misstatement": 1.0,
+          "source_conflict": 1.0,
+          "receipt_excess": 1.0,
+          "booking_amount": 0.6666666666666666,
+          "invoice_missing": 1.0,
+          "balance_inconsistency": 1.0
+        },
+        "conclusion_accuracy": 0.9666666666666667,
+        "withheld_evidence_cases": 40,
+        "withheld_evidence_obtained": 40,
+        "indeterminate_family": {
+          "samples": 0,
+          "conclusion_insufficient": 0
+        },
+        "family_bootstrap_conclusion_accuracy": {
+          "families": 30,
+          "lower": 0.9,
+          "upper": 1.0
+        }
+      }
+    },
+    "validation": {
+      "rule_only": {
+        "samples": 80,
+        "main_metric_samples": 80,
+        "category_macro_f1": 0.8571428571428571,
+        "per_category_f1": {
+          "normal_business": 1.0,
+          "duplicate_posting": 1.0,
+          "late_document": 0.0,
+          "posting_omission": 1.0,
+          "account_mapping": 1.0,
+          "period_misstatement": 1.0,
+          "source_conflict": 1.0
+        },
+        "conclusion_accuracy": 1.0,
+        "withheld_evidence_cases": 20,
+        "withheld_evidence_obtained": 0,
+        "indeterminate_family": {
+          "samples": 0,
+          "conclusion_insufficient": 0
+        },
+        "family_bootstrap_conclusion_accuracy": {
+          "families": 8,
+          "lower": 1.0,
+          "upper": 1.0
+        }
+      },
+      "rule_fixed_request": {
+        "samples": 80,
+        "main_metric_samples": 80,
+        "category_macro_f1": 1.0,
+        "per_category_f1": {
+          "normal_business": 1.0,
+          "duplicate_posting": 1.0,
+          "late_document": 1.0,
+          "posting_omission": 1.0,
+          "account_mapping": 1.0,
+          "period_misstatement": 1.0,
+          "source_conflict": 1.0
+        },
+        "conclusion_accuracy": 1.0,
+        "withheld_evidence_cases": 20,
+        "withheld_evidence_obtained": 20,
+        "indeterminate_family": {
+          "samples": 0,
+          "conclusion_insufficient": 0
+        },
+        "family_bootstrap_conclusion_accuracy": {
+          "families": 8,
+          "lower": 1.0,
+          "upper": 1.0
+        }
+      }
+    }
+  },
+  "scope": "deterministic baselines on synthetic data; sealed_test not run"
+}

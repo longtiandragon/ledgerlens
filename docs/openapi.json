@@ -1,0 +1,5560 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "账证智核 LedgerLens",
+    "description": "本地会计复核研究与辅助平台；原账只读，调整仅限模拟。",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/v1/process-datasets/rule-catalog": {
+      "get": {
+        "tags": [
+          "process evidence"
+        ],
+        "summary": "Process Rule Catalog",
+        "operationId": "process_rule_catalog_api_v1_process_datasets_rule_catalog_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/process-datasets": {
+      "get": {
+        "tags": [
+          "process evidence"
+        ],
+        "summary": "List Datasets",
+        "operationId": "list_datasets_api_v1_process_datasets_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/process-datasets/{dataset_scope_id}/snapshots/{snapshot_id}": {
+      "get": {
+        "tags": [
+          "process evidence"
+        ],
+        "summary": "Snapshot Detail",
+        "operationId": "snapshot_detail_api_v1_process_datasets__dataset_scope_id__snapshots__snapshot_id__get",
+        "parameters": [
+          {
+            "name": "dataset_scope_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset Scope Id"
+            }
+          },
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Snapshot Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/process-datasets/{dataset_scope_id}/snapshots/{snapshot_id}/traces": {
+      "get": {
+        "tags": [
+          "process evidence"
+        ],
+        "summary": "Traces",
+        "operationId": "traces_api_v1_process_datasets__dataset_scope_id__snapshots__snapshot_id__traces_get",
+        "parameters": [
+          {
+            "name": "dataset_scope_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset Scope Id"
+            }
+          },
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Snapshot Id"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 200,
+              "default": "",
+              "title": "Q"
+            }
+          },
+          {
+            "name": "conclusion",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^(compatible|needs_review|insufficient|out_of_scope)$"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Conclusion"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/process-datasets/{dataset_scope_id}/snapshots/{snapshot_id}/trace": {
+      "get": {
+        "tags": [
+          "process evidence"
+        ],
+        "summary": "Trace Detail",
+        "operationId": "trace_detail_api_v1_process_datasets__dataset_scope_id__snapshots__snapshot_id__trace_get",
+        "parameters": [
+          {
+            "name": "dataset_scope_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset Scope Id"
+            }
+          },
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Snapshot Id"
+            }
+          },
+          {
+            "name": "source_trace_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 500,
+              "title": "Source Trace Id"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/process-datasets/{dataset_scope_id}/snapshots/{snapshot_id}/events": {
+      "get": {
+        "tags": [
+          "process evidence"
+        ],
+        "summary": "Events",
+        "operationId": "events_api_v1_process_datasets__dataset_scope_id__snapshots__snapshot_id__events_get",
+        "parameters": [
+          {
+            "name": "dataset_scope_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset Scope Id"
+            }
+          },
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Snapshot Id"
+            }
+          },
+          {
+            "name": "source_trace_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 500
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source Trace Id"
+            }
+          },
+          {
+            "name": "activity_raw",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Activity Raw"
+            }
+          },
+          {
+            "name": "event_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Event Type"
+            }
+          },
+          {
+            "name": "occurred_from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Occurred From"
+            }
+          },
+          {
+            "name": "occurred_to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Occurred To"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/process-datasets/{dataset_scope_id}/snapshots/{snapshot_id}/evidence/{evidence_id}": {
+      "get": {
+        "tags": [
+          "process evidence"
+        ],
+        "summary": "Evidence",
+        "operationId": "evidence_api_v1_process_datasets__dataset_scope_id__snapshots__snapshot_id__evidence__evidence_id__get",
+        "parameters": [
+          {
+            "name": "dataset_scope_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset Scope Id"
+            }
+          },
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Snapshot Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/process-datasets/{dataset_scope_id}/snapshots/{snapshot_id}/rule-summary": {
+      "get": {
+        "tags": [
+          "process evidence"
+        ],
+        "summary": "Rule Summary",
+        "operationId": "rule_summary_api_v1_process_datasets__dataset_scope_id__snapshots__snapshot_id__rule_summary_get",
+        "parameters": [
+          {
+            "name": "dataset_scope_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset Scope Id"
+            }
+          },
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Snapshot Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/process-datasets/{dataset_scope_id}/snapshots/{snapshot_id}/trace-review": {
+      "get": {
+        "tags": [
+          "process evidence"
+        ],
+        "summary": "Trace Review",
+        "operationId": "trace_review_api_v1_process_datasets__dataset_scope_id__snapshots__snapshot_id__trace_review_get",
+        "parameters": [
+          {
+            "name": "dataset_scope_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset Scope Id"
+            }
+          },
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Snapshot Id"
+            }
+          },
+          {
+            "name": "source_trace_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 500,
+              "title": "Source Trace Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/process-datasets/{dataset_scope_id}/snapshots/{snapshot_id}/trace-review/export": {
+      "get": {
+        "tags": [
+          "process evidence"
+        ],
+        "summary": "Trace Review Export",
+        "operationId": "trace_review_export_api_v1_process_datasets__dataset_scope_id__snapshots__snapshot_id__trace_review_export_get",
+        "parameters": [
+          {
+            "name": "dataset_scope_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset Scope Id"
+            }
+          },
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Snapshot Id"
+            }
+          },
+          {
+            "name": "source_trace_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 500,
+              "title": "Source Trace Id"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^(json|markdown)$",
+              "default": "json",
+              "title": "Format"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/process-datasets/{dataset_scope_id}/snapshots/{snapshot_id}/trace-investigations": {
+      "post": {
+        "tags": [
+          "process evidence"
+        ],
+        "summary": "Start Trace Investigation",
+        "operationId": "start_trace_investigation_api_v1_process_datasets__dataset_scope_id__snapshots__snapshot_id__trace_investigations_post",
+        "parameters": [
+          {
+            "name": "dataset_scope_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset Scope Id"
+            }
+          },
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Snapshot Id"
+            }
+          },
+          {
+            "name": "source_trace_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 500,
+              "title": "Source Trace Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "process evidence"
+        ],
+        "summary": "List Trace Investigations",
+        "operationId": "list_trace_investigations_api_v1_process_datasets__dataset_scope_id__snapshots__snapshot_id__trace_investigations_get",
+        "parameters": [
+          {
+            "name": "dataset_scope_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset Scope Id"
+            }
+          },
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Snapshot Id"
+            }
+          },
+          {
+            "name": "source_trace_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 500,
+              "title": "Source Trace Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/process-datasets/process-investigations/{run_id}": {
+      "get": {
+        "tags": [
+          "process evidence"
+        ],
+        "summary": "Read Trace Investigation",
+        "operationId": "read_trace_investigation_api_v1_process_datasets_process_investigations__run_id__get",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/evaluations/numeric": {
+      "get": {
+        "tags": [
+          "evaluations"
+        ],
+        "summary": "Numeric Evaluations",
+        "operationId": "numeric_evaluations_api_v1_evaluations_numeric_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/evaluations/root-cause": {
+      "get": {
+        "tags": [
+          "evaluations"
+        ],
+        "summary": "Root Cause Results",
+        "operationId": "root_cause_results_api_v1_evaluations_root_cause_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/evidence-requests": {
+      "get": {
+        "tags": [
+          "evidence requests"
+        ],
+        "summary": "List Requests",
+        "operationId": "list_requests_api_v1_cases__case_id__evidence_requests_get",
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "evidence requests"
+        ],
+        "summary": "Create Request",
+        "operationId": "create_request_api_v1_cases__case_id__evidence_requests_post",
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/evidence-requests/{request_id}/fulfil": {
+      "post": {
+        "tags": [
+          "evidence requests"
+        ],
+        "summary": "Fulfil",
+        "operationId": "fulfil_api_v1_evidence_requests__request_id__fulfil_post",
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FulfilInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/evidence-requests/{request_id}/withdraw": {
+      "post": {
+        "tags": [
+          "evidence requests"
+        ],
+        "summary": "Withdraw",
+        "operationId": "withdraw_api_v1_evidence_requests__request_id__withdraw_post",
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WithdrawInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/statement-datasets": {
+      "get": {
+        "tags": [
+          "public statement evidence"
+        ],
+        "summary": "Datasets",
+        "operationId": "datasets_api_v1_statement_datasets_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatementDatasetList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/statement-datasets/{dataset_scope_id}/snapshots/{snapshot_id}": {
+      "get": {
+        "tags": [
+          "public statement evidence"
+        ],
+        "summary": "Detail",
+        "operationId": "detail_api_v1_statement_datasets__dataset_scope_id__snapshots__snapshot_id__get",
+        "parameters": [
+          {
+            "name": "dataset_scope_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset Scope Id"
+            }
+          },
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Snapshot Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatementDataset"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/statement-datasets/{dataset_scope_id}/snapshots/{snapshot_id}/reports": {
+      "get": {
+        "tags": [
+          "public statement evidence"
+        ],
+        "summary": "Reports",
+        "operationId": "reports_api_v1_statement_datasets__dataset_scope_id__snapshots__snapshot_id__reports_get",
+        "parameters": [
+          {
+            "name": "dataset_scope_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset Scope Id"
+            }
+          },
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Snapshot Id"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 200,
+              "default": "",
+              "title": "Q"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "all",
+                "observed",
+                "rejected"
+              ],
+              "type": "string",
+              "default": "all",
+              "title": "Status"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 30,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatementReportsPage"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/statement-datasets/{dataset_scope_id}/snapshots/{snapshot_id}/reports/{report_id}/file": {
+      "get": {
+        "tags": [
+          "public statement evidence"
+        ],
+        "summary": "Original File",
+        "operationId": "original_file_api_v1_statement_datasets__dataset_scope_id__snapshots__snapshot_id__reports__report_id__file_get",
+        "parameters": [
+          {
+            "name": "dataset_scope_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset Scope Id"
+            }
+          },
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Snapshot Id"
+            }
+          },
+          {
+            "name": "report_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Report Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/statement-datasets/{dataset_scope_id}/snapshots/{snapshot_id}/evidence/{evidence_id}": {
+      "get": {
+        "tags": [
+          "public statement evidence"
+        ],
+        "summary": "Evidence",
+        "operationId": "evidence_api_v1_statement_datasets__dataset_scope_id__snapshots__snapshot_id__evidence__evidence_id__get",
+        "parameters": [
+          {
+            "name": "dataset_scope_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset Scope Id"
+            }
+          },
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Snapshot Id"
+            }
+          },
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatementEvidenceDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/policy-checks/catalog": {
+      "get": {
+        "tags": [
+          "bounded policy consistency"
+        ],
+        "summary": "Catalog",
+        "operationId": "catalog_api_v1_policy_checks_catalog_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyCatalogResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books/{book_id}/policy-observations": {
+      "post": {
+        "tags": [
+          "bounded policy consistency"
+        ],
+        "summary": "Append Observation",
+        "operationId": "append_observation_api_v1_books__book_id__policy_observations_post",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PolicyObservationInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyObservationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "bounded policy consistency"
+        ],
+        "summary": "Observations",
+        "operationId": "observations_api_v1_books__book_id__policy_observations_get",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          },
+          {
+            "name": "snapshot_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Snapshot Id"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PolicyObservationResponse"
+                  },
+                  "title": "Response Observations Api V1 Books  Book Id  Policy Observations Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books/{book_id}/policy-observations/{identity}": {
+      "get": {
+        "tags": [
+          "bounded policy consistency"
+        ],
+        "summary": "Observation",
+        "operationId": "observation_api_v1_books__book_id__policy_observations__identity__get",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          },
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyObservationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books/{book_id}/policy-observations/{identity}/check": {
+      "post": {
+        "tags": [
+          "bounded policy consistency"
+        ],
+        "summary": "Check",
+        "operationId": "check_api_v1_books__book_id__policy_observations__identity__check_post",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          },
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyCheckResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books/{book_id}/policy-checks": {
+      "get": {
+        "tags": [
+          "bounded policy consistency"
+        ],
+        "summary": "Checks",
+        "operationId": "checks_api_v1_books__book_id__policy_checks_get",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          },
+          {
+            "name": "observation_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Observation Id"
+            }
+          },
+          {
+            "name": "snapshot_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Snapshot Id"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PolicyCheckResponse"
+                  },
+                  "title": "Response Checks Api V1 Books  Book Id  Policy Checks Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books/{book_id}/policy-checks/{identity}": {
+      "get": {
+        "tags": [
+          "bounded policy consistency"
+        ],
+        "summary": "Read Check",
+        "operationId": "read_check_api_v1_books__book_id__policy_checks__identity__get",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          },
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyCheckResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books/{book_id}/policy-checks/{identity}/export": {
+      "get": {
+        "tags": [
+          "bounded policy consistency"
+        ],
+        "summary": "Export Check",
+        "operationId": "export_check_api_v1_books__book_id__policy_checks__identity__export_get",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          },
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_api_v1_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/settings": {
+      "get": {
+        "summary": "Read Settings",
+        "operationId": "read_settings_api_v1_settings_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books": {
+      "get": {
+        "summary": "Books",
+        "operationId": "books_api_v1_books_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Book",
+        "operationId": "create_book_api_v1_books_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books/{book_id}": {
+      "put": {
+        "summary": "Update Book",
+        "operationId": "update_book_api_v1_books__book_id__put",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/policies": {
+      "get": {
+        "summary": "Policies",
+        "operationId": "policies_api_v1_policies_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/knowledge/search": {
+      "get": {
+        "summary": "Search Knowledge",
+        "operationId": "search_knowledge_api_v1_knowledge_search_get",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Query"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books/{book_id}/overview": {
+      "get": {
+        "summary": "Overview",
+        "operationId": "overview_api_v1_books__book_id__overview_get",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/imports": {
+      "post": {
+        "summary": "Upload",
+        "operationId": "upload_api_v1_imports_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_api_v1_imports_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/imports/{identity}/mapping": {
+      "put": {
+        "summary": "Remap",
+        "operationId": "remap_api_v1_imports__identity__mapping_put",
+        "parameters": [
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/imports/{identity}/confirm": {
+      "post": {
+        "summary": "Confirm",
+        "operationId": "confirm_api_v1_imports__identity__confirm_post",
+        "parameters": [
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books/{book_id}/imports": {
+      "get": {
+        "summary": "Imports",
+        "operationId": "imports_api_v1_books__book_id__imports_get",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books/{book_id}/demo": {
+      "post": {
+        "summary": "Seed Demo",
+        "operationId": "seed_demo_api_v1_books__book_id__demo_post",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books/{book_id}/supplement-demo": {
+      "post": {
+        "summary": "Supplement Demo",
+        "operationId": "supplement_demo_api_v1_books__book_id__supplement_demo_post",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/snapshots": {
+      "post": {
+        "summary": "Snapshot",
+        "operationId": "snapshot_api_v1_snapshots_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SnapshotInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/snapshots/{identity}": {
+      "get": {
+        "summary": "Read Snapshot",
+        "operationId": "read_snapshot_api_v1_snapshots__identity__get",
+        "parameters": [
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/check-runs": {
+      "post": {
+        "summary": "Check",
+        "operationId": "check_api_v1_check_runs_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases": {
+      "get": {
+        "summary": "Cases",
+        "operationId": "cases_api_v1_cases_get",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{identity}": {
+      "get": {
+        "summary": "Read Case",
+        "operationId": "read_case_api_v1_cases__identity__get",
+        "parameters": [
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{identity}/investigate": {
+      "post": {
+        "summary": "Start Investigation",
+        "operationId": "start_investigation_api_v1_cases__identity__investigate_post",
+        "parameters": [
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvestigateInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/runs/{identity}": {
+      "get": {
+        "summary": "Read Run",
+        "operationId": "read_run_api_v1_runs__identity__get",
+        "parameters": [
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/runs/{identity}/policy-context": {
+      "get": {
+        "summary": "Run Policy Context",
+        "operationId": "run_policy_context_api_v1_runs__identity__policy_context_get",
+        "parameters": [
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvestigationPolicyContextResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/runs/{identity}/events": {
+      "get": {
+        "summary": "Events",
+        "operationId": "events_api_v1_runs__identity__events_get",
+        "parameters": [
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{identity}/evidence": {
+      "get": {
+        "summary": "Evidence",
+        "operationId": "evidence_api_v1_cases__identity__evidence_get",
+        "parameters": [
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books/{book_id}/records": {
+      "get": {
+        "summary": "Records",
+        "operationId": "records_api_v1_books__book_id__records_get",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Kind"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books/{book_id}/documents": {
+      "get": {
+        "summary": "Documents",
+        "operationId": "documents_api_v1_books__book_id__documents_get",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books/{book_id}/matches": {
+      "get": {
+        "summary": "Matches",
+        "operationId": "matches_api_v1_books__book_id__matches_get",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          },
+          {
+            "name": "flow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "payable",
+              "title": "Flow"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/books/{book_id}/bank-reconciliation": {
+      "get": {
+        "summary": "Reconcile Bank",
+        "operationId": "reconcile_bank_api_v1_books__book_id__bank_reconciliation_get",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Book Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/documents/{identity}/file": {
+      "get": {
+        "summary": "Document File",
+        "operationId": "document_file_api_v1_documents__identity__file_get",
+        "parameters": [
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/simulations": {
+      "post": {
+        "summary": "Simulation",
+        "operationId": "simulation_api_v1_simulations_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimulationInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Simulations",
+        "operationId": "simulations_api_v1_simulations_get",
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/reviews": {
+      "post": {
+        "summary": "Review",
+        "operationId": "review_api_v1_reviews_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/exports/cases/{identity}": {
+      "get": {
+        "summary": "Export Case",
+        "operationId": "export_case_api_v1_exports_cases__identity__get",
+        "parameters": [
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "markdown",
+              "title": "Format"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/evaluations": {
+      "get": {
+        "summary": "Evaluations",
+        "operationId": "evaluations_api_v1_evaluations_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/evaluations/run": {
+      "post": {
+        "summary": "Evaluate",
+        "operationId": "evaluate_api_v1_evaluations_run_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object",
+                "title": "Body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BalanceObservation": {
+        "properties": {
+          "difference_reported_unit": {
+            "type": "string",
+            "title": "Difference Reported Unit"
+          },
+          "equal_as_reported": {
+            "type": "boolean",
+            "title": "Equal As Reported"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "difference_reported_unit",
+          "equal_as_reported"
+        ],
+        "title": "BalanceObservation"
+      },
+      "Body_upload_api_v1_imports_post": {
+        "properties": {
+          "book_id": {
+            "type": "string",
+            "title": "Book Id"
+          },
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          },
+          "mapping": {
+            "type": "string",
+            "title": "Mapping",
+            "default": "{}"
+          }
+        },
+        "type": "object",
+        "required": [
+          "book_id",
+          "file"
+        ],
+        "title": "Body_upload_api_v1_imports_post"
+      },
+      "BookInput": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "framework": {
+            "type": "string",
+            "enum": [
+              "CAS",
+              "SCAS"
+            ],
+            "title": "Framework"
+          },
+          "period": {
+            "type": "string",
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+            "title": "Period"
+          },
+          "currency": {
+            "type": "string",
+            "const": "CNY",
+            "title": "Currency",
+            "default": "CNY"
+          },
+          "accounts": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Accounts"
+          },
+          "locked_periods": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Locked Periods"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "framework",
+          "period"
+        ],
+        "title": "BookInput"
+      },
+      "CapturedPolicyCheck": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Id"
+          },
+          "created_at": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Created At"
+          },
+          "observation_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Observation Id"
+          },
+          "pack_key": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Pack Key"
+          },
+          "observation_digest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Observation Digest"
+          },
+          "artifact_digest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Artifact Digest"
+          },
+          "binding": {
+            "$ref": "#/components/schemas/PolicyCheckBinding"
+          },
+          "result": {
+            "$ref": "#/components/schemas/PolicyResult"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "created_at",
+          "observation_id",
+          "pack_key",
+          "observation_digest",
+          "artifact_digest",
+          "binding",
+          "result"
+        ],
+        "title": "CapturedPolicyCheck"
+      },
+      "CapturedPolicyObservation": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Id"
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Digest"
+          },
+          "logical_key": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Logical Key"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "digest",
+          "logical_key",
+          "version"
+        ],
+        "title": "CapturedPolicyObservation"
+      },
+      "CheckInput": {
+        "properties": {
+          "book_id": {
+            "type": "string",
+            "title": "Book Id"
+          },
+          "snapshot_id": {
+            "type": "string",
+            "title": "Snapshot Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "book_id",
+          "snapshot_id"
+        ],
+        "title": "CheckInput"
+      },
+      "ColumnHeader": {
+        "properties": {
+          "pdf_page": {
+            "type": "integer",
+            "maximum": 5000.0,
+            "minimum": 1.0,
+            "title": "Pdf Page"
+          },
+          "cells": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 4,
+            "title": "Cells"
+          },
+          "current_column_zero_based": {
+            "type": "integer",
+            "maximum": 3.0,
+            "minimum": 2.0,
+            "title": "Current Column Zero Based"
+          },
+          "previous_column_zero_based": {
+            "type": "integer",
+            "maximum": 3.0,
+            "minimum": 2.0,
+            "title": "Previous Column Zero Based"
+          },
+          "current_column_bbox": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 4,
+            "title": "Current Column Bbox"
+          },
+          "previous_column_bbox": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 4,
+            "title": "Previous Column Bbox"
+          },
+          "table_header_bbox": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 4,
+            "title": "Table Header Bbox"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "pdf_page",
+          "cells",
+          "current_column_zero_based",
+          "previous_column_zero_based",
+          "current_column_bbox",
+          "previous_column_bbox",
+          "table_header_bbox"
+        ],
+        "title": "ColumnHeader"
+      },
+      "ConfirmedCondition": {
+        "properties": {
+          "value": {
+            "type": "string",
+            "enum": [
+              "yes",
+              "no",
+              "unknown"
+            ],
+            "title": "Value",
+            "default": "unknown"
+          },
+          "confirmation": {
+            "type": "string",
+            "enum": [
+              "human_confirmed",
+              "source_reported",
+              "model_suggested",
+              "unconfirmed"
+            ],
+            "title": "Confirmation",
+            "default": "unconfirmed"
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Evidence Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ConfirmedCondition"
+      },
+      "FulfilInput": {
+        "properties": {
+          "snapshot_id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Snapshot Id"
+          },
+          "record_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 200,
+            "minItems": 1,
+            "title": "Record Ids"
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Comment",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "snapshot_id",
+          "record_ids"
+        ],
+        "title": "FulfilInput"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "InvestigateInput": {
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "rules",
+              "single",
+              "multi",
+              "active"
+            ],
+            "title": "Mode",
+            "default": "rules"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "InvestigateInput"
+      },
+      "InvestigationPolicyContextPayload": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "investigation-policy-context-v1",
+            "title": "Schema Version"
+          },
+          "run_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Run Id"
+          },
+          "book_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Book Id"
+          },
+          "snapshot_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Snapshot Id"
+          },
+          "snapshot_digest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Snapshot Digest"
+          },
+          "captured_at": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Captured At"
+          },
+          "policy_rule_identity": {
+            "$ref": "#/components/schemas/PolicyPackIdentity"
+          },
+          "checks": {
+            "items": {
+              "$ref": "#/components/schemas/CapturedPolicyCheck"
+            },
+            "type": "array",
+            "maxItems": 60,
+            "title": "Checks"
+          },
+          "observation_manifest": {
+            "items": {
+              "$ref": "#/components/schemas/CapturedPolicyObservation"
+            },
+            "type": "array",
+            "maxItems": 5000,
+            "title": "Observation Manifest"
+          },
+          "notice": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Notice"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "schema_version",
+          "run_id",
+          "book_id",
+          "snapshot_id",
+          "snapshot_digest",
+          "captured_at",
+          "policy_rule_identity",
+          "checks",
+          "observation_manifest",
+          "notice"
+        ],
+        "title": "InvestigationPolicyContextPayload"
+      },
+      "InvestigationPolicyContextResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "captured",
+              "legacy_uncaptured"
+            ],
+            "title": "Status"
+          },
+          "payload": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/InvestigationPolicyContextPayload"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "digest": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Digest"
+          },
+          "stale": {
+            "type": "boolean",
+            "title": "Stale"
+          },
+          "stale_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Stale Reasons"
+          },
+          "notice": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Notice"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status",
+          "payload",
+          "digest",
+          "stale",
+          "stale_reasons",
+          "notice"
+        ],
+        "title": "InvestigationPolicyContextResponse"
+      },
+      "LabelFragment": {
+        "properties": {
+          "table_row": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Table Row"
+          },
+          "table_column_zero_based": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Table Column Zero Based"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "bbox": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 4,
+            "title": "Bbox"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "table_row",
+          "table_column_zero_based",
+          "text",
+          "bbox"
+        ],
+        "title": "LabelFragment"
+      },
+      "PolicyAnnotationEnvelope": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "book_id": {
+            "type": "string",
+            "title": "Book Id"
+          },
+          "snapshot_id": {
+            "type": "string",
+            "title": "Snapshot Id"
+          },
+          "logical_key": {
+            "type": "string",
+            "title": "Logical Key"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "parent_version_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Version Id"
+          },
+          "payload": {
+            "$ref": "#/components/schemas/PolicyObservation"
+          },
+          "comment": {
+            "type": "string",
+            "title": "Comment"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "created_at",
+          "book_id",
+          "snapshot_id",
+          "logical_key",
+          "version",
+          "parent_version_id",
+          "payload",
+          "comment"
+        ],
+        "title": "PolicyAnnotationEnvelope"
+      },
+      "PolicyCatalogResponse": {
+        "properties": {
+          "policy_rule_identity": {
+            "$ref": "#/components/schemas/PolicyPackIdentity"
+          },
+          "rules": {
+            "items": {
+              "$ref": "#/components/schemas/PolicyRule"
+            },
+            "type": "array",
+            "title": "Rules"
+          },
+          "scope": {
+            "type": "string",
+            "title": "Scope"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "policy_rule_identity",
+          "rules",
+          "scope"
+        ],
+        "title": "PolicyCatalogResponse"
+      },
+      "PolicyCheckBinding": {
+        "properties": {
+          "ledger_snapshot_id": {
+            "type": "string",
+            "title": "Ledger Snapshot Id"
+          },
+          "ledger_snapshot_digest": {
+            "type": "string",
+            "title": "Ledger Snapshot Digest"
+          },
+          "book_revision": {
+            "type": "integer",
+            "title": "Book Revision"
+          },
+          "framework": {
+            "type": "string",
+            "enum": [
+              "CAS",
+              "SCAS"
+            ],
+            "title": "Framework"
+          },
+          "period": {
+            "type": "string",
+            "title": "Period"
+          },
+          "source_cutoff": {
+            "type": "string",
+            "title": "Source Cutoff"
+          },
+          "observation_version": {
+            "type": "integer",
+            "title": "Observation Version"
+          },
+          "observation_id": {
+            "type": "string",
+            "title": "Observation Id"
+          },
+          "observation_digest": {
+            "type": "string",
+            "title": "Observation Digest"
+          },
+          "annotation_recorded_at": {
+            "type": "string",
+            "title": "Annotation Recorded At"
+          },
+          "annotation_envelope": {
+            "$ref": "#/components/schemas/PolicyAnnotationEnvelope"
+          },
+          "policy_rule_identity": {
+            "$ref": "#/components/schemas/PolicyPackIdentity"
+          },
+          "observation": {
+            "$ref": "#/components/schemas/PolicyObservation"
+          },
+          "evidence_locators": {
+            "items": {
+              "$ref": "#/components/schemas/PolicyEvidenceLocator"
+            },
+            "type": "array",
+            "title": "Evidence Locators"
+          },
+          "result_sha256": {
+            "type": "string",
+            "title": "Result Sha256"
+          },
+          "confirmation_scope": {
+            "type": "string",
+            "title": "Confirmation Scope"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "ledger_snapshot_id",
+          "ledger_snapshot_digest",
+          "book_revision",
+          "framework",
+          "period",
+          "source_cutoff",
+          "observation_version",
+          "observation_id",
+          "observation_digest",
+          "annotation_recorded_at",
+          "annotation_envelope",
+          "policy_rule_identity",
+          "observation",
+          "evidence_locators",
+          "result_sha256",
+          "confirmation_scope"
+        ],
+        "title": "PolicyCheckBinding"
+      },
+      "PolicyCheckResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "book_id": {
+            "type": "string",
+            "title": "Book Id"
+          },
+          "snapshot_id": {
+            "type": "string",
+            "title": "Snapshot Id"
+          },
+          "observation_id": {
+            "type": "string",
+            "title": "Observation Id"
+          },
+          "pack_key": {
+            "type": "string",
+            "title": "Pack Key"
+          },
+          "observation_digest": {
+            "type": "string",
+            "title": "Observation Digest"
+          },
+          "artifact_digest": {
+            "type": "string",
+            "title": "Artifact Digest"
+          },
+          "binding": {
+            "$ref": "#/components/schemas/PolicyCheckBinding"
+          },
+          "result": {
+            "$ref": "#/components/schemas/PolicyResult"
+          },
+          "stale": {
+            "type": "boolean",
+            "title": "Stale"
+          },
+          "pack_compatible": {
+            "type": "boolean",
+            "title": "Pack Compatible"
+          },
+          "historical_result": {
+            "type": "boolean",
+            "title": "Historical Result"
+          },
+          "ledger_writes": {
+            "type": "integer",
+            "const": 0,
+            "title": "Ledger Writes"
+          },
+          "notice": {
+            "type": "string",
+            "title": "Notice"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "created_at",
+          "book_id",
+          "snapshot_id",
+          "observation_id",
+          "pack_key",
+          "observation_digest",
+          "artifact_digest",
+          "binding",
+          "result",
+          "stale",
+          "pack_compatible",
+          "historical_result",
+          "ledger_writes",
+          "notice"
+        ],
+        "title": "PolicyCheckResponse"
+      },
+      "PolicyEvidenceLocator": {
+        "properties": {
+          "evidence_id": {
+            "type": "string",
+            "title": "Evidence Id"
+          },
+          "record_id": {
+            "type": "string",
+            "title": "Record Id"
+          },
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          },
+          "document_id": {
+            "type": "string",
+            "title": "Document Id"
+          },
+          "document_name": {
+            "type": "string",
+            "title": "Document Name"
+          },
+          "document_sha256": {
+            "type": "string",
+            "title": "Document Sha256"
+          },
+          "synthetic": {
+            "type": "boolean",
+            "title": "Synthetic"
+          },
+          "locator": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Locator"
+          },
+          "record_fingerprint": {
+            "type": "string",
+            "title": "Record Fingerprint"
+          },
+          "source_known_at": {
+            "type": "string",
+            "title": "Source Known At"
+          },
+          "confirmed_import_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Confirmed Import Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "evidence_id",
+          "record_id",
+          "source_id",
+          "document_id",
+          "document_name",
+          "document_sha256",
+          "synthetic",
+          "locator",
+          "record_fingerprint",
+          "source_known_at",
+          "confirmed_import_ids"
+        ],
+        "title": "PolicyEvidenceLocator"
+      },
+      "PolicyObservation": {
+        "properties": {
+          "observation_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Observation Id"
+          },
+          "book_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Book Id"
+          },
+          "snapshot_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Snapshot Id"
+          },
+          "topic": {
+            "type": "string",
+            "enum": [
+              "resale_inventory",
+              "routine_repair",
+              "previous_expensed_prototype",
+              "vat_credit_refund",
+              "personal_tax_withholding_fee",
+              "short_term_lease",
+              "lease_cash_flow",
+              "transport_fulfillment_cost",
+              "advance_receipt",
+              "contract_asset_impairment",
+              "lessee_improvement",
+              "foreign_currency_advance",
+              "debt_restructuring_inventory",
+              "cash_discount",
+              "group_share_payment",
+              "debt_release_timing",
+              "initial_revenue_ecl",
+              "rent_subsidy",
+              "voluntary_share_cancellation"
+            ],
+            "title": "Topic"
+          },
+          "conditions": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/ConfirmedCondition"
+            },
+            "type": "object",
+            "title": "Conditions"
+          },
+          "beneficiary": {
+            "type": "string",
+            "enum": [
+              "inventory_production",
+              "administration",
+              "dedicated_sales",
+              "other",
+              "unknown"
+            ],
+            "title": "Beneficiary",
+            "default": "unknown"
+          },
+          "beneficiary_confirmation": {
+            "type": "string",
+            "enum": [
+              "human_confirmed",
+              "source_reported",
+              "model_suggested",
+              "unconfirmed"
+            ],
+            "title": "Beneficiary Confirmation",
+            "default": "unconfirmed"
+          },
+          "beneficiary_evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Beneficiary Evidence Ids"
+          },
+          "reported_treatment": {
+            "type": "string",
+            "enum": [
+              "inventory",
+              "fixed_asset",
+              "period_expense",
+              "inventory_cost",
+              "management_expense",
+              "selling_expense",
+              "reverse_prior_expense",
+              "keep_prior_expense",
+              "tax_refunds_received",
+              "other_operating_cash_received",
+              "taxes_paid",
+              "other_income_and_operating_revenue",
+              "nonoperating_income",
+              "right_of_use_asset_and_lease_liability",
+              "short_term_lease_simplified",
+              "financing_cash_outflow",
+              "operating_cash_outflow",
+              "advance_receipts",
+              "asset_impairment_loss",
+              "contract_liability",
+              "credit_impairment_loss",
+              "deferred_income",
+              "exchange_difference_recognized",
+              "finance_expense",
+              "historical_rate_no_exchange_difference",
+              "long_term_prepaid_expense",
+              "operating_cost",
+              "other_income_not_revenue",
+              "revenue_and_cost_of_sales",
+              "right_of_use_asset_cost",
+              "variable_consideration",
+              "equity_settled_share_payment",
+              "cash_settled_share_payment",
+              "defer_debt_restructuring_gain",
+              "recognize_debt_restructuring_gain",
+              "opening_retained_earnings_no_comparative_restatement",
+              "restate_comparative_ecl",
+              "income_related_grant",
+              "asset_related_grant",
+              "accelerate_vesting_keep_prior_expense",
+              "reverse_share_payment_expense",
+              "unknown",
+              "other"
+            ],
+            "title": "Reported Treatment",
+            "default": "unknown"
+          },
+          "treatment_evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Treatment Evidence Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "observation_id",
+          "book_id",
+          "snapshot_id",
+          "topic",
+          "conditions"
+        ],
+        "title": "PolicyObservation"
+      },
+      "PolicyObservationInput": {
+        "properties": {
+          "snapshot_id": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Snapshot Id"
+          },
+          "logical_observation_key": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Logical Observation Key"
+          },
+          "parent_version_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Version Id"
+          },
+          "human_confirmation": {
+            "type": "boolean",
+            "title": "Human Confirmation"
+          },
+          "topic": {
+            "type": "string",
+            "enum": [
+              "resale_inventory",
+              "routine_repair",
+              "previous_expensed_prototype",
+              "vat_credit_refund",
+              "personal_tax_withholding_fee",
+              "short_term_lease",
+              "lease_cash_flow",
+              "transport_fulfillment_cost",
+              "advance_receipt",
+              "contract_asset_impairment",
+              "lessee_improvement",
+              "foreign_currency_advance",
+              "debt_restructuring_inventory",
+              "cash_discount",
+              "group_share_payment",
+              "debt_release_timing",
+              "initial_revenue_ecl",
+              "rent_subsidy",
+              "voluntary_share_cancellation"
+            ],
+            "title": "Topic"
+          },
+          "conditions": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/ConfirmedCondition"
+            },
+            "type": "object",
+            "title": "Conditions"
+          },
+          "beneficiary": {
+            "type": "string",
+            "enum": [
+              "inventory_production",
+              "administration",
+              "dedicated_sales",
+              "other",
+              "unknown"
+            ],
+            "title": "Beneficiary",
+            "default": "unknown"
+          },
+          "beneficiary_confirmation": {
+            "type": "string",
+            "enum": [
+              "human_confirmed",
+              "source_reported",
+              "model_suggested",
+              "unconfirmed"
+            ],
+            "title": "Beneficiary Confirmation",
+            "default": "unconfirmed"
+          },
+          "beneficiary_evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Beneficiary Evidence Ids"
+          },
+          "reported_treatment": {
+            "type": "string",
+            "enum": [
+              "inventory",
+              "fixed_asset",
+              "period_expense",
+              "inventory_cost",
+              "management_expense",
+              "selling_expense",
+              "reverse_prior_expense",
+              "keep_prior_expense",
+              "tax_refunds_received",
+              "other_operating_cash_received",
+              "taxes_paid",
+              "other_income_and_operating_revenue",
+              "nonoperating_income",
+              "right_of_use_asset_and_lease_liability",
+              "short_term_lease_simplified",
+              "financing_cash_outflow",
+              "operating_cash_outflow",
+              "advance_receipts",
+              "asset_impairment_loss",
+              "contract_liability",
+              "credit_impairment_loss",
+              "deferred_income",
+              "exchange_difference_recognized",
+              "finance_expense",
+              "historical_rate_no_exchange_difference",
+              "long_term_prepaid_expense",
+              "operating_cost",
+              "other_income_not_revenue",
+              "revenue_and_cost_of_sales",
+              "right_of_use_asset_cost",
+              "variable_consideration",
+              "equity_settled_share_payment",
+              "cash_settled_share_payment",
+              "defer_debt_restructuring_gain",
+              "recognize_debt_restructuring_gain",
+              "opening_retained_earnings_no_comparative_restatement",
+              "restate_comparative_ecl",
+              "income_related_grant",
+              "asset_related_grant",
+              "accelerate_vesting_keep_prior_expense",
+              "reverse_share_payment_expense",
+              "unknown",
+              "other"
+            ],
+            "title": "Reported Treatment",
+            "default": "unknown"
+          },
+          "treatment_evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Treatment Evidence Ids"
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 4000,
+            "title": "Comment",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "snapshot_id",
+          "logical_observation_key",
+          "human_confirmation",
+          "topic",
+          "conditions"
+        ],
+        "title": "PolicyObservationInput"
+      },
+      "PolicyObservationResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "book_id": {
+            "type": "string",
+            "title": "Book Id"
+          },
+          "snapshot_id": {
+            "type": "string",
+            "title": "Snapshot Id"
+          },
+          "logical_key": {
+            "type": "string",
+            "title": "Logical Key"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "parent_version_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Version Id"
+          },
+          "payload": {
+            "$ref": "#/components/schemas/PolicyObservation"
+          },
+          "digest": {
+            "type": "string",
+            "title": "Digest"
+          },
+          "comment": {
+            "type": "string",
+            "title": "Comment"
+          },
+          "latest": {
+            "type": "boolean",
+            "title": "Latest"
+          },
+          "stale": {
+            "type": "boolean",
+            "title": "Stale"
+          },
+          "confirmation_notice": {
+            "type": "string",
+            "title": "Confirmation Notice"
+          },
+          "source_cutoff": {
+            "type": "string",
+            "title": "Source Cutoff"
+          },
+          "annotation_recorded_at": {
+            "type": "string",
+            "title": "Annotation Recorded At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "created_at",
+          "book_id",
+          "snapshot_id",
+          "logical_key",
+          "version",
+          "parent_version_id",
+          "payload",
+          "digest",
+          "comment",
+          "latest",
+          "stale",
+          "confirmation_notice",
+          "source_cutoff",
+          "annotation_recorded_at"
+        ],
+        "title": "PolicyObservationResponse"
+      },
+      "PolicyPackIdentity": {
+        "properties": {
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "source_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Source Sha256"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "source_sha256"
+        ],
+        "title": "PolicyPackIdentity"
+      },
+      "PolicyResult": {
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "title": "Rule Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "normal",
+              "supported",
+              "insufficient",
+              "unsupported"
+            ],
+            "title": "Status"
+          },
+          "expected_treatment": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "inventory",
+                  "fixed_asset",
+                  "period_expense",
+                  "inventory_cost",
+                  "management_expense",
+                  "selling_expense",
+                  "reverse_prior_expense",
+                  "keep_prior_expense",
+                  "tax_refunds_received",
+                  "other_operating_cash_received",
+                  "taxes_paid",
+                  "other_income_and_operating_revenue",
+                  "nonoperating_income",
+                  "right_of_use_asset_and_lease_liability",
+                  "short_term_lease_simplified",
+                  "financing_cash_outflow",
+                  "operating_cash_outflow",
+                  "advance_receipts",
+                  "asset_impairment_loss",
+                  "contract_liability",
+                  "credit_impairment_loss",
+                  "deferred_income",
+                  "exchange_difference_recognized",
+                  "finance_expense",
+                  "historical_rate_no_exchange_difference",
+                  "long_term_prepaid_expense",
+                  "operating_cost",
+                  "other_income_not_revenue",
+                  "revenue_and_cost_of_sales",
+                  "right_of_use_asset_cost",
+                  "variable_consideration",
+                  "equity_settled_share_payment",
+                  "cash_settled_share_payment",
+                  "defer_debt_restructuring_gain",
+                  "recognize_debt_restructuring_gain",
+                  "opening_retained_earnings_no_comparative_restatement",
+                  "restate_comparative_ecl",
+                  "income_related_grant",
+                  "asset_related_grant",
+                  "accelerate_vesting_keep_prior_expense",
+                  "reverse_share_payment_expense",
+                  "unknown",
+                  "other"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Treatment"
+          },
+          "reported_treatment": {
+            "type": "string",
+            "enum": [
+              "inventory",
+              "fixed_asset",
+              "period_expense",
+              "inventory_cost",
+              "management_expense",
+              "selling_expense",
+              "reverse_prior_expense",
+              "keep_prior_expense",
+              "tax_refunds_received",
+              "other_operating_cash_received",
+              "taxes_paid",
+              "other_income_and_operating_revenue",
+              "nonoperating_income",
+              "right_of_use_asset_and_lease_liability",
+              "short_term_lease_simplified",
+              "financing_cash_outflow",
+              "operating_cash_outflow",
+              "advance_receipts",
+              "asset_impairment_loss",
+              "contract_liability",
+              "credit_impairment_loss",
+              "deferred_income",
+              "exchange_difference_recognized",
+              "finance_expense",
+              "historical_rate_no_exchange_difference",
+              "long_term_prepaid_expense",
+              "operating_cost",
+              "other_income_not_revenue",
+              "revenue_and_cost_of_sales",
+              "right_of_use_asset_cost",
+              "variable_consideration",
+              "equity_settled_share_payment",
+              "cash_settled_share_payment",
+              "defer_debt_restructuring_gain",
+              "recognize_debt_restructuring_gain",
+              "opening_retained_earnings_no_comparative_restatement",
+              "restate_comparative_ecl",
+              "income_related_grant",
+              "asset_related_grant",
+              "accelerate_vesting_keep_prior_expense",
+              "reverse_share_payment_expense",
+              "unknown",
+              "other"
+            ],
+            "title": "Reported Treatment"
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Ids"
+          },
+          "missing_conditions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing Conditions"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          },
+          "policy_rule_identity": {
+            "$ref": "#/components/schemas/PolicyPackIdentity"
+          },
+          "source": {
+            "$ref": "#/components/schemas/PolicySource"
+          },
+          "scope_note": {
+            "type": "string",
+            "title": "Scope Note"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "rule_id",
+          "title",
+          "status",
+          "expected_treatment",
+          "reported_treatment",
+          "evidence_ids",
+          "missing_conditions",
+          "reason",
+          "policy_rule_identity",
+          "source",
+          "scope_note"
+        ],
+        "title": "PolicyResult"
+      },
+      "PolicyRule": {
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "title": "Rule Id"
+          },
+          "framework": {
+            "type": "string",
+            "enum": [
+              "CAS",
+              "SCAS"
+            ],
+            "title": "Framework"
+          },
+          "topic": {
+            "type": "string",
+            "enum": [
+              "resale_inventory",
+              "routine_repair",
+              "previous_expensed_prototype",
+              "vat_credit_refund",
+              "personal_tax_withholding_fee",
+              "short_term_lease",
+              "lease_cash_flow",
+              "transport_fulfillment_cost",
+              "advance_receipt",
+              "contract_asset_impairment",
+              "lessee_improvement",
+              "foreign_currency_advance",
+              "debt_restructuring_inventory",
+              "cash_discount",
+              "group_share_payment",
+              "debt_release_timing",
+              "initial_revenue_ecl",
+              "rent_subsidy",
+              "voluntary_share_cancellation"
+            ],
+            "title": "Topic"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          },
+          "publication_date": {
+            "type": "string",
+            "title": "Publication Date"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "source_sha256": {
+            "type": "string",
+            "title": "Source Sha256"
+          },
+          "applicable_conditions": {
+            "type": "string",
+            "title": "Applicable Conditions"
+          },
+          "unsupported_conditions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Unsupported Conditions"
+          },
+          "known_limits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Known Limits"
+          },
+          "treatment_captions": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Treatment Captions"
+          },
+          "source": {
+            "$ref": "#/components/schemas/PolicySource"
+          },
+          "required_conditions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Required Conditions"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "policy_rule_identity": {
+            "$ref": "#/components/schemas/PolicyPackIdentity"
+          },
+          "validation_status": {
+            "type": "string",
+            "title": "Validation Status"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "reference_available_from": {
+            "type": "string",
+            "title": "Reference Available From"
+          },
+          "effective_from": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective From"
+          },
+          "effective_to": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective To"
+          },
+          "scope_note": {
+            "type": "string",
+            "title": "Scope Note"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "rule_id",
+          "framework",
+          "topic",
+          "title",
+          "source_id",
+          "publication_date",
+          "url",
+          "source_sha256",
+          "applicable_conditions",
+          "unsupported_conditions",
+          "known_limits",
+          "treatment_captions",
+          "source",
+          "required_conditions",
+          "version",
+          "policy_rule_identity",
+          "validation_status",
+          "status",
+          "reference_available_from",
+          "effective_from",
+          "effective_to",
+          "scope_note"
+        ],
+        "title": "PolicyRule"
+      },
+      "PolicySource": {
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "publication_date": {
+            "type": "string",
+            "title": "Publication Date"
+          },
+          "source_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Source Sha256"
+          },
+          "locator": {
+            "type": "string",
+            "title": "Locator"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source_id",
+          "url",
+          "publication_date",
+          "source_sha256",
+          "locator"
+        ],
+        "title": "PolicySource"
+      },
+      "RequestInput": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "order",
+              "receipt",
+              "invoice",
+              "bank",
+              "journal",
+              "opening",
+              "trial_balance"
+            ],
+            "title": "Kind"
+          },
+          "reference": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Description"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "kind",
+          "description"
+        ],
+        "title": "RequestInput"
+      },
+      "ReviewInput": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "title": "Case Id"
+          },
+          "expected_snapshot_id": {
+            "type": "string",
+            "title": "Expected Snapshot Id"
+          },
+          "decision": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "returned",
+              "reserved"
+            ],
+            "title": "Decision"
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 4000,
+            "title": "Comment",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "case_id",
+          "expected_snapshot_id",
+          "decision"
+        ],
+        "title": "ReviewInput"
+      },
+      "SimulationInput": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "title": "Case Id"
+          },
+          "adjustments": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "maxItems": 1000,
+            "minItems": 1,
+            "title": "Adjustments"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "case_id",
+          "adjustments"
+        ],
+        "title": "SimulationInput"
+      },
+      "SnapshotInput": {
+        "properties": {
+          "book_id": {
+            "type": "string",
+            "title": "Book Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "book_id"
+        ],
+        "title": "SnapshotInput"
+      },
+      "SourceLine": {
+        "properties": {
+          "line": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Line"
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 10000,
+            "title": "Text"
+          },
+          "bbox": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 4,
+            "title": "Bbox"
+          },
+          "pdf_page": {
+            "type": "integer",
+            "maximum": 5000.0,
+            "minimum": 1.0,
+            "title": "Pdf Page"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "line",
+          "text",
+          "bbox",
+          "pdf_page"
+        ],
+        "title": "SourceLine"
+      },
+      "StatementContext": {
+        "properties": {
+          "statement_title": {
+            "$ref": "#/components/schemas/SourceLine"
+          },
+          "statement_date": {
+            "$ref": "#/components/schemas/SourceLine"
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "元",
+              "千元"
+            ],
+            "title": "Unit"
+          },
+          "currency": {
+            "type": "string",
+            "const": "CNY",
+            "title": "Currency"
+          },
+          "unit_factor_cny": {
+            "type": "string",
+            "enum": [
+              "1",
+              "1000"
+            ],
+            "title": "Unit Factor Cny"
+          },
+          "unit_source": {
+            "$ref": "#/components/schemas/SourceLine"
+          },
+          "section_stop": {
+            "$ref": "#/components/schemas/SourceLine"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "statement_title",
+          "statement_date",
+          "unit",
+          "currency",
+          "unit_factor_cny",
+          "unit_source",
+          "section_stop"
+        ],
+        "title": "StatementContext"
+      },
+      "StatementDataset": {
+        "properties": {
+          "dataset_scope_id": {
+            "type": "string",
+            "pattern": "^annual_reports_[0-9a-f]{64}$",
+            "title": "Dataset Scope Id"
+          },
+          "snapshot_id": {
+            "type": "string",
+            "pattern": "^statement_snapshot_[0-9a-f]{64}$",
+            "title": "Snapshot Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Observed At"
+          },
+          "report_count": {
+            "type": "integer",
+            "maximum": 300.0,
+            "minimum": 1.0,
+            "title": "Report Count"
+          },
+          "observed_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Observed Count"
+          },
+          "rejected_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Rejected Count"
+          },
+          "parser_source_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Parser Source Sha256"
+          },
+          "scope": {
+            "type": "string",
+            "const": "public_consolidated_balance_sheet",
+            "title": "Scope",
+            "default": "public_consolidated_balance_sheet"
+          },
+          "read_only": {
+            "type": "boolean",
+            "const": true,
+            "title": "Read Only",
+            "default": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "dataset_scope_id",
+          "snapshot_id",
+          "title",
+          "observed_at",
+          "report_count",
+          "observed_count",
+          "rejected_count",
+          "parser_source_sha256"
+        ],
+        "title": "StatementDataset"
+      },
+      "StatementDatasetList": {
+        "properties": {
+          "snapshots": {
+            "items": {
+              "$ref": "#/components/schemas/StatementDataset"
+            },
+            "type": "array",
+            "title": "Snapshots"
+          },
+          "read_only": {
+            "type": "boolean",
+            "const": true,
+            "title": "Read Only",
+            "default": true
+          },
+          "scope": {
+            "type": "string",
+            "const": "public_consolidated_balance_sheet",
+            "title": "Scope",
+            "default": "public_consolidated_balance_sheet"
+          },
+          "notice": {
+            "type": "string",
+            "title": "Notice"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "snapshots",
+          "notice"
+        ],
+        "title": "StatementDatasetList"
+      },
+      "StatementEvidenceDetail": {
+        "properties": {
+          "observation": {
+            "$ref": "#/components/schemas/StatementObservation"
+          },
+          "report": {
+            "$ref": "#/components/schemas/StatementSourceIdentity"
+          },
+          "context": {
+            "$ref": "#/components/schemas/StatementContext"
+          },
+          "column_header": {
+            "$ref": "#/components/schemas/ColumnHeader"
+          },
+          "page": {
+            "$ref": "#/components/schemas/StatementPageGeometry"
+          },
+          "read_only": {
+            "type": "boolean",
+            "const": true,
+            "title": "Read Only",
+            "default": true
+          },
+          "semantic_status": {
+            "type": "string",
+            "const": "unverified_extraction",
+            "title": "Semantic Status",
+            "default": "unverified_extraction"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "observation",
+          "report",
+          "context",
+          "column_header",
+          "page"
+        ],
+        "title": "StatementEvidenceDetail"
+      },
+      "StatementObservation": {
+        "properties": {
+          "evidence_id": {
+            "type": "string",
+            "pattern": "^statement_evidence_[0-9a-f]{64}$",
+            "title": "Evidence Id"
+          },
+          "metric": {
+            "type": "string",
+            "enum": [
+              "total_assets",
+              "total_liabilities",
+              "total_equity"
+            ],
+            "title": "Metric"
+          },
+          "amount_reported": {
+            "type": "string",
+            "title": "Amount Reported"
+          },
+          "previous_amount_reported": {
+            "type": "string",
+            "title": "Previous Amount Reported"
+          },
+          "normalized_cny": {
+            "type": "string",
+            "title": "Normalized Cny"
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "元",
+              "千元"
+            ],
+            "title": "Unit"
+          },
+          "currency": {
+            "type": "string",
+            "const": "CNY",
+            "title": "Currency"
+          },
+          "pdf_page": {
+            "type": "integer",
+            "maximum": 5000.0,
+            "minimum": 1.0,
+            "title": "Pdf Page"
+          },
+          "table": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Table"
+          },
+          "table_row": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Table Row"
+          },
+          "current_table_column_zero_based": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Current Table Column Zero Based"
+          },
+          "previous_table_column_zero_based": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Previous Table Column Zero Based"
+          },
+          "current_cell": {
+            "type": "string",
+            "title": "Current Cell"
+          },
+          "previous_cell": {
+            "type": "string",
+            "title": "Previous Cell"
+          },
+          "label_cell": {
+            "type": "string",
+            "title": "Label Cell"
+          },
+          "current_cell_bbox": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 4,
+            "title": "Current Cell Bbox"
+          },
+          "previous_cell_bbox": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 4,
+            "title": "Previous Cell Bbox"
+          },
+          "text_lines": {
+            "items": {
+              "$ref": "#/components/schemas/TextLine"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Text Lines"
+          },
+          "label_fragments": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/LabelFragment"
+                },
+                "type": "array",
+                "maxItems": 2,
+                "minItems": 2
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label Fragments"
+          },
+          "table_rows": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "integer"
+                },
+                "type": "array",
+                "maxItems": 2,
+                "minItems": 2
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Table Rows"
+          },
+          "semantic_status": {
+            "type": "string",
+            "const": "unverified_extraction",
+            "title": "Semantic Status",
+            "default": "unverified_extraction"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "evidence_id",
+          "metric",
+          "amount_reported",
+          "previous_amount_reported",
+          "normalized_cny",
+          "unit",
+          "currency",
+          "pdf_page",
+          "table",
+          "table_row",
+          "current_table_column_zero_based",
+          "previous_table_column_zero_based",
+          "current_cell",
+          "previous_cell",
+          "label_cell",
+          "current_cell_bbox",
+          "previous_cell_bbox",
+          "text_lines"
+        ],
+        "title": "StatementObservation"
+      },
+      "StatementPageGeometry": {
+        "properties": {
+          "width": {
+            "type": "number",
+            "title": "Width"
+          },
+          "height": {
+            "type": "number",
+            "title": "Height"
+          },
+          "rotation": {
+            "type": "integer",
+            "title": "Rotation"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "width",
+          "height",
+          "rotation"
+        ],
+        "title": "StatementPageGeometry"
+      },
+      "StatementReport": {
+        "properties": {
+          "report_id": {
+            "type": "string",
+            "pattern": "^annual-\\d{6}-20\\d{2}$",
+            "title": "Report Id"
+          },
+          "company_code": {
+            "type": "string",
+            "pattern": "^\\d{6}$",
+            "title": "Company Code"
+          },
+          "company_name": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Company Name"
+          },
+          "report_year": {
+            "type": "integer",
+            "maximum": 2099.0,
+            "minimum": 2000.0,
+            "title": "Report Year"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "observed",
+              "rejected"
+            ],
+            "title": "Status"
+          },
+          "error_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Code"
+          },
+          "raw_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Raw Sha256"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "source_license": {
+            "type": "string",
+            "const": "unspecified",
+            "title": "Source License",
+            "default": "unspecified"
+          },
+          "observations": {
+            "items": {
+              "$ref": "#/components/schemas/StatementObservation"
+            },
+            "type": "array",
+            "title": "Observations"
+          },
+          "balance_check": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BalanceObservation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "report_id",
+          "company_code",
+          "company_name",
+          "report_year",
+          "status",
+          "error_code",
+          "raw_sha256",
+          "url",
+          "observations",
+          "balance_check"
+        ],
+        "title": "StatementReport"
+      },
+      "StatementReportsPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/StatementReport"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "next_offset": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Offset"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "offset",
+          "limit",
+          "next_offset"
+        ],
+        "title": "StatementReportsPage"
+      },
+      "StatementSourceIdentity": {
+        "properties": {
+          "report_id": {
+            "type": "string",
+            "title": "Report Id"
+          },
+          "company_name": {
+            "type": "string",
+            "title": "Company Name"
+          },
+          "report_year": {
+            "type": "integer",
+            "title": "Report Year"
+          },
+          "raw_sha256": {
+            "type": "string",
+            "title": "Raw Sha256"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "report_id",
+          "company_name",
+          "report_year",
+          "raw_sha256",
+          "url"
+        ],
+        "title": "StatementSourceIdentity"
+      },
+      "TextLine": {
+        "properties": {
+          "line": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Line"
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 10000,
+            "title": "Text"
+          },
+          "bbox": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 4,
+            "title": "Bbox"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "line",
+          "text",
+          "bbox"
+        ],
+        "title": "TextLine"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "WithdrawInput": {
+        "properties": {
+          "comment": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Comment"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "comment"
+        ],
+        "title": "WithdrawInput"
+      }
+    }
+  }
+}

@@ -1,0 +1,532 @@
+[
+  {
+    "name": "absl-py",
+    "version": "2.5.0",
+    "license_metadata": "Apache-2.0"
+  },
+  {
+    "name": "aiosqlite",
+    "version": "0.22.1",
+    "license_metadata": "OSI Approved :: MIT License"
+  },
+  {
+    "name": "alembic",
+    "version": "1.20.0",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "amqp",
+    "version": "5.4.1",
+    "license_metadata": "BSD"
+  },
+  {
+    "name": "annotated-doc",
+    "version": "0.0.5",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "annotated-types",
+    "version": "0.8.0",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "anyio",
+    "version": "4.15.1",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "beancount",
+    "version": "3.2.3",
+    "license_metadata": "GPL-2.0-only"
+  },
+  {
+    "name": "beautifulsoup4",
+    "version": "4.15.0",
+    "license_metadata": "MIT License"
+  },
+  {
+    "name": "billiard",
+    "version": "4.3.1",
+    "license_metadata": "BSD"
+  },
+  {
+    "name": "celery",
+    "version": "5.6.3",
+    "license_metadata": "BSD-3-Clause"
+  },
+  {
+    "name": "certifi",
+    "version": "2026.7.22",
+    "license_metadata": "MPL-2.0"
+  },
+  {
+    "name": "cffi",
+    "version": "2.1.1",
+    "license_metadata": "MIT-0"
+  },
+  {
+    "name": "charset-normalizer",
+    "version": "3.5.2",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "click",
+    "version": "8.5.0",
+    "license_metadata": "BSD-3-Clause"
+  },
+  {
+    "name": "click-didyoumean",
+    "version": "0.3.1",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "click-plugins",
+    "version": "1.1.1.2",
+    "license_metadata": "New BSD"
+  },
+  {
+    "name": "click-repl",
+    "version": "0.4.1",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "colorama",
+    "version": "0.4.6",
+    "license_metadata": "OSI Approved :: BSD License"
+  },
+  {
+    "name": "cryptography",
+    "version": "50.0.2",
+    "license_metadata": "Apache-2.0 OR BSD-3-Clause"
+  },
+  {
+    "name": "distro",
+    "version": "1.9.0",
+    "license_metadata": "Apache License, Version 2.0"
+  },
+  {
+    "name": "et_xmlfile",
+    "version": "2.0.0",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "fastapi",
+    "version": "0.142.2",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "h11",
+    "version": "0.16.0",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "httpcore",
+    "version": "1.0.9",
+    "license_metadata": "BSD-3-Clause"
+  },
+  {
+    "name": "httpcore2",
+    "version": "2.13.1",
+    "license_metadata": "BSD-3-Clause"
+  },
+  {
+    "name": "httptools",
+    "version": "0.8.0",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "httpx",
+    "version": "0.28.1",
+    "license_metadata": "BSD-3-Clause"
+  },
+  {
+    "name": "httpx2",
+    "version": "2.13.1",
+    "license_metadata": "BSD-3-Clause"
+  },
+  {
+    "name": "hypothesis",
+    "version": "6.168.5",
+    "license_metadata": "MPL-2.0"
+  },
+  {
+    "name": "idna",
+    "version": "3.20",
+    "license_metadata": "BSD-3-Clause"
+  },
+  {
+    "name": "immutabledict",
+    "version": "4.3.1",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "iniconfig",
+    "version": "2.3.1",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "jsonpatch",
+    "version": "1.33",
+    "license_metadata": "Modified BSD License"
+  },
+  {
+    "name": "jsonpointer",
+    "version": "3.2.0",
+    "license_metadata": "Modified BSD License"
+  },
+  {
+    "name": "kombu",
+    "version": "5.6.2",
+    "license_metadata": "BSD-3-Clause"
+  },
+  {
+    "name": "langchain-core",
+    "version": "1.6.7",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "langchain-protocol",
+    "version": "0.0.19",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "langgraph",
+    "version": "1.2.14",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "langgraph-checkpoint",
+    "version": "4.2.0",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "langgraph-checkpoint-postgres",
+    "version": "3.1.2",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "langgraph-checkpoint-sqlite",
+    "version": "3.1.1",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "langgraph-prebuilt",
+    "version": "1.1.0",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "langgraph-sdk",
+    "version": "0.4.6",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "langsmith",
+    "version": "0.14.4",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "Mako",
+    "version": "1.4.3",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "MarkupSafe",
+    "version": "3.0.4",
+    "license_metadata": "BSD-3-Clause"
+  },
+  {
+    "name": "numpy",
+    "version": "2.5.3",
+    "license_metadata": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0"
+  },
+  {
+    "name": "openpyxl",
+    "version": "3.1.5",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "opentelemetry-api",
+    "version": "1.45.1",
+    "license_metadata": "Apache-2.0"
+  },
+  {
+    "name": "opentelemetry-sdk",
+    "version": "1.45.1",
+    "license_metadata": "Apache-2.0"
+  },
+  {
+    "name": "opentelemetry-semantic-conventions",
+    "version": "0.66b1",
+    "license_metadata": "Apache-2.0"
+  },
+  {
+    "name": "orjson",
+    "version": "3.13.0",
+    "license_metadata": "MPL-2.0 AND (Apache-2.0 OR MIT)"
+  },
+  {
+    "name": "ormsgpack",
+    "version": "1.12.2",
+    "license_metadata": "Apache-2.0 OR MIT"
+  },
+  {
+    "name": "ortools",
+    "version": "9.15.6755",
+    "license_metadata": "Apache 2.0"
+  },
+  {
+    "name": "packaging",
+    "version": "26.3",
+    "license_metadata": "Apache-2.0 OR BSD-2-Clause"
+  },
+  {
+    "name": "pandas",
+    "version": "3.0.6",
+    "license_metadata": "BSD 3-Clause License\n\n Copyright (c) 2008-2011, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team\n All rights reserved.\n\n Copyright (c) 2011-2026, Open source contributors.\n\n Redistribution and use in source and binary forms, with or without\n modification, are permitted provided that the following conditions are met:\n\n * Redistributions of source code must retain the above copyright notice, this\n   list of conditions and the following disclaimer.\n\n * Redistributions in binary form must reproduce the above copyright notice,\n   this list of conditions and the following disclaimer in the documentation\n   and/or other materials provided with the distribution.\n\n * Neither the name of the copyright holder nor the names of its\n   contributors may be used to endorse or promote products derived from\n   this software without specific prior written permission.\n\n THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\n AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\n IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE\n DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE\n FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL\n DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR\n SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER\n CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,\n OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\n OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n"
+  },
+  {
+    "name": "pdfminer.six",
+    "version": "20260107",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "pdfplumber",
+    "version": "0.11.10",
+    "license_metadata": "OSI Approved :: MIT License"
+  },
+  {
+    "name": "pgvector",
+    "version": "0.5.0",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "pillow",
+    "version": "12.3.0",
+    "license_metadata": "MIT-CMU"
+  },
+  {
+    "name": "pluggy",
+    "version": "1.6.0",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "prompt_toolkit",
+    "version": "3.0.53",
+    "license_metadata": "OSI Approved :: BSD License"
+  },
+  {
+    "name": "protobuf",
+    "version": "6.33.6",
+    "license_metadata": "3-Clause BSD License"
+  },
+  {
+    "name": "psycopg",
+    "version": "3.3.6",
+    "license_metadata": "LGPL-3.0-only"
+  },
+  {
+    "name": "psycopg-binary",
+    "version": "3.3.6",
+    "license_metadata": "LGPL-3.0-only"
+  },
+  {
+    "name": "psycopg-pool",
+    "version": "3.3.3",
+    "license_metadata": "LGPL-3.0-only"
+  },
+  {
+    "name": "pycparser",
+    "version": "3.0",
+    "license_metadata": "BSD-3-Clause"
+  },
+  {
+    "name": "pydantic",
+    "version": "2.13.5",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "pydantic-settings",
+    "version": "2.15.0",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "pydantic_core",
+    "version": "2.46.5",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "Pygments",
+    "version": "2.21.0",
+    "license_metadata": "BSD-2-Clause"
+  },
+  {
+    "name": "pypdfium2",
+    "version": "5.14.0",
+    "license_metadata": "BSD-3-Clause, Apache-2.0, dependency licenses"
+  },
+  {
+    "name": "pytest",
+    "version": "9.1.1",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "pytest-asyncio",
+    "version": "1.4.0",
+    "license_metadata": "Apache-2.0"
+  },
+  {
+    "name": "python-dateutil",
+    "version": "2.9.0.post0",
+    "license_metadata": "Dual License"
+  },
+  {
+    "name": "python-dotenv",
+    "version": "1.2.4",
+    "license_metadata": "BSD-3-Clause"
+  },
+  {
+    "name": "python-multipart",
+    "version": "0.0.32",
+    "license_metadata": "Apache-2.0"
+  },
+  {
+    "name": "PyYAML",
+    "version": "6.0.3",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "redis",
+    "version": "6.4.0",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "regex",
+    "version": "2026.9.29",
+    "license_metadata": "Apache-2.0 AND CNRI-Python"
+  },
+  {
+    "name": "requests",
+    "version": "2.34.2",
+    "license_metadata": "Apache-2.0"
+  },
+  {
+    "name": "requests-toolbelt",
+    "version": "1.0.0",
+    "license_metadata": "Apache 2.0"
+  },
+  {
+    "name": "ruff",
+    "version": "0.16.10",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "six",
+    "version": "1.17.0",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "sniffio",
+    "version": "1.3.1",
+    "license_metadata": "MIT OR Apache-2.0"
+  },
+  {
+    "name": "sortedcontainers",
+    "version": "2.4.0",
+    "license_metadata": "Apache 2.0"
+  },
+  {
+    "name": "soupsieve",
+    "version": "2.10",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "SQLAlchemy",
+    "version": "2.1.3",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "sqlite-vec",
+    "version": "0.1.9",
+    "license_metadata": "MIT License, Apache License, Version 2.0"
+  },
+  {
+    "name": "starlette",
+    "version": "1.7.0",
+    "license_metadata": "BSD-3-Clause"
+  },
+  {
+    "name": "tenacity",
+    "version": "9.2.1",
+    "license_metadata": "Apache-2.0"
+  },
+  {
+    "name": "truststore",
+    "version": "0.10.4",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "typing-inspection",
+    "version": "0.4.4",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "typing_extensions",
+    "version": "4.16.0",
+    "license_metadata": "PSF-2.0"
+  },
+  {
+    "name": "tzdata",
+    "version": "2026.5",
+    "license_metadata": "Apache-2.0"
+  },
+  {
+    "name": "tzlocal",
+    "version": "5.4.4",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "urllib3",
+    "version": "2.8.0",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "uuid_utils",
+    "version": "0.17.1",
+    "license_metadata": "BSD-3-Clause"
+  },
+  {
+    "name": "uvicorn",
+    "version": "0.54.0",
+    "license_metadata": "BSD-3-Clause"
+  },
+  {
+    "name": "vine",
+    "version": "5.1.0",
+    "license_metadata": "BSD"
+  },
+  {
+    "name": "watchfiles",
+    "version": "1.3.0",
+    "license_metadata": "MIT"
+  },
+  {
+    "name": "wcwidth",
+    "version": "0.9.2",
+    "license_metadata": "OSI Approved :: MIT License"
+  },
+  {
+    "name": "websockets",
+    "version": "16.1.1",
+    "license_metadata": "BSD-3-Clause"
+  },
+  {
+    "name": "xxhash",
+    "version": "4.0.1",
+    "license_metadata": "BSD-2-Clause"
+  },
+  {
+    "name": "zstandard",
+    "version": "0.25.0",
+    "license_metadata": "BSD-3-Clause"
+  }
+]

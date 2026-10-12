@@ -1,0 +1,296 @@
+{
+  "schema_version": "mechanism-challenges-v1",
+  "created_at": "2026-10-12T09:35:12.188371+00:00",
+  "model_requests": 0,
+  "source_sha256": {
+    "benchmarks/mechanism_ablations.py": "c0afeec9e63dfb9675fdfcdd02c1e1c931fc170814f15f6c96d04ed0c77fd7bb",
+    "backend/app/domain.py": "b49e39dd9e544b4bf4568aa04bf7ec54dc63a591efa123fd925331989e693a75",
+    "backend/app/investigation.py": "2a2ef8c859920a36e2154349de3b89a830fa1703d618076ace0187edc48553a8"
+  },
+  "temporal": {
+    "samples_per_method": 4,
+    "rows": [
+      {
+        "case_id": "t1",
+        "method": "snapshot",
+        "expected_at_cutoff": "insufficient",
+        "predicted": "insufficient",
+        "error": null,
+        "correct_historical_status": true,
+        "false_historical_normal": false,
+        "source_unchanged": true
+      },
+      {
+        "case_id": "t1",
+        "method": "no_time_view",
+        "expected_at_cutoff": "insufficient",
+        "predicted": "normal",
+        "error": null,
+        "correct_historical_status": false,
+        "false_historical_normal": true,
+        "source_unchanged": true
+      },
+      {
+        "case_id": "t2",
+        "method": "snapshot",
+        "expected_at_cutoff": "insufficient",
+        "predicted": "insufficient",
+        "error": null,
+        "correct_historical_status": true,
+        "false_historical_normal": false,
+        "source_unchanged": true
+      },
+      {
+        "case_id": "t2",
+        "method": "no_time_view",
+        "expected_at_cutoff": "insufficient",
+        "predicted": "normal",
+        "error": null,
+        "correct_historical_status": false,
+        "false_historical_normal": true,
+        "source_unchanged": true
+      },
+      {
+        "case_id": "t3",
+        "method": "snapshot",
+        "expected_at_cutoff": "insufficient",
+        "predicted": "insufficient",
+        "error": null,
+        "correct_historical_status": true,
+        "false_historical_normal": false,
+        "source_unchanged": true
+      },
+      {
+        "case_id": "t3",
+        "method": "no_time_view",
+        "expected_at_cutoff": "insufficient",
+        "predicted": "insufficient",
+        "error": null,
+        "correct_historical_status": true,
+        "false_historical_normal": false,
+        "source_unchanged": true
+      },
+      {
+        "case_id": "t4",
+        "method": "snapshot",
+        "expected_at_cutoff": "normal",
+        "predicted": "normal",
+        "error": null,
+        "correct_historical_status": true,
+        "false_historical_normal": false,
+        "source_unchanged": true
+      },
+      {
+        "case_id": "t4",
+        "method": "no_time_view",
+        "expected_at_cutoff": "normal",
+        "predicted": "normal",
+        "error": null,
+        "correct_historical_status": true,
+        "false_historical_normal": false,
+        "source_unchanged": true
+      }
+    ],
+    "methods": {
+      "snapshot": {
+        "correct": 4,
+        "false_historical_normal": 0
+      },
+      "no_time_view": {
+        "correct": 2,
+        "false_historical_normal": 2
+      }
+    }
+  },
+  "simulation": {
+    "samples_per_method": 6,
+    "invalid_drafts": 5,
+    "rows": [
+      {
+        "case_id": "s1",
+        "method": "program_recompute",
+        "expected_valid": true,
+        "accepted": true,
+        "false_acceptance": false,
+        "source_unchanged": true,
+        "verification": {
+          "accepted": true,
+          "balanced": true,
+          "violations": [],
+          "declared_effect_matches": true,
+          "actual_delta": {
+            "1405": "-100.00",
+            "2202": "100.00"
+          }
+        }
+      },
+      {
+        "case_id": "s1",
+        "method": "trust_proposal_without_recompute",
+        "expected_valid": true,
+        "accepted": true,
+        "false_acceptance": false,
+        "source_unchanged": true,
+        "verification": null
+      },
+      {
+        "case_id": "s2",
+        "method": "program_recompute",
+        "expected_valid": false,
+        "accepted": false,
+        "false_acceptance": false,
+        "source_unchanged": true,
+        "verification": {
+          "accepted": false,
+          "balanced": true,
+          "violations": [],
+          "declared_effect_matches": false,
+          "actual_delta": {
+            "1405": "-100.00",
+            "2202": "100.00"
+          }
+        }
+      },
+      {
+        "case_id": "s2",
+        "method": "trust_proposal_without_recompute",
+        "expected_valid": false,
+        "accepted": true,
+        "false_acceptance": true,
+        "source_unchanged": true,
+        "verification": null
+      },
+      {
+        "case_id": "s3",
+        "method": "program_recompute",
+        "expected_valid": false,
+        "accepted": false,
+        "false_acceptance": false,
+        "source_unchanged": true,
+        "verification": {
+          "accepted": false,
+          "balanced": false,
+          "violations": [
+            "凭证 simulation-adjustment 的借减贷差额为 0.01 CNY。"
+          ],
+          "declared_effect_matches": true,
+          "actual_delta": {
+            "1405": "-99.99",
+            "2202": "100.00"
+          }
+        }
+      },
+      {
+        "case_id": "s3",
+        "method": "trust_proposal_without_recompute",
+        "expected_valid": false,
+        "accepted": true,
+        "false_acceptance": true,
+        "source_unchanged": true,
+        "verification": null
+      },
+      {
+        "case_id": "s4",
+        "method": "program_recompute",
+        "expected_valid": false,
+        "accepted": false,
+        "false_acceptance": false,
+        "source_unchanged": true,
+        "verification": {
+          "accepted": false,
+          "balanced": true,
+          "violations": [
+            "期间 2026-09 已锁定；该草稿不得正式入账"
+          ],
+          "declared_effect_matches": true,
+          "actual_delta": {
+            "1405": "-100.00",
+            "2202": "100.00"
+          }
+        }
+      },
+      {
+        "case_id": "s4",
+        "method": "trust_proposal_without_recompute",
+        "expected_valid": false,
+        "accepted": true,
+        "false_acceptance": true,
+        "source_unchanged": true,
+        "verification": null
+      },
+      {
+        "case_id": "s5",
+        "method": "program_recompute",
+        "expected_valid": false,
+        "accepted": false,
+        "false_acceptance": false,
+        "source_unchanged": true,
+        "verification": {
+          "accepted": false,
+          "balanced": true,
+          "violations": [
+            "科目 9999 不在当前账套的已确认科目表中；这仅证明映射缺口，不证明业务科目选择错误。"
+          ],
+          "declared_effect_matches": true,
+          "actual_delta": {
+            "2202": "100.00",
+            "9999": "-100.00"
+          }
+        }
+      },
+      {
+        "case_id": "s5",
+        "method": "trust_proposal_without_recompute",
+        "expected_valid": false,
+        "accepted": true,
+        "false_acceptance": true,
+        "source_unchanged": true,
+        "verification": null
+      },
+      {
+        "case_id": "s6",
+        "method": "program_recompute",
+        "expected_valid": false,
+        "accepted": true,
+        "false_acceptance": true,
+        "source_unchanged": true,
+        "verification": {
+          "accepted": true,
+          "balanced": true,
+          "violations": [],
+          "declared_effect_matches": true,
+          "actual_delta": {
+            "2202": "100.00",
+            "6602": "-100.00"
+          }
+        }
+      },
+      {
+        "case_id": "s6",
+        "method": "trust_proposal_without_recompute",
+        "expected_valid": false,
+        "accepted": true,
+        "false_acceptance": true,
+        "source_unchanged": true,
+        "verification": null
+      }
+    ],
+    "methods": {
+      "program_recompute": {
+        "false_acceptance": 1,
+        "correct": 5
+      },
+      "trust_proposal_without_recompute": {
+        "false_acceptance": 5,
+        "correct": 1
+      }
+    }
+  },
+  "all_sources_unchanged": true,
+  "limitations": [
+    "Handwritten synthetic challenge pairs, not sampled model output or real-world error rates.",
+    "Temporal metric measures historical overclaim, not semantic root-cause accuracy.",
+    "Simulation checks arithmetic and rule coverage; balanced wrong-purpose entries can pass.",
+    "No-counterproof and actual model-suggestion closed-loop ablations remain unmeasured."
+  ]
+}

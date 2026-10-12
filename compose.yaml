@@ -1,0 +1,87 @@
+name: ledgerlens
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_DB: ledgerlens
+      POSTGRES_USER: ledgerlens
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local-ledgerlens}
+    volumes:
+      - ${STORAGE_ROOT:-./runtime/docker}/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U ledgerlens"]
+      interval: 5s
+      retries: 20
+    mem_limit: 1g
+    restart: unless-stopped
+  redis:
+    image: redis:7.2-alpine
+    command: [redis-server, --appendonly, 'yes', --maxmemory, 128mb, --maxmemory-policy, noeviction]
+    volumes:
+      - ${STORAGE_ROOT:-./runtime/docker}/redis:/data
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      retries: 20
+    mem_limit: 256m
+    restart: unless-stopped
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    # Only the API migrates; worker and scheduler wait for it to be healthy.
+    command: [sh, -c, "alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+    environment: &backend-env
+      DATABASE_URL: postgresql+psycopg://ledgerlens:${POSTGRES_PASSWORD:-local-ledgerlens}@postgres:5432/ledgerlens
+      DATA_DIR: /data
+      TASK_MODE: celery
+      REDIS_URL: redis://redis:6379/0
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      DEEPSEEK_BASE_URL: ${DEEPSEEK_BASE_URL:-https://api.deepseek.com}
+      DEEPSEEK_MODEL: ${DEEPSEEK_MODEL:-deepseek-flash}
+    volumes:
+      - ${STORAGE_ROOT:-./runtime/docker}/app:/data
+    ports:
+      - 127.0.0.1:8000:8000
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health')"]
+      interval: 10s
+      retries: 20
+    mem_limit: 1g
+    restart: unless-stopped
+  worker:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    command: [.venv/bin/celery, -A, app.jobs:celery_app, worker, --concurrency=1, --loglevel=INFO]
+    environment: *backend-env
+    volumes:
+      - ${STORAGE_ROOT:-./runtime/docker}/app:/data
+    depends_on:
+      api: {condition: service_healthy}
+    mem_limit: 2g
+    restart: unless-stopped
+  scheduler:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    command: [.venv/bin/celery, -A, app.jobs:celery_app, beat, --loglevel=INFO, --schedule=/data/celerybeat]
+    environment: *backend-env
+    volumes:
+      - ${STORAGE_ROOT:-./runtime/docker}/app:/data
+    depends_on:
+      api: {condition: service_healthy}
+    mem_limit: 256m
+    restart: unless-stopped
+  web:
+    build:
+      context: frontend
+    ports:
+      - 127.0.0.1:${WEB_PORT:-8080}:80
+    depends_on:
+      api: {condition: service_healthy}
+    mem_limit: 256m
+    restart: unless-stopped

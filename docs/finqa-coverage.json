@@ -1,0 +1,56 @@
+{
+  "accounting_investigation_accuracy_measured": null,
+  "component_accuracy_measured": null,
+  "evaluator_only_fields": "all_qa_fields_except_question_and_all_other_top_level_fields",
+  "failure": null,
+  "isolation": "logical_filesystem_zones_not_OS_permission_enforcement",
+  "license": "MIT",
+  "limitations": [
+    "Financial-report numeric reasoning data; not complete Chinese accounting books.",
+    "Acquisition and field projection checks do not prove numerical answers or investigation accuracy.",
+    "Official public/private test splits are not acquired; dev is not a sealed acceptance set.",
+    "Repository main can change; these downloaded bytes are pinned by SHA-256.",
+    "Repo MIT notice retained locally; report excerpts can have separate original rights."
+  ],
+  "raw_files_redistributed": false,
+  "record_count": 883,
+  "repository_url": "https://github.com/czyssrs/FinQA",
+  "retrieved_at": "2026-10-08T05:24:18.504627+00:00",
+  "runtime_input_fields": [
+    "id",
+    "question",
+    "pre_text",
+    "post_text",
+    "table",
+    "locators"
+  ],
+  "runtime_policy_knowledge_registered": false,
+  "schema_version": "finqa-dev-acquisition-v1",
+  "source_revision": "main_unpinned_content_pinned_by_sha256",
+  "sources": [
+    {
+      "bytes": 10954658,
+      "role": "dataset",
+      "sha256": "a847fb7e0d61a3125a1e2909852df6b89f1ee64d2c5ff1bf689e332214deee51",
+      "url": "https://raw.githubusercontent.com/czyssrs/FinQA/main/dataset/dev.json"
+    },
+    {
+      "bytes": 1067,
+      "role": "license",
+      "sha256": "92c0e67bd762c15c07ba60de09558338315a8ebf99aac4f51f487179809ac087",
+      "url": "https://raw.githubusercontent.com/czyssrs/FinQA/main/LICENSE"
+    }
+  ],
+  "split": "dev",
+  "status": "collected",
+  "verification": {
+    "accounting_validation": null,
+    "answer_zone_separation": "passed",
+    "knowledge_manifest_exclusion": "passed",
+    "observed_field_allowlist": "passed",
+    "projection_fidelity": "passed",
+    "records": 883,
+    "source_hashes": "passed",
+    "status": "verified"
+  }
+}

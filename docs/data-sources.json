@@ -1,0 +1,13 @@
+{
+  "version": "2026-10-07.1",
+  "sources": [
+    {"id":"cas28","title":"企业会计准则第28号","url":"https://kjs.mof.gov.cn/zt/kjzzss/kuaijizhunzeshishi/200806/t20080618_46220.htm","framework":"CAS","publisher":"财政部","kind":"policy","redistribution":"source_manifest_only","effective_from":null},
+    {"id":"scas-error-correction","title":"小企业会计准则差错更正答复","url":"https://www.mof.gov.cn/bd/mhwzzxly/hjs/202401/t20240121_3926735.htm","framework":"SCAS","publisher":"财政部","kind":"official_answer","redistribution":"source_manifest_only","effective_from":null},
+    {"id":"accounting-software-2024","title":"会计软件基本功能和服务规范发布通知","url":"https://www.mof.gov.cn/jrttts/202408/t20240809_3941453.htm","framework":"BOTH","publisher":"财政部","kind":"policy_notice","redistribution":"source_manifest_only","effective_from":"2025-01-01","required_text":"会计软件基本功能和服务规范","expected_article_title":"关于印发《会计软件基本功能和服务规范》的通知"},
+    {"id":"accounting-software-2024-full","title":"会计软件基本功能和服务规范完整附件","url":"https://www.mof.gov.cn/jrttts/202408/P020240809318551591785.pdf","framework":"BOTH","publisher":"财政部","kind":"policy","redistribution":"source_manifest_only","effective_from":"2025-01-01","required_text":"会计软件基本功能和服务规范"},
+    {"id":"revenue-cases-index","title":"收入准则应用案例目录","url":"https://kjs.mof.gov.cn/zt/kjzzss/srzzzq/srzzyy/index.htm","framework":"CAS","publisher":"财政部","kind":"case_index","redistribution":"source_manifest_only","effective_from":null},
+    {"id":"bpi2019","title":"BPI Challenge 2019","url":"https://research.tue.nl/en/datasets/bpi-challenge-2019/","framework":"NONE","publisher":"Eindhoven University of Technology / 4TU","kind":"dataset_description","redistribution":"check_dataset_license","effective_from":null},
+    {"id":"finqa","title":"FinQA dataset and task description","url":"https://finqasite.github.io/index.html","framework":"NONE","publisher":"FinQA authors","kind":"dataset_description","redistribution":"check_dataset_license","effective_from":null}
+  ],
+  "note":"目录页面不是已采集案例；数据集说明页面不是已下载的数据集。执行采集程序后以获取报告为准。"
+}

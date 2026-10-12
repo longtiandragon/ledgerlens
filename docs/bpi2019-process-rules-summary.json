@@ -1,0 +1,139 @@
+{
+  "schema_version": "bpi2019-process-rules-summary-v1",
+  "generated_at": "2026-10-11T08:20:55.809821+00:00",
+  "model_requests": 0,
+  "snapshots": [
+    {
+      "manifest": {
+        "dataset_scope_id": "process_dataset_2f12c82ada9654869b7e6f5ed6063a6acd763759b82169ebdcb11cc116f6e072",
+        "snapshot_id": "process_snapshot_51f479a4225941332a4474892621835c118e797a0cfba287b3ee95285bb0830a",
+        "source_raw_sha256": "af63bc687fc4152f2123b05c3af7772b37ef3fce2d3f67f812666c9e356baae7",
+        "source_subset_sha256": "0175894689d7f93ae104fbdafb0fd4033654e2930fc6bd6bce20fd8f317cf248",
+        "trace_count": 1000,
+        "event_count": 15351
+      },
+      "summary": {
+        "rule_pack": {
+          "version": "bpi2019-process-rules-v1",
+          "source_sha256": "09ccc53dadf853bede934e926e224dfc9046fa732e6430adc2a4f7e4a03154ba"
+        },
+        "dataset_scope_id": "process_dataset_2f12c82ada9654869b7e6f5ed6063a6acd763759b82169ebdcb11cc116f6e072",
+        "snapshot_id": "process_snapshot_51f479a4225941332a4474892621835c118e797a0cfba287b3ee95285bb0830a",
+        "trace_count": 1000,
+        "conclusion_counts": {
+          "compatible": 879,
+          "needs_review": 0,
+          "insufficient": 121,
+          "out_of_scope": 0
+        },
+        "rule_status_counts": {
+          "BPI2019_PROCESS.POLICY_CLASSIFICATION": {
+            "compatible": 1000,
+            "needs_review": 0,
+            "insufficient": 0,
+            "out_of_scope": 0
+          },
+          "BPI2019_PROCESS.ACTIVITY_VOCABULARY": {
+            "compatible": 1000,
+            "needs_review": 0,
+            "insufficient": 0,
+            "out_of_scope": 0
+          },
+          "BPI2019_PROCESS.EVENT_FIELD_QUALITY": {
+            "compatible": 1000,
+            "needs_review": 0,
+            "insufficient": 0,
+            "out_of_scope": 0
+          },
+          "BPI2019_PROCESS.GOODS_RECEIPT_EXPECTATION": {
+            "compatible": 970,
+            "needs_review": 0,
+            "insufficient": 30,
+            "out_of_scope": 0
+          },
+          "BPI2019_PROCESS.ITEM_INVOICE_EXPECTATION": {
+            "compatible": 970,
+            "needs_review": 0,
+            "insufficient": 30,
+            "out_of_scope": 0
+          },
+          "BPI2019_PROCESS.GR_BASED_INVOICE_ORDER": {
+            "compatible": 957,
+            "needs_review": 0,
+            "insufficient": 14,
+            "out_of_scope": 29
+          },
+          "BPI2019_PROCESS.CLEARING_AFTER_GOODS_RECEIPT": {
+            "compatible": 918,
+            "needs_review": 0,
+            "insufficient": 53,
+            "out_of_scope": 29
+          },
+          "BPI2019_PROCESS.REPEATED_STAGE_EVENTS": {
+            "compatible": 144,
+            "needs_review": 0,
+            "insufficient": 0,
+            "out_of_scope": 856
+          },
+          "BPI2019_PROCESS.CANCELLATION_EVENTS": {
+            "compatible": 0,
+            "needs_review": 0,
+            "insufficient": 67,
+            "out_of_scope": 933
+          }
+        },
+        "needs_review_trace_samples": {
+          "BPI2019_PROCESS.POLICY_CLASSIFICATION": [],
+          "BPI2019_PROCESS.ACTIVITY_VOCABULARY": [],
+          "BPI2019_PROCESS.EVENT_FIELD_QUALITY": [],
+          "BPI2019_PROCESS.GOODS_RECEIPT_EXPECTATION": [],
+          "BPI2019_PROCESS.ITEM_INVOICE_EXPECTATION": [],
+          "BPI2019_PROCESS.GR_BASED_INVOICE_ORDER": [],
+          "BPI2019_PROCESS.CLEARING_AFTER_GOODS_RECEIPT": [],
+          "BPI2019_PROCESS.REPEATED_STAGE_EVENTS": [],
+          "BPI2019_PROCESS.CANCELLATION_EVENTS": []
+        },
+        "result_kind": "observation_counts_not_accuracy_or_anomaly_rate",
+        "unsupported_checks": [
+          "goods_receipt_to_invoice_value_matching",
+          "stage_value_summation_and_rounding_tolerance",
+          "per_batch_receipt_invoice_clearing_pairing",
+          "cancellation_target_identification_and_netting",
+          "payment_block_state_reconstruction",
+          "clearing_as_bank_payment",
+          "duplicate_posting_diagnosis",
+          "anomaly_root_cause",
+          "business_completion"
+        ]
+      },
+      "independent_cross_checks": [
+        {
+          "name": "three_way_without_clear_invoice",
+          "independent": 53,
+          "rule_package": 53,
+          "match": true
+        },
+        {
+          "name": "gr_based_missing_goods_or_invoice_receipt",
+          "independent": 14,
+          "rule_package": 14,
+          "match": true
+        },
+        {
+          "name": "consignment_with_item_invoice_or_clearing",
+          "independent": 0,
+          "rule_package": 0,
+          "match": true
+        },
+        {
+          "name": "traces_with_cancellation",
+          "independent": 67,
+          "rule_package": 67,
+          "match": true
+        }
+      ]
+    }
+  ],
+  "all_cross_checks_match": true,
+  "interpretation": "Rule outcome counts on a local public subset; not accuracy, anomaly rate, accounting-standard support or business completion."
+}

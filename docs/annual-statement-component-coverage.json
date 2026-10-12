@@ -1,0 +1,384 @@
+{
+  "schema_version": "annual-statement-component-coverage-v1",
+  "created_at": "2026-10-08T19:23:35.824924+00:00",
+  "source_report_sha256": "fae3f5f4903477c52cf90162ab9a4a05a7ae6a2745bfe3d93642b1e21ca71527",
+  "parser_source_sha256": "702365c7554a0dbabb68393b7a53a0bbbb3eacf6adda94010677f831d5a3aa1c",
+  "coverage_manifest_sha256": "cea7dd5ffcbf500a7ad9ea0c3bb70bbdf94eb04bc9b6efec4149098187307f7a",
+  "reports_attempted": 30,
+  "reports_observed": 23,
+  "reports_rejected": 7,
+  "unprobed_reports": 0,
+  "independently_pinned_report_samples": 4,
+  "model_calls": 0,
+  "runtime_agent_used": false,
+  "financial_accuracy_benchmark": false,
+  "error_counts": {
+    "monetary_unit_not_unique": 6,
+    "consolidated_balance_sheet_title_not_confirmed": 1
+  },
+  "reports": [
+    {
+      "id": "annual-002697-2023",
+      "company_code": "002697",
+      "report_year": 2023,
+      "url": "https://static.cninfo.com.cn/finalpage/2024-04-02/1219489390.PDF",
+      "raw_sha256": "133679da9adbf3c935f7db04a7ac17539c1ecddc99a52fef199d8f82b7d73c29",
+      "status": "rejected",
+      "error_code": "monetary_unit_not_unique",
+      "observed_metric_count": 0,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-002697-2024",
+      "company_code": "002697",
+      "report_year": 2024,
+      "url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223142268.PDF",
+      "raw_sha256": "397dbb5aefc22aa8646e01b0723dd197d7f546f603877e32d49ac45b3746ac67",
+      "status": "rejected",
+      "error_code": "monetary_unit_not_unique",
+      "observed_metric_count": 0,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-002697-2025",
+      "company_code": "002697",
+      "report_year": 2025,
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-09/1225084036.PDF",
+      "raw_sha256": "e8a4288cee95363a3c6a5faf5e4790998fa969a6bde07df1a164ef78625e656f",
+      "status": "rejected",
+      "error_code": "monetary_unit_not_unique",
+      "observed_metric_count": 0,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-002024-2023",
+      "company_code": "002024",
+      "report_year": 2023,
+      "url": "https://static.cninfo.com.cn/finalpage/2024-03-30/1219473986.PDF",
+      "raw_sha256": "e06c813538de45ed6a55153d397c341111f9d8cd82764350b9b8b78b2c7ae2ad",
+      "status": "rejected",
+      "error_code": "consolidated_balance_sheet_title_not_confirmed",
+      "observed_metric_count": 0,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-002024-2024",
+      "company_code": "002024",
+      "report_year": 2024,
+      "url": "https://static.cninfo.com.cn/finalpage/2025-03-29/1222950703.PDF",
+      "raw_sha256": "ad6635b3abaece497d6cd2a1ca2edb86ef9f51045d3da5b4284f07ec164116fa",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-002024-2025",
+      "company_code": "002024",
+      "report_year": 2025,
+      "url": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225064473.PDF",
+      "raw_sha256": "2ab6216190ce0602fdf17526b5178a74d5d2372127ea47efc4b81a0487bde0b6",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": true
+    },
+    {
+      "id": "annual-601933-2023",
+      "company_code": "601933",
+      "report_year": 2023,
+      "url": "https://static.cninfo.com.cn/finalpage/2024-04-27/1219878384.PDF",
+      "raw_sha256": "e42dc09dd459be4b3b3f5b99915add27be9ea0b0c94cb55bf82b590538b5669e",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": true
+    },
+    {
+      "id": "annual-601933-2024",
+      "company_code": "601933",
+      "report_year": 2024,
+      "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223319424.PDF",
+      "raw_sha256": "236f6dee2ca9ef7d355e2fa2654e071a9a18ad7c358167a9864a878c95722eac",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-601933-2025",
+      "company_code": "601933",
+      "report_year": 2025,
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-17/1225113031.PDF",
+      "raw_sha256": "8911349483454b538fe505e669a05bb4110c84e053ab74eeb9a04f8a607c9e9c",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-600859-2023",
+      "company_code": "600859",
+      "report_year": 2023,
+      "url": "https://static.cninfo.com.cn/finalpage/2024-04-20/1219698702.PDF",
+      "raw_sha256": "64ac089b365f448ddba97463aa991852b5bc34a95290952e6ecb0a868ae6034c",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-600859-2024",
+      "company_code": "600859",
+      "report_year": 2024,
+      "url": "https://static.cninfo.com.cn/finalpage/2025-04-26/1223313058.PDF",
+      "raw_sha256": "55e2e53cbbc3e7a590affc9a15b0e84365ab06ffe35ea6bb518de5cad8940f69",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-600859-2025",
+      "company_code": "600859",
+      "report_year": 2025,
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225156521.PDF",
+      "raw_sha256": "e9d746bc70fa3d4b0c1ca6e866868be86bfc90ae1110918c4e0d5c04c88c98ca",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-600729-2023",
+      "company_code": "600729",
+      "report_year": 2023,
+      "url": "https://static.cninfo.com.cn/finalpage/2024-04-19/1219673639.PDF",
+      "raw_sha256": "5ef3d48b04c4a306688c4fd78d7882c19a5c0ab494e82d91a494079434afe9a7",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-600729-2024",
+      "company_code": "600729",
+      "report_year": 2024,
+      "url": "https://static.cninfo.com.cn/finalpage/2025-04-19/1223152819.PDF",
+      "raw_sha256": "86838272f893e88a0b046bd16cac9d1db40cb2f38442f3b1b13a9e78b2542d0c",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-600729-2025",
+      "company_code": "600729",
+      "report_year": 2025,
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225117270.PDF",
+      "raw_sha256": "be991a51ef7d36fe3670141ba490086b070f44c99662528a732b5c8149e9b492",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-600415-2023",
+      "company_code": "600415",
+      "report_year": 2023,
+      "url": "https://static.cninfo.com.cn/finalpage/2024-04-17/1219636094.PDF",
+      "raw_sha256": "1351d1bc10f561dabc32a585dfeccc780974358d5083121b2064a72b98862d63",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-600415-2024",
+      "company_code": "600415",
+      "report_year": 2024,
+      "url": "https://static.cninfo.com.cn/finalpage/2025-03-27/1222910290.PDF",
+      "raw_sha256": "202fc9bba88d5ba6d4b57f700b774e326e790fbe1dd7f8970610f37bbe21103f",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-600415-2025",
+      "company_code": "600415",
+      "report_year": 2025,
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-09/1225085392.PDF",
+      "raw_sha256": "e7cb54f27212eec7fdeb817e15ab06b8c768700f2432dc572d53c635d360053a",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-600588-2023",
+      "company_code": "600588",
+      "report_year": 2023,
+      "url": "https://static.cninfo.com.cn/finalpage/2024-03-30/1219465845.PDF",
+      "raw_sha256": "0a78f501c4d3ab8ee6c78ca4c0adc936613f3df5eb3326696a0c2feeb10d5749",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-600588-2024",
+      "company_code": "600588",
+      "report_year": 2024,
+      "url": "https://static.cninfo.com.cn/finalpage/2025-03-29/1222946316.PDF",
+      "raw_sha256": "3d057dc1334f65dbc18c34501eb0145df75a2b9d86fb8f49d9075b657b8e3c66",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-600588-2025",
+      "company_code": "600588",
+      "report_year": 2025,
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225120765.PDF",
+      "raw_sha256": "04af3511b61d5c22cad4cfcca68bc9da88eb5144d6c22c6ee87e79c32f5c1052",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": true
+    },
+    {
+      "id": "annual-600570-2023",
+      "company_code": "600570",
+      "report_year": 2023,
+      "url": "https://static.cninfo.com.cn/finalpage/2024-03-25/1219392177.PDF",
+      "raw_sha256": "191752cdc76bffb08b013700782e728f85a5c3fb05a62df5de95c315630159cd",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-600570-2024",
+      "company_code": "600570",
+      "report_year": 2024,
+      "url": "https://static.cninfo.com.cn/finalpage/2025-03-29/1222946269.PDF",
+      "raw_sha256": "771c7cfe4d8c133991af831eeebb99d14bffdfb0ed8b55e1c091d5eba8fd5eff",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-600570-2025",
+      "company_code": "600570",
+      "report_year": 2025,
+      "url": "https://static.cninfo.com.cn/finalpage/2026-03-28/1225046858.PDF",
+      "raw_sha256": "e2b084183d2061001e76fb87b9d60d9fa27a4a51939a70721746f678c0ecfedc",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-688111-2023",
+      "company_code": "688111",
+      "report_year": 2023,
+      "url": "https://static.cninfo.com.cn/finalpage/2024-03-21/1219361803.PDF",
+      "raw_sha256": "e07701bbf871a58308efc05126c25377e37f8cc917fbec6ab52530c557829dce",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-688111-2024",
+      "company_code": "688111",
+      "report_year": 2024,
+      "url": "https://static.cninfo.com.cn/finalpage/2025-03-20/1222847501.PDF",
+      "raw_sha256": "168fb9dcaaedb27756391912837ddb96098726829305d251a8f8bd64ee908848",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-688111-2025",
+      "company_code": "688111",
+      "report_year": 2025,
+      "url": "https://static.cninfo.com.cn/finalpage/2026-03-26/1225032227.PDF",
+      "raw_sha256": "bf6ade124527896edb1c1be6af04a7d6b4c0eb964de42a96a77db7dbc6cee281",
+      "status": "observed",
+      "error_code": null,
+      "observed_metric_count": 3,
+      "has_independently_pinned_sample": true
+    },
+    {
+      "id": "annual-002410-2023",
+      "company_code": "002410",
+      "report_year": 2023,
+      "url": "https://static.cninfo.com.cn/finalpage/2024-03-26/1219402662.PDF",
+      "raw_sha256": "af170641d8b7cc8dbbb5384dacc235e7c387749f371115ac11ac7ec9b4875b2d",
+      "status": "rejected",
+      "error_code": "monetary_unit_not_unique",
+      "observed_metric_count": 0,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-002410-2024",
+      "company_code": "002410",
+      "report_year": 2024,
+      "url": "https://static.cninfo.com.cn/finalpage/2025-03-25/1222881520.PDF",
+      "raw_sha256": "455610c72c2920ed7d29740f13ccd9062b156cb82380eeb3b25a1067cd9ab2c2",
+      "status": "rejected",
+      "error_code": "monetary_unit_not_unique",
+      "observed_metric_count": 0,
+      "has_independently_pinned_sample": false
+    },
+    {
+      "id": "annual-002410-2025",
+      "company_code": "002410",
+      "report_year": 2025,
+      "url": "https://static.cninfo.com.cn/finalpage/2026-03-24/1225024978.PDF",
+      "raw_sha256": "2822b9d65947985e610ba4d316623cadb54b79ecd9fe82e36543e8746710b717",
+      "status": "rejected",
+      "error_code": "monetary_unit_not_unique",
+      "observed_metric_count": 0,
+      "has_independently_pinned_sample": false
+    }
+  ],
+  "limitations": [
+    "Observed means located extraction, not verified financial truth.",
+    "Only four pinned samples have independent cell regressions.",
+    "The read-only workspace is separate from books, executable rules and Agent tools."
+  ],
+  "previous_runs": [
+    {
+      "created_at": "2026-10-08T19:06:28.955208+00:00",
+      "source_report_sha256": "aba3db940992ba6c1df6a60a168f817d900354bb4e1bbbc3669f668101392931",
+      "parser_source_sha256": "2e9aa470a6dd64285d6af8835f97838a35835378b655c0b1ed62fa233d2a1126",
+      "reports_attempted": 30,
+      "reports_observed": 22,
+      "reports_rejected": 8,
+      "error_counts": {
+        "monetary_unit_not_unique": 6,
+        "consolidated_balance_sheet_title_not_confirmed": 1,
+        "required_total_missing_or_duplicate": 1
+      }
+    },
+    {
+      "created_at": "2026-10-08T19:10:44.791229+00:00",
+      "source_report_sha256": "8596920bc6a9e34ea89d130c314daee7ef7940e8440f01038207a411d568f0bd",
+      "parser_source_sha256": "fe885423ed14c28a8e7dda4eecc4e4b2e2b79e22455f939222c13f7671014654",
+      "reports_attempted": 30,
+      "reports_observed": 22,
+      "reports_rejected": 8,
+      "error_counts": {
+        "monetary_unit_not_unique": 6,
+        "consolidated_balance_sheet_title_not_confirmed": 1,
+        "required_total_missing_or_duplicate": 1
+      }
+    }
+  ]
+}

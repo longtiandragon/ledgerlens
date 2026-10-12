@@ -1,0 +1,78 @@
+{
+  "schema_version": "bpi2019-complete-traces-v1",
+  "started_at": "2026-10-08T05:30:56.873485+00:00",
+  "status": "collected",
+  "article_id": 12715853,
+  "file_id": 24072995,
+  "doi": "10.4121/uuid:d06aff4b-79f0-45e6-8ec8-e19730c248f1",
+  "title": "BPI Challenge 2019",
+  "metadata_sources": [
+    {
+      "url": "https://data.4tu.nl/v2/articles/12715853",
+      "status": "fetched",
+      "bytes": 8102,
+      "sha256": "6632a3b7c43ccb2fd6981055ff117ea15a8fd3de51282dd0eddfe54284ec70cb",
+      "retrieved_at": "2026-10-08T05:30:58.889379+00:00"
+    },
+    {
+      "url": "https://api.figshare.com/v2/articles/12715853",
+      "status": "fetched",
+      "bytes": 10637,
+      "sha256": "daf1fc7b9a812283b6411b7d7a2e2e2c75df289cbc741ee459658dfcb56aa872",
+      "retrieved_at": "2026-10-08T05:31:00.608892+00:00"
+    }
+  ],
+  "limitations": [
+    "This is a real anonymised purchase-to-pay event log, not a general ledger.",
+    "Only the first requested complete traces in source order are selected; this is not random sampling.",
+    "No accounting framework, currency, journals or anomaly root-cause labels are inferred.",
+    "Trace parsing is component validation, not Chinese accounting accuracy or business impact validation."
+  ],
+  "redistribution": "metadata_statistics_only_raw_and_subset_in_ignored_local_storage",
+  "source": {
+    "article_id": 12715853,
+    "file_id": 24072995,
+    "title": "BPI Challenge 2019",
+    "doi": "10.4121/uuid:d06aff4b-79f0-45e6-8ec8-e19730c248f1",
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "name": "BPI_Challenge_2019.xes",
+    "expected_bytes": 728558522,
+    "expected_md5": "4eb909242351193a61e1c15b9c3cc814",
+    "download_url": "https://ndownloader.figshare.com/files/24072995",
+    "version": 1,
+    "published_date": "2019-01-31T00:00:00Z",
+    "published_file_complete": null,
+    "creators": [
+      "Boudewijn van Dongen"
+    ]
+  },
+  "download": {
+    "status": "verified",
+    "bytes": 728558522,
+    "md5_matches_official": true,
+    "source_url": "https://ndownloader.figshare.com/files/24072995",
+    "byte_limit": 800000000,
+    "sha256": "af63bc687fc4152f2123b05c3af7772b37ef3fce2d3f67f812666c9e356baae7",
+    "md5": "4eb909242351193a61e1c15b9c3cc814"
+  },
+  "subset": {
+    "complete_traces": 1000,
+    "events": 15351,
+    "minimum_events_per_trace": 2,
+    "maximum_events_per_trace": 923,
+    "selection": "first_complete_traces_in_source_order",
+    "requested_traces": 1000,
+    "accounting_framework": null,
+    "currency_inferred": false,
+    "journals_inferred": false,
+    "anomaly_truth_available": false,
+    "bytes": 3164875,
+    "sha256": "0175894689d7f93ae104fbdafb0fd4033654e2930fc6bd6bce20fd8f317cf248",
+    "md5": "0433bad47845b3c97cc429731c73414f",
+    "parser": "backend.app.connectors.read_bpi_xes"
+  },
+  "finished_at": "2026-10-08T05:33:40.129546+00:00"
+}

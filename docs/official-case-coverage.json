@@ -1,0 +1,891 @@
+{
+  "schema_version": "mof-official-qa-v1",
+  "generated_at": "2026-10-08T04:22:43.384467+00:00",
+  "collected_official_qa_count": 32,
+  "failed_source_count": 0,
+  "official_accounting_tests_passed": null,
+  "executable_rule_coverage": "not_evaluated",
+  "runtime_answer_indexed_count": 0,
+  "question_answer_separation": "separate_local_directories",
+  "access_control": "logical_contract_only_no_OS_permission_boundary",
+  "redistribution": "metadata_and_locators_only_originals_stored_locally",
+  "acquisition_attempt_history": {
+    "attempts": 44,
+    "failures": 12,
+    "failure_codes": {
+      "ValueError": 12
+    }
+  },
+  "limitations": [
+    "These are policy Q&A, not complete ledgers or independently labelled anomaly investigations.",
+    "Publication date is recorded; effective intervals and later replacements still need review.",
+    "No official conclusion has been converted into an executable accounting rule by this collector.",
+    "Original HTML and evaluator answers must not be added to the runtime reference index."
+  ],
+  "sources": [
+    {
+      "id": "mof-qa-3861813",
+      "title": "二手车采购与存货",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/chzzsswd/202301/t20230103_3861813.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "汽车销售企业在日常活动中购进二手车用于销售。",
+      "sha256": "c2a124f48ff46df0807a46da04de6ceaba341a9401e0d12318ed7a76535d4837",
+      "bytes": 15629,
+      "published_at": "2023-01-03",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "16798ad8732f055c682c339c8ffc7c98f876d3bab00932d2f78be66961a94e47",
+      "answer_sha256": "3d544310a982cf4d714f42a26c397c2412a98a770c3b78778603071b2e628d1b",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:15:50.974786+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3962188",
+      "title": "固定资产改造与折旧年限",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/gdzczzsswd/202504/t20250417_3962188.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "大厦与幕墙总体确认为一项固定资产，改造消除安全风险后拟延长折旧年限。",
+      "sha256": "ea4b0ddb46f90dea332ad1b16b130dcbbb5aa40d81d62b85785ba7a8e00948c2",
+      "bytes": 18099,
+      "published_at": "2025-04-17",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "6839f4c56adf51b2c2ac0f8317c97f4312ae053a188ce3c31f599d5e8b2a48eb",
+      "answer_sha256": "fa05ddc05bd7273a104c789e8dd90e95db0406980cd308ed879891ed18857b6b",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:15:50.975792+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3762834",
+      "title": "固定资产日常修理费用",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/gdzczzsswd/202111/t20211102_3762834.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "日常修理支出不符合固定资产后续支出资本化条件，需辨别受益对象。",
+      "sha256": "f2e966d221ebfea80e01fb2063e2c9089d617a470d24b65ce321bb10656063fb",
+      "bytes": 16492,
+      "published_at": "2021-11-02",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "740511811bad64c0875a38fe5257fee2e143563793d14f465dcba77c399fad28",
+      "answer_sha256": "a3302ccc4ccb872ef8add12ada83b0aa072d24d90c0e8daa22771fb9367610ad",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:15:50.976791+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3962191",
+      "title": "已费用化研发样机后续出售",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/wxzczzsswd/202504/t20250417_3962191.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "以前期间研发样机支出已经费用化，后续期间签订销售合同并实现销售。",
+      "sha256": "58d1e5355011ec094d7d38a91eee3a06b850ee0b9caf7c6756d159c3492e25c1",
+      "bytes": 17602,
+      "published_at": "2025-04-17",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "ed418afd467387ad6e24eef8e39a54857c7189e638acd889765100a4bfc192bc",
+      "answer_sha256": "dcd98f75c98d405da59f9d432c03d0a2695b9f6bb620c99e3df87b9e0e4ff638",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:15:50.976791+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3946594",
+      "title": "内部数据资源开发支出",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/sjzykjclsswd/202410/t20241030_3946594.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "企业内部数据资源研究开发项目，判断开发阶段支出是否满足资本化条件。",
+      "sha256": "f681211b5dc8c2a5d578384fff60b88aa12a3952216827bbf9d12557b0ee126d",
+      "bytes": 21502,
+      "published_at": "2024-10-31",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "4537c9180ac52ed8bec2a4879cfd766a52fb195645e951eb1a1fa954be45fa2c",
+      "answer_sha256": "1fb9337b68b402c22c2e41aa69ff057dd1433a4f88b50fbdd4d397c8f8bbe3c5",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:16:07.238590+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3895086",
+      "title": "权益法投资减值迹象",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/zcjzzzsswd/202307/t20230710_3895086.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "联营企业股票价值大幅下降，投资方采用权益法核算长期股权投资。",
+      "sha256": "3f7cf05d5f01ea61a53ccf5175aceefda3e547268608c6bc51d6cf6bc0fe0dce",
+      "bytes": 16578,
+      "published_at": "2023-07-10",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "a4f33442f3d205bafe8ddb0446d873b4845955e64da0eb1abc4938c70fc1b227",
+      "answer_sha256": "5772f48797a936e74fc575aa270d8407d130f763f4c20fcedab1145c8a1f6a85",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:16:07.240729+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3895087",
+      "title": "商誉减值的资产组范围",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/zcjzzzsswd/202307/t20230710_3895087.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "企业合并形成的商誉分摊至资产组或资产组组合后实施减值测试。",
+      "sha256": "03af4a44716dad45381884f3f48eaa10e44f6b57da9328e8b0ba75746158b8a4",
+      "bytes": 15855,
+      "published_at": "2023-07-10",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "cec8910cdd2901e6a52db7db95efb78edbac507ad4be8bc86da763b15adb0d03",
+      "answer_sha256": "083e13151eab5f413f17959701b60b4c2146954f30bc861b4c1d8f068e72f040",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:16:07.242730+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3896761",
+      "title": "股份支付等待期退出",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/gfzzsswd/202307/t20230717_3896761.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "员工在约定服务期和业绩条件的股权激励等待期内主动退出计划。",
+      "sha256": "b81fd1edccce57133eab29e8c9e47c4fb5b51237a4d5af7f5b5ac0dfbc512823",
+      "bytes": 16517,
+      "published_at": "2023-07-17",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "288a9d7b6096814f0e96e66b92a6efcdf0c9d5d1ab1187e8565baa2ec5a67619",
+      "answer_sha256": "a460676a842da9828f2dc49b311e6070c1811f88ec673ad4f0f09984191fbf9f",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:16:07.243728+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3664183",
+      "title": "境外母公司股权激励",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/gfzzsswd/202103/t20210302_3664183.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "境外母公司实行集团股份支付，国内企业对员工激励无结算义务。",
+      "sha256": "ca3ac90a0901a83448e19d69c60171c5dd149711492993d4d6a298f641a85507",
+      "bytes": 15435,
+      "published_at": "2021-03-02",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "c48233d0d7d60cd4fd15d77f5b9f5142e8be7eea34400566fa225e4512d56ed3",
+      "answer_sha256": "17bf0848c07f428eb12e6de36d18b3208fe4e13fd396508dcb649eb200b9ad51",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:16:07.342095+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3691695",
+      "title": "债务重组非金融资产初始计量",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/zwcz/202104/t20210425_3691695.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "债权人与债务人以资产清偿债务，债权人初始确认受让非金融资产。",
+      "sha256": "fef454b7da8faf6d9af254037bc016a2c0b6f40e37cfa748c2717d5703a9344a",
+      "bytes": 15554,
+      "published_at": "2021-04-25",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "26c32a69354ca6394244e8f9e5eff7485442b305988b7b20595b5b1459783349",
+      "answer_sha256": "c044b276aabfe0e0f3666cc4a460602fa003de75d8a441ac3413392d1718526b",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:18:14.086609+00:00",
+      "original_content_source": "会计司",
+      "publisher_verification": "official_HTTPS_origin_and_site_metadata",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3664190",
+      "title": "债务重组损益确认时点",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/zwcz/202103/t20210302_3664190.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "债务人签署债务重组合同，但需要判断损益确认条件和时点。",
+      "sha256": "4e624f6e70c40f3adc6abfaea54ed2edd8f462fbfc96c23914629b8c8b9d312c",
+      "bytes": 15297,
+      "published_at": "2021-03-02",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "f90b88a5e65dbf844e7829a06993d96cbd6911fdadc63ed1d60182c0b49e3c02",
+      "answer_sha256": "fa25939db58628b2e332b00b3bbd441bfe16462179b6ff9e23911eb0da5d02f2",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:16:07.344093+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3664187",
+      "title": "债务重组债转股分类",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/zwcz/202103/t20210302_3664187.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "判断债务重组是否属于将债务转为权益工具方式。",
+      "sha256": "f03753c448f22a95d57afbdae9e42f507562d43ae850c0007a360cc4c48e50e0",
+      "bytes": 16117,
+      "published_at": "2021-03-02",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "9c553351765bac7564ba1070f227a0602dd598424e701fb7107ad1646cdeae4f",
+      "answer_sha256": "cafa6d7631b5e264bb19c206ccd0e7cc2cb2a68e9cce4a91dfd647228fc91621",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:16:07.344093+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3664186",
+      "title": "以存货清偿债务",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/zwcz/202103/t20210302_3664186.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "债务人以存货清偿债务进行债务重组。",
+      "sha256": "df84f1457570800e25da3f2926277f3f03efd27cccb3f10be2d321d581f8a0a6",
+      "bytes": 15415,
+      "published_at": "2021-03-02",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "2ff3e60e72dc9b05b3b0f767b2799e85c89006a4e4f4c11a4e202d16fa177658",
+      "answer_sha256": "50876211b196efa0346b0916e102cf1992e4fecfa36dc93769c2436386d56125",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:16:07.420690+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3762833",
+      "title": "运输合同履约成本列报",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/srzzsswd/202111/t20211102_3762833.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "履行收入合同的运输活动不构成单项履约义务，相关成本计为合同履约成本。",
+      "sha256": "f58df319bc3e06d38ecdbb923291291b8187941f40a45cf936485e9aa17b50df",
+      "bytes": 15925,
+      "published_at": "2021-11-02",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "a32e58f0d190639d16a9b70c03469b0929aa41d2908fd626cab749fbdde4be02",
+      "answer_sha256": "5bae670bc81b93fc9f4a89a9ed97003f4bb9573384b7bb262d6b7fd4b6bcfd5d",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:16:07.450296+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3634036",
+      "title": "首次执行收入准则与预期信用损失",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/srzzsswd/202012/t20201211_3634036.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "已执行2017年金融工具准则的企业首次执行2017年收入准则。",
+      "sha256": "dcfd17d651bc5da2e85f5e25f5317f86e6b91da55d0ef29a3500eec5c3cb0850",
+      "bytes": 14714,
+      "published_at": "2020-12-11",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "8c48800b29da59432c09d72ca308ae475f3d4c9b8ef254ec9006a114b48e4160",
+      "answer_sha256": "972c917b309e30b3ab67ec680c53b4f7f1bc4b81bfb16ebcf6a617a1d661aabe",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:18:14.087614+00:00",
+      "original_content_source": "",
+      "publisher_verification": "official_HTTPS_origin_and_site_metadata",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3634035",
+      "title": "合同资产减值的科目",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/srzzsswd/202012/t20201211_3634035.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "按照2017年收入和金融工具准则，对合同资产发生的减值进行处理。",
+      "sha256": "d90ac598dc58a3874b4144d029a3ef112197e8eff3aae20bdbeb77232c5b16e5",
+      "bytes": 13874,
+      "published_at": "2020-12-11",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "a68a346f3a4cad59a3ccfdbd591e56df9991cd66264cf19fbe2a93aea3fbf6ec",
+      "answer_sha256": "ef62414e81d4717fecda9cf2017bb15fdd9d77c6fa124f32cfd70c1e445a025f",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:18:14.088614+00:00",
+      "original_content_source": "",
+      "publisher_verification": "official_HTTPS_origin_and_site_metadata",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3634031",
+      "title": "收入预收款与增值税科目",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/srzzsswd/202012/t20201211_3634031.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "企业执行2017年收入准则，因转让商品收到预收款及相关增值税。",
+      "sha256": "9073c8a850fa5b87838900bce20eaad767f9a80b32b36c1b0a35de0ece195450",
+      "bytes": 14342,
+      "published_at": "2020-12-11",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "0f52d977999a5f4f4cf1358e4de9514fac1129151a1d78e3f75b821dd4a97d51",
+      "answer_sha256": "21247fac9ff2cddf6c7cd5b690ae23f4bf72861e550a6b0d36f0b7e7d9c50f5a",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:18:14.088614+00:00",
+      "original_content_source": "",
+      "publisher_verification": "official_HTTPS_origin_and_site_metadata",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3634029",
+      "title": "给予客户现金折扣",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/srzzsswd/202012/t20201211_3634029.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "执行2017年收入准则的企业给予客户现金折扣。",
+      "sha256": "e16496b3abbfb237fd32b0a052594124191472b4b7d9e4d9d41f1523a0083d92",
+      "bytes": 13555,
+      "published_at": "2020-12-11",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "72331d2c1ad27ff9c7991c1597783463f959068bdb22b4daac8e9d1e0a569eea",
+      "answer_sha256": "6a5d2d04a0489bc55a7dbda472ef02dc6d7aacdd6703c2c713b42662ad51e15b",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:18:30.466334+00:00",
+      "original_content_source": "",
+      "publisher_verification": "official_HTTPS_origin_and_site_metadata",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3991864",
+      "title": "项目建设进度奖励补助",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/zfbzzzsswd/202606/t20260618_3991864.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "政府奖励与地基及厂房封顶进度挂钩，对资金使用用途没有限制。",
+      "sha256": "1ae29b3b7795d55c5f6b5a069f3a9e265138b477042e35622fb79a33aeccf398",
+      "bytes": 17647,
+      "published_at": "2026-06-18",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "76c71644cb55e347e3770758a5191d1f6db5b86de92e4dc9fd94cefb7c2c6205",
+      "answer_sha256": "18347258acecd24d80172e920c0ba491a85e222158429374399390b5be4c778f",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:16:07.544106+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3819697",
+      "title": "政府租金扶持补贴",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/zfbzzzsswd/202206/t20220621_3819697.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "企业五年租赁物业，每季度支付租金后申请并取得对应期间扶持补贴。",
+      "sha256": "c51b0c59343f825a5ade462a1545de8428f2ee68dda5e8e802434359e97cbb7a",
+      "bytes": 16596,
+      "published_at": "2022-06-21",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "47278a7192e2f5e6adae1435201987a189b46b0dea1326186af08716860de9a9",
+      "answer_sha256": "afb75eab54b2ffaf314642224db44187ef3fea242a8530e54aef3cab3795ee8d",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:18:30.467344+00:00",
+      "original_content_source": "",
+      "publisher_verification": "official_HTTPS_origin_and_site_metadata",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3991866",
+      "title": "定制设备专门借款资本化",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/jkwd/202606/t20260618_3991866.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "定制设备建造周期超过一年，预付款由专门借款筹资，安装调试不足一年。",
+      "sha256": "ff59c6e493640ff9280909fe4ba83a6c80810a9ae6d205fb4c65da93004ff3b6",
+      "bytes": 17036,
+      "published_at": "2026-06-18",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "6b93a6323df4acefc53bce89ce0c44aa109cfb82bae4367b600b7001e824ce40",
+      "answer_sha256": "0c0ad54f28d761662ce429ab5a473f6435913b7e1a7ddc0521b46d9a09c8c355",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:16:07.575693+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3634037",
+      "title": "开发建造用土地使用权借款费用",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/jkwd/202012/t20201211_3634037.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "土地使用权用于开发建造房屋建筑物，判断是否为符合资本化条件资产。",
+      "sha256": "dbf4c36357e746e3f63fbf58e093cde295e9a806b84eca795d404c0924db8cff",
+      "bytes": 15719,
+      "published_at": "2020-12-11",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "aa310979dbe6e877007fb8482fea9b3878e2e4d553ce37265ea5f293636f23b1",
+      "answer_sha256": "df6eff7fa1d042fda3c7fa80a7f0d753d48e2420054bfc21b97e39b67d432c5a",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:18:30.493719+00:00",
+      "original_content_source": "",
+      "publisher_verification": "official_HTTPS_origin_and_site_metadata",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3994211",
+      "title": "不可兑换货币汇率估计方法",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/wbzs/202607/t20260723_3994211.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "适用准则解释第20号，货币不可兑换时选用即期汇率估计方法。",
+      "sha256": "35822076a90491de8e5317edc9e346691a391f54aca4931f2d822fb1c628c5c4",
+      "bytes": 14860,
+      "published_at": "2026-07-23",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "a9f9f9ed32ec536295d5fbdd89b8439302a3bdf8fffdd30b66fd885a042ef4fc",
+      "answer_sha256": "d1af88a151ab0136597ff99bd9370ee15c63fdc6a94d0fecadf2b123ce690e94",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:18:30.498252+00:00",
+      "original_content_source": "",
+      "publisher_verification": "official_HTTPS_origin_and_site_metadata",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3664191",
+      "title": "外币预收与预付款汇兑",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/wbzs/202103/t20210302_3664191.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "外币预收账款和预付账款在资产负债表日的项目属性和汇兑处理。",
+      "sha256": "923c6f69d9c2db834e515dad4f32694f7bc0db232e797785cdae55d6c99e53c5",
+      "bytes": 15416,
+      "published_at": "2021-03-02",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "971211d681ed36767164d70b0ad3697fe22081ab435620fa439f72bbdb46c903",
+      "answer_sha256": "b557483053d11c1a913c740e1fd464d20949a75b21af96f9eb2589ce28802d2f",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:16:07.638992+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3717408",
+      "title": "一年租赁合同的短期租赁判断",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/zlzzsswd/202106/t20210610_3717408.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "承租人与出租人签订租赁期为一年的合同，判断短期租赁条件。",
+      "sha256": "0a21c3f1376ee54b3778cfd3effab18a674769b9f20269757c961c89c0f028c2",
+      "bytes": 16140,
+      "published_at": "2021-06-10",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "2fac6d7cbdf2967004e3bb5c1cc2c3cdaf8b88b22012055b33e9743715f94909",
+      "answer_sha256": "deeadc961a0f51e6df02ac0866f2441232fe6a84b54823667bdaafcd6ea632e0",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:18:30.576411+00:00",
+      "original_content_source": "会计司",
+      "publisher_verification": "official_HTTPS_origin_and_site_metadata",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3691864",
+      "title": "含购买选择权的短期租赁",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/zlzzsswd/202104/t20210425_3691864.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "租赁期不超过十二个月且包含购买选择权。",
+      "sha256": "18b511890690de18d1a6913f9e4d084d233b857fef03d9f7c2ac140581a14cf5",
+      "bytes": 14889,
+      "published_at": "2021-04-25",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "26810b29e9ed5fccf28942a5eb34fd3ce49b01086c15f396b4c430ae23176e66",
+      "answer_sha256": "5383ab65b0645bc472c536bf1fb350b8df3d61ba2f12d630916e3de9d6987298",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:18:30.581939+00:00",
+      "original_content_source": "会计司",
+      "publisher_verification": "official_HTTPS_origin_and_site_metadata",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3691863",
+      "title": "承租人改良及复原支出",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/zlzzsswd/202104/t20210425_3691863.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "承租人发生租赁资产改良支出及由此产生的预计复原支出。",
+      "sha256": "9572638352fb99c07d4508bf76d7b412f46c5503d19dd6c5568cd11e8b390bc7",
+      "bytes": 15724,
+      "published_at": "2021-04-25",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "d0a8f7b58282eaaa47ef882b7c623cc9b51ec733170c630bdaab4dae995fc5ea",
+      "answer_sha256": "13a2a6ab37f7cb5bdf025b660553e35053a9eceb2117365329ad8aebc073dc26",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:18:30.616449+00:00",
+      "original_content_source": "会计司",
+      "publisher_verification": "official_HTTPS_origin_and_site_metadata",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3691861",
+      "title": "租赁现金流列报",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/zlzzsswd/202104/t20210425_3691861.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "承租人支付租赁负债本金和利息、预付租金及租赁保证金。",
+      "sha256": "7f8e969c11ec5d7d1dc5ac1062fc3d6960501f6c8fd7a4db154213856aef4b82",
+      "bytes": 15353,
+      "published_at": "2021-04-25",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "8511d4e3b9125998c6cb733ffbb9a6f8f5110e879434c746d948f202334c95f3",
+      "answer_sha256": "8888be8ec6fee51078f4eca5ad57188786b2254a9d6afcd141b81de74131392c",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:18:30.618966+00:00",
+      "original_content_source": "会计司",
+      "publisher_verification": "official_HTTPS_origin_and_site_metadata",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3962193",
+      "title": "比较期与发现期的重要前期差错",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/kjzckjgjbgzzsswd/202504/t20250417_3962193.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "补缴以前年度所得税构成前期差错，对比较期不重要但对发现期重要。",
+      "sha256": "5d5d886b02afccc860470093d60e75f339f7a8a6f464d0535fb092f8930fac9f",
+      "bytes": 17872,
+      "published_at": "2025-04-17",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "2aee6e17af3804a1a1ab481facdf80756e61cee3250cac82d4c7a2451f3c7be8",
+      "answer_sha256": "71b6cbdd195734ace4685f871bc65845d5007ef64eab23283280e2f1ad475877",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:16:07.737101+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3819699",
+      "title": "企业准则留抵退税现金流",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/xjllbzzsswd/202206/t20220621_3819699.htm",
+      "framework": "CAS",
+      "status": "fetched",
+      "applicable_conditions": "执行企业会计准则的企业收到或缴回增值税期末留抵退税款项。",
+      "sha256": "e0d6aa47ec3d50473a934fca90f9c93247ffd26ba7c0370b62c35b0e4d34fb6b",
+      "bytes": 15393,
+      "published_at": "2022-06-21",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "ae9b3c4dd9c7d6ac4615932abd86fa9802293d514c4d08bd876a6b7a2f948685",
+      "answer_sha256": "eb3998a35b556661d9d2a4ae9b6d227a222f4ecec1728b00b38480eefb06271b",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:16:07.771378+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3819702",
+      "title": "小企业准则留抵退税现金流",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/xqykjzzsswd/202206/t20220621_3819702.htm",
+      "framework": "SCAS",
+      "status": "fetched",
+      "applicable_conditions": "执行小企业会计准则的企业收到或缴回增值税期末留抵退税款项。",
+      "sha256": "b0c2f5f27ddf30cc86385962a727d0733adc23e9d668cf9f8224e533c46f02a2",
+      "bytes": 15392,
+      "published_at": "2022-06-21",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "c8e2054c394163f658db0e92b860fe481090f2c5c83795334962e3cb4d077995",
+      "answer_sha256": "7d99afe8ac99c6627a4da188f93c7b4361b5830843fe67b98f6ac388d98a41d3",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:16:07.804168+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    },
+    {
+      "id": "mof-qa-3762844",
+      "title": "小企业个税扣缴手续费",
+      "url": "https://kjs.mof.gov.cn/zt/kjzzss/sswd/xqykjzzsswd/202111/t20211102_3762844.htm",
+      "framework": "SCAS",
+      "status": "fetched",
+      "applicable_conditions": "执行小企业会计准则，作为个税扣缴义务人收到扣缴税款手续费。",
+      "sha256": "45a248ca3f44cdb7cb9a3d3692b0a2e65162ea8a14171245bfa6cf3fa753709e",
+      "bytes": 16048,
+      "published_at": "2021-11-02",
+      "parser_version": "mof-official-qa-v1",
+      "question_sha256": "fa4f606f2e9c1fc651a5885d16e75cdcec529ac6bb59bb70165543411f60b80c",
+      "answer_sha256": "f69505c27a0097eb260682fa927368d7f84516daf342a8fca7acde84ecef4af9",
+      "accounting_validation": "not_run",
+      "retrieved_at": "2026-10-08T04:16:07.811759+00:00",
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "collected"
+        }
+      ]
+    }
+  ],
+  "local_artifact_verification": {
+    "checked": 32,
+    "passed": 32,
+    "failed": 0,
+    "results": [
+      {
+        "id": "mof-qa-3861813",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3962188",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3762834",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3962191",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3946594",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3895086",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3895087",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3896761",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3664183",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3691695",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3664190",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3664187",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3664186",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3762833",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3634036",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3634035",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3634031",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3634029",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3991864",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3819697",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3991866",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3634037",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3994211",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3664191",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3717408",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3691864",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3691863",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3691861",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3962193",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3819699",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3819702",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3762844",
+        "passed": true
+      }
+    ],
+    "scope": "source_parser_hash_and_answer_isolation_not_accounting_accuracy"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "schema_version": "finqa-numeric-model-pilot-v1",
+  "created_at": "2026-10-08T13:28:22.448270+00:00",
+  "status": "completed_with_failures",
+  "split": "dev",
+  "source_sha256": "a847fb7e0d61a3125a1e2909852df6b89f1ee64d2c5ff1bf689e332214deee51",
+  "selection": "sha256(finqa-pilot-v1:observable_id); no answer/program based selection",
+  "prompt_version": "finqa-question-only-v2",
+  "calculator_version": "financial-math-v3",
+  "model_parameters": {
+    "thinking": false,
+    "max_tokens": 2048,
+    "max_case_calls": 3,
+    "max_case_tokens": 40000,
+    "max_schema_repairs": 1,
+    "parallel_requests": 1
+  },
+  "configured_model": "deepseek-flash",
+  "paid_request_limit": 96,
+  "paid_requests": 37,
+  "summary": {
+    "samples": 32,
+    "scorable": 32,
+    "unscorable": 0,
+    "answered": 30,
+    "abstained": 0,
+    "failed": 2,
+    "exact_matches": 21,
+    "exact_match_rate": 0.65625,
+    "tokens": 75142,
+    "errors": {
+      "numeric_model_output": 2
+    }
+  },
+  "source_hashes": {
+    "backend/app/financial_math.py": "dfc814c22101d19bf4139647545da8f1fab6ff9f01432d7a0e9a9f4cc520d58b",
+    "backend/app/financial_evidence.py": "3303496ad97ed9031a16af9dae526f84a1d3a9c2d8770d8dc1c16b96bea0f555",
+    "benchmarks/finqa_models.py": "b34ebb0f09448bec0436bd7f8f699c644906529eaf9f22b259fdb61b967ba4e2"
+  },
+  "limitations": [
+    "Numeric question answering on selected dev records, not accounting investigation accuracy.",
+    "Answers are evaluator-owned and read only after each model runtime terminates.",
+    "Source locations prove lexical value presence, not formula/unit semantic correctness.",
+    "Single run per document; not a multi-agent comparison or sealed acceptance test.",
+    "Retries, failures and abstentions are retained; unknown billed attempts are not free."
+  ],
+  "validation_failure_counts": {
+    "operand_not_in_cited_sources": 6,
+    "invalid_proposal_schema": 1
+  },
+  "list_price_estimate": {
+    "samples": 32,
+    "physical_attempts": 37,
+    "estimated_responses": 37,
+    "unknown_attempts": 0,
+    "known_usage_minimum_usd": "0.008914296",
+    "known_usage_maximum_usd": "0.017828592",
+    "complete_cost_coverage": true
+  }
+}
