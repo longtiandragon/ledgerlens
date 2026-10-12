@@ -1,0 +1,103 @@
+{
+  "schema_version": "pdf-ocr-validation-summary-v1",
+  "status": "requires_field_verification",
+  "prediction_sha256": "8334889ac76f31ac2539b241515857e4d7000320c7effe66c95acfef524aa8ae",
+  "dataset_sha256": "f8f471ca750f096eb706bb3bf833cdf06e7a63cc5bedcb6005b703a75f3c1adf",
+  "source_pdf_sha256": "ed064f7c84ef7ef1e701441e180622475bb3fa5c077311b3fc08d2151647956e",
+  "source_sha256_by_file": {
+    "backend/app/ocr_pdf.py": "591871204279b35f9993510237ad57e9408bc9b82d4f109e5003e3b67b9dfcfa",
+    "backend/app/ocr_observations.py": "253bc8f25c8e2310c1976cf7d08dcfeb06d0c21366b7e27da0b5175c9e2a3876",
+    "scripts/ocr_pdf.py": "bea18167764bb6ebdd58e7303ea1a3bd0962b0cb76d396fcf137e5dd23d4569e",
+    "docs/ocr-model-sources.json": "98830626d48543261d9fabc89ab6ec31ba1c666d78b4b02960842fba5f6b2632"
+  },
+  "engine": {
+    "paddleocr": "3.7.0",
+    "paddlepaddle": "3.3.1",
+    "paddlex": "3.7.2",
+    "models_sha256": "3308911c08f709a8a4334a85f139ba4d4345a6f8af7dbb9f0c0758543d523879",
+    "model_files": {
+      "PP-OCRv5_mobile_det_infer/inference.json": "05feef1acb00aa4cd7362b15f7f501fc4f99d7b1fa73c1c871e0c7b1504b0f5c",
+      "PP-OCRv5_mobile_det_infer/inference.pdiparams": "afa1820cb16c1fd0dad589d0f8b389139061c1ef6d68019685fd07be997dda5b",
+      "PP-OCRv5_mobile_det_infer/inference.yml": "98069072e1b6b37d727fd9d9f11725faa46d6ea0de012f2ed26caea011c37699",
+      "PP-OCRv5_mobile_rec_infer/inference.json": "24587345250c7332d0fc6f9a44e794d078cdaeb64c302fef906f325619de2569",
+      "PP-OCRv5_mobile_rec_infer/inference.pdiparams": "2460da90875937c94db97eba74ae3d9e5d4c4c57c42f1f41531c09a26bcc771a",
+      "PP-OCRv5_mobile_rec_infer/inference.yml": "5dfeb2777f6d0db8177d8128a8acfcf6e6276dc4ac73ea3bf0dc06d6a5e85d8e"
+    },
+    "device": "cpu",
+    "document_transforms": false,
+    "pdf_renderer": "5.14.0",
+    "pdfium_build": "156.0.8076.0",
+    "dpi": 144,
+    "wrapper": "local-pdf-ocr-observations-v1"
+  },
+  "page_count": 6,
+  "failed_pages": 0,
+  "hidden_text_characters": 0,
+  "all_saved_page_coordinates_revalidated": true,
+  "pages": [
+    {
+      "page": 1,
+      "status": "requires_field_verification",
+      "literal_hits": 5,
+      "literal_total": 5,
+      "line_hits": 6,
+      "line_total": 7,
+      "blank_correct": false
+    },
+    {
+      "page": 2,
+      "status": "requires_field_verification",
+      "literal_hits": 5,
+      "literal_total": 5,
+      "line_hits": 7,
+      "line_total": 7,
+      "blank_correct": false
+    },
+    {
+      "page": 3,
+      "status": "requires_field_verification",
+      "literal_hits": 5,
+      "literal_total": 5,
+      "line_hits": 5,
+      "line_total": 7,
+      "blank_correct": false
+    },
+    {
+      "page": 4,
+      "status": "requires_field_verification",
+      "literal_hits": 5,
+      "literal_total": 5,
+      "line_hits": 5,
+      "line_total": 7,
+      "blank_correct": false
+    },
+    {
+      "page": 5,
+      "status": "requires_field_verification",
+      "literal_hits": 3,
+      "literal_total": 4,
+      "line_hits": 5,
+      "line_total": 7,
+      "blank_correct": false
+    },
+    {
+      "page": 6,
+      "status": "no_text_detected",
+      "literal_hits": 0,
+      "literal_total": 0,
+      "line_hits": 0,
+      "line_total": 0,
+      "blank_correct": true
+    }
+  ],
+  "totals": {
+    "literal_hits": 23,
+    "literal_total": 24,
+    "line_hits": 28,
+    "line_total": 35,
+    "blank_correct": 1
+  },
+  "confirmation": "unconfirmed",
+  "ledger_writes": 0,
+  "scope": "synthetic_printed_pdf_not_real_vouchers_or_field_confirmation"
+}
