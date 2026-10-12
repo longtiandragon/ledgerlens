@@ -51,6 +51,7 @@ docker compose -f infra/erpnext/compose.yaml up -d
 |`backend/app/model_gateway.py` / `model_contract.py`|DeepSeek 网关（预算、重试、用量）与系统协议文本|
 |`backend/app/evidence_selection.py` / `evidence_planning.py`|主动调查的查询计划编译与选择|
 |`backend/app/policy_*.py`, `investigation_policy.py`|官方问答政策规则、条件版本、调查时冻结的政策上下文|
+|`backend/app/retrieval_index.py` / `scripts/retrieval_index.py`|独立版本化pgvector持久索引、跨进程核验与管理CLI；尚未进入产品默认检索|
 |`backend/app/ocr_workflow.py` / `ocr_api.py`|本地识别任务、原件校验、追加式人工字段复核与导入失效检查（迁移0005）；网页见OCR_WORKFLOW|
 |`backend/app/evidence_requests.py`|补证事项与人工确认（迁移 0004）|
 |`backend/app/process_*.py`|BPI2019 流程证据、流程规则、流程模型解释|
@@ -101,7 +102,7 @@ docker compose -f infra/erpnext/compose.yaml up -d
 1. **原因调查v3真实模型验证**：窄契约、270例新数据、逐请求及人民币费用预留、冻结开发计划均已实现；还未调用模型。开发/验证确定性基线、新计划与命令见 [ROOT_CAUSE_V3](ROOT_CAUSE_V3.md)。开发冒烟预计¥0.50–0.90，保守高峰价预留上限¥1.20、60次请求，用户已明确“暂不付费，继续离线工作”，保留计划但不执行，也不反复询问费用。新封存集仍未运行，最终3次重复另行冻结与审批。
 2. **官方问答离线扩展已完成一轮**：新增5条规则；剩余12条已逐条阅读并记录缺失材料与实现路径，见 [POLICY_RULE_PACKAGE](POLICY_RULE_PACKAGE.md)。暂不把专业判断自动化为事实。
 3. **时间快照与模拟复核的效果测量**：已有4个时间挑战、6份草稿的离线机制消融，保留了“合法且平衡的错误业务用途仍能通过”反例，见 [ROOT_CAUSE_V3](ROOT_CAUSE_V3.md)。真实模型闭环与去反证实验仍未测。
-4. **检索离线对比已完成**：独立语料6份原文94段，统一分成156段；20条人工查询中18条有答案，关键词前6命中16/18，BGE＋实际pgvector为15/18，向量未优于关键词，两种方法对2条无答案查询仍返回候选。保留负面结果与2个502来源，不在本批查询调参；产品仍用原默认语料/关键词，持久化索引与产品开关未接入，见 [RETRIEVAL_VALIDATION](RETRIEVAL_VALIDATION.md)。
+4. **检索离线对比已完成**：独立语料6份原文94段，统一分成156段；20条人工查询中18条有答案，关键词前6命中16/18，BGE＋实际pgvector为15/18，向量未优于关键词，两种方法对2条无答案查询仍返回候选。保留负面结果与2个502来源，不在本批查询调参；产品仍用原默认语料/关键词，版本化持久索引与管理CLI已完成：156窗口重启后结果一致，27项新增检查（含9项实际PG）通过。产品API、索引选择及快照绑定仍未接入，下一步从此推进，见 [PERSISTENT_RETRIEVAL](PERSISTENT_RETRIEVAL.md) 和 [RETRIEVAL_VALIDATION](RETRIEVAL_VALIDATION.md)。
 5. **OCR图像与扫描PDF离线验收已完成**：6图及其6页纯图像PDF均实跑，23/24字串、28/35整行，空白页正确；保留混淆错误。PDF原页/像素/坐标可回查，页数与像素预算预检、失败页保留。本地网页已接入原件高亮、人工逐字段引用、追加复核版本和普通导入快照；图像及PDF真实CPU闭环通过。真实单据、扫描表格结构与多记录提取仍未完成，见 [OCR_WORKFLOW](OCR_WORKFLOW.md) 与 [OCR_PDF_VALIDATION](OCR_PDF_VALIDATION.md)。
 6. **观测**：OpenTelemetry本地span与费用未知值处理已实现、真实规则调查验收通过；Langfuse和远端Collector未接入，见 [OBSERVABILITY](OBSERVABILITY.md)。
 7. **ERPNext有限场景差分已完成**：外币账户／本位币、多公司、库存21项；订单→部分收货→发票→部分付款21项；重复执行记录一致。保留日期覆盖失败账套，USD本位币仍拒绝，详见 [ERPNEXT_SEMANTICS](ERPNEXT_SEMANTICS.md)。

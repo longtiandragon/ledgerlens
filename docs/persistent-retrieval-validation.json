@@ -1,0 +1,151 @@
+{
+  "schema_version": "persistent-reference-index-validation-v1",
+  "date": "2026-10-13",
+  "status": "completed",
+  "scope": "Persistence and integrity validation only; default product keyword retrieval unchanged. No new retrieval-effectiveness evaluation.",
+  "manifest": {
+    "schema_version": "persistent-reference-index-v1",
+    "engine": {
+      "model": "BAAI/bge-small-zh-v1.5",
+      "revision": "7999e1d3359715c523056ef9478215996d62a620",
+      "manifest_sha256": "588ee2f1da01c50d4f19a3b9bfa847b67e22c8af2623c08843e5b10c2e7c94e3",
+      "packages": {
+        "sentence-transformers": "6.1.0",
+        "torch": "2.14.1",
+        "transformers": "5.19.0",
+        "tokenizers": "0.23.3"
+      },
+      "dimensions": 512,
+      "window_tokens": 480,
+      "stride_tokens": 400,
+      "query_prefix": "为这个句子生成表示以用于检索相关文章：",
+      "device": "cpu",
+      "normalized": true
+    },
+    "corpus_sha256": "c98585a2ac90627199e56e8a82d5bdee596757b58672a4e2ca6914c9e9a1e1d9",
+    "registry_sha256": "473012feccb6f74a3001e97c50d1453ca187e70f41696b96d235a1de7ec66741",
+    "parents_sha256": "80ee9af151d23daa220e380569dcbe8cdeeaac8e825b9563b90e068c6fcbcdad",
+    "segments_sha256": "368b8da988699a039f03088cc8ff831df8f9408d8c707e38afe6f8587e121a5e",
+    "vectors_sha256": "9fc296e56f4deebee615d27e9e1eb849d0aab0a7fadb8d1a5b865bb0c8a5c045",
+    "segment_count": 156,
+    "dimensions": 512,
+    "index_id": "3e814e281f4349aeed5afc6c7b200accfdd32945e30cbb9135ee1fd0180d0d8c"
+  },
+  "postgres_version": "17.10 (Debian 17.10-1.pgdg12+1)",
+  "pgvector_version": "0.8.2",
+  "idempotent_rebuild": true,
+  "container_restarted": true,
+  "identical_rankings_after_restart": true,
+  "query": {
+    "text": "存货采购成本包含哪些费用",
+    "framework": "CAS",
+    "period": "2026-09",
+    "limit": 6
+  },
+  "ranks": [
+    {
+      "segment_id": "9a3961fdcfc15ba33d591f324994730a8bbb8ec85866b1694fcd7afecebcb687",
+      "parent_chunk_id": "660104e2983d6c6d49de91d0142b21f10ba34e6009daa40783dd82e9b02b9b14",
+      "source_id": "cas1-inventory",
+      "score": 0.7189145088195801
+    },
+    {
+      "segment_id": "bdee25f111864f8db1d8bb462bde35327c320bed6aeee4b4aa8c081e1dd4b44d",
+      "parent_chunk_id": "ab97e6069f4e659896b2e3873d12177f03ab5ae8d0fcdf623ea628870565a6ef",
+      "source_id": "cas1-inventory",
+      "score": 0.676808019781352
+    },
+    {
+      "segment_id": "fdf4cc5a8d43d822111b5c60cf91cc7942714f9f0488e65214825b3f70df902b",
+      "parent_chunk_id": "ab97e6069f4e659896b2e3873d12177f03ab5ae8d0fcdf623ea628870565a6ef",
+      "source_id": "cas1-inventory",
+      "score": 0.6726090507144313
+    },
+    {
+      "segment_id": "1ebf5be70a4c9c1e4d395bf8ed265fb670fb03e39959f75f4f95227d6af08c58",
+      "parent_chunk_id": "b51e48fc458eda2afd64ec4dfef3a8ad263b1f59e95f39eac7f42057272de0f0",
+      "source_id": "cas1-inventory",
+      "score": 0.6545560359954834
+    },
+    {
+      "segment_id": "5e2bf81dbc9770326afb058453d4c343dadd9870f99cb05a012b51cf65c6af0e",
+      "parent_chunk_id": "660104e2983d6c6d49de91d0142b21f10ba34e6009daa40783dd82e9b02b9b14",
+      "source_id": "cas1-inventory",
+      "score": 0.6092544975654633
+    },
+    {
+      "segment_id": "3dec770adbd9983c05228b32b142b914fdb2614447feb40b3060f9adde7df8e1",
+      "parent_chunk_id": "b51e48fc458eda2afd64ec4dfef3a8ad263b1f59e95f39eac7f42057272de0f0",
+      "source_id": "cas1-inventory",
+      "score": 0.5830766558647156
+    }
+  ],
+  "failed_build": {
+    "type": "TypeError",
+    "message": "object of type 'Vector' has no len()"
+  },
+  "paid_model_requests": 0,
+  "ledger_writes": 0,
+  "default_retrieval_changed": false,
+  "tests": {
+    "retrieval_index": 27,
+    "including_live_postgres": 9,
+    "with_existing_retrieval_tests": 55,
+    "duration_seconds": "1.44",
+    "ruff": "passed",
+    "generated_contracts": "consistent",
+    "full_backend": "not rerun; prior OCR commit had 1917 passed and 2 Windows permission skips"
+  },
+  "artifacts": {
+    "failed": {
+      "path": ".local/retrieval-index-build-v1.json",
+      "sha256": "af669409cb9920c868aee76210eff043b88395f56b7e0e882ac24b0ab4abeac5",
+      "duration_seconds": 49.68141130008735
+    },
+    "build": {
+      "path": ".local/retrieval-index-build-v2.json",
+      "sha256": "f87f519270234ca3014d0c5894d6eb1b51b86a80b4c1173b113b942d5b289c12",
+      "duration_seconds": 23.100434600142762
+    },
+    "rebuild": {
+      "path": ".local/retrieval-index-rebuild-v1.json",
+      "sha256": "ffa8d9effef12a161ebf646979a78c201314a1a3f0879fe50449044f5465e1b9",
+      "duration_seconds": 22.65600370010361
+    },
+    "before": {
+      "path": ".local/retrieval-index-query-before-v1.json",
+      "sha256": "7b39a32f5e5a14be0e4c95ab6f1cc4bf7d65f02369085a9f059002e051b347ee",
+      "duration_seconds": 11.908296599984169
+    },
+    "after": {
+      "path": ".local/retrieval-index-query-after-v1.json",
+      "sha256": "b11e6f5afcc19dafebda1f14d7bfd9fe80548a717e7545aaef3907737db0fdc0",
+      "duration_seconds": 11.576541000045836
+    },
+    "verify": {
+      "path": ".local/retrieval-index-verify-after-v1.json",
+      "sha256": "c83232c5a8277da304cdc962a6646b48b375b0bbb2dcb1002bae47a39031f97c",
+      "duration_seconds": 1.7376232000533491
+    },
+    "restart": {
+      "path": ".local/retrieval-index-restart-v1.json",
+      "sha256": "a1fa20cbbe95a388f6d4ba3432052423bdfb0e646a96251e0b063d8ce54d8047",
+      "duration_seconds": null
+    },
+    "final_verify": {
+      "path": ".local/retrieval-index-verify-final-v1.json",
+      "sha256": "64a0cb4435a77cbffe22bfa7779a1c0a5ce70e4b431d3b38fc55990a4f9b4c72",
+      "duration_seconds": 1.6453980000223964
+    }
+  },
+  "source_sha256": {
+    "backend/app/retrieval_index.py": "88f2e26ff804c486393ab57045e006881f1a1b87cda9da3cd4d6a0939d9f7d19",
+    "scripts/retrieval_index.py": "ba3b38cfa081b6fbddbab3c7d03f398650cd3df0126d982ebd3755b75a359480",
+    "backend/tests/test_retrieval_index.py": "ef98e31adb7c510cf3967d01a68708683129188ef11bc1fc3ea9be74b0c67241"
+  },
+  "remaining": [
+    "Product API/selector integration and snapshot binding",
+    "Independent relevance and no-answer validation",
+    "Large-scale approximate index and multi-user authorization"
+  ]
+}
