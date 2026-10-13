@@ -1,0 +1,310 @@
+{
+  "schema_version": "clean-checkout-validation-v1",
+  "status": "passed",
+  "started_at": "2026-10-13T16:25:26.747646+00:00",
+  "steps": [
+    {
+      "name": "archive",
+      "status": "passed",
+      "log": "archive.log",
+      "exit_code": 0,
+      "seconds": 2.84,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "python-install",
+      "status": "passed",
+      "log": "python-install.log",
+      "exit_code": 0,
+      "seconds": 2.55,
+      "sha256": "e90d08aab476d39ec822b1daea70f4a18ff5cfcea0299b064b0447cfd617954d"
+    },
+    {
+      "name": "frontend-install",
+      "status": "passed",
+      "log": "frontend-install.log",
+      "exit_code": 0,
+      "seconds": 24.06,
+      "sha256": "8cf1b4cac5da2f275d160c47bacb24c961e6c97679aabf850011aa0ff63b008c"
+    },
+    {
+      "name": "backend-tests",
+      "status": "passed",
+      "log": "backend-tests.log",
+      "exit_code": 0,
+      "seconds": 152.94,
+      "sha256": "20f27831fe65f052b180b9ed861fbe6e4b04b9a423c9030a6f73cd18d19fd68d"
+    },
+    {
+      "name": "contracts",
+      "status": "passed",
+      "log": "contracts.log",
+      "exit_code": 0,
+      "seconds": 2.05,
+      "sha256": "ca2e7c4a35d699aa93e9905e70508a4a44ad8edc083dc13a4636f9c45b711e7f"
+    },
+    {
+      "name": "frontend-build",
+      "status": "passed",
+      "log": "frontend-build.log",
+      "exit_code": 0,
+      "seconds": 45.55,
+      "sha256": "54d9a27f910429eeed35e82fa560ce928655e8fa9ae8d424574ad9d3188242b9"
+    },
+    {
+      "name": "generate-synthetic-data",
+      "status": "passed",
+      "log": "generate-synthetic-data.log",
+      "exit_code": 0,
+      "seconds": 0.75,
+      "sha256": "57432e324d43aa303fa3473e9aa1cf9b176ca603b49372a319bf86566cb10d55"
+    },
+    {
+      "name": "rule-benchmark",
+      "status": "passed",
+      "log": "rule-benchmark.log",
+      "exit_code": 0,
+      "seconds": 7.48,
+      "sha256": "81eba335660459b40dd934102e4abb6e9f58109f60925da54d0f74e06dbe9ebb"
+    },
+    {
+      "name": "browser-tests",
+      "status": "passed",
+      "log": "browser-tests.log",
+      "exit_code": 0,
+      "seconds": 74.61,
+      "sha256": "df7bd7ee4c99ae63c7cf34c336ed4f2c322764233c5968dc827948182c57ca54"
+    }
+  ],
+  "model_requests": 0,
+  "validator_sha256": "04e9cc0ab90f82ce55b3fdafed5379317e6e0416aef13e3cb7e7ca5c7b4d3586",
+  "scope": "Offline cached dependency install and committed-source local rule/browser workflow",
+  "source_commit": "ce7caf28fb5d222b6621067be9474203fc43c01b",
+  "archive_sha256": "07176c2f53ef24ec0af07a365a50314bbfc02ba3e11629bd6c33328e5c30bd59",
+  "excluded_local_state": {
+    ".env": true,
+    ".local": true,
+    ".cache": true,
+    ".venv": true,
+    "runtime": true,
+    "frontend/node_modules": true
+  },
+  "backend": {
+    "tests": 2183,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 52,
+    "skip_reasons": [
+      "Explicit MIGRATION_POSTGRES_TESTS=1 requires the dedicated local PostgreSQL service",
+      "Explicit RETRIEVAL_INDEX_TESTS=1 requires the local optional pgvector service",
+      "Filesystem link creation unavailable: OSError",
+      "Host cannot create test symlink: OSError",
+      "Local v16 observable report is not available",
+      "Optional Beancount differential dependency is absent",
+      "Original official HTML stays in optional local storage",
+      "Selected original PDF is absent; no download is attempted",
+      "local v2 dataset not generated"
+    ],
+    "passed": 2131,
+    "pytest_suite_seconds": [
+      "141.912"
+    ],
+    "skipped_by_module": {
+      "backend.tests.test_annual_statement_probe": 4,
+      "backend.tests.test_backup_links": 12,
+      "backend.tests.test_beancount_differential": 20,
+      "backend.tests.test_context_transport": 1,
+      "backend.tests.test_migrations_postgres": 2,
+      "backend.tests.test_official_policy_benchmark": 1,
+      "backend.tests.test_retrieval_index": 9,
+      "backend.tests.test_root_cause_v2": 1,
+      "backend.tests.test_statement_store": 2
+    }
+  },
+  "rule_benchmark": {
+    "method": "deterministic_rules",
+    "metric_scope": "synthetic injected rule-label detection, not real accounting accuracy or LLM cause classification",
+    "created_at": "2026-10-13T16:29:24.470925+00:00",
+    "dataset_version": "1.0.0",
+    "split": "all",
+    "case_count": 480,
+    "failures": 0,
+    "exact_label_match_rate": 1.0,
+    "macro_rule_f1": 1.0,
+    "per_rule": {
+      "ACCOUNT_VALIDITY": {
+        "tp": 40,
+        "fp": 0,
+        "fn": 0,
+        "f1": 1.0
+      },
+      "DUPLICATE_INVOICE": {
+        "tp": 90,
+        "fp": 0,
+        "fn": 0,
+        "f1": 1.0
+      },
+      "INVOICE_CONFLICT": {
+        "tp": 30,
+        "fp": 0,
+        "fn": 0,
+        "f1": 1.0
+      },
+      "INVOICE_EVIDENCE": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "f1": 1.0
+      },
+      "INVOICE_OVERBOOKED": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "f1": 1.0
+      },
+      "OPENING_REQUIRED": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "f1": 1.0
+      },
+      "PERIOD_CUTOFF": {
+        "tp": 20,
+        "fp": 0,
+        "fn": 0,
+        "f1": 1.0
+      },
+      "RECEIPT_EXCESS": {
+        "tp": 20,
+        "fp": 0,
+        "fn": 0,
+        "f1": 1.0
+      },
+      "RECEIPT_GAP": {
+        "tp": 90,
+        "fp": 0,
+        "fn": 0,
+        "f1": 1.0
+      },
+      "TRIAL_BALANCE": {
+        "tp": 20,
+        "fp": 0,
+        "fn": 0,
+        "f1": 1.0
+      },
+      "VOUCHER_BALANCE": {
+        "tp": 40,
+        "fp": 0,
+        "fn": 0,
+        "f1": 1.0
+      }
+    },
+    "frameworks": {
+      "CAS": {
+        "cases": 240,
+        "exact_matches": 240
+      },
+      "SCAS": {
+        "cases": 240,
+        "exact_matches": 240
+      }
+    },
+    "duration_seconds": 6.26831189985387,
+    "model_calls": 0,
+    "multi_agent_comparison": "not_run",
+    "reference_cases": {
+      "case_count": 30,
+      "passed": 30,
+      "official_case_count": 0,
+      "reference_case_count": 30
+    },
+    "family_count": 48,
+    "dataset_size": 480,
+    "normal_cases": 160,
+    "report_path": "F:\\Code\\Project\\Project18\\.local\\clean-checkout-v4\\checkout\\.local\\reports\\rules-all.json",
+    "status": "completed",
+    "limitations": [
+      "合成拓扑/故障配置，不是真实企业验证",
+      "统计规则标签检测，不是原因分类 Macro-F1",
+      "单 Agent、多 Agent、消融实验尚未运行",
+      "30 个独立参考例，不是财政部官方案例"
+    ]
+  },
+  "fresh_api": {
+    "status": "ok",
+    "mode": "local",
+    "model_configured": false,
+    "initial_books": 0
+  },
+  "browser": {
+    "startTime": "2026-10-13T16:29:32.256Z",
+    "duration": 71972.079,
+    "expected": 42,
+    "skipped": 9,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "owned_processes_stopped": true,
+  "source_files_unchanged": 408,
+  "final_run_observations": [
+    {
+      "mode": "rules",
+      "status": "complete",
+      "usage": {
+        "calls": 0,
+        "tokens": 0,
+        "tools": 0,
+        "reserved_tokens": 0
+      }
+    },
+    {
+      "mode": "rules",
+      "status": "complete",
+      "usage": {
+        "calls": 0,
+        "tokens": 0,
+        "tools": 0,
+        "reserved_tokens": 0
+      }
+    },
+    {
+      "mode": "rules",
+      "status": "complete",
+      "usage": {
+        "calls": 0,
+        "tokens": 0,
+        "tools": 0,
+        "reserved_tokens": 0
+      }
+    },
+    {
+      "mode": "rules",
+      "status": "complete",
+      "usage": {
+        "calls": 0,
+        "tokens": 0,
+        "tools": 0,
+        "reserved_tokens": 0
+      }
+    }
+  ],
+  "limitations": [
+    "Same Windows host and installed Python/Node/Chrome, cached offline install; not independent machine or uncached installation.",
+    "Skipped optional data/model/service checks remain unverified in this run.",
+    "No paid v26 development smoke or new v3 sealed evaluation, Linux API/browser, Docker workflow, remote CI or publication."
+  ],
+  "evidence": {
+    ".local/clean-checkout-v4/report.json": "48f5e0e5b3d65321a34109635605043ad4a231c3d0613661a3791fffdc749b71",
+    ".local/clean-checkout-v4/backend.xml": "c14918273dc57520d1ea04eaa4281d7f9e46f122669385c01b053351be5e0ffe",
+    ".local/clean-checkout-v4/source.zip": "07176c2f53ef24ec0af07a365a50314bbfc02ba3e11629bd6c33328e5c30bd59",
+    ".local/clean-checkout-v4/checkout/runtime/frontend-e2e-report.md": "4fe8966215e9f8f5aef2161cd031b4c854485a3fe50813142bed217e7a7c073f",
+    ".local/clean-checkout-v4/checkout/runtime/frontend-mobile.png": "268483e5efa03db4db180a4c3a0703cb93d481acb80547902300e6af03cffccc",
+    ".local/clean-checkout-v4/browser-artifacts/retrieval-evaluation-参考检索展示真实负面结果、试验边界与只读刷新/retrieval-desktop.png": "31e397ddc3270d5869b17472989aa9c2a244cb1697656ec5e99e850d3c33aaa1",
+    ".local/clean-checkout-v4/browser-artifacts/retrieval-evaluation-参考检索展示真实负面结果、试验边界与只读刷新/retrieval-mobile.png": "2d0b106926e17496b8588a25e25062c1d35db7eb1f7e34dfd1efac4ec2c9c5bf"
+  },
+  "visual_review": {
+    "frontend_mobile_390px": "passed",
+    "retrieval_mobile_390px": "passed; horizontally scrolled failed-gate column visible",
+    "exported_workpaper": "inspected; synthetic evidence identifiers and non-business-fact notice retained"
+  }
+}
