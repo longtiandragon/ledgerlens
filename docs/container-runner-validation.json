@@ -1,0 +1,67 @@
+{
+  "schema_version": "container-runner-validation-v1",
+  "date": "2026-10-14",
+  "status": "offline_checks_passed",
+  "source_head": "0006",
+  "tests": {
+    "runtime/container-runner-before-v1.xml": {
+      "tests": "18",
+      "failures": "18",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.478"
+    },
+    "runtime/container-runner-after-v1.xml": {
+      "tests": "18",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.867"
+    },
+    "runtime/container-runner-after-v2.xml": {
+      "tests": "24",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.935"
+    }
+  },
+  "cli": {
+    "status": "passed",
+    "first_exit": 1,
+    "first_failure": {
+      "type": "RuntimeError",
+      "message": "docker compose ps failed: failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified."
+    },
+    "repeat_exit": 2,
+    "report_preserved": true,
+    "report_sha256": "44cabc344bb436a191ec29c7838acf5541179158ae73f245321a32d4fd7eb2f7",
+    "scope": "CLI preserves an actual failed readiness report; no container runtime acceptance"
+  },
+  "scope": "Offline runner regressions and live failure-report preservation; no successful container workflow",
+  "changes": [
+    "Read expected migration heads from local Alembic scripts, compare complete current output lines",
+    "Reject failed service/health/key/migration/schema/extension preflight before synthetic book creation",
+    "Reserve report path exclusively before verification and retain explicit failed state on exceptions or keyboard interruption",
+    "Bound alembic check command to 60 seconds"
+  ],
+  "model_requests": 0,
+  "new_dependencies": 0,
+  "limitations": [
+    "Docker engine unavailable; no image, database migration or Celery workflow acceptance performed",
+    "Preflight success and failure variations use mock HTTP/Docker responses",
+    "Report reservation does not establish atomic final writes under power loss",
+    "Forced process termination or workflow interruption does not establish automatic restoration of stopped services"
+  ],
+  "sha256": {
+    "runtime/container-runner-before-v1.xml": "4d8ba1d92a153996a99fc89b99b78d1c08adfd25616b738cf8e7f0f0d2167940",
+    "runtime/container-runner-after-v1.xml": "c61df85d2f87459a91ad288b7c859ef0273f6de40ee4f207553978d9e22f7da9",
+    "runtime/container-runner-after-v2.xml": "fe3bd8830c8cc214c8e278ea9b90c45364f7d53847611876f9493e61f370149a",
+    "runtime/container-runner-cli-v1/failure.json": "44cabc344bb436a191ec29c7838acf5541179158ae73f245321a32d4fd7eb2f7",
+    "runtime/container-runner-cli-v1/first.log": "9c3b83eb110a0a6eaf354b5be5a2e8de2414e62fa06817b4176e1f6064f01e3e",
+    "runtime/container-runner-cli-v1/repeat.log": "4db274d159e613215378afe760bd00e7829005321bfeca2179f8ed135e8ba619",
+    "runtime/container-runner-cli-v1/verification.json": "03ef5f86d2934e86868cdb4d51a2a935e67868a7ff8252f0c8cf068d6e24938c",
+    "scripts/validate_containers.py": "8e2521605ad2a376705a47c0bd6b7ee65b75fd71da47218e2d37f199ce0a1cde",
+    "backend/tests/test_container_validation.py": "4ea2d9f5e509c54def0382af38cc0ebc9f84fe93a5a0e38d1a77f0d0a3c400d6"
+  }
+}

@@ -14,7 +14,7 @@
 
 `docker compose logs api worker scheduler`查看运行；`docker compose down`保留绑定目录。不要使用删除数据目录的清理命令。容器中API启动前执行`alembic upgrade head`，再启动服务；worker与scheduler等待API健康后才启动，只有API执行迁移。LangGraph检查点表由其`saver.setup()`维护，Alembic比对时排除这四张表，其他未知表仍会报告。所有服务设置`restart: unless-stopped`。结构更改需通过Alembic正式迁移，不依赖create_all修改已有表。
 
-容器验收（不调用模型，须置空DeepSeek密钥）：`$env:DEEPSEEK_API_KEY=''; $env:WEB_PORT='8088'; docker compose up --build -d`，然后`.venv\Scripts\python.exe scripts/validate_containers.py --web-url http://127.0.0.1:8088/`。
+容器验收（不调用模型，须置空DeepSeek密钥）：`$env:DEEPSEEK_API_KEY=''; $env:WEB_PORT='8088'; docker compose up --build -d`，然后`.venv\Scripts\python.exe scripts/validate_containers.py --web-url http://127.0.0.1:8088/ --output .local/reports/container-new.json`。每次使用不存在的报告路径；脚本先独占创建报告，再验证六个服务、API模式与空密钥、当前源码迁移头、结构漂移和pgvector可用性。预检失败停止，不创建测试账套或停止worker。异常与键盘中断记为未通过；强制杀进程可能仅留下running/未通过记录，不能当作成功。进入工作流后的停机注入若被中断，仍需人工检查并恢复worker/scheduler服务；本轮仅离线验证入口，真实容器复验尚未完成。
 
 ## 模型配置
 

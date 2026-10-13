@@ -17,9 +17,31 @@ import subprocess
 import time
 
 import httpx
+from alembic.script import ScriptDirectory
 
 ROOT = Path(__file__).resolve().parents[1]
 ENV = {**os.environ, 'DEEPSEEK_API_KEY': ''}
+
+
+def source_heads() -> tuple[str, ...]:
+    """Read migration scripts, without loading env.py or connecting to a database."""
+    heads = tuple(sorted(ScriptDirectory(str(ROOT / 'backend/migrations')).get_heads()))
+    if not heads:
+        raise ValueError('No source migration head')
+    return heads
+
+
+def migrated_to_head(current: str, expected: tuple[str, ...]) -> bool:
+    # Non-verbose Alembic current: each applied head is a complete output line.
+    # Compare against this checkout, so a stale image cannot certify its own head.
+    lines = [line.strip() for line in current.splitlines() if line.strip()]
+    return bool(expected) and sorted(lines) == sorted(f'{head} (head)' for head in expected)
+
+
+def require_preflight(checks: dict) -> None:
+    failed = [name for name, passed in checks.items() if passed is not True]
+    if failed:
+        raise RuntimeError('Container preflight failed: ' + ', '.join(failed))
 
 
 def compose(*args: str, check: bool = True) -> str:
@@ -77,18 +99,29 @@ def verify(base_url: str, web_url: str) -> dict:
         try:
             services = [json.loads(line) for line in compose('ps', '--format', 'json').splitlines() if line.strip()]
             report['services'] = {item['Service']: item.get('Health') or item['State'] for item in services}
-            checks['all_services_running'] = all(item['State'] == 'running' for item in services) and len(services) == 6
+            expected_services = {'postgres', 'redis', 'api', 'worker', 'scheduler', 'web'}
+            checks['all_services_running'] = (len(services) == len(expected_services)
+                and {item['Service'] for item in services} == expected_services
+                and all(item['State'] == 'running' and item.get('Health') in (None, '', 'healthy')
+                        for item in services))
+            require_preflight(checks)
             health = get('/health')
             checks['api_uses_celery_and_no_model_key'] = health['mode'] == 'celery' and health['model_configured'] is False
+            require_preflight(checks)
             current = compose('exec', '-T', 'api', 'alembic', 'current')
             report['alembic_current'] = current.strip()
-            checks['postgres_migrated_to_head'] = '0003' in current and '(head)' in current
+            expected_heads = source_heads()
+            report['expected_migration_heads'] = list(expected_heads)
+            checks['postgres_migrated_to_head'] = migrated_to_head(current, expected_heads)
+            require_preflight(checks)
             drift = subprocess.run(['docker', 'compose', 'exec', '-T', 'api', 'alembic', 'check'], cwd=ROOT, env=ENV,
-                                   capture_output=True, text=True, encoding='utf-8', errors='replace')
+                                   capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=60)
             checks['postgres_schema_matches_models'] = drift.returncode == 0 and 'No new upgrade operations' in (
                 drift.stdout + drift.stderr)
+            require_preflight(checks)
             checks['pgvector_extension_available'] = psql(
                 "select count(*) from pg_available_extensions where name='vector'") == '1'
+            require_preflight(checks)
 
             book = post('/books', {'name': '容器验收 · 合成演示', 'framework': 'CAS', 'period': '2026-09'})
             report['book_id'] = book['id']
@@ -191,9 +224,28 @@ def main() -> None:
     parser.add_argument('--web-url', default='http://127.0.0.1:8080/')
     parser.add_argument('--output', type=Path, default=ROOT / '.local/reports/container-acceptance-v1.json')
     args = parser.parse_args()
-    report = verify(args.base_url, args.web_url)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    try:
+        output = args.output.open('x', encoding='utf-8', newline='\n')
+    except FileExistsError:
+        parser.error('Refusing to overwrite an existing acceptance report')
+    with output:
+        report = {'schema_version': 'container-acceptance-v1', 'status': 'running', 'passed': False,
+                  'started_at': datetime.now(UTC).isoformat(), 'checks': {}}
+        output.write(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
+        output.flush()
+        os.fsync(output.fileno())
+        try:
+            report = verify(args.base_url, args.web_url)
+            report['status'] = 'completed' if report['passed'] else 'failed'
+        except (Exception, KeyboardInterrupt) as exc:
+            report.update(status='failed', completed_at=datetime.now(UTC).isoformat(),
+                          error={'type': type(exc).__name__, 'message': str(exc)[:400]})
+        output.seek(0)
+        output.write(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
+        output.truncate()
+        output.flush()
+        os.fsync(output.fileno())
     print(json.dumps({'passed': report['passed'], 'checks': report['checks'], 'error': report.get('error')},
                      ensure_ascii=False, indent=1))
     if not report['passed']:
