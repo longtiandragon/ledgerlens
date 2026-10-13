@@ -1,0 +1,224 @@
+{
+  "schema_version": "container-revalidation-v1",
+  "date": "2026-10-14",
+  "status": "passed",
+  "scope": "Real Docker Desktop Compose stack on the development Windows host; no model calls",
+  "host_recovery": {
+    "blocker": "Docker Desktop inference manager could not remove its own stale AF_UNIX socket",
+    "path": "C:/Users/20987/AppData/Local/Docker/run/dockerInference",
+    "stale_since_local": "2026-10-13T20:06:03+08:00",
+    "attributes": "Archive, ReparsePoint",
+    "user_approved_removal": true,
+    "removed_with": "Remove-Item -LiteralPath -Force",
+    "docker_desktop_start_exit_code": 0,
+    "docker_desktop_start_seconds": 8.6,
+    "engine": "29.6.1 linux/amd64",
+    "clean_stop_left_socket": false,
+    "side_effect": "9 containers of other local projects with restart policies auto-started while Docker Desktop ran and stopped with it; Docker Desktop was stopped at the end as before the session"
+  },
+  "build": {
+    "exit_code": 0,
+    "seconds": 71.6,
+    "images": [
+      "ledgerlens-api",
+      "ledgerlens-worker",
+      "ledgerlens-scheduler",
+      "ledgerlens-web"
+    ]
+  },
+  "data_backup": {
+    "path": ".local/backups/docker-runtime-before-v6-20261014",
+    "files": 1392,
+    "post_copy_hash_check": "passed"
+  },
+  "migration": {
+    "revision_before": "0003",
+    "revision_after": "0006",
+    "compared_on": "copies opened by throwaway pgvector/pgvector:pg17 containers; copies deleted after",
+    "data_tables_compared": 19,
+    "data_tables_all_prior_rows_preserved": 19,
+    "alembic_version_changed_as_expected": true,
+    "new_tables_after": [
+      "evidence_request_events",
+      "evidence_requests",
+      "ocr_reviews",
+      "ocr_runs",
+      "reference_choices",
+      "reference_searches"
+    ],
+    "books_before": 5,
+    "books_after_session": 10,
+    "note": "Five additional synthetic books come from the five acceptance runs of this session"
+  },
+  "acceptance": {
+    "acceptance_v6": {
+      "report": ".local/reports/container-acceptance-v6.json",
+      "status": "completed",
+      "passed": true,
+      "checks": 20,
+      "checks_true": 20,
+      "alembic_current": "0006 (head)",
+      "error": null,
+      "service_restoration": [],
+      "sha256": "99e9568d14551a253ee1b66abcc69fd2b23521c2dc2c2764d11044ff078ec1f3"
+    },
+    "acceptance_v7": {
+      "report": ".local/reports/container-acceptance-v7.json",
+      "status": "completed",
+      "passed": true,
+      "checks": 20,
+      "checks_true": 20,
+      "alembic_current": "0006 (head)",
+      "error": null,
+      "service_restoration": [],
+      "sha256": "f9c3694bde1cfc765b27e5fca4ac4a45b74f512c75e360960a3da0a130893a1e"
+    },
+    "interrupt_scheduler_worker": {
+      "report": "runtime/container-live-restoration-v1/acceptance-interrupt-scheduler-worker.json",
+      "status": "failed",
+      "passed": false,
+      "checks": 10,
+      "checks_true": 10,
+      "alembic_current": "0006 (head)",
+      "error": {
+        "type": "KeyboardInterrupt",
+        "message": "injected after real docker compose stop scheduler,worker"
+      },
+      "service_restoration": [
+        {
+          "service": "worker",
+          "restored": true,
+          "observed_states": [
+            {
+              "service": "worker",
+              "state": "running",
+              "health": ""
+            }
+          ]
+        },
+        {
+          "service": "scheduler",
+          "restored": true,
+          "observed_states": [
+            {
+              "service": "scheduler",
+              "state": "running",
+              "health": ""
+            }
+          ]
+        }
+      ],
+      "sha256": "2f22ea867d7d41cad052a9d626aa594a8f10a5cbd8383a29ceaf2bc871c1d5fc"
+    },
+    "interrupt_worker": {
+      "report": "runtime/container-live-restoration-v1/acceptance-interrupt-worker.json",
+      "status": "failed",
+      "passed": false,
+      "checks": 9,
+      "checks_true": 9,
+      "alembic_current": "0006 (head)",
+      "error": {
+        "type": "KeyboardInterrupt",
+        "message": "injected after real docker compose stop worker"
+      },
+      "service_restoration": [
+        {
+          "service": "worker",
+          "restored": true,
+          "observed_states": [
+            {
+              "service": "worker",
+              "state": "running",
+              "health": ""
+            }
+          ]
+        }
+      ],
+      "sha256": "05fd97c3eedc6542fbf774cbee14a65b9c18c59bbd7500d143304fb5d3287357"
+    },
+    "acceptance_after_interrupts": {
+      "report": "runtime/container-live-restoration-v1/acceptance-after-interrupts.json",
+      "status": "completed",
+      "passed": true,
+      "checks": 20,
+      "checks_true": 20,
+      "alembic_current": "0006 (head)",
+      "error": null,
+      "service_restoration": [],
+      "sha256": "dcebb1427e4a39f28c8fa26a78df3187b27c41eadf4d865060334882f8e0a026"
+    }
+  },
+  "live_interrupt_restoration": {
+    "scheduler_worker": {
+      "summary": "runtime/container-live-restoration-v1/summary-scheduler-worker.json",
+      "passed": true,
+      "target_stop": [
+        "scheduler",
+        "worker"
+      ],
+      "verifier_exit_code": 1,
+      "expectations": {
+        "interrupt_fired_after_real_stop": true,
+        "acceptance_not_passed": true,
+        "original_error_kept": true,
+        "only_stopped_services_restored": true,
+        "restoration_reported_running": true,
+        "independent_state_all_running": true
+      },
+      "sha256": "1a6ca3c329317660e51d103d2a6f5ddb1dd1816273f03d0274b7e52072ae2a57"
+    },
+    "worker": {
+      "summary": "runtime/container-live-restoration-v1/summary-worker.json",
+      "passed": true,
+      "target_stop": [
+        "worker"
+      ],
+      "verifier_exit_code": 1,
+      "expectations": {
+        "interrupt_fired_after_real_stop": true,
+        "acceptance_not_passed": true,
+        "original_error_kept": true,
+        "only_stopped_services_restored": true,
+        "restoration_reported_running": true,
+        "independent_state_all_running": true
+      },
+      "sha256": "a0105bab31e0b45b030a69d60ff1784e76277f41ceb321dfaac852dc5840ce3b"
+    }
+  },
+  "packaged_evaluations_via_web_proxy": {
+    "root_cause": {
+      "status": "available",
+      "runs": 6
+    },
+    "numeric": {
+      "arithmetic_replay_records": 883,
+      "exact_matches": 883,
+      "model_pilots": 3,
+      "issues": 0
+    },
+    "retrieval": {
+      "baseline": "available",
+      "abstention": "available"
+    }
+  },
+  "project_containers_stopped": true,
+  "docker_desktop_stopped": true,
+  "model_requests": 0,
+  "new_dependencies": 0,
+  "limitations": [
+    "Interrupts were raised in Python after real compose stop commands; console signals during a stop, forced kill, host crash and power loss remain untested.",
+    "Dead leases are still simulated by marking a queued run as claimed, not by killing a worker mid-run.",
+    "Rule investigations take under a second; long model investigations, PostgreSQL backup/restore and sustained load in containers remain unverified.",
+    "Same development host and Docker Desktop installation; not an independent machine or production deployment."
+  ],
+  "sha256": {
+    "runtime/container-live-restoration-v1/inject_interrupt.py": "6ba06ed087f1db09368bc027befd4f0b968bad2942c832e8ed2b6df21d5a86de",
+    "runtime/container-revalidation-v1/build.log": "b09f7f65c03c5067327928ada256fd1c479c17c75f08ea1e05cc08d926145117",
+    "runtime/container-revalidation-v1/compare.py": "b8bb653e23a0287359a683ffc7b1fc0fcf8d5654f35c69582c830939b3178031",
+    "runtime/container-revalidation-v1/comparison.json": "8c8c76d8f0bbc2eb5ec49cf3488fa7712e901a7aed15303cb1e6377d301f921b",
+    "runtime/container-revalidation-v1/backup-manifest.sha256": "9fed4ffe982f9333314eec28ff6f849c7ac037f102c9caa88b9506c613dc5c86",
+    "scripts/validate_containers.py": "5c00d2b9d8f80480a5b7313c979e1516af59cfbd9da9c0b41ec5eb9688554312",
+    "backend/Dockerfile": "e078ad00c6cfc202b08862a8332e721d279a2be8ddfc4bc4e8660ee806ed5b34",
+    "compose.yaml": "b0ff125ac51b92b78e123c4dfd16ce583a04ca21e528f53fcf8fc14b977f0288"
+  }
+}

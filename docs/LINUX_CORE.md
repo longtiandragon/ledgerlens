@@ -49,3 +49,5 @@ Ubuntu WSL已有Python，但没有主API所需的完整依赖，也没有Linux u
 后验汇总重新核验两份ZIP、包文件、日志、完整480条结果、30参考例和68项JUnit，并独立比较Windows当前规则指纹。它没有启动付费模型或原因调查v3新封存集。
 
 仍未验证：完整Linux依赖重装、OR-Tools原生后端、全量API/浏览器、PostgreSQL/容器部署、无缓存联网安装、独立机器和远端CI。原Docker启动故障没有修改或绕过其宿主安全设置；诊断见 [cross-platform-readiness.json](cross-platform-readiness.json)。
+
+后续（2026-10-14）：私有GitHub远端CI在全新ubuntu-24.04按锁文件完整安装（含OR-Tools）并运行全量后端、480/30规则契约与空库浏览器测试，均通过；容器部署也在Docker恢复后复验。上文核心子集记录保持原范围不改，详见[github-ci-validation.json](github-ci-validation.json)与[container-revalidation-validation.json](container-revalidation-validation.json)。

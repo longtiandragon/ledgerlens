@@ -1,0 +1,131 @@
+{
+  "schema_version": "github-ci-validation-v1",
+  "date": "2026-10-14",
+  "repository": {
+    "host": "github.com",
+    "visibility": "private",
+    "user_approved": true,
+    "note": "Private remote for CI; not a public release"
+  },
+  "runner": "GitHub-hosted ubuntu-24.04, Python 3.12.3 system interpreter, Node 22",
+  "status": "passed_on_current_branch",
+  "runs": {
+    "38442118586": {
+      "purpose": "historical main at first commit",
+      "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/38442118586",
+      "head_sha": "d7dd5c2ace5c905905ed346d0bc0c68d65007489",
+      "branch": "main",
+      "conclusion": "failure",
+      "jobs": {
+        "backend": "failure",
+        "frontend": "success"
+      },
+      "log_sha256": "d71fa7ced8357683862ceaca6b91a8d2092e4d853cda9c5514b983c7f168a418",
+      "python_packages_installed": 104,
+      "backend_pytest": "1 failed, 1774 passed, 27 skipped, 2 warnings in 49.18s",
+      "npm_packages_added": 81,
+      "cache_observations": [
+        "backend: No GitHub Actions cache found",
+        "frontend: npm cache is not found"
+      ]
+    },
+    "38442126748": {
+      "purpose": "first branch run, original workflow",
+      "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/38442126748",
+      "head_sha": "4949fb63af18e7da78543c0bb288a666c7f6c6ca",
+      "branch": "codex/offline-ocr-validation",
+      "conclusion": "success",
+      "jobs": {
+        "frontend": "success",
+        "backend": "success"
+      },
+      "log_sha256": "52f28d8452a26ccdb04c525fd82ef88ff16419437914ea180103f26f4140c98a",
+      "npm_packages_added": 81,
+      "python_packages_installed": 104,
+      "backend_pytest": "2145 passed, 38 skipped, 2 warnings in 66.58s (0:01:06)",
+      "cache_observations": [
+        "backend: No GitHub Actions cache found",
+        "frontend: npm cache is not found"
+      ]
+    },
+    "38443892694": {
+      "purpose": "extended workflow with reproduce job",
+      "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/38443892694",
+      "head_sha": "83f14a82ed16ca69e14825e7c00d28bc121be2df",
+      "branch": "codex/offline-ocr-validation",
+      "conclusion": "success",
+      "jobs": {
+        "reproduce": "success",
+        "backend": "success",
+        "frontend": "success"
+      },
+      "log_sha256": "98c80e0479decd206adffdb47494d21b0b0f990471f2364a6b0253b1d89ab002",
+      "python_packages_installed": 104,
+      "npm_packages_added": 81,
+      "backend_pytest": "2153 passed, 38 skipped, 2 warnings in 62.22s (0:01:02)",
+      "backend_skip_reasons": {
+        "backend/tests/test_annual_statement_probe.py: Selected original PDF is absent; no download is attempted": 4,
+        "backend/tests/test_beancount_differential.py: Optional Beancount differential dependency is absent": 20,
+        "backend/tests/test_context_transport.py: Local v16 observable report is not available": 1,
+        "backend/tests/test_migrations_postgres.py: Explicit MIGRATION_POSTGRES_TESTS=1 requires the dedicated local PostgreSQL service": 2,
+        "backend/tests/test_official_policy_benchmark.py: Original official HTML stays in optional local storage": 1,
+        "backend/tests/test_retrieval_index.py: Explicit RETRIEVAL_INDEX_TESTS=1 requires the local optional pgvector service": 9,
+        "backend/tests/test_root_cause_v2.py: local v2 dataset not generated": 1
+      },
+      "cache_observations": [
+        "backend: No GitHub Actions cache found",
+        "frontend: Cache hit for",
+        "reproduce: Cache hit for",
+        "reproduce: No GitHub Actions cache found"
+      ],
+      "reproduce": {
+        "rule_benchmark": {
+          "case_count": 480,
+          "failures": 0,
+          "exact_label_match_rate": 1.0,
+          "model_calls": 0,
+          "reference_cases": {
+            "case_count": 30,
+            "passed": 30
+          }
+        },
+        "health": {
+          "status": "ok",
+          "mode": "local",
+          "model_configured": false
+        },
+        "browser": {
+          "expected": 42,
+          "skipped": 9,
+          "unexpected": 0,
+          "flaky": 0,
+          "duration": 117576.296
+        },
+        "browser_skipped_files": {
+          "ocr-batch.spec.ts": 1,
+          "ocr-tables.spec.ts": 3,
+          "ocr.spec.ts": 2,
+          "process-evidence.spec.ts": 1,
+          "reference-indexes.spec.ts": 1,
+          "statement-evidence.spec.ts": 1
+        },
+        "sha256": {
+          "api.log": "b715df11a1b0efc46cafc7b51f77982c26738e909f8fd9889e21238f0a0ec78c",
+          "browser.json": "da568b619d81073cd7648d25d7d88211b09c8a1ee1bd429096ab2d9b5f16a6df",
+          "health.json": "5729653b4531af261b989c22db8263efd9c9b69b5b26a9f9907735b0bf75454b",
+          "rule-benchmark.json": "4a7c600b3e3a17e3dc1c0f30cc459aeeb35fc5566a37e8ecceb290d39a945413",
+          "web.log": "8f5b76a9460787fd5cd0973e376d376e8b3174b6abb3294245b93e31fa5e4903"
+        }
+      }
+    }
+  },
+  "historical_failure": "main still points at first commit d7dd5c2; its failure is the optional Beancount test isolation defect fixed by aebfada and is kept, not rerun or hidden",
+  "model_requests": 0,
+  "limitations": [
+    "Hosted runner proves an independent clean Linux machine, not an independent person following the README.",
+    "Optional Beancount, OCR, BGE/pgvector, PostgreSQL migration and local real-data checks stay skipped.",
+    "Windows is not part of CI; Windows evidence remains the local clean-checkout validation.",
+    "Later runs may restore Actions caches; the first run of each cache key was a cold network install.",
+    "Synthetic rule-label contract and empty-database browser flow say nothing about model quality."
+  ]
+}

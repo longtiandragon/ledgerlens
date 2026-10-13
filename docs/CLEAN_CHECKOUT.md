@@ -66,3 +66,7 @@ Windows上安装Git、兼容项目版本的Python、uv、Node.js和Chrome。`uv.
 52项后端跳过由20项可选Beancount、14项Windows文件链接权限、11项未启用PG索引／迁移、4项原PDF及3项本机HTML／历史报告／数据组成。9项网页跳过包括三个真实OCR表格样本、其他OCR／BGE／BPI／年报可选场景；本轮未安装可选模型来减少跳过数。相关独立专项证据继续有效于各自标注版本，不与本轮数字混合。原有3条提示仍保留：2条第三方布尔位运算弃用提示、1条JUnit record_property兼容提示。
 
 手机390px工作台和新检索评测截图、导出底稿已检查。重新核验Git ZIP、全部步骤日志SHA、JUnit、浏览器JSON与独立演示库调查记录后生成摘要；原件保存在 `.local/clean-checkout-v4`。这证明当前提交在本机缓存／工具条件下的基础复现，尚不证明无缓存安装、独立机器、Linux全后端、Docker运行、远端CI或研究主张。
+
+## 后续：远端CI无缓存复现（2026-10-14）
+
+上文各次记录保持原范围。用户同意建立私有GitHub远端后，CI在全新ubuntu-24.04上无缓存联网安装锁定依赖（104个Python包、81个npm包），后端2153通过／38可选跳过；reproduce作业重新生成合成数据、强制原480/30契约，并在空库无密钥环境运行浏览器测试42通过／9可选跳过。这补足了“无缓存联网安装、全新操作系统、远端CI”，但Windows不在CI中，他人按README独立复现与公开发布仍未完成。见[github-ci-validation.json](github-ci-validation.json)。

@@ -23,7 +23,7 @@ powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1
 
 停止：`powershell -ExecutionPolicy Bypass -File scripts/stop-local.ps1`。启动器仅管理自身记录的进程。
 
-已有完整依赖缓存时，可执行 `.venv/Scripts/python.exe scripts/validate_clean_checkout.py --output .local/clean-checkout-new`，从Git提交导出干净源码，在独立空库重跑安装、数据生成、规则与网页验收。条件、保留的失败及验证边界见[干净源码复现](docs/CLEAN_CHECKOUT.md)。
+已有完整依赖缓存时，可执行 `.venv/Scripts/python.exe scripts/validate_clean_checkout.py --output .local/clean-checkout-new`，从Git提交导出干净源码，在独立空库重跑安装、数据生成、规则与网页验收。条件、保留的失败及验证边界见[干净源码复现](docs/CLEAN_CHECKOUT.md)。同样的安装、480/30规则契约和空库网页流程也在 GitHub Actions 的全新 Linux 机器上无缓存执行（`.github/workflows/ci.yml` 的 reproduce 作业），结果见[CI摘要](docs/github-ci-validation.json)。
 
 ## 体验完整流程
 
@@ -85,7 +85,7 @@ DeepSeek真实JSON、思考模式工具往返、单Agent账务调查及v8／v10�
 
 ## PostgreSQL 部署
 
-Compose 配置使用 PostgreSQL、Redis、Celery、持久化 LangGraph 检查点；所有对外端口绑定 loopback。2026-10-11 已实机联调：20项容器验收连续两次通过（迁移、重复投递、Worker停机、失效租约恢复、全栈重启与持久化），见[状态](docs/STATUS.md)。按 [运行手册](docs/RUNBOOK.md)执行 `docker compose up --build -d`，入口为 <http://127.0.0.1:8080>（可用 `WEB_PORT` 改端口）。
+Compose 配置使用 PostgreSQL、Redis、Celery、持久化 LangGraph 检查点；所有对外端口绑定 loopback。2026-10-11 已实机联调：20项容器验收连续两次通过（迁移、重复投递、Worker停机、失效租约恢复、全栈重启与持久化）；2026-10-14 用当前镜像复验再次连续两次通过，并验证旧库升级保留及验收中断后的服务恢复，见[状态](docs/STATUS.md)。按 [运行手册](docs/RUNBOOK.md)执行 `docker compose up --build -d`，入口为 <http://127.0.0.1:8080>（可用 `WEB_PORT` 改端口）。
 
 ## 文档
 

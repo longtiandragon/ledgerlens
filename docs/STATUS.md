@@ -1,6 +1,6 @@
 # 交付状态与验证记录
 
-更新：2026-10-14。产品版本：0.1.0，本地工程与仿真版本。当前调查源码为 `investigation-v26` / `snapshot-tools-v11`（原因调查v2封存集对比：单Agent低于同预算确定性基线），另有独立 `policy-consistency-v4` 有限政策检查（20条）及 `bpi2019-process-rules-v1` 流程观察规则；最新提交ce7caf2干净源码基础环境后端2131通过、52项可选或本机条件跳过（141.98秒）；空库网页42通过、9项可选跳过（71.97秒），见CLEAN_CHECKOUT。此前启用本机数据／PG的测试、独立OCR及Linux专项各保留版本边界，不能与本轮数字混合。PostgreSQL／Redis／Celery历史容器20项验收曾通过；当前Docker引擎不可用，最新镜像与验收器未完成容器运行复验。v20保留按角色读取与未读来源断言约束，新增运行参考来源绑定；没有v19或v20的真实模型验收。v16产品主动调查通过；v15四组三次重复全部执行，包含失败，v16同条件24样本终止，114次API尝试，固定多Agent0/6、主动5/6完成；没有多Agent增益结论。源码、工程验证与模型验收分别记录。原计划全部能力尚未完成，不能宣布完整研究目标达成。
+更新：2026-10-14。产品版本：0.1.0，本地工程与仿真版本。当前调查源码为 `investigation-v26` / `snapshot-tools-v11`（原因调查v2封存集对比：单Agent低于同预算确定性基线），另有独立 `policy-consistency-v4` 有限政策检查（20条）及 `bpi2019-process-rules-v1` 流程观察规则；最新提交ce7caf2干净源码基础环境后端2131通过、52项可选或本机条件跳过（141.98秒）；空库网页42通过、9项可选跳过（71.97秒），见CLEAN_CHECKOUT。此前启用本机数据／PG的测试、独立OCR及Linux专项各保留版本边界，不能与本轮数字混合。2026-10-14经用户同意清除Docker遗留套接字后，当前镜像容器验收20项连续两次通过，0003→0006真实升级保留全部旧行，验收器中断后真实恢复worker/scheduler两个场景通过；私有GitHub远端CI三项作业通过（Linux后端2153通过／38跳过、空库网页42通过／9跳过），见文末两节。v20保留按角色读取与未读来源断言约束，新增运行参考来源绑定；没有v19或v20的真实模型验收。v16产品主动调查通过；v15四组三次重复全部执行，包含失败，v16同条件24样本终止，114次API尝试，固定多Agent0/6、主动5/6完成；没有多Agent增益结论。源码、工程验证与模型验收分别记录。原计划全部能力尚未完成，不能宣布完整研究目标达成。
 
 ## 当前可运行内容
 
@@ -45,9 +45,9 @@
 |Beancount基础差分|9/9独立手写账例通过，8项有效余额比较、1项一分不平衡拒绝；39项独立回归通过。首次8/9的表示错误记录保留。| `docs/beancount-validation-summary.json` |
 |真实目录备份恢复|58条记录恢复后逐条一致；15个来源文件哈希通过，SQLite完整性为ok。| `.local/reports/restore-verification.json` |
 |Alembic|空SQLite升级至冻结0002、索引／约束与模型比较通过；Postgres离线SQL生成通过。不是PostgreSQL实机验收。| `backend/tests/test_migrations.py` |
-|Compose容器|2026-10-11实机运行六个服务。20项验收v4、v5连续通过：迁移至0003且模型比对无差异、pgvector可用、Celery完成规则调查、终态重复投递不产生新结果、Worker停机时排队任务保留、已认领后失效的租约不被旧消息重跑且只恢复一次、模拟/复核/导出、全栈重启后记录/快照/运行不变、无多余运行、Nginx代理。失效租约以数据库标注模拟，不是真实进程中途被杀。v1–v3失败保留。| `scripts/validate_containers.py` |
+|Compose容器|2026-10-11实机运行六个服务。20项验收v4、v5连续通过：迁移至0003且模型比对无差异、pgvector可用、Celery完成规则调查、终态重复投递不产生新结果、Worker停机时排队任务保留、已认领后失效的租约不被旧消息重跑且只恢复一次、模拟/复核/导出、全栈重启后记录/快照/运行不变、无多余运行、Nginx代理。失效租约以数据库标注模拟，不是真实进程中途被杀。v1–v3失败保留。2026-10-14当前镜像v6、v7连续20/20，迁移头0006；两次真实中断恢复及其后20/20，见[container-revalidation-validation.json](container-revalidation-validation.json)。| `scripts/validate_containers.py` |
 
-规则回归的100%只表明该受控生成器的已知标签通过，**不等于真实会计准确率，也不是Agent原因分类Macro-F1**。模型Mock测试证明约束与错误处理路径，不证明DeepSeek真实推理效果。CI仅完成配置与本地对应检查，未在GitHub执行。
+规则回归的100%只表明该受控生成器的已知标签通过，**不等于真实会计准确率，也不是Agent原因分类Macro-F1**。模型Mock测试证明约束与错误处理路径，不证明DeepSeek真实推理效果。CI已于2026-10-14在私有GitHub远端实际执行，范围与跳过见文末“GitHub私有远端与CI复现”。
 
 端到端测试运行时需避免付费调查占用本地单任务运行槽。先前与模型调查并发时有2项排队超时；调查结束后相同测试8项全部通过。不能将排队超时记作已通过，也不应修改业务检查来绕过运行槽。
 
@@ -120,11 +120,11 @@ BPI2019完整原XES已真实下载、官方MD5核验；首次1000个完整trace�
 |三类场景、两套制度|采购／资金／期间的受控合成任务，两套政策配置及差错处理说明。|全部场景包专业覆盖；重要性判断、追溯重述报表等专用规则。支持两套配置不代表覆盖全部准则。|
 |证据与人工闭环|当前快照查询、来源定位、模拟、复核、底稿与迟到资料产生新快照；补证事项登记、较新快照候选匹配与人工确认。|扫描件字段与区域定位、跨来源冲突处理的业务覆盖。|
 |单Agent与多Agent|真实单Agent及v8／v10／v16主动产品验收；v15／v16完整3次重复四组试跑，选择器、累计观察、定义去重及计划修复已接入。|固定多Agent稳定完成，正常案例误报与主动识别质量；扩展场景公平对照、根因分类与消融、费用／质量增益。|
-|运行恢复与部署|本地持久化、租约、幂等、备份恢复；PostgreSQL、Redis、Celery真实容器联调、重复投递、停机排队、失效租约恢复及全栈重启验收。|调查执行中途被强杀的真实中断、PostgreSQL备份恢复、真实模型调查在容器中的运行、长时间负载。|
+|运行恢复与部署|本地持久化、租约、幂等、备份恢复；PostgreSQL、Redis、Celery真实容器联调、重复投递、停机排队、失效租约恢复及全栈重启验收；当前镜像复验、真实旧库升级保持及验收器中断后服务恢复。|调查执行中途被强杀的真实中断、PostgreSQL备份恢复、真实模型调查在容器中的运行、长时间负载。|
 |解析与检索技术栈|文本PDF、openpyxl/CSV、中文词法检索，可选PaddleOCR/bge适配器。|OCR及bge模型真实运行、pgvector索引、Polars批量解析与生产解析质量。|
 |公开与外部数据|32条官方问答、883条FinQA dev、30份三年官方年报、1000个真实BPI完整trace；BPI和年报独立只读证据接入，BPI流程观察规则及底稿导出，480合成任务及30自建参考例。|官方规则一致性验收、年报完整勾稽和独立财务真值；FinQA未见题与全dev模型组件评测、BPI模型调查与反证、两方匹配真实样本及独立异常真值。|
 |成熟软件借鉴与差分|Beancount 9/9基础差分、39项回归；ERPNext v16真实服务联调，总账导出与ERPNext试算平衡表一致；BPI解析适配器，项目及许可文档。|ERPNext多币种、多公司、库存与单据链语义对齐差分；更复杂业务差分。不得把基础余额正确解释成准则或科目业务选择正确。|
-|真实业务与长期交付|本地单用户工程、贡献／许可／CI基础文件。|企业授权账套及专业复核、多用户审签、完整OpenTelemetry／Langfuse、社区发布和持续维护。|
+|真实业务与长期交付|本地单用户工程、贡献／许可文件；私有GitHub远端CI在全新Linux机器上复现安装、测试、规则基准与空库网页。|企业授权账套及专业复核、多用户审签、完整OpenTelemetry／Langfuse、公开社区发布和持续维护。|
 
 v17中性复核起点、规则编号和无损传输已通过离线回归，但完整真实试跑及产品验收仍有失败。v18按职责输出意见，最终阶段接收全部历史意见，模型schema只去注释并保留约束；新的同预算四组及产品验收因预算及HTTP402终止，保留失败与未执行记录；见[v18复核](AGENT_PILOT_V18.md)。当前v19保留完整持久证据，用全索引及按角色读全文缓解重复传输，程序强制依据可见性；仍需余额恢复后的同预算真实验收。FinQA算术与模型公式选择分开推进，保留原始失败和开发反馈边界。预算保护、引用验证和全部失败记录保持。公开问答、FinQA及BPI按各自业务验证推进，不能用采集数量代替准则支持数量。部署、解析检索和专业验证按各自验收推进，不删除未通过项。
 
@@ -602,3 +602,27 @@ verify的普通异常和KeyboardInterrupt均保留已取得的账套ID、检查�
 复核发现原root-cause-v3-smoke-plan.json的13份源码哈希中investigation.py一份漂移，来自b8563a6人工参考条文选择校验；其余12份及数据manifest不变。现有validate_plan实测拒绝旧计划。保留原文件，新增root-cause-v3-smoke-plan-v2.json，只更新该源码哈希及修订说明，所有模型／案例／划分／模式／次数／预算参数不变；现有校验器接受新计划。9个开发案例的18份可见／扣留资料哈希相符，policy均没有reference_choice或reference_passages；只读取manifest和开发输入，不读truth或封存案例文件，不调用run或模型Gateway。
 
 结果见[v26-plan-preparation-validation.json](v26-plan-preparation-validation.json)，原始核对在runtime/v26-plan-refresh-v1。文档中的未来执行命令改指向新计划，但用户“暂不付费”继续有效；准备不是授权、不是模型冒烟或效果改善证据。保留旧费用估计的日期，未来执行前须重新核验价格，未查询余额或发起模型请求。没有新增付费请求、依赖、成绩或生产逻辑修改。
+
+
+## Docker宿主恢复与当前镜像容器复验（2026-10-14）
+
+Docker Desktop此前无法启动的直接原因是其推理服务自身遗留的AF_UNIX套接字`%LOCALAPPDATA%\Docker\run\dockerInference`（10-13 20:06生成，ReparsePoint，无内容），后端启动时无法删除。经用户明确同意，仅删除该文件；随后`docker desktop start`退出0（8.6秒），引擎29.6.1 linux/amd64。结束时`docker desktop stop`正常退出，run目录为空，未再遗留套接字；推断原故障来自10-13的非正常停止，未改动Docker其他设置或数据。副作用：Docker运行期间，本机另外两个项目共9个带重启策略的容器被自动拉起，已随Docker Desktop一并停止，恢复到会话前Docker未运行的状态。
+
+当前源码`docker compose build`退出0（71.6秒），空模型密钥、WEB_PORT=8088启动。启动前完整复制原容器数据目录到`.local/backups/docker-runtime-before-v6-20261014`，1392个文件复制前后哈希一致。API启动时冻结迁移从0003升级至0006（head）。另用一次性pgvector容器分别打开升级前备份与会话后数据的**副本**比较：19张业务与检查点表中，升级前的每一行在原有列上全部保留；仅alembic_version按预期由0003变为0006，新增6张表；账套5个→10个，新增5个均来自本次5轮验收。比较副本用后删除，原件不挂载。
+
+验收器v6、v7连续两轮20/20通过（53.8–56.3秒）：六服务健康、Celery模式与空密钥、迁移头0006且alembic check无漂移、pgvector、Celery规则调查、终态重复投递无新结果、worker停机排队保留、失效租约不被旧消息重跑且只恢复一次、模拟/复核/导出、全栈重启后记录/快照/运行不变、无多余运行、Nginx代理。经Web代理读取打包的历史评测：原因调查6条运行、FinQA算术重放883/883与3次模型试跑0问题、检索两份摘要均为available，证明此前Dockerfile补齐的5份摘要在镜像中实际可用。
+
+此前只用模拟验证的“验收器异常退出后恢复自有服务”，本次对真实容器做了两次注入：测试包装在真实`docker compose stop`返回后抛出KeyboardInterrupt（与控制台Ctrl+C在Python中的异常相同），验收器代码不改。停止scheduler+worker场景和仅停止worker场景都保留原失败（status=failed、passed=false、错误类型KeyboardInterrupt、中断前已完成的8–9项验收检查保留，另记恢复检查），finally只启动本轮停止的服务并报告running；包装器另起`docker compose ps`独立核对六服务均running/healthy。随后完整验收再次20/20，证明恢复后Celery可继续完成任务。
+
+边界：中断发生在stop命令返回后，stop执行中途的控制台信号、强制杀进程、宿主崩溃与断电未覆盖；失效租约仍以数据库标注模拟；规则调查不足1秒，长时间模型调查、PostgreSQL备份恢复及持续负载未测；同一开发机与Docker Desktop，不是独立机器或生产部署。项目容器已停止，付费请求0、新依赖0。报告与哈希见[container-revalidation-validation.json](container-revalidation-validation.json)，原始文件在`.local/reports/container-acceptance-v6/v7.json`、`runtime/container-live-restoration-v1`与`runtime/container-revalidation-v1`。历史跨平台阻塞记录[cross-platform-readiness.json](cross-platform-readiness.json)保留不改。
+
+
+## GitHub私有远端与CI复现（2026-10-14）
+
+经用户同意创建私有仓库并推送main与当前分支（仅用户可见，不是公开发布）。推送前检查：.env／.local／runtime未入库，密钥形态扫描仅命中测试中的伪造密钥。CI在GitHub托管的全新ubuntu-24.04（系统Python 3.12.3、Node 22）上运行。
+
+首轮（提交4949fb6，原工作流）：uv与npm缓存均不存在，按锁文件从网络安装104个Python包、81个npm包；后端2145通过、38跳过，Ruff与契约检查通过，前端构建通过。这是此前缺失的无缓存联网安装与独立机器证据。main仍指向首个提交d7dd5c2，其CI失败1项（Beancount可选依赖缺失时测试隔离缺陷，已由aebfada修复），失败保留，未改写历史或删除记录。
+
+随后扩展工作流（提交83f14a8）：固定ubuntu-24.04、改用Node 24版本的官方Action大版本、Ruff检查范围与文档一致（backend scripts datasets benchmarks）、pytest打印跳过原因；新增reproduce作业：重新生成合成数据，`benchmarks.evaluate --require-acceptance`强制原有480/30契约（新增8项契约单测，期望值手写，不取自生产输出），再在空SQLite、无模型密钥的API和Vite上运行Playwright。结果三项作业通过：后端2153通过、38跳过（Beancount20、PG检索索引9、PG迁移2、原PDF4、v2数据1、官方原HTML1、v16报告1）；Windows因权限跳过的14项真实链接检查在Linux实际执行通过；规则基准480/480、失败0、参考例30/30、模型调用0；健康检查mode=local、model_configured=false、初始账套0；浏览器42通过、9跳过（OCR6、BPI1、BGE1、年报1，均需本机数据或模型），0失败、0 flaky（117.6秒）。Python缓存仍为冷启动，npm命中首轮缓存。
+
+边界：托管机器证明全新Linux环境可复现，不等于其他人按README在自己机器上复现；可选Beancount、OCR、BGE/pgvector、PostgreSQL迁移与本机真实数据未在CI执行；Windows不在CI中，仍以本机干净源码复现为准；后续运行可能命中缓存。规则契约与空库网页通过不说明模型质量，原因调查研究结论不变。工件保留30天，本地副本在`.local/reports/github-ci`，摘要与哈希见[github-ci-validation.json](github-ci-validation.json)。付费请求0、新依赖0；v26开发冒烟与新封存集继续暂缓。
