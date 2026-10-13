@@ -1,0 +1,82 @@
+{
+  "schema_version": "erpnext-tax-return-summary-v1",
+  "status": "passed",
+  "synthetic": true,
+  "model_requests": 0,
+  "new_dependencies": 0,
+  "company": "LedgerLens Tax Return Synthetic",
+  "recomputed_checks_per_run": [
+    24,
+    24
+  ],
+  "checks": {
+    "scope_company_currency_and_journal_only": true,
+    "source_ids_unique": true,
+    "explicit_string_money": true,
+    "submitted_same_company_supplier": true,
+    "original_and_return_stock_flags": true,
+    "frozen_posting_dates": true,
+    "exact_return_document_and_child_link": true,
+    "purchase_quantity_rate_and_net": true,
+    "purchase_explicit_test_charge_and_total": true,
+    "purchase_three_exact_gl_lines": true,
+    "purchase_gl_date_preserved": true,
+    "purchase_one_exact_stock_movement": true,
+    "return_quantity_rate_and_net": true,
+    "return_explicit_test_charge_and_total": true,
+    "return_three_exact_gl_lines": true,
+    "return_gl_date_preserved": true,
+    "return_one_exact_stock_movement": true,
+    "only_two_posting_vouchers_and_movements": true,
+    "gl_totals_match_handwritten_expected": true,
+    "trial_balance_independently_matches": true,
+    "remaining_stock_seven_units_86_38": true,
+    "net_payable_95_02": true,
+    "normal_import_preview_preserves_six_gl_rows": true,
+    "no_inferred_business_documents": true
+  },
+  "replay_equal": {
+    "documents": true,
+    "export": true,
+    "stock": true,
+    "trial_balance": true
+  },
+  "documents": {
+    "purchase": "ACC-PINV-2026-00003",
+    "return": "ACC-PINV-2026-00004"
+  },
+  "observed_totals": {
+    "purchase_net": "123.40",
+    "purchase_test_tax": "12.34",
+    "purchase_total": "135.74",
+    "return_net": "-37.02",
+    "return_test_tax": "-3.70",
+    "return_total": "-40.72",
+    "remaining_stock_quantity": "7",
+    "remaining_stock_value": "86.38",
+    "net_payable": "95.02"
+  },
+  "reports": [
+    {
+      "path": ".local/reports/erpnext-tax-return-v1.json",
+      "sha256": "f4f672aaec4f3c8f1cf5d2c02f945dc3f631a53a5615346323877a92a3e4483b",
+      "duration_seconds": 13.583844699896872
+    },
+    {
+      "path": ".local/reports/erpnext-tax-return-v2-replay.json",
+      "sha256": "4986fa35af87fe14450e51b1b3d4ad8615265b25b08692160e8ebfb2b071dbf8",
+      "duration_seconds": 5.244712900137529
+    }
+  ],
+  "source_sha256": {
+    "scripts/validate_erpnext_returns.py": "5ef64433ef0842f2acb0bfc81099cd696ae6284f95169de69adaa89113b6a314",
+    "scripts/validate_erpnext_semantics.py": "a5c09b60c08cd073426b1d1200e98cea1fb2e623cb5e03afc8db463a798dab0f",
+    "backend/app/connectors.py": "a44f809a827f85e85a32241a62f86001785f1709cd059c4dce1bab1537c07627"
+  },
+  "limitations": [
+    "10 percent is a synthetic test charge, not a statutory tax rate or policy.",
+    "One company, one stock item, one partial return; no payment/refund, cancellation or valuation-tax scenario.",
+    "Local ERPNext v16.50.0 only; no real enterprise data or professional review.",
+    "GL adapter remains read-only and journal-only; paginated reads are not atomic."
+  ]
+}

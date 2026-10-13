@@ -106,7 +106,7 @@ docker compose -f infra/erpnext/compose.yaml up -d
 4. **检索离线对比及本地人工接入已完成**：独立语料6份原文94段、156窗口；20条人工查询中18条有答案，关键词前6命中16/18、BGE＋pgvector为15/18，两者对2条无答案查询仍返回候选。保留负面结果与2个502来源，不在本批查询调参。持久索引重启回放一致；本地API和网页现支持选择父条文并冻结新快照、恢复默认与历史选择查看，真实BGE查询及规则调查通过。默认关键词不变；独立未见查询、无答案拒答、规模性能及专业复核仍未完成，见 [REFERENCE_WORKFLOW](REFERENCE_WORKFLOW.md)、[PERSISTENT_RETRIEVAL](PERSISTENT_RETRIEVAL.md) 和 [RETRIEVAL_VALIDATION](RETRIEVAL_VALIDATION.md)。
 5. **OCR图像、扫描PDF及多记录人工核实已完成，有限表格候选已接入**：6图及其6页纯图像PDF均实跑，23/24字串、28/35整行，空白页正确；保留混淆错误。PDF原页/像素/坐标可回查，页数与像素预算预检、失败页保留。网页支持原件高亮、逐字段引用、1至100条人工记录、追加复核与整批导入快照；图像/单条PDF以及跨页两条记录的真实CPU闭环通过。修订使旧预览失效，任一来源冲突整批回滚。明确表头和单行单元格可按OCR坐标提取待核实字段，两张独立合成图分别验证三行12字段和不支持双金额列；不自动判定业务类型或入账。真实单据、复杂结构及通用字段提取仍未完成，见 [OCR_TABLES](OCR_TABLES.md)、[OCR_WORKFLOW](OCR_WORKFLOW.md) 与 [OCR_PDF_VALIDATION](OCR_PDF_VALIDATION.md)。
 6. **观测**：OpenTelemetry本地span与费用未知值处理已实现、真实规则调查验收通过；Langfuse和远端Collector未接入，见 [OBSERVABILITY](OBSERVABILITY.md)。
-7. **ERPNext有限场景差分已完成**：外币账户／本位币、多公司、库存21项；订单→部分收货→发票→部分付款21项；重复执行记录一致。保留日期覆盖失败账套，USD本位币仍拒绝，详见 [ERPNEXT_SEMANTICS](ERPNEXT_SEMANTICS.md)。
+7. **ERPNext有限场景差分已完成**：外币账户／本位币、多公司、库存21项；订单→部分收货→发票→部分付款21项；含税采购→部分退货24项。各自重复执行记录一致；测试税率不代表税法。保留日期覆盖失败账套，USD本位币仍拒绝，复杂税费、退款、取消、汇兑与真实业务未验证，详见 [ERPNEXT_SEMANTICS](ERPNEXT_SEMANTICS.md) 和 [ERPNEXT_TAX_RETURN](ERPNEXT_TAX_RETURN.md)。
 8. **需要外部条件**：企业授权真实账套试点、会计专业复核、多用户审签与社区发布。
 
 ## 8. 交接时的状态核对
