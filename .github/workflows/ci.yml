@@ -98,6 +98,29 @@ jobs:
           API_PROXY_TARGET: http://127.0.0.1:8000
           PLAYWRIGHT_JSON_OUTPUT_NAME: ${{ runner.temp }}/reproduce/browser.json
         run: npx playwright test --reporter=list,json
+      # Same build, second API in multi-user mode: preparer, reviewer and approver are
+      # separate accounts created by the local CLI; passwords are CI-only throwaways.
+      - name: Multi-user sign-off browser flow
+        env:
+          SIGNOFF_PASSWORD: ci-only-signoff-password
+        run: |
+          demo="$RUNNER_TEMP/demo-multi"
+          test ! -e "$demo" && mkdir "$demo"
+          export PYTHONPATH=backend:. DATA_DIR="$demo" DATABASE_URL="sqlite:///$demo/demo.sqlite" AUTH_MODE=multi_user
+          nohup uv run uvicorn app.main:app --host 127.0.0.1 --port 8001 > "$RUNNER_TEMP/reproduce/api-multi.log" 2>&1 &
+          curl -fsS --retry 60 --retry-delay 1 --retry-all-errors http://127.0.0.1:8001/api/v1/health > /dev/null
+          for spec in "paul:Paul:preparer" "rita:Rita:reviewer approver" "amy:Amy:approver"; do
+            IFS=: read -r name display roles <<< "$spec"
+            LEDGERLENS_NEW_PASSWORD="$SIGNOFF_PASSWORD" uv run python -m app.manage_users create \
+              --username "$name" --display-name "$display" --roles $roles
+          done
+          cd frontend
+          API_PROXY_TARGET=http://127.0.0.1:8001 nohup node node_modules/vite/bin/vite.js --host 127.0.0.1 \
+            --port 5189 --strictPort > "$RUNNER_TEMP/reproduce/web-multi.log" 2>&1 &
+          curl -fsS -o /dev/null --retry 60 --retry-delay 1 --retry-all-errors http://127.0.0.1:5189/
+          MULTI_USER_TESTS=1 UI_URL=http://127.0.0.1:5189 \
+            PLAYWRIGHT_JSON_OUTPUT_NAME="$RUNNER_TEMP/reproduce/browser-multi.json" \
+            npx playwright test tests/signoff.spec.ts --reporter=list,json
       - if: always()
         uses: actions/upload-artifact@v6
         with:
