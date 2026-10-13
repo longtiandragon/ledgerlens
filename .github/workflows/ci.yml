@@ -1,23 +1,78 @@
 name: checks
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 jobs:
   backend:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
         with: {version: '0.11.28'}
       - run: uv sync --frozen --python 3.12
-      - run: uv run pytest -q
-      - run: uv run ruff check backend/app
+      - run: uv run pytest -q -rs
+      - run: uv run ruff check backend scripts datasets benchmarks
       - run: uv run python scripts/generate_contracts.py --check
   frontend:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run: {working-directory: frontend}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: {node-version: '22', cache: npm, cache-dependency-path: frontend/package-lock.json}
       - run: npm ci
       - run: npm run build
+  # Reproduce the local demo on a fresh machine: regenerate synthetic data, hold
+  # the existing 480/30 rule-label contract, then drive an empty database through
+  # the browser. No model key is present, so no paid request can be made.
+  reproduce:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      DEEPSEEK_API_KEY: ''
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+        with: {version: '0.11.28'}
+      - uses: actions/setup-node@v5
+        with: {node-version: '22', cache: npm, cache-dependency-path: frontend/package-lock.json}
+      - run: uv sync --frozen --python 3.12
+      - run: npm ci
+        working-directory: frontend
+      - name: Regenerate synthetic data and hold the 480/30 rule contract
+        run: |
+          mkdir -p "$RUNNER_TEMP/reproduce"
+          uv run python -m datasets.generate --output .local/datasets
+          PYTHONPATH=backend:. uv run python -m benchmarks.evaluate --require-acceptance \
+            > "$RUNNER_TEMP/reproduce/rule-benchmark.json"
+          jq '{case_count, failures, exact_label_match_rate, model_calls, reference_cases}' \
+            "$RUNNER_TEMP/reproduce/rule-benchmark.json"
+      - name: Start API on an empty database and the web dev server
+        run: |
+          demo="$RUNNER_TEMP/demo-data"
+          test ! -e "$demo" && mkdir "$demo"
+          PYTHONPATH=backend:. DATA_DIR="$demo" DATABASE_URL="sqlite:///$demo/demo.sqlite" \
+            nohup uv run uvicorn app.main:app --host 127.0.0.1 --port 8000 > "$RUNNER_TEMP/reproduce/api.log" 2>&1 &
+          curl -fsS --retry 60 --retry-delay 1 --retry-all-errors http://127.0.0.1:8000/api/v1/health \
+            | tee "$RUNNER_TEMP/reproduce/health.json" | jq -e '.model_configured == false and .mode == "local"'
+          curl -fsS http://127.0.0.1:8000/api/v1/books | jq -e '. == []'
+          cd frontend
+          API_PROXY_TARGET=http://127.0.0.1:8000 nohup node node_modules/vite/bin/vite.js --host 127.0.0.1 \
+            --port 5188 --strictPort > "$RUNNER_TEMP/reproduce/web.log" 2>&1 &
+          curl -fsS -o /dev/null --retry 60 --retry-delay 1 --retry-all-errors http://127.0.0.1:5188/
+      - name: Browser end-to-end tests
+        working-directory: frontend
+        env:
+          UI_URL: http://127.0.0.1:5188
+          API_PROXY_TARGET: http://127.0.0.1:8000
+          PLAYWRIGHT_JSON_OUTPUT_NAME: ${{ runner.temp }}/reproduce/browser.json
+        run: npx playwright test --reporter=list,json
+      - if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: reproduce-evidence
+          retention-days: 30
+          if-no-files-found: ignore
+          path: |
+            ${{ runner.temp }}/reproduce
+            runtime/frontend-test-results

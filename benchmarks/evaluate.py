@@ -1,6 +1,7 @@
 """Public evaluator entry point. Runtime investigators never receive this tool."""
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 
@@ -37,5 +38,23 @@ def run_evaluation() -> dict:
     return summary
 
 
+def acceptance_failures(summary: dict) -> list[str]:
+    """Existing 480/30 rule-label contract. Passing it says nothing about model quality."""
+    references = summary.get("reference_cases") or {}
+    checks = {"case_count": summary.get("case_count") == 480,
+              "failures": summary.get("failures") == 0,
+              "exact_label_match_rate": summary.get("exact_label_match_rate") == 1,
+              "reference_cases": references.get("case_count") == 30 and references.get("passed") == 30,
+              "model_calls": summary.get("model_calls") == 0}
+    return [name for name, passed in checks.items() if not passed]
+
+
 if __name__ == "__main__":
-    print(json.dumps(run_evaluation(), ensure_ascii=False, indent=2))
+    parser = argparse.ArgumentParser(description=run_evaluation.__doc__)
+    parser.add_argument("--require-acceptance", action="store_true",
+                        help="exit non-zero unless the existing 480/30 rule-label contract holds")
+    options = parser.parse_args()
+    summary = run_evaluation()
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
+    if options.require_acceptance and (failed := acceptance_failures(summary)):
+        raise SystemExit("Rule benchmark acceptance failed: " + ", ".join(failed))
