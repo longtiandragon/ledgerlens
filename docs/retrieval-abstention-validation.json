@@ -1,0 +1,538 @@
+{
+  "schema_version": "reference-abstention-summary-v1",
+  "status": "completed",
+  "date": "2026-10-13",
+  "source_commit_before_predictions": "8dc793e",
+  "plan_sha256": "7a7fc2f66265997bb89fcfc20fba97119e7116bc1ef693f8917bf7306e742497",
+  "report_sha256": "2f30062012db10c446e995dc1de1e0bddbaa7b26bc8370ca59d7d5bcb47fd5a2",
+  "source_sha256": {
+    "benchmarks/reference_abstention.py": "6569286942e05a386d494c9842be29826bf3b577b5821970fd90a584d7b11471",
+    "benchmarks/reference_retrieval.py": "19ab9be02e4f1867cfa5867bbd1c9f5082877668a7218cc019fac66b4fe43d52",
+    "backend/app/retrieval_vectors.py": "3894894ff0afb5753e0d99eee8c9ba8d131a6d8bc880f5fbe481e55e96c0bbd6",
+    "backend/app/knowledge.py": "f68a5c41fd0074f0dadaf12207808306f8a069b4b88bcfa1c844e9f0962e6825",
+    "backend/app/reference_sources.py": "8c6e3fc4711e80d876a327dc54864f77d0ffd664424eeef220e857c8cce6466e",
+    "docs/retrieval-model-v1.json": "588ee2f1da01c50d4f19a3b9bfa847b67e22c8af2623c08843e5b10c2e7c94e3"
+  },
+  "input_sha256": {
+    ".local/retrieval-corpus-v1.json": "c98585a2ac90627199e56e8a82d5bdee596757b58672a4e2ca6914c9e9a1e1d9",
+    "docs/retrieval-sources-v1.json": "473012feccb6f74a3001e97c50d1453ca187e70f41696b96d235a1de7ec66741",
+    "benchmarks/retrieval-abstention-dev-queries-v1.json": "0ece2061414de6f481c2a408af72f5b2614f2cbad727ce4aba4ec997292b70e8",
+    "benchmarks/retrieval-abstention-dev-truth-v1.json": "0ce32143402f624739776c287e1b4fb809b1917ccc70dcd2dd2aa18796bb6c16",
+    "benchmarks/retrieval-abstention-heldout-queries-v1.json": "6de28fdbd18e0f1cfbf5059a677c4d6b38617554793ad08799660f44f18eff2d",
+    "benchmarks/retrieval-abstention-heldout-truth-v1.json": "cf8a7ad86c6a34bb66949f1732bcec85a4b1dfc78643d559f02211154d2ce708"
+  },
+  "engine_scope": "Local BGE exact NumPy cosine; no PostgreSQL claim",
+  "parent_chunks": 94,
+  "segments": 156,
+  "seconds": 53.84,
+  "methods": {
+    "keyword": {
+      "threshold": 0.2857142857142857,
+      "development": {
+        "answerable": 12,
+        "unanswerable": 12,
+        "accepted_answerable": 11,
+        "rejected_unanswerable": 11,
+        "accepted_unanswerable": 1,
+        "correct_hit_at_6_kept": 11,
+        "correct_hit_at_6_lost": 1,
+        "failures": 0,
+        "balanced_answerability_accuracy": 0.9166666666666666
+      },
+      "candidates": 23,
+      "heldout_baseline": {
+        "answerable": 12,
+        "unanswerable": 12,
+        "accepted_answerable": 12,
+        "rejected_unanswerable": 0,
+        "accepted_unanswerable": 12,
+        "correct_hit_at_6_kept": 11,
+        "correct_hit_at_6_lost": 0,
+        "failures": 0,
+        "balanced_answerability_accuracy": 0.5
+      },
+      "heldout": {
+        "answerable": 12,
+        "unanswerable": 12,
+        "accepted_answerable": 11,
+        "rejected_unanswerable": 10,
+        "accepted_unanswerable": 2,
+        "correct_hit_at_6_kept": 11,
+        "correct_hit_at_6_lost": 0,
+        "failures": 0,
+        "balanced_answerability_accuracy": 0.875
+      },
+      "decisions": [
+        {
+          "query_id": "heldout-answer-01",
+          "no_answer": false,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-02",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-03",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-04",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-05",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-06",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-07",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-08",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-09",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-10",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-11",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-12",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-absent-01",
+          "no_answer": true,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "private_order"
+        },
+        {
+          "query_id": "heldout-absent-02",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "private_fair_value"
+        },
+        {
+          "query_id": "heldout-absent-03",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "private_returns"
+        },
+        {
+          "query_id": "heldout-absent-04",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "private_rent"
+        },
+        {
+          "query_id": "heldout-absent-05",
+          "no_answer": true,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "private_investment"
+        },
+        {
+          "query_id": "heldout-absent-06",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "private_password"
+        },
+        {
+          "query_id": "heldout-absent-07",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "absent_filing_calendar"
+        },
+        {
+          "query_id": "heldout-absent-08",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "absent_tax_office"
+        },
+        {
+          "query_id": "heldout-absent-09",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "absent_insurer_contact"
+        },
+        {
+          "query_id": "heldout-absent-10",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "absent_postgres_command"
+        },
+        {
+          "query_id": "heldout-absent-11",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "absent_social_insurance"
+        },
+        {
+          "query_id": "heldout-absent-12",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "absent_vendor_sla"
+        }
+      ],
+      "candidate_meets_gate": false
+    },
+    "bge_numpy": {
+      "threshold": 0.5847992897033691,
+      "development": {
+        "answerable": 12,
+        "unanswerable": 12,
+        "accepted_answerable": 10,
+        "rejected_unanswerable": 12,
+        "accepted_unanswerable": 0,
+        "correct_hit_at_6_kept": 7,
+        "correct_hit_at_6_lost": 1,
+        "failures": 0,
+        "balanced_answerability_accuracy": 0.9166666666666666
+      },
+      "candidates": 25,
+      "heldout_baseline": {
+        "answerable": 12,
+        "unanswerable": 12,
+        "accepted_answerable": 12,
+        "rejected_unanswerable": 0,
+        "accepted_unanswerable": 12,
+        "correct_hit_at_6_kept": 10,
+        "correct_hit_at_6_lost": 0,
+        "failures": 0,
+        "balanced_answerability_accuracy": 0.5
+      },
+      "heldout": {
+        "answerable": 12,
+        "unanswerable": 12,
+        "accepted_answerable": 12,
+        "rejected_unanswerable": 10,
+        "accepted_unanswerable": 2,
+        "correct_hit_at_6_kept": 10,
+        "correct_hit_at_6_lost": 0,
+        "failures": 0,
+        "balanced_answerability_accuracy": 0.9166666666666666
+      },
+      "decisions": [
+        {
+          "query_id": "heldout-answer-01",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-02",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-03",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-04",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-05",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-06",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-07",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-08",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-09",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-10",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-11",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-answer-12",
+          "no_answer": false,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": true,
+          "kind": "answerable"
+        },
+        {
+          "query_id": "heldout-absent-01",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "private_order"
+        },
+        {
+          "query_id": "heldout-absent-02",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "private_fair_value"
+        },
+        {
+          "query_id": "heldout-absent-03",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "private_returns"
+        },
+        {
+          "query_id": "heldout-absent-04",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "private_rent"
+        },
+        {
+          "query_id": "heldout-absent-05",
+          "no_answer": true,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "private_investment"
+        },
+        {
+          "query_id": "heldout-absent-06",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "private_password"
+        },
+        {
+          "query_id": "heldout-absent-07",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "absent_filing_calendar"
+        },
+        {
+          "query_id": "heldout-absent-08",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "absent_tax_office"
+        },
+        {
+          "query_id": "heldout-absent-09",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "absent_insurer_contact"
+        },
+        {
+          "query_id": "heldout-absent-10",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "absent_postgres_command"
+        },
+        {
+          "query_id": "heldout-absent-11",
+          "no_answer": true,
+          "accepted": false,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "absent_social_insurance"
+        },
+        {
+          "query_id": "heldout-absent-12",
+          "no_answer": true,
+          "accepted": true,
+          "failed": false,
+          "correct_hit_at_6": false,
+          "kind": "absent_vendor_sla"
+        }
+      ],
+      "candidate_meets_gate": false
+    }
+  },
+  "model_requests": 0,
+  "ledger_writes": 0,
+  "default_changed": false,
+  "evidence_sha256": {
+    "dev-predictions.json": "b0c86bc7f9046dc9b5385233f6bc7788b6e03e9d64af8ad0dca76efc25af25df",
+    "heldout-predictions.json": "ea02581c6c3dbf7804c0e8f7d2314952e4c947530481b39a377dd367ae81a584",
+    "report.json": "2f30062012db10c446e995dc1de1e0bddbaa7b26bc8370ca59d7d5bcb47fd5a2",
+    "thresholds.json": "467c9b1d802716c7efebf307484a24c25215e6f256337b5c59e5808a204286bf"
+  },
+  "limitations": [
+    "Implementer-authored synthetic queries, not independent expert validation",
+    "Top-score threshold is not a semantic answerability guarantee",
+    "No PostgreSQL run in this experiment",
+    "No prompt/model/window changes and no tuning after held-out scores",
+    "Neither gate pass nor retrieval hit establishes professional applicability"
+  ],
+  "additional_verification": {
+    "unit_tests_passed": 11,
+    "pytest_reported_seconds": 0.4,
+    "ruff": "passed",
+    "tampered_reports_rejected": [
+      {
+        "fault": "gate",
+        "rejected": true,
+        "reason": "Changed metrics or hidden failed gate"
+      },
+      {
+        "fault": "threshold",
+        "rejected": true,
+        "reason": "Threshold was not fitted exclusively on development cases"
+      },
+      {
+        "fault": "missing_prediction",
+        "rejected": true,
+        "reason": "Missing queries or labels"
+      }
+    ],
+    "evidence_sha256": {
+      "runtime/reference-abstention-unit-v1.xml": "22bdca0ed5cfcf76624c23006982d658ab3b69ceea302a573c4ac625c0d355c0",
+      ".local/retrieval-abstention-audit-v1/report.json": "b3b93c8edc22c7a154dfb039c4970cd2cebba7b85c36e3599fb6c91d19defca0",
+      "scripts/summarize_abstention.py": "dc48997784c5947d379b5328c5a264a00df56c88978998d7c19d827d583055a2",
+      "backend/tests/test_reference_abstention.py": "ce9bd7b2431e7ff83fcb6a2527dfd729d54ac556c74017891654ae1a5412c679"
+    }
+  }
+}
