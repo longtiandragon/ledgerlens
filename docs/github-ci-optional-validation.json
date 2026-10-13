@@ -1,0 +1,74 @@
+{
+  "schema_version": "github-ci-optional-validation-v1",
+  "date": "2026-10-14",
+  "run": 38449430186,
+  "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/38449430186",
+  "head_sha": "479381eb806f1059f15a084bb488a8b618af3c8d",
+  "conclusion": "success",
+  "jobs": {
+    "frontend": "success",
+    "backend": "success",
+    "reproduce": "success",
+    "optional": "success"
+  },
+  "optional_job": {
+    "installs": [
+      104,
+      2
+    ],
+    "optional_packages": {
+      "beancount": "3.2.3",
+      "regex": "2026.9.29"
+    },
+    "pytest": "68 passed in 2.35s",
+    "junit_counts": "{'tests': 68, 'skipped': 0}",
+    "service": "pgvector/pgvector:pg17 on 127.0.0.1:55439 (same credentials as the local retrieval service)",
+    "opt_in": [
+      "MIGRATION_POSTGRES_TESTS=1",
+      "RETRIEVAL_INDEX_TESTS=1"
+    ],
+    "files": [
+      "backend/tests/test_migrations_postgres.py",
+      "backend/tests/test_retrieval_index.py",
+      "backend/tests/test_beancount_differential.py"
+    ],
+    "skip_gate": "job fails if the JUnit report has any skipped test or no tests"
+  },
+  "default_backend_job": {
+    "installs": [
+      104
+    ],
+    "skips": [
+      "SKIPPED [3] backend/tests/test_annual_statement_probe.py:529: Selected original PDF is absent; no download is attempted",
+      "SKIPPED [1] backend/tests/test_annual_statement_probe.py:562: Selected original PDF is absent; no download is attempted",
+      "SKIPPED [9] backend/tests/test_beancount_differential.py:19: Optional Beancount differential dependency is absent",
+      "SKIPPED [1] backend/tests/test_beancount_differential.py:31: Optional Beancount differential dependency is absent",
+      "SKIPPED [1] backend/tests/test_beancount_differential.py:42: Optional Beancount differential dependency is absent",
+      "SKIPPED [1] backend/tests/test_beancount_differential.py:50: Optional Beancount differential dependency is absent",
+      "SKIPPED [1] backend/tests/test_beancount_differential.py:65: Optional Beancount differential dependency is absent",
+      "SKIPPED [1] backend/tests/test_beancount_differential.py:76: Optional Beancount differential dependency is absent",
+      "SKIPPED [1] backend/tests/test_beancount_differential.py:87: Optional Beancount differential dependency is absent",
+      "SKIPPED [1] backend/tests/test_beancount_differential.py:97: Optional Beancount differential dependency is absent",
+      "SKIPPED [1] backend/tests/test_beancount_differential.py:106: Optional Beancount differential dependency is absent",
+      "SKIPPED [1] backend/tests/test_beancount_differential.py:117: Optional Beancount differential dependency is absent",
+      "SKIPPED [1] backend/tests/test_beancount_differential.py:130: Optional Beancount differential dependency is absent",
+      "SKIPPED [1] backend/tests/test_beancount_differential.py:195: Optional Beancount differential dependency is absent",
+      "SKIPPED [1] backend/tests/test_context_transport.py:255: Local v16 observable report is not available",
+      "SKIPPED [2] backend/tests/test_migrations_postgres.py:20: Explicit MIGRATION_POSTGRES_TESTS=1 requires the dedicated local PostgreSQL service",
+      "SKIPPED [1] backend/tests/test_official_policy_benchmark.py:243: Original official HTML stays in optional local storage",
+      "SKIPPED [1] backend/tests/test_retrieval_index.py:144: Explicit RETRIEVAL_INDEX_TESTS=1 requires the local optional pgvector service",
+      "SKIPPED [6] backend/tests/test_retrieval_index.py:160: Explicit RETRIEVAL_INDEX_TESTS=1 requires the local optional pgvector service",
+      "SKIPPED [1] backend/tests/test_retrieval_index.py:186: Explicit RETRIEVAL_INDEX_TESTS=1 requires the local optional pgvector service",
+      "SKIPPED [1] backend/tests/test_retrieval_index.py:203: Explicit RETRIEVAL_INDEX_TESTS=1 requires the local optional pgvector service",
+      "SKIPPED [1] backend/tests/test_root_cause_v2.py:113: local v2 dataset not generated"
+    ],
+    "pytest": "2170 passed, 38 skipped, 2 warnings in 65.27s (0:01:05)"
+  },
+  "log_sha256": "6534eadfaac5f074104d785e8d0db73188f737ef407707c5406ac91c900d2f9b",
+  "model_requests": 0,
+  "limitations": [
+    "Ephemeral CI database with synthetic fixtures; not the persisted local retrieval index.",
+    "Beancount stays an optional evaluator; its GPL code is installed only in CI, not bundled.",
+    "Annual-report PDFs, official HTML and local v2/v16 reports remain local-only skips."
+  ]
+}

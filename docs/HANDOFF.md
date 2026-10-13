@@ -15,7 +15,7 @@
 |数据库迁移|冻结至 `0006`（参考检索任务和人工选择版本；只允许向前迁移）；SQLite及真实PostgreSQL临时schema迁移8项通过，见postgres-migration-validation.json|
 |本地旧库升级|启动器执行结构核验、自动备份和向前迁移；无版本旧库仅接管完整匹配的冻结结构。30项专项及隔离启动器实跑通过，原工作库仅做副本演练，见LOCAL_DATABASE_UPGRADE|
 |本地备份恢复|v2逐文件哈希与检查点清单，复制前后核验；32项专项通过，实际副本3257行业务数据和4179行检查点保持，199快照/26OCR/117参考上下文重验通过，见BACKUP_RESTORE。另建合成库两个规则调查进程中断点恢复、预算保持及重复派发通过，见RESTORED_RUN；非空白机器完整灾难恢复。Compose PostgreSQL用`scripts/postgres_backup.py`停写备份／新STORAGE_ROOT恢复，恢复栈API视图一致、容器验收20/20，见BACKUP_RESTORE末节|
-|测试|提交ce7caf2干净源码基础环境2131通过、52项可选/本机条件跳过；网页42通过、9项可选场景跳过，见CLEAN_CHECKOUT。此前启用实际PG/本机模型资料的后端全量2017通过、2项Windows文件链接权限跳过（144.31秒）；浏览器48通过、0跳过（4.4分钟），两种环境范围不同，不互相替代。GitHub CI（全新ubuntu-24.04）后端2153通过/38可选跳过、480/30规则契约及空库网页42通过/9可选跳过，见github-ci-validation.json|
+|测试|提交ce7caf2干净源码基础环境2131通过、52项可选/本机条件跳过；网页42通过、9项可选场景跳过，见CLEAN_CHECKOUT。此前启用实际PG/本机模型资料的后端全量2017通过、2项Windows文件链接权限跳过（144.31秒）；浏览器48通过、0跳过（4.4分钟），两种环境范围不同，不互相替代。GitHub CI（全新ubuntu-24.04）后端2170通过/38可选跳过、480/30规则契约及空库网页42通过/9可选跳过；optional作业以pgvector服务和固定Beancount执行默认作业跳过的31项（所在3个文件共68项全部执行、0跳过），见github-ci-validation.json及github-ci-optional-validation.json|
 |DeepSeek 余额|¥2.60（2026-10-12 查询）；配置模型 `deepseek-flash`|
 
 ## 2. 启动与常用命令（PowerShell，仓库根目录）

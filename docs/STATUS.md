@@ -634,4 +634,11 @@ Docker Desktop此前无法启动的直接原因是其推理服务自身遗留的
 
 17项单元检查通过（含首个实跑后发现的相对路径清单缺陷：新回归在旧代码上1失败/16通过，修复后通过）。实跑：写入方运行时拒绝且无残留；停写后备份48.5秒（26表1586行、10个Document、PG17.10、迁移0006），恢复21.4秒，重复恢复到已存在目录被拒绝。以独立Compose项目在恢复目录启动全栈：迁移保持0006（head），只读API视图（10账套、记录、10个Document下载哈希、20案件、27运行、快照）与原部署SHA-256完全一致，完整容器验收20/20。原部署数据文件备份后未变。用修复后的最终代码重复：备份42.2秒，部署全部停止时恢复21.2秒，表、Document和修订与首轮一致，转储字节因时间戳不同。一次性容器0残留，恢复项目连同本地构建镜像已删除，原栈与Docker Desktop均已停止。
 
-边界：需要停写，没有在线／时间点恢复、WAL归档或加密；Redis不在备份内，排队运行依赖定时失效租约恢复重新派发（该恢复会重新投递全部queued运行）；同一开发机验证，异机与大库未测；清单哈希不能证明被恶意重写的清单可信。付费请求0、新依赖0。摘要见[postgres-backup-restore-validation.json](postgres-backup-restore-validation.json)，原始证据在`runtime/postgres-backup-v1`、`.local/backups/pg-backup-v1/v2-20261014`与`.local/restore-tests`。
+边界：需要停写，没有在线／时间点恢复、WAL归档或加密；Redis不在备份内，排队运行依赖定时失效租约恢复重新派发（该恢复会重新投递全部queued运行）；同一开发机验证，异机与大库未测；清单哈希不能证明被恶意重写的清单可信。提交前本机全量首轮出现1项失败（输出只保留了汇总行，未能取得测试名），随后连续5次全量均为2183通过、25跳过、0失败，未能复现，原因未定，按可能的偶发问题保留记录。付费请求0、新依赖0。摘要见[postgres-backup-restore-validation.json](postgres-backup-restore-validation.json)，原始证据在`runtime/postgres-backup-v1`、`.local/backups/pg-backup-v1/v2-20261014`与`.local/restore-tests`。
+
+
+## CI可选组件作业（2026-10-14）
+
+默认后端作业保持“按锁文件基础安装”的范围；新增optional作业在GitHub托管机上启动pgvector/pgvector:pg17服务（与本地检索服务相同端口和测试凭据），设置MIGRATION_POSTGRES_TESTS=1、RETRIEVAL_INDEX_TESTS=1，并按`benchmarks/requirements-beancount.txt`安装固定的Beancount 3.2.3／regex 2026.9.29。三份测试文件68项全部执行通过、0跳过；作业另以JUnit计数把“任何跳过或零测试”判为失败，避免可选检查静默跳过。提交479381e的四项作业全部通过：默认后端2170通过／38跳过、前端构建、reproduce（480/30契约与空库网页42通过／9跳过）及optional。
+
+这把默认CI的38项跳过中31项（PG迁移2、持久pgvector索引9、Beancount20）在全新Linux机器上实际执行；其余7项依赖不可再分发的本地原件或历史报告，继续跳过。CI数据库为一次性合成夹具，不等于本地持久检索索引；Beancount仍只是可选评测工具，不随项目分发。摘要见[github-ci-optional-validation.json](github-ci-optional-validation.json)。
