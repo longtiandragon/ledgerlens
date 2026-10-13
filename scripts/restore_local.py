@@ -1,13 +1,16 @@
 """Restore into a NEW directory and fix source references; never overwrites live data."""
 import argparse
 import hashlib
-import json
 import re
 import shutil
 import sqlite3
 import tempfile
+import sys
 from contextlib import closing
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from scripts.backup_manifest import files, no_links, read_metadata, verify  # noqa: E402
 
 
 def _check_database(path: Path):
@@ -19,22 +22,10 @@ def _check_database(path: Path):
         raise ValueError(f'Backup database is unreadable: {path.name}') from error
 
 
-def restore(source: Path, destination: Path):
-    source, destination = source.resolve(), destination.resolve()
-    if destination.exists() or source == destination or source in destination.parents:
-        raise ValueError('Restore destination must be a new directory outside the backup')
-    if not source.is_dir():
-        raise ValueError('Backup directory does not exist')
-    # Do not let an archive with symbolic links read files outside its contents.
-    if any(path.is_symlink() or path.is_junction() for path in source.rglob('*')):
-        raise ValueError('Backup symbolic links and junctions are not supported')
-    metadata = json.loads((source / 'backup.json').read_text(encoding='utf-8'))
-    if metadata.get('type') != 'sqlite-local':
-        raise ValueError('Only local SQLite backups are supported')
+def _check_sources(source: Path):
     original = source / 'ledgerlens.sqlite'
     if not original.is_file():
         raise ValueError('Backup is missing its business database')
-    _check_database(original)
     with closing(sqlite3.connect(f'{original.as_uri()}?mode=ro', uri=True)) as database:
         documents = database.execute('SELECT id, sha256 FROM documents').fetchall()
     for identity, sha in documents:
@@ -47,6 +38,21 @@ def restore(source: Path, destination: Path):
             digest = hashlib.file_digest(stream, 'sha256').hexdigest()
         if digest != sha:
             raise ValueError(f'Backup source is missing/corrupt: {identity}')
+    return documents
+
+
+def restore(source: Path, destination: Path):
+    source, destination = no_links(source), no_links(destination)
+    if destination.exists() or source == destination or source in destination.parents:
+        raise ValueError('Restore destination must be a new directory outside the backup')
+    if not source.is_dir():
+        raise ValueError('Backup directory does not exist')
+    files(source)
+    metadata = read_metadata(source)
+    verify(source, metadata)
+    original = source / 'ledgerlens.sqlite'
+    _check_database(original)
+    documents = _check_sources(source)
     checkpoints = source / 'checkpoints.sqlite'
     if checkpoints.exists():
         _check_database(checkpoints)
@@ -60,6 +66,13 @@ def restore(source: Path, destination: Path):
                 shutil.copy2(path, staging / path.name)
         if (source / 'sources').is_dir():
             shutil.copytree(source / 'sources', staging / 'sources')
+        # Verify copied bytes before path relocation or publishing the directory.
+        verify(staging, metadata)
+        _check_database(staging / 'ledgerlens.sqlite')
+        if (staging / 'checkpoints.sqlite').exists():
+            _check_database(staging / 'checkpoints.sqlite')
+        if _check_sources(staging) != documents:
+            raise ValueError('Backup documents changed during restore')
         with closing(sqlite3.connect(staging / 'ledgerlens.sqlite')) as database:
             for identity, sha in documents:
                 database.execute('UPDATE documents SET storage_path=? WHERE id=?',

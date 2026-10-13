@@ -36,7 +36,7 @@
 .venv\Scripts\python.exe scripts/backup.py --runtime runtime --output F:\LedgerLensBackups\backup-001
 ```
 
-备份包含业务SQLite、检查点SQLite、来源文件及清单。单数据库backup操作一致，但多个文件的整体一致性要求暂停写入。PostgreSQL使用pg_dump，并同时复制来源文件；不得把SQLite备份命令套用到PostgreSQL。
+备份包含业务SQLite、可选检查点SQLite、来源文件及v2清单（逐文件SHA-256、字节数和检查点是否包含）。校验成功才发布到全新目录。单数据库backup操作一致，但多个文件的整体一致性要求暂停写入。PostgreSQL使用pg_dump，并同时复制来源文件；不得把SQLite备份命令套用到PostgreSQL。
 
 恢复到新目录，先校验所有文件哈希和SQL完整性，再指向新DATA_DIR/DATABASE_URL。业务Document保存的原始存储路径需要迁移，不能仅移动数据库就声称来源可读取。恢复脚本提供显式路径修复，保留原备份不修改。
 
@@ -44,7 +44,7 @@
 .venv\Scripts\python.exe scripts/restore_local.py --backup F:\LedgerLensBackups\backup-001 --destination F:\LedgerLensRestored\restore-001
 ```
 
-恢复器先验证业务库、检查点库及每份来源文件，再在临时目录修复路径并移入一个全新目录。不会覆盖现有运行目录。`.env`、公开资料索引、日志与基准报告不在此备份格式内；旧调查的参考片段已经冻结在业务快照，新资料索引可用采集清单重新建立。
+恢复器在复制前后验证v2清单、业务库、检查点库及每份来源文件，再在临时目录修复路径并移入一个全新目录。不会覆盖现有运行目录。`.env`、模型、公开资料索引、日志与基准报告不在此备份格式内；旧调查的参考片段已经冻结在业务快照，但完整校验仍需其绑定的受信资料注册表。旧格式的校验限制、恢复后再次备份方式及实跑证据见[备份恢复验证](BACKUP_RESTORE.md)。
 
 ## ERPNext 只读接入
 

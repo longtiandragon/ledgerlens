@@ -1,3 +1,4 @@
+from contextlib import closing
 import hashlib
 import json
 import sqlite3
@@ -18,12 +19,12 @@ def backup(tmp_path):
     document = root / 'sources' / sha[:2] / sha
     document.parent.mkdir(parents=True)
     document.write_bytes(content)
-    with sqlite3.connect(root / 'ledgerlens.sqlite') as database:
+    with closing(sqlite3.connect(root / 'ledgerlens.sqlite')) as database, database:
         database.execute('CREATE TABLE documents (id TEXT PRIMARY KEY, sha256 TEXT, storage_path TEXT)')
         database.execute('INSERT INTO documents VALUES (?, ?, ?)', ('proof-1', sha, 'F:/old/runtime/source.csv'))
         database.execute('CREATE TABLE original_ledger (amount TEXT)')
         database.execute("INSERT INTO original_ledger VALUES ('100.01')")
-    with sqlite3.connect(root / 'checkpoints.sqlite') as database:
+    with closing(sqlite3.connect(root / 'checkpoints.sqlite')) as database, database:
         database.execute('CREATE TABLE checkpoints (id TEXT)')
         database.execute("INSERT INTO checkpoints VALUES ('saved-run')")
     return root
@@ -35,13 +36,13 @@ def test_restore_verifies_evidence_relocates_paths_and_preserves_original(backup
     result = restore(backup, tmp_path / 'restored')
     assert result == tmp_path / 'restored'
     assert (backup / 'ledgerlens.sqlite').read_bytes() == original
-    with sqlite3.connect(result / 'ledgerlens.sqlite') as database:
+    with closing(sqlite3.connect(result / 'ledgerlens.sqlite')) as database, database:
         sha, path = database.execute('SELECT sha256, storage_path FROM documents').fetchone()
         assert Path(path) == result / 'sources' / sha[:2] / sha
         assert hashlib.sha256(Path(path).read_bytes()).hexdigest() == sha
         assert database.execute('SELECT amount FROM original_ledger').fetchone() == ('100.01',)
         assert database.execute('PRAGMA integrity_check').fetchone() == ('ok',)
-    with sqlite3.connect(result / 'checkpoints.sqlite') as database:
+    with closing(sqlite3.connect(result / 'checkpoints.sqlite')) as database, database:
         assert database.execute('SELECT id FROM checkpoints').fetchone() == ('saved-run',)
     assert not (result / '.env').exists()
     assert not list(tmp_path.glob('.restored-restore-*'))
@@ -63,7 +64,7 @@ def test_invalid_backup_is_rejected_before_creating_destination(backup, tmp_path
         else:
             document.write_bytes(b'modified-source')
     elif fault == 'hash':
-        with sqlite3.connect(backup / 'ledgerlens.sqlite') as database:
+        with closing(sqlite3.connect(backup / 'ledgerlens.sqlite')) as database, database:
             database.execute("UPDATE documents SET sha256='../outside'")
     elif fault in {'database', 'checkpoints'}:
         name = 'ledgerlens.sqlite' if fault == 'database' else 'checkpoints.sqlite'

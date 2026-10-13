@@ -1,0 +1,76 @@
+{
+  "schema_version": "backup-restore-validation-v1",
+  "date": "2026-10-13",
+  "status": "passed",
+  "backup_schema_version": "sqlite-local-backup-v2",
+  "tests": {
+    "passed": 32,
+    "new_cases": 21,
+    "skipped": 0,
+    "pytest_reported_seconds": 2.18,
+    "junit_suite_seconds": 1.911,
+    "ruff": "passed"
+  },
+  "rehearsal": {
+    "status": "passed",
+    "business_tables": 21,
+    "business_rows": 3257,
+    "all_business_rows_unchanged_except_document_paths": true,
+    "checkpoint_tables": {
+      "checkpoints": 573,
+      "writes": 3606
+    },
+    "checkpoint_rows_unchanged": true,
+    "documents_relocated_and_sha256_verified": 266,
+    "checks": {
+      "snapshot": 199,
+      "ocr": 26,
+      "frozen_references": 117
+    },
+    "failures": [],
+    "backup_unchanged": true,
+    "original_runtime_write_attempts": 0,
+    "model_requests": 0,
+    "backup_files": 12,
+    "backup_manifest_sha256": "8a7c77361864ea0ef6b7d6a931000718820f79c14c629307575ce49ca4f493ed"
+  },
+  "scope": "Stopped local writers; read-only backup of synthetic working data; restore to a fresh directory; verification uses existing trusted source registries. Restored API not started.",
+  "negative_runs": [
+    {
+      "artifact": "runtime/backup-restore-v2-tests-v1.xml",
+      "passed": 30,
+      "failed": 2,
+      "reason": "Windows SQLite test connections were not explicitly closed; fixed fixture resource lifecycle without changing assertions."
+    },
+    {
+      "artifact": ".local/restore-rehearsal-v1/verification.json",
+      "failed_reference_checks": 4,
+      "reason": "Initial audit used the default registry for explicitly selected BGE sources; corrected to production snapshot-bound registry verification without changing data."
+    }
+  ],
+  "not_verified": [
+    "Blank-machine disaster recovery including trusted source registries and models",
+    "Power loss or concurrent writer consistency",
+    "PostgreSQL restore",
+    "Historical investigation restart after restoring",
+    "Authenticity against malicious manifest rewriting",
+    "Model or real business effectiveness"
+  ],
+  "paid_model_requests": 0,
+  "new_dependencies": [],
+  "source_sha256": {
+    "scripts/backup.py": "74d790f4bb3ef1dadc10ff46782751f7ba30d6cf9d70e01ceb4dd27db33abe12",
+    "scripts/backup_manifest.py": "687e417883122f67b7b9a83ef2b81de9ef18e573a359ffba98d48b1230336b59",
+    "scripts/restore_local.py": "e8b57f9e3c21d6557e3903dad7f208a435be2ec00053bd505c98e54059218a7a",
+    "backend/tests/test_restore.py": "297bf6a38d80b50a788c2155e548c71a24391cf73f12f883c16b7d3ffd00fcc6",
+    "backend/tests/test_backup_manifest.py": "bb06ecf89941576b6db48826f6651706b3a1d7388ee29941d020e4f9ce44f3f9"
+  },
+  "evidence_sha256": {
+    "runtime/backup-restore-v2-tests-v1.xml": "ef8c9c387088c9189ad11c98bf7e81653bd35103b2c287bf12e335cd04c204a5",
+    "runtime/backup-restore-v2-tests-v2.xml": "537c77e2d428d4276409cfd822c46b11075f983c28fe50f31bbed96c07108f24",
+    "runtime/verify_restore_v2.py": "5582aeb5984ee7b0852987dde9f7589f6c81492b7eccbb3fbc17c75e3a3c1627",
+    ".local/restore-rehearsal-v1/verification.json": "58ed4504fbca7a13affb41ac53c6c9409414e197f1569c07287e21fb39a83e54",
+    ".local/restore-rehearsal-v1/verification-v2.json": "dc4a029c40f052f9eb30265df68c2b106a67c2bdfa0d91f2db21eb6a817b3392",
+    ".local/restore-rehearsal-v1/backup/backup.json": "8a7c77361864ea0ef6b7d6a931000718820f79c14c629307575ce49ca4f493ed"
+  }
+}
