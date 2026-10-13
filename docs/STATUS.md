@@ -573,3 +573,14 @@ Dockerfile新增5份公开历史摘要的显式复制，不复制整个docs目�
 21项验收器检查加3项镜像摘要回归，共24通过、0失败／跳过（pytest1.13秒），Ruff与diff检查通过。包含0006允许通过预检、8种失败预检均不发送业务写入、重复报告拒绝、异常／中断和正常完成。预检使用隔离模拟HTTP与Docker响应，不是容器部署成功证据。
 
 实际命令行使用新报告路径执行：docker compose ps因引擎管道缺失失败，退出1并保存failed／passed=false，没有创建账套或操作worker；同路径重试在验收前拒绝、退出2，原报告SHA-256保持。原始日志与报告保存在runtime/container-runner-cli-v1，公开摘要和哈希见[container-runner-validation.json](container-runner-validation.json)。无付费、下载或新依赖，真实迁移／Celery／容器业务复验未执行。报告独占创建不等于断电原子落盘；工作流中断后自动恢复被停止的服务也未证明，运行手册明确需检查服务状态。
+
+
+## 容器停机演练异常退出恢复（2026-10-14）
+
+继续修复验收器主动停止worker/scheduler后异常退出不恢复的问题。新增故障回归先复现排队HTTP失败后缺失恢复记录；随后KeyboardInterrupt逃出旧verify导致pytest提前停止，该初轮XML保留，不把未执行的参数项记为失败或通过。修复在stop命令前登记本轮服务，覆盖命令已部分停止服务但返回失败／中断的情况；正常start也要观察对应容器running后才解除恢复登记。
+
+verify的普通异常和KeyboardInterrupt均保留已取得的账套ID、检查与原始错误；finally逐个尝试启动尚需恢复的worker/scheduler并查询状态。worker恢复命令失败、状态不符、查询失败或再次键盘中断时，仍尝试scheduler；每项service_restoration保存结果与错误，任何恢复成功都不把原失败验收改成通过。不停止／恢复未经本轮预检及stop登记的服务。
+
+最终9种故障覆盖排队HTTP失败、键盘中断、stop结果不确定、purge失败、恢复启动报错、启动后已退出、状态查询失败、恢复时中断及正常start成功但服务已退出。连同既有验收器和打包检查33通过，0失败／跳过（pytest1.18秒），Ruff与diff通过；前一版32项结果也保留。公开摘要与原始XML哈希见[container-restoration-validation.json](container-restoration-validation.json)。
+
+这些检查使用隔离的HTTP/Compose模拟，执行真实verify控制流程，没有启动／停止实际容器或访问业务库。Docker仍无可用引擎，实际服务恢复尚未验证；running仅为容器状态，不能证明Celery就绪或账务完成。强制杀进程、宿主崩溃、断电可绕过finally，完整栈restart失败和外部并发改变状态也不在此恢复保证内。运行手册已明确人工处理边界；本轮付费请求0、新依赖0，研究目标仍未完成。

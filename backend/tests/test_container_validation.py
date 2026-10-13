@@ -140,3 +140,99 @@ def test_valid_source_head_allows_preflight_to_reach_synthetic_book(monkeypatch)
     assert report['expected_migration_heads'] == ['0006']
     assert len(report['checks']) == 5 and all(report['checks'].values())
     assert report['passed'] is False and report['error']['type'] == 'HTTPStatusError'
+
+
+@pytest.mark.parametrize('fault', ['queue_http', 'queue_interrupt', 'partial_stop', 'purge',
+                                 'worker_restart', 'worker_exited', 'worker_probe', 'cleanup_interrupt',
+                                 'normal_start_exited'])
+def test_interrupted_fault_injection_restores_only_owned_services(monkeypatch, fault):
+    calls = []
+    stopped = set()
+    investigating = 0
+    cleanup = False
+
+    def compose(*args, **kwargs):
+        nonlocal cleanup
+        calls.append(args)
+        if args == ('ps', '--format', 'json'):
+            return '\n'.join(json.dumps({'Service': name, 'State': 'running'})
+                             for name in ('postgres', 'redis', 'api', 'worker', 'scheduler', 'web'))
+        if args == ('exec', '-T', 'api', 'alembic', 'current'):
+            return '0006 (head)'
+        if args[:4] == ('exec', '-T', 'postgres', 'psql'):
+            return '1'
+        if args[0] == 'stop':
+            stopped.update(args[1:])
+            if fault == 'partial_stop':
+                cleanup = True
+                raise RuntimeError('stop result uncertain')
+            return ''
+        if args[0] == 'start':
+            if cleanup and args[1] == 'worker' and fault in ('worker_restart', 'cleanup_interrupt'):
+                raise RuntimeError('restart failed') if fault == 'worker_restart' else KeyboardInterrupt()
+            stopped.difference_update(args[1:])
+            return ''
+        if args[:4] == ('exec', '-T', 'worker', 'python'):
+            return ''  # Duplicate terminal-run delivery.
+        if args[0] == 'run':
+            cleanup = True
+            raise RuntimeError('purge failed')
+        if args[:4] == ('ps', '--all', '--format', 'json'):
+            service = args[4]
+            if cleanup and fault == 'worker_probe' and service == 'worker':
+                raise RuntimeError('probe failed')
+            if fault == 'normal_start_exited' and not cleanup:
+                cleanup = True
+                return json.dumps({'Service': service, 'State': 'exited'})
+            return json.dumps({'Service': service, 'State': 'exited' if cleanup and fault == 'worker_exited' and service == 'worker' else 'running'})
+        raise AssertionError('Unexpected Docker operation: ' + repr(args))
+
+    def respond(request):
+        nonlocal investigating, cleanup
+        path = request.url.path.removeprefix('/api/v1')
+        if path == '/health':
+            data = {'mode': 'celery', 'model_configured': False}
+        elif path == '/books':
+            data = {'id': 'book'}
+        elif path == '/books/book/demo':
+            data = {'snapshot_id': 'snap'}
+        elif path == '/books/book/records':
+            data = []
+        elif path == '/snapshots/snap':
+            data = {'id': 'snap'}
+        elif path == '/check-runs':
+            data = {'cases': [{'id': 'case1'}, {'id': 'case2'}]}
+        elif path.endswith('/investigate'):
+            investigating += 1
+            if investigating == 2 and fault in ('queue_http', 'queue_interrupt'):
+                cleanup = True
+                if fault == 'queue_interrupt':
+                    raise KeyboardInterrupt()
+                return httpx.Response(503, json={'detail': 'queued request failed'})
+            data = {'id': 'run' + str(investigating)}
+        elif path.startswith('/runs/'):
+            data = {'status': 'queued' if 'worker' in stopped else 'complete', 'usage': {'calls': 0}}
+        else:
+            raise AssertionError('Unexpected HTTP request: ' + path)
+        return httpx.Response(200, json=data)
+
+    original_client = httpx.Client
+    monkeypatch.setattr(runner, 'compose', compose)
+    monkeypatch.setattr(runner.httpx, 'Client', lambda **kw: original_client(
+        **kw, transport=httpx.MockTransport(respond)))
+    monkeypatch.setattr(runner.time, 'sleep', lambda seconds: None)
+    monkeypatch.setattr(runner.subprocess, 'run', lambda *a, **k: type('Result', (), {
+        'returncode': 0, 'stdout': 'No new upgrade operations', 'stderr': ''})())
+    report = runner.verify('http://offline.invalid', 'http://offline.invalid')
+    assert report['passed'] is False and 'error' in report
+    assert report['book_id'] == 'book'  # Keep partial evidence on keyboard interruption too.
+    entries = report['service_restoration']
+    expected = ['worker'] if fault in ('queue_http', 'queue_interrupt', 'partial_stop', 'normal_start_exited') else ['worker', 'scheduler']
+    assert [entry['service'] for entry in entries] == expected
+    failing_cleanup = fault in ('worker_restart', 'worker_exited', 'worker_probe', 'cleanup_interrupt')
+    assert report['checks']['interrupted_services_restored'] is (not failing_cleanup)
+    assert entries[0]['restored'] is (not failing_cleanup)
+    if len(entries) == 2:
+        assert entries[1]['restored'] is True  # Failure restoring worker must not skip scheduler.
+    assert all(call[1] in ('worker', 'scheduler') for call in calls if call[0] == 'start')
+    assert not any(call[0] in ('down', 'restart') for call in calls)

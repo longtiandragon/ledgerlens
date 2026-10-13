@@ -1,0 +1,63 @@
+{
+  "schema_version": "container-restoration-validation-v1",
+  "date": "2026-10-14",
+  "status": "offline_checks_passed",
+  "scope": "Mocked HTTP/Compose fault-injection lifecycle through real acceptance verifier; no live container run",
+  "tests": {
+    "runtime/container-restoration-before-v1.xml": {
+      "tests": "1",
+      "failures": "1",
+      "errors": "0",
+      "skipped": "0",
+      "time": "1.349"
+    },
+    "runtime/container-restoration-after-v1.xml": {
+      "tests": "32",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.993"
+    },
+    "runtime/container-restoration-after-v2.xml": {
+      "tests": "33",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.988"
+    }
+  },
+  "faults_covered": [
+    "queue_http_error",
+    "queue_keyboard_interrupt",
+    "partial_stop_unknown_result",
+    "purge_failure",
+    "worker_restart_error",
+    "worker_exited_after_cleanup_start",
+    "worker_state_probe_error",
+    "cleanup_keyboard_interrupt",
+    "normal_start_returns_success_but_worker_exited"
+  ],
+  "semantics": [
+    "Record stop intent before sending command",
+    "Only restore owned worker/scheduler stops, whose prior running state passed preflight",
+    "Verify observed running state after normal and exit-path starts",
+    "Attempt scheduler restoration even if worker restoration fails",
+    "Preserve original failure, partial checks and each restoration result",
+    "Restoration success does not make failed experiment pass"
+  ],
+  "paid_requests": 0,
+  "new_dependencies": 0,
+  "limitations": [
+    "Docker unavailable, so actual service restoration is unverified",
+    "Running container state is not Celery readiness or business completion",
+    "Forced termination, host crash or power loss can bypass cleanup",
+    "Full-stack restart failures and externally changed service state are not covered by owned-stop recovery"
+  ],
+  "sha256": {
+    "runtime/container-restoration-before-v1.xml": "8e68fda991dbb879e5b5b1b637cd8a40c0ecf01f18b3b770b9c4536334806257",
+    "runtime/container-restoration-after-v1.xml": "39816e3c00adab01d6da1bdd4fe6c4cc15e169b9b2e500671fd1051a25c71113",
+    "runtime/container-restoration-after-v2.xml": "dd3c6223b9c40838c775b873a10d2dcc51d0b6ce4a14ca63427e734324cbfbf2",
+    "scripts/validate_containers.py": "5c00d2b9d8f80480a5b7313c979e1516af59cfbd9da9c0b41ec5eb9688554312",
+    "backend/tests/test_container_validation.py": "f86717e56d3cc80555965e6220692b56cb222130e01fec005b14bf2c982caf9f"
+  }
+}

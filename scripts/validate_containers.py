@@ -44,6 +44,16 @@ def require_preflight(checks: dict) -> None:
         raise RuntimeError('Container preflight failed: ' + ', '.join(failed))
 
 
+def service_state(name: str) -> tuple[bool, list[dict]]:
+    observed = [json.loads(line) for line in compose(
+        'ps', '--all', '--format', 'json', name).splitlines() if line.strip()]
+    running = (len(observed) == 1 and observed[0].get('Service') == name
+               and observed[0].get('State') == 'running'
+               and observed[0].get('Health') in (None, '', 'healthy'))
+    return running, [{'service': item.get('Service'), 'state': item.get('State'),
+                      'health': item.get('Health')} for item in observed]
+
+
 def compose(*args: str, check: bool = True) -> str:
     result = subprocess.run(['docker', 'compose', *args], cwd=ROOT, env=ENV, capture_output=True,
                             text=True, encoding='utf-8', errors='replace', timeout=300)
@@ -77,6 +87,21 @@ def verify(base_url: str, web_url: str) -> dict:
               'checks': {}, 'model_requests': 0, 'synthetic_book': True,
               'scope': 'container_runtime_and_task_semantics_not_accounting_accuracy'}
     checks = report['checks']
+    pending_services: set[str] = set()
+
+    def stop_services(*names: str) -> None:
+        # Preflight proves these services initially ran. Record intent first:
+        # a failed/interrupting stop may already have stopped part of the group.
+        pending_services.update(names)
+        compose('stop', *names)
+
+    def start_services(*names: str) -> None:
+        compose('start', *names)
+        for name in names:
+            if not service_state(name)[0]:
+                raise RuntimeError('Service not running after start: ' + name)
+            pending_services.discard(name)
+
     with httpx.Client(base_url=base_url, timeout=60, trust_env=False) as client:
         def get(path, **kwargs):
             response = client.get('/api/v1' + path, **kwargs)
@@ -147,11 +172,11 @@ def verify(base_url: str, web_url: str) -> dict:
             checks['duplicate_delivery_creates_no_second_result'] = get('/runs/' + run['id']) == before
 
             # 3. Work queued while the worker is down survives in Redis.
-            compose('stop', 'worker')
+            stop_services('worker')
             queued = post('/cases/' + cases[1]['id'] + '/investigate', {'mode': 'rules'})
             time.sleep(3)
             still = get('/runs/' + queued['id'])['status']
-            compose('start', 'worker')
+            start_services('worker')
             finished = wait_run(queued['id'], 90)
             checks['queued_run_survives_worker_outage'] = still == 'queued' and finished['status'] == 'complete'
             report['run_ids'].append(queued['id'])
@@ -160,13 +185,13 @@ def verify(base_url: str, web_url: str) -> dict:
             # message must not run it again; only stale-lease recovery may.
             # Scheduled recovery would race the explicit check: stop beat and
             # drain queued beat messages before enqueueing the orphan's message.
-            compose('stop', 'scheduler', 'worker')
+            stop_services('scheduler', 'worker')
             compose('run', '--rm', '--no-deps', 'worker', '.venv/bin/celery', '-A', 'app.jobs:celery_app',
                     'purge', '-f')
             orphan = post('/cases/' + cases[0]['id'] + '/investigate', {'mode': 'rules'})
             psql("update agent_runs set status='running', worker_token='vanished-worker', "
                  f"heartbeat='2000-01-01T00:00:00+00:00' where id='{orphan['id']}' and status='queued'")
-            compose('start', 'worker')
+            start_services('worker')
             time.sleep(6)
             dead = get('/runs/' + orphan['id'])
             redelivery_noop = dead['status'] == 'running' and not dead['steps']
@@ -178,7 +203,7 @@ def verify(base_url: str, web_url: str) -> dict:
             checks['stale_lease_recovered_once'] = (final['status'] == 'complete' and token == '<none>'
                                                     and "'recovered': 1" in recovered)
             report['recovery_output'] = recovered.strip()
-            compose('start', 'scheduler')
+            start_services('scheduler')
             report['run_ids'].append(orphan['id'])
 
             # 5. Simulation, review and export on PostgreSQL.
@@ -211,8 +236,25 @@ def verify(base_url: str, web_url: str) -> dict:
             proxied = httpx.get(web_url.rstrip('/') + '/api/v1/health', timeout=20, trust_env=False)
             checks['web_served_and_api_proxied'] = web.status_code == 200 and proxied.json().get('mode') == 'celery'
             report['records_sha256'] = records_before
-        except Exception as exc:
+        except (Exception, KeyboardInterrupt) as exc:
             report['error'] = {'type': type(exc).__name__, 'message': str(exc)[:400]}
+        finally:
+            # Only restore services stopped by this run. Keep the original error
+            # even when restoration succeeds; command success alone is not proof
+            # of a running container, nor does running prove Celery readiness.
+            restoration = report['service_restoration'] = []
+            for name in ('worker', 'scheduler'):
+                if name not in pending_services:
+                    continue
+                entry = {'service': name, 'restored': False}
+                restoration.append(entry)
+                try:
+                    compose('start', name)
+                    entry['restored'], entry['observed_states'] = service_state(name)
+                except (Exception, KeyboardInterrupt) as exc:
+                    entry['error'] = {'type': type(exc).__name__, 'message': str(exc)[:400]}
+            if restoration:
+                checks['interrupted_services_restored'] = all(item['restored'] for item in restoration)
     report['completed_at'] = datetime.now(UTC).isoformat()
     report['passed'] = bool(checks) and all(checks.values()) and 'error' not in report
     return report
