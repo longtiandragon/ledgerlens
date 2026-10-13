@@ -66,3 +66,20 @@
 - 公开来源502：采集报告保留失败，可以之后重试；不要从失效页面编造规则正文。
 - 余额不一致：先确认期间、期初、科目映射和导入完整性。
 - SQLite与Postgres结果应分别验证；Compose语法通过不代表容器已成功启动。
+
+## 多用户审签（可选）
+
+默认单用户本地模式不需要登录，行为与此前一致。需要不同人员分别完成调查、复核与审批时，在 `.env` 设置 `AUTH_MODE=multi_user`（可选 `SESSION_HOURS`，默认12小时，1–72）后重启；容器部署同样以环境变量设置。数据库须先迁移到0007（本地启动器或容器API启动时自动执行）。
+
+首个管理员只能在本机命令行创建，密码交互输入或经 `LEDGERLENS_NEW_PASSWORD` 环境变量提供，不接受命令行参数：
+
+```powershell
+$env:PYTHONPATH='backend;.'
+.venv\Scripts\python.exe -m app.manage_users create --username admin --display-name 管理员 --roles admin
+.venv\Scripts\python.exe -m app.manage_users list
+.venv\Scripts\python.exe -m app.manage_users deactivate --username alice      # 同时撤销其全部会话
+```
+
+容器内为 `docker compose exec api python -m app.manage_users ...`。管理员登录后也可在接口 `/api/v1/auth/users` 创建账户。职责：preparer（编制／调查）、reviewer（复核）、approver（审批签发）、admin（用户管理），一个账户可兼任，但系统强制：发起案件调查的人不能复核该案件；复核人和调查人不能审批；审批只针对当前快照上最新且未退回的复核；单用户模式下的旧复核不会被事后归属给任何人，因此不能进入审批。密码以scrypt加盐存储，会话令牌只存SHA-256；令牌保存在浏览器当前标签页的sessionStorage，关闭标签页即需重新登录。所有登录、复核、审批与用户变更写入审计事件。
+
+边界：这是本机局域网内的内部控制辅助，不含多因素认证、密码找回、单点登录或细粒度数据权限；尚未完成浏览器端到端验收。

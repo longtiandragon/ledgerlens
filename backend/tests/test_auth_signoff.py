@@ -193,3 +193,23 @@ def test_single_user_reviews_are_never_attributed_or_approved_later(client, monk
     assert response.status_code == 409
     with Session() as s:
         assert s.scalar(select(User).where(User.username == 'amy')) is not None
+
+
+def test_local_cli_creates_lists_deactivates_and_never_takes_passwords_as_arguments(client, monkeypatch, capsys):
+    from app import manage_users
+    monkeypatch.setenv('LEDGERLENS_NEW_PASSWORD', PASSWORD)
+    assert manage_users.main(['create', '--username', 'carol', '--display-name', 'Carol', '--roles', 'reviewer']) == 0
+    created = capsys.readouterr().out
+    assert '"carol"' in created and PASSWORD not in created
+    with pytest.raises(SystemExit):
+        manage_users.main(['create', '--username', 'carol', '--display-name', 'Carol', '--roles', 'reviewer'])
+    with pytest.raises(SystemExit):   # unknown option: no --password argument exists
+        manage_users.main(['create', '--username', 'dave', '--display-name', 'Dave', '--roles', 'reviewer',
+                           '--password', PASSWORD])
+    monkeypatch.setattr(settings, 'auth_mode', 'multi_user')
+    headers = login(client, 'carol')
+    assert manage_users.main(['deactivate', '--username', 'carol']) == 0
+    assert '"sessions_revoked": 1' in capsys.readouterr().out
+    assert client.get('/api/v1/books', headers=headers).status_code == 401
+    assert manage_users.main(['list']) == 0
+    assert '"active": false' in capsys.readouterr().out
