@@ -485,3 +485,14 @@ v3验证提交aebfada：后端2004通过、40跳过、0失败，pytest124.37秒�
 停止本地写入后，对当前合成工作库只读备份并恢复到全新.local/restore-rehearsal-v1/restored。业务库21张表3257行除Document.storage_path外逐行一致；检查点573行及writes 3606行一致；266个Document对应10个去重原件全部重定位并校验哈希。199历史快照、26个OCR结果和117个已验证参考上下文重验通过。原备份12个有效载荷文件和清单恢复前后不变，没有启动恢复副本API或派发历史调查。
 
 初次参考复核误用默认注册表，4个显式选择BGE资料的快照被拒绝；改为生产的按快照绑定注册表入口后全部通过，没有修改快照或注册表。保留verification.json失败记录、verification-v2.json成功记录和两次测试XML。范围及证据哈希见[BACKUP_RESTORE](BACKUP_RESTORE.md)和[公开摘要](backup-restore-validation.json)。该验证依赖现有受信资料环境；空白机器资料恢复、断电、并发写入、PostgreSQL及恢复后的历史任务重启未验证。无前端或API计算变更，未重复全量/浏览器；无新增依赖、下载或付费调用。v26开发冒烟及新封存集继续暂缓。
+
+
+## 恢复副本中的中断调查续跑（2026-10-13）
+
+新增离线验收器validate_restored_run，从新目录创建手写两行合成凭证（借100.00、贷90.00、独立预期差额10.00），通过真实导入、检查、调查创建事务入队。在生产SQLite检查点提交后，以退出码79直接结束独立子进程；分别覆盖detect后尚无结果、finalize已存结果但Run仍running两个位置。确认进程终止后，使用正式备份恢复脚本建立新目录，由另一进程实际调用应用lifespan继续任务。
+
+两种场景全部通过，合计17.38秒；Ruff通过。检查点ID及恢复前数据保持；detect后继续完成，finalize后复用完整已存结果。预置合成预算calls=3/tokens=123/tools=2/reserved_tokens=37原样保持，这些不是实际模型消耗；实际调用0。完成后释放租约，检测事件仅一次；两次并发重复派发及第二次启动不改整个Run。除agent_runs外各业务表保持，原合成库与备份不变。
+
+首次.local/restored-run-v1失败是验收器误拦Windows asyncio内部socketpair回环连接；放行回环但继续禁止外部连接和模型构造后，v2通过。未修改生产代码、金额预期或预算预期。报告、子进程日志及seed/crash/recover原始JSON均保留；重新核对所有来源和证据哈希，见[RESTORED_RUN](RESTORED_RUN.md)及[公开摘要](restored-run-validation.json)。
+
+本次执行的是新合成rules任务和应用lifespan，不是工作库所有历史任务，也未启动HTTP监听服务；未覆盖断电、提交中存储损坏、并发备份、真实模型请求中断、Celery/PostgreSQL或OCR/检索任务恢复。Docker服务当前未运行，未启动或改动它。无依赖、前端或API变化，未重复全量测试；无付费调用，开发冒烟和新封存集仍暂缓。

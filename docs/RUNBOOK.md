@@ -46,6 +46,8 @@
 
 恢复器在复制前后验证v2清单、业务库、检查点库及每份来源文件，再在临时目录修复路径并移入一个全新目录。不会覆盖现有运行目录。`.env`、模型、公开资料索引、日志与基准报告不在此备份格式内；旧调查的参考片段已经冻结在业务快照，但完整校验仍需其绑定的受信资料注册表。旧格式的校验限制、恢复后再次备份方式及实跑证据见[备份恢复验证](BACKUP_RESTORE.md)。
 
+备份恢复后的任务续跑可在全新合成目录离线验收：`.venv\Scripts\python.exe scripts/validate_restored_run.py --output .local/restored-run-new`。不读取工作库或调用模型；覆盖两个已提交检查点后的进程退出、恢复续跑和重复派发。详见[恢复副本调查续跑](RESTORED_RUN.md)。
+
 ## ERPNext 只读接入
 
 `scripts/export_erpnext.py --help`列出参数。Token需要读取Company和GL Entry权限；公司本位币必须明确为CNY，科目映射必须提供。金额直接从JSON数值解析为Decimal，不以浮点或缺失值补零。分页导出不是原子快照，应在源端暂停记账时执行。当前仅适配总账，不从总账猜出采购/收货资料。

@@ -1,0 +1,80 @@
+{
+  "schema_version": "restored-run-validation-v1",
+  "status": "passed",
+  "scenarios": [
+    {
+      "point": "detect",
+      "status": "passed",
+      "crash_exit": 79,
+      "checkpoint_id": "1f1c6fdd-992c-68d4-8001-479997167c0e",
+      "reused_completed_checkpoint": false,
+      "synthetic_usage_preserved": {
+        "calls": 3,
+        "tokens": 123,
+        "tools": 2,
+        "reserved_tokens": 37
+      },
+      "difference": "10.00",
+      "original_business_rows_unchanged": true,
+      "restored_non_run_rows_unchanged": true,
+      "duplicate_deliveries_unchanged": true,
+      "second_restart_unchanged": true,
+      "backup_unchanged": true,
+      "evidence_sha256": {
+        "detect/crash.json": "7cde12556b4e32978582b67504b42c9f9398c80e932979a372d58e7289bd7836",
+        "detect/recover.json": "146abdbb66e402eb9e623678fb48cd004cf7e6808c501a3af918faf3eb43b701",
+        "detect/seed.json": "d93a1c6ff34017b2c77e19a5f394b16b11cec30446d9d0ab2f4b4da4647f7124"
+      }
+    },
+    {
+      "point": "finalize",
+      "status": "passed",
+      "crash_exit": 79,
+      "checkpoint_id": "1f1c6fdd-ec9b-66c2-8002-a384e16ae1dd",
+      "reused_completed_checkpoint": true,
+      "synthetic_usage_preserved": {
+        "calls": 3,
+        "tokens": 123,
+        "tools": 2,
+        "reserved_tokens": 37
+      },
+      "difference": "10.00",
+      "original_business_rows_unchanged": true,
+      "restored_non_run_rows_unchanged": true,
+      "duplicate_deliveries_unchanged": true,
+      "second_restart_unchanged": true,
+      "backup_unchanged": true,
+      "evidence_sha256": {
+        "finalize/crash.json": "a2b64154d56203538c35bf38e430ef2deb1e293a2d586c17bcac181226a36fcc",
+        "finalize/recover.json": "a8579f0a1793c01c2024e0423e25f696fd544b12de932720d59cd3c828f692aa",
+        "finalize/seed.json": "3f047000ceec2990ccc15ff438ec0a7b364cd2937c7bcf28c8ec71f0d75fc500"
+      }
+    }
+  ],
+  "scope": "Fresh synthetic SQLite, rules mode; real process exit after committed checkpoint; no remote service",
+  "model_requests": 0,
+  "source_sha256": {
+    "scripts/validate_restored_run.py": "a1da8045b9766acf094d718083570ec0e8d54245f12bbb56c003edc2881b40da",
+    "scripts/backup.py": "74d790f4bb3ef1dadc10ff46782751f7ba30d6cf9d70e01ceb4dd27db33abe12",
+    "scripts/restore_local.py": "e8b57f9e3c21d6557e3903dad7f208a435be2ec00053bd505c98e54059218a7a",
+    "backend/app/jobs.py": "80c6393fb2227ec645478f7b9da52f2d12c239630a918f6b262a0a5bb822facd",
+    "backend/app/investigation.py": "10e9d7c7f6df48b217ec00ed50119d197775254eaec59f86a16420e378f623f4",
+    "backend/app/main.py": "788bda2638beaa9c76dd70953e315d443a818090bded31823cd5e2608c9db641"
+  },
+  "seconds": 17.38,
+  "date": "2026-10-13",
+  "ruff": "passed",
+  "raw_report": ".local/restored-run-v2/report.json",
+  "raw_report_sha256": "9e8e2b05faaa6d06568ef21b3d83e6a33ccd2d288df9cad073cbab0b2b4dfc8e",
+  "budget_notice": "Persisted counters are synthetic test inputs, not actual model usage.",
+  "negative_run": {
+    "report": ".local/restored-run-v1/report.json",
+    "sha256": "2c5d6d74d3033aab7670e5c7c4cbd99f25b5b2fadac61a63640f4589ec1d9e85",
+    "reason": "Validator network guard rejected Windows asyncio internal loopback socketpair; allowed loopback and reran without changing product or expected results."
+  },
+  "limitations": [
+    "Rules mode only; no model request interruption",
+    "Application lifespan executed directly, no HTTP process manager",
+    "No power loss, mid-commit storage corruption, cross-file concurrent backup, Celery/PostgreSQL or OCR/retrieval job recovery"
+  ]
+}
