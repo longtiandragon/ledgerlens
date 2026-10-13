@@ -1,0 +1,102 @@
+{
+  "schema_version": "official-query-retrieval-v1",
+  "method": "product keyword search (app.knowledge.search), limit 6",
+  "corpus_sha256": "c98585a2ac90627199e56e8a82d5bdee596757b58672a4e2ca6914c9e9a1e1d9",
+  "queries_sha256": "9500596dfed4c23450d473d5073657450f827320e7e24f62be670c646719d01f",
+  "truth_sha256": "34ea6955daa8357b5c7581756d21e8ca2801ba51578b1a792dc8fb728bab0b24",
+  "queries": 11,
+  "document_hit_at_1": 9,
+  "document_hit_at_6": 10,
+  "document_mrr_at_6": 0.8636,
+  "article_queries": 5,
+  "article_hit_at_6": 4,
+  "date": "2026-10-14",
+  "report_sha256": "3d7b7a8105320b1095f3c6859a9d1b6c6bd312fe3987d0a8acc5f5156570c8c5",
+  "rows": [
+    {
+      "query_id": "mof-qa-3634031",
+      "document_hit_at_1": true,
+      "document_hit_at_6": true,
+      "article_query": false,
+      "article_hit_at_6": null
+    },
+    {
+      "query_id": "mof-qa-3634036",
+      "document_hit_at_1": false,
+      "document_hit_at_6": true,
+      "article_query": false,
+      "article_hit_at_6": null
+    },
+    {
+      "query_id": "mof-qa-3664186",
+      "document_hit_at_1": true,
+      "document_hit_at_6": true,
+      "article_query": true,
+      "article_hit_at_6": false
+    },
+    {
+      "query_id": "mof-qa-3691861",
+      "document_hit_at_1": true,
+      "document_hit_at_6": true,
+      "article_query": true,
+      "article_hit_at_6": true
+    },
+    {
+      "query_id": "mof-qa-3691863",
+      "document_hit_at_1": true,
+      "document_hit_at_6": true,
+      "article_query": true,
+      "article_hit_at_6": true
+    },
+    {
+      "query_id": "mof-qa-3691864",
+      "document_hit_at_1": true,
+      "document_hit_at_6": true,
+      "article_query": true,
+      "article_hit_at_6": true
+    },
+    {
+      "query_id": "mof-qa-3717408",
+      "document_hit_at_1": true,
+      "document_hit_at_6": true,
+      "article_query": true,
+      "article_hit_at_6": true
+    },
+    {
+      "query_id": "mof-qa-3762844",
+      "document_hit_at_1": true,
+      "document_hit_at_6": true,
+      "article_query": false,
+      "article_hit_at_6": null
+    },
+    {
+      "query_id": "mof-qa-3819702",
+      "document_hit_at_1": true,
+      "document_hit_at_6": true,
+      "article_query": false,
+      "article_hit_at_6": null
+    },
+    {
+      "query_id": "mof-qa-3962188",
+      "document_hit_at_1": true,
+      "document_hit_at_6": true,
+      "article_query": false,
+      "article_hit_at_6": null
+    },
+    {
+      "query_id": "mof-qa-3962191",
+      "document_hit_at_1": false,
+      "document_hit_at_6": false,
+      "article_query": false,
+      "article_hit_at_6": null
+    }
+  ],
+  "query_source": "Official MOF Q&A questions (practitioner/MOF authored), 11 of 32 whose answers name a corpus standard",
+  "truth_source": "Standards named and articles explicitly cited in the official answers; mapped mechanically to corpus chunks",
+  "limitations": [
+    "Small set: 11 document-level and 5 article-level queries; corpus lacks CAS 17/28 and two sources failed collection.",
+    "Article matching uses article headings in chunk text, so a chunk that only refers to the article can count.",
+    "Keyword method only so far; BGE comparison on these queries is not run.",
+    "Question and answer text stay in the local archive because redistribution rights are unclear."
+  ]
+}
