@@ -106,11 +106,11 @@ async function saveAndCheck(page: Page) {
 }
 function clean(observed: Awaited<ReturnType<typeof mountPolicy>>) { expect(observed.unexpected).toEqual([]); expect(observed.errors).toEqual([]) }
 
-test('当前五条新增政策的条件以中文呈现，切换主题不继承人工确认', async ({ page, request }) => {
+test('v4及v5新增政策的条件以中文呈现，切换主题不继承人工确认', async ({ page, request }) => {
   const response = await request.get('/api/v1/policy-checks/catalog')
   expect(response.ok()).toBe(true)
   const catalog = await response.json()
-  expect(catalog.policy_rule_identity.version).toBe('policy-consistency-v4')
+  expect(catalog.policy_rule_identity.version).toBe('policy-consistency-v5')
   const seen = await mountPolicy(page, request, { override: async (route, url, method) => {
     if (method === 'GET' && url.pathname === '/api/v1/policy-checks/catalog') {
       await route.fulfill({ json: catalog }); return true
@@ -119,7 +119,11 @@ test('当前五条新增政策的条件以中文呈现，切换主题不继承�
   } })
   await page.setViewportSize({ width: 390, height: 844 })
   await ready(page)
-  for (const topic of ['group_share_payment', 'debt_release_timing', 'initial_revenue_ecl', 'rent_subsidy', 'voluntary_share_cancellation']) {
+  for (const topic of ['group_share_payment', 'debt_release_timing', 'initial_revenue_ecl', 'rent_subsidy', 'voluntary_share_cancellation',
+    'renovation_useful_life', 'renovation_replaced_part', 'data_resource_development', 'equity_method_impairment',
+    'goodwill_cgu_allocation', 'debt_restructuring_asset_measurement', 'debt_to_equity_classification',
+    'construction_progress_grant', 'custom_equipment_borrowing_cost', 'land_use_right_borrowing_cost',
+    'non_exchangeable_currency_rate', 'one_year_lease_term', 'prior_period_error_materiality']) {
     await page.getByLabel('业务主题').selectOption(topic)
     const fields = page.locator('[data-predicate]')
     const current = catalog.rules.find((item: any) => item.topic === topic)
