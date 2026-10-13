@@ -83,6 +83,10 @@ FinQA已取得883条官方dev记录，题目／财报内容与答案／程序分
 
 DeepSeek真实JSON、思考模式工具往返、单Agent账务调查及v8／v10主动调查已通过。v10主动调查6次请求、90292 Token、8次工具调用，12条不同引用均可定位，原账簿前后哈希一致。试跑中的截断、预算耗尽、HTTP 402及批次中断均保留，不能据此声称多Agent有增益。详细实测、测试版本和未完成能力见 [交付状态](docs/STATUS.md)。
 
+## 多用户审签（可选）
+
+默认单用户本地模式无需登录。设置 `AUTH_MODE=multi_user` 后，调查、复核、审批须由不同账户完成，首个管理员用 `python -m app.manage_users create ...` 在本机创建，详见[运行手册](docs/RUNBOOK.md)。
+
 ## PostgreSQL 部署
 
 Compose 配置使用 PostgreSQL、Redis、Celery、持久化 LangGraph 检查点；所有对外端口绑定 loopback。2026-10-11 已实机联调：20项容器验收连续两次通过（迁移、重复投递、Worker停机、失效租约恢复、全栈重启与持久化）；2026-10-14 用当前镜像复验再次连续两次通过，并验证旧库升级保留及验收中断后的服务恢复，见[状态](docs/STATUS.md)。按 [运行手册](docs/RUNBOOK.md)执行 `docker compose up --build -d`，入口为 <http://127.0.0.1:8080>（可用 `WEB_PORT` 改端口）。
