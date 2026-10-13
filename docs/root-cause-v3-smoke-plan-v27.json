@@ -1,0 +1,61 @@
+{
+  "schema_version": "root-cause-experiment-plan-v1",
+  "status": "prepared_not_authorized_or_run",
+  "dataset_version": "root-cause-v3.0.0",
+  "dataset_manifest_sha256": "7c78e480895d197335cff8ef02be997f0caeb2868d948d93b500d9a69b435971",
+  "source_sha256": {
+    "backend/app/investigation.py": "032fdbbd8016b037950c25bfb5b0d243aa32eefd7c6010e5f0fa644da93ec8e1",
+    "backend/app/model_contract.py": "698602de854cb3ab4ac39b750812ec9f7e3f2e7b3f64919d3052f2930b32294e",
+    "backend/app/model_gateway.py": "e95d9b789ca4bb492c34d15859cd9eeb73118af99458f8b3b5e28b04cfb08cb8",
+    "backend/app/domain.py": "b49e39dd9e544b4bf4568aa04bf7ec54dc63a591efa123fd925331989e693a75",
+    "backend/app/evidence_planning.py": "09f5896d9987682b2d8c8839908aad46b46356edc82f1497882e3d3215c5432c",
+    "backend/app/evidence_selection.py": "7be0a02484dc00c4b7b00d07060b4b0f6ab838c535fccf014691a482070a0b77",
+    "benchmarks/root_cause_v2.py": "51423ef82bf5188c458c233347234edcb93732a93d7b3405b0e4923cd7ec98e3",
+    "benchmarks/root_cause_v2_models.py": "41f8ed30206c618ead3da657e92a6b8327a933e7ad9359ddd2650ab2a2d863dc",
+    "benchmarks/run_agents.py": "ac4fdb0e0c98b17d40c62a55aa4107891bb5e16c0d0bd5d1529eaff56f103820",
+    "benchmarks/paid_budget.py": "894f65b7a756fe0769e2442687b0cb4b30a43b2a2a1517ddede89062a66d0095",
+    "datasets/generate.py": "e37e9746ffabfc94d7400bc72441751b2598764f75759c0e9e3a5a8cf7cd1d0a",
+    "datasets/generate_v2.py": "2c249d5fc2a99e48fc8542fbd21a14028c9e56a77beda348aac8d8fcd8ffe2f9",
+    "datasets/generate_v3.py": "4db3d6db6c56414915d1286871c1fff32d25fe3ab4a9c5ffefdcfab5430dca2f"
+  },
+  "prompt_version": "investigation-v27",
+  "runner_version": "rc-runner-v3",
+  "model": "deepseek-flash",
+  "split": "development",
+  "per_family": 1,
+  "repeat": 1,
+  "modes": [
+    "rule_only",
+    "rule_fixed_request",
+    "keyword_request",
+    "single",
+    "multi",
+    "active"
+  ],
+  "selected_case_ids": [
+    "rc3-c-1e5315a794bf",
+    "rc3-c-32cf68652c93",
+    "rc3-c-094ed4554e6c",
+    "rc3-c-135d7e248230",
+    "rc3-c-46b55f716ee3",
+    "rc3-c-0913974e57ac",
+    "rc3-c-1547a87a6a34",
+    "rc3-c-0dca0e003f95",
+    "rc3-c-1c4bedf6d803"
+  ],
+  "max_paid_requests": 300,
+  "max_cny": "8.00",
+  "estimated_offpeak_cny": [
+    "1.50",
+    "3.00"
+  ],
+  "estimate_basis": "v26 development smoke cost CNY 0.37 for nine single-agent samples (balance difference); multi and active scaled by role count, not a promise.",
+  "stop_policy": "Peak-price pre-dispatch reservation; retain unknown attempts and all failures.",
+  "hypothesis": "Typed JSON diagnostics and one-fence unwrapping remove output failures without changing reasoning prompts; multi and active complete under the narrow root-cause contract.",
+  "smoke_success": "No output rejection after repair in any model sample of any model mode; report accuracy separately.",
+  "limitations": [
+    "Development smoke only, not an unseen performance claim.",
+    "Conservative peak reservations may stop before all nine cases complete.",
+    "No sealed evaluation or extra paid retry is authorized by preparing this file."
+  ]
+}

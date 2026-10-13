@@ -123,7 +123,7 @@ async def test_rules_seed_the_task_and_the_final_assessment_reaches_the_result(m
 
 @pytest.mark.parametrize('payload,code', [
     ('{', 'invalid_json'),
-    ('{"status":"normal","status":"insufficient"}', 'invalid_json'),
+    ('{"status":"normal","status":"insufficient"}', 'duplicate_json_key'),
     (json.dumps({'status': 'normal'}), 'missing'),
     (json.dumps({'status': 'normal', 'cause_assessment': None}), 'model_type'),
     (json.dumps({'status': 'insufficient', 'cause_assessment': {
@@ -136,6 +136,63 @@ def test_narrow_wire_contract_rejects_malformed_or_legacy_outputs(payload, code)
         validate_proposal(payload, context())
     assert failure.value.diagnostics[0]['code'] == code
     assert 'secret' not in json.dumps(failure.value.diagnostics)
+
+
+@pytest.mark.parametrize('payload,code', [
+    ('', 'empty_output'),
+    ('  \n ', 'empty_output'),
+    ('{"status": "insufficient", "secret": NaN}', 'non_finite_json_number'),
+    ('{"status": "insufficient"} secret note', 'invalid_json'),
+    ('```json\n{"status": "insufficient"}\n```\nsecret note', 'invalid_json'),   # fence must close the output
+    ('```json\n{"a": 1}\n```\n```json\n{"secret": 2}\n```', 'invalid_json'),     # only one fence is unwrapped
+    ('```json\n{"status":"normal","status":"insufficient"}\n```', 'duplicate_json_key'),
+])
+def test_json_level_failures_are_typed_and_text_free(payload, code):
+    with pytest.raises(ProposalRejected) as failure:
+        validate_proposal(payload, context())
+    assert failure.value.diagnostics[0]['code'] == code
+    assert 'secret' not in json.dumps(failure.value.diagnostics)
+
+
+def test_syntax_errors_report_parser_position_only():
+    payload = '{"status": "insufficient", "secret_key" 1}'
+    with pytest.raises(ProposalRejected) as failure:
+        validate_proposal(payload, context())
+    diagnostic = failure.value.diagnostics[0]
+    assert diagnostic['code'] == 'invalid_json' and diagnostic['parser'] == "Expecting ':' delimiter"
+    assert diagnostic['position'] == payload.index(' 1}') + 1 and diagnostic['length'] == len(payload)
+    assert 'secret_key' not in json.dumps(diagnostic)
+
+
+def test_one_surrounding_fence_is_unwrapped_then_validated_strictly():
+    for fence in ('```json\n{}\n```', '```\n{}\n```', '  ```json  \n{}\n  ```  '):
+        accepted = validate_proposal(fence.replace('{}', proposal(categories=[])), context())
+        assert accepted.status == 'insufficient'
+    with pytest.raises(ProposalRejected) as failure:   # fenced content keeps the narrow contract
+        validate_proposal('```json\n' + json.dumps({'status': 'normal'}) + '\n```', context())
+    assert failure.value.diagnostics[0]['code'] == 'missing'
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('first,hinted', [('{"status": "insufficient"', True),
+                                          (json.dumps({'status': 'normal'}), False)])
+async def test_repair_request_names_json_rules_only_for_json_failures(first, hinted):
+    seen = []
+
+    def handler(request):
+        body = json.loads(request.content)
+        seen.append(body['messages'])
+        content = first if len(seen) == 1 else proposal(categories=[])
+        return httpx.Response(200, json={'model': 'offline', 'usage': {'total_tokens': 10}, 'choices': [{
+            'finish_reason': 'stop', 'message': {'role': 'assistant', 'content': content}}]})
+
+    async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
+        result = await investigate(records(), policy(), task(), mode='single',
+                                   gateway=DeepSeekGateway('offline-key', client=client))
+    assert result['error'] is None and len(seen) == 2
+    repair = seen[1][-1]['content']
+    assert repair.startswith('输出未通过校验') and ('只输出一个完整的 JSON 对象' in repair) is hinted
+    assert first not in repair    # rejected output is never replayed
 
 
 @pytest.mark.parametrize('status,categories,citations,read,code', [

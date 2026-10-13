@@ -378,7 +378,7 @@ async def test_model_configuration_changes_checkpoint_fingerprint(ledger):
         first = await investigate(*ledger, mode="single", gateway=DeepSeekGateway("test", model="model-a", client=client))
         second = await investigate(*ledger, mode="single", gateway=DeepSeekGateway("test", model="model-b", client=client))
     assert first["fingerprint"] != second["fingerprint"]
-    assert first["prompt_version"] == "investigation-v26"
+    assert first["prompt_version"] == "investigation-v27"
     assert first["model_parameters"] == {"thinking": True, "max_tokens": 8192,
                                          "reasoning_effort": "low", "temperature": None,
                                          "truncation_recovery": {"maximum": 1, "thinking": False, "tools": False},
@@ -396,6 +396,7 @@ async def test_model_configuration_changes_checkpoint_fingerprint(ledger):
                                          "review_task_initialization": "neutral_without_presumed_anomaly",
                                          "proposal_rule_ids": "current_framework_enum",
                                          "schema_repair_conversation": "fresh_scoped_program_context",
+                                         "output_json_parsing": "strict_single_fence_unwrap_typed_diagnostics",
                                          "schema_encoding": "constraints_without_annotations",
                                          "root_cause_output": "narrow_assessment_v1",
                                          "role_outputs": "specialist_opinions_final_synthesis",

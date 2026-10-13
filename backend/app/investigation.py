@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from collections import Counter
 from copy import deepcopy
 from datetime import UTC, date, datetime
@@ -28,7 +29,7 @@ from .model_contract import PROTOCOL, ROOT_CAUSE_PROTOCOL, compact_schema
 STATUSES = {"supported", "normal", "insufficient", "unsupported"}
 MODES = {"rules", "single", "multi", "active"}
 ABLATIONS = {"no_counterproof", "no_time_view", "no_program_verification", "no_active_selection"}
-PROMPT_VERSION = "investigation-v26"
+PROMPT_VERSION = "investigation-v27"
 TOOL_VERSION = "snapshot-tools-v11"
 MAX_PROGRAM_OBSERVATIONS = 60  # Same ceiling as the run-wide executed-tool budget.
 MAX_ROLE_TOOL_BATCHES = 2
@@ -48,6 +49,7 @@ MODEL_PARAMETERS = {"thinking": True, "max_tokens": 8192, "reasoning_effort": "l
                     "review_task_initialization": "neutral_without_presumed_anomaly",
                     "proposal_rule_ids": "current_framework_enum",
                     "schema_repair_conversation": "fresh_scoped_program_context",
+                    "output_json_parsing": "strict_single_fence_unwrap_typed_diagnostics",
                     "schema_encoding": "constraints_without_annotations",
                     "root_cause_output": "narrow_assessment_v1",
                     "role_outputs": "specialist_opinions_final_synthesis",
@@ -147,15 +149,42 @@ class ProposalRejected(ValueError):
         self.diagnostics = diagnostics
 
 
+JSON_DIAGNOSTICS = {"empty_output", "invalid_json", "duplicate_json_key", "non_finite_json_number"}
+_FENCE = re.compile(r"\A```(?:json)?[ \t]*\n(.*?)\n[ \t]*```\Z", re.S)
+
+
+def parse_model_json(content) -> object:
+    """Strict JSON with typed, text-free diagnostics.
+
+    Only one surrounding Markdown fence is removed; the inner text is still
+    parsed strictly. Duplicate keys and non-finite numbers stay rejected. The
+    diagnostics carry parser codes and positions, never provider text.
+    """
+    if not isinstance(content, str) or not content.strip():
+        raise ProposalRejected([{"code": "empty_output", "path": []}])
+    text = content.strip()
+    fenced = _FENCE.match(text)
+    if fenced:
+        text = fenced.group(1)
+    try:
+        return strict_json(text)
+    except json.JSONDecodeError as exc:
+        raise ProposalRejected([{"code": "invalid_json", "path": [], "parser": exc.msg,
+                                 "position": exc.pos, "length": len(text)}]) from None
+    except ValueError as exc:
+        code = ("duplicate_json_key" if str(exc) == "Duplicate JSON key" else
+                "non_finite_json_number" if str(exc).startswith("Non-finite") else "invalid_json")
+        raise ProposalRejected([{"code": code, "path": []}]) from None
+    except TypeError:
+        raise ProposalRejected([{"code": "invalid_json", "path": []}]) from None
+
+
 def validate_proposal(content: str, context, *, allow_plan: bool = False,
                       read_evidence_ids: set[str] | None = None,
                       read_reference_ids: set[str] | None = None,
                       read_policy_check_ids: set[str] | None = None) -> BaseProposal:
     """Return safe field diagnostics without publishing rejected values."""
-    try:
-        raw = strict_json(content)
-    except (ValueError, TypeError):
-        raise ProposalRejected([{"code": "invalid_json", "path": []}]) from None
+    raw = parse_model_json(content)
     try:
         model = ((RootCausePlanProposal if allow_plan else RootCauseProposal) if context.cause_taxonomy
                  else (Proposal if allow_plan else BaseProposal))
@@ -1355,6 +1384,9 @@ async def investigate(
                                      "输出未通过校验。修复这些字段并重新输出完整 JSON；不添加 origin、verification 或角色元数据。"
                                      "evidence_ids 必须取工具返回记录的 evidence_id，不能用记录 id 或业务编号。错误字段：" +
                                      json.dumps(exc.diagnostics, ensure_ascii=False) +
+                                     ("。只输出一个完整的 JSON 对象：不使用代码块或附加说明，同一对象内不得重复键名，"
+                                      "数值必须是有限数字。" if any(d["code"] in JSON_DIAGNOSTICS
+                                                              for d in exc.diagnostics) else "") +
                                      ("。本次不能取得新资料；依据尚未读取时保留insufficient/unresolved，"
                                       "删除未读取的政策引用，不得假称已读。" if any(
                                           d["code"] in {"evidence_content_not_read", "policy_content_not_read", 'policy_check_content_not_read'}
