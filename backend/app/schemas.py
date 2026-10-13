@@ -93,3 +93,10 @@ class ReviewInput(StrictModel):
     expected_snapshot_id: str
     decision: Literal['accepted', 'returned', 'reserved']
     comment: str = Field(default='', max_length=4000)
+
+
+class ApprovalInput(StrictModel):
+    review_id: str
+    expected_snapshot_id: str
+    decision: Literal['approved', 'rejected']
+    comment: str = Field(default='', max_length=4000)

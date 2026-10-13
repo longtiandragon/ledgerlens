@@ -5,15 +5,16 @@ from pathlib import Path
 from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, Form, BackgroundTasks, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
-from fastapi.responses import Response, FileResponse, StreamingResponse
+from fastapi.responses import Response, FileResponse, JSONResponse, StreamingResponse
 from sqlalchemy import select, func, update
 from sqlalchemy.exc import IntegrityError
 from pdfminer.pdfexceptions import PDFException
 from pdfplumber.utils.exceptions import PdfminerException
 from .config import settings
 from .db import (Base, engine, Session, session, serialize, Book, Document, ImportBatch,
-                 Record, Snapshot, CheckRun, Case, Run, Simulation, Review, Audit, Evaluation)
-from .schemas import BookInput, SnapshotInput, CheckInput, InvestigateInput, SimulationInput, ReviewInput, LedgerInput
+                 Record, Snapshot, CheckRun, Case, Run, Simulation, Review, Audit, Evaluation, Approval, User)
+from .schemas import (BookInput, SnapshotInput, CheckInput, InvestigateInput, SimulationInput, ReviewInput,
+                      LedgerInput, ApprovalInput)
 from .imports import parse_file, confirm_import, make_snapshot, snapshot_records, policy_for, digest
 from .domain import check_records, balances, simulate, rule_catalog, ensure_rule_compatibility, rule_identity_key
 from .business_chain import business_chain
@@ -27,6 +28,8 @@ from .policy_api import router as policy_router
 from .policy_context_contract import InvestigationPolicyContextResponse
 from .ocr_api import router as ocr_router
 from .reference_api import router as reference_router
+from .auth_api import router as auth_router
+from . import auth
 
 
 def get(s, cls, identity):
@@ -89,10 +92,23 @@ app.include_router(statement_router)
 app.include_router(policy_router)
 app.include_router(ocr_router)
 app.include_router(reference_router)
+app.include_router(auth_router)
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=['127.0.0.1', 'localhost', 'testserver', 'api'])
 app.add_middleware(CORSMiddleware, allow_origins=['http://127.0.0.1:5188', 'http://localhost:5188',
                                                 'http://127.0.0.1:8080', 'http://localhost:8080'],
-                   allow_methods=['GET', 'POST', 'PUT'], allow_headers=['Content-Type'])
+                   allow_methods=['GET', 'POST', 'PUT'], allow_headers=['Content-Type', 'Authorization'])
+
+
+@app.middleware('http')
+async def multi_user_guard(request: Request, call_next):
+    # Multi-user mode: every API call except the open entry points needs a live
+    # session. Role and duty-separation checks happen in the endpoints.
+    path = request.url.path
+    if auth.multi_user() and path.startswith('/api/') and path not in auth.OPEN_PATHS and request.method != 'OPTIONS':
+        with Session() as s:
+            if auth.resolve(s, auth.bearer(request)) is None:
+                return JSONResponse({'detail': '请先登录'}, status_code=401)
+    return await call_next(request)
 
 
 @app.middleware('http')
@@ -115,7 +131,7 @@ def health():
 
 @app.get('/api/v1/settings')
 def read_settings():
-    return {**health(), 'model': settings.deepseek_model, 'frameworks': ['CAS', 'SCAS'],
+    return {**health(), 'model': settings.deepseek_model, 'frameworks': ['CAS', 'SCAS'], 'auth_mode': settings.auth_mode,
             'limits': {'rounds': 3, 'model_calls': 24, 'tool_calls': 60},
             'disclaimer': '工程与仿真验证；不执行正式记账。模型调用会向配置的服务发送必要资料片段。'}
 
@@ -341,11 +357,25 @@ def read_case(identity: str, s=Depends(session)):
     return {**case_data(item), 'stale': snap.revision != book.revision or compatibility_error is not None,
             'rules_compatible': compatibility_error is None, 'rule_compatibility_error': compatibility_error,
             'runs': runs, 'investigations': runs,
-            'reviews': [serialize(r) for r in s.scalars(select(Review).where(Review.case_id == identity))]}
+            'reviews': [serialize(r) for r in s.scalars(select(Review).where(Review.case_id == identity))],
+            **signoff(s, identity)}
+
+
+def signoff(s, identity: str) -> dict:
+    approvals = [serialize(a) for a in s.scalars(select(Approval).where(Approval.case_id == identity)
+                                               .order_by(Approval.created_at))]
+    actor_ids = {a['user_id'] for a in approvals}
+    actor_ids |= {r.user_id for r in s.scalars(select(Review).where(Review.case_id == identity)) if r.user_id}
+    actor_ids |= auth.investigators(s, identity)
+    actors = {user.id: {'username': user.username, 'display_name': user.display_name}
+              for user in (s.get(User, actor) for actor in sorted(actor_ids)) if user}
+    return {'approvals': approvals, 'actors': actors, 'auth_mode': settings.auth_mode}
 
 
 @app.post('/api/v1/cases/{identity}/investigate')
-def start_investigation(identity: str, body: InvestigateInput, background: BackgroundTasks, s=Depends(session)):
+def start_investigation(identity: str, body: InvestigateInput, background: BackgroundTasks, request: Request,
+                        s=Depends(session)):
+    user = auth.acting_user(request, s, 'preparer')
     item = get(s, Case, identity)
     snap = require_case_rules(s, item)
     if body.mode != 'rules':
@@ -364,7 +394,7 @@ def start_investigation(identity: str, body: InvestigateInput, background: Backg
     existing = s.scalar(select(Run).where(Run.active_slot == identity))
     if existing:
         return serialize(existing)
-    run = Run(case_id=item.id, mode=body.mode, active_slot=identity)
+    run = Run(case_id=item.id, mode=body.mode, active_slot=identity, created_by=user.id if user else None)
     s.add(run)
     try:
         s.flush()
@@ -551,17 +581,54 @@ def simulations(case_id: str, s=Depends(session)):
 
 
 @app.post('/api/v1/reviews')
-def review(body: ReviewInput, s=Depends(session)):
+def review(body: ReviewInput, request: Request, s=Depends(session)):
+    user = auth.acting_user(request, s, 'reviewer')
     item = get(s, Case, body.case_id)
+    auth.require_separate(user, auth.investigators(s, item.id), '发起该案件调查的人员不能复核同一案件（不相容职务分离）')
     require_case_rules(s, item)
     # Serialize with imports to prevent accepting a version that changed during review.
     s.execute(update(Book).where(Book.id == item.book_id).values(revision=Book.revision))
     book, snap = get(s, Book, item.book_id), get(s, Snapshot, item.snapshot_id)
     if item.snapshot_id != body.expected_snapshot_id or snap.revision != book.revision:
         raise HTTPException(409, '数据或政策已更新，请在最新快照重新检查和复核')
-    row = Review(case_id=item.id, snapshot_id=snap.id, decision=body.decision, comment=body.comment)
+    row = Review(case_id=item.id, snapshot_id=snap.id, decision=body.decision, comment=body.comment,
+                 user_id=user.id if user else None)
     s.add(row)
-    s.add(Audit(book_id=book.id, action='review.recorded', details={'case_id': item.id, 'decision': body.decision}))
+    s.add(Audit(book_id=book.id, action='review.recorded', details={
+        'case_id': item.id, 'decision': body.decision, 'user_id': user.id if user else None}))
+    s.commit()
+    return serialize(row)
+
+
+@app.post('/api/v1/cases/{identity}/approvals')
+def approve(identity: str, body: ApprovalInput, request: Request, s=Depends(session)):
+    if not auth.multi_user():
+        raise HTTPException(409, '审批签发需要多用户模式（AUTH_MODE=multi_user）')
+    user = auth.acting_user(request, s, 'approver')
+    item = get(s, Case, identity)
+    require_case_rules(s, item)
+    s.execute(update(Book).where(Book.id == item.book_id).values(revision=Book.revision))
+    book, snap = get(s, Book, item.book_id), get(s, Snapshot, item.snapshot_id)
+    if item.snapshot_id != body.expected_snapshot_id or snap.revision != book.revision:
+        raise HTTPException(409, '数据或政策已更新，请在最新快照重新复核后再审批')
+    review_row = s.get(Review, body.review_id)
+    if not review_row or review_row.case_id != item.id or review_row.snapshot_id != snap.id:
+        raise HTTPException(409, '只能审批本案件当前快照上的复核')
+    latest = s.scalar(select(Review).where(Review.case_id == item.id, Review.snapshot_id == snap.id)
+                      .order_by(Review.created_at.desc(), Review.id.desc()))
+    if latest.id != review_row.id:
+        raise HTTPException(409, '只能审批该快照上最新的复核意见')
+    if review_row.user_id is None:
+        raise HTTPException(409, '该复核没有可追溯的复核人（单用户模式记录），不能进入审批')
+    if review_row.decision == 'returned':
+        raise HTTPException(409, '已退回的复核不能审批签发')
+    auth.require_separate(user, {review_row.user_id}, '复核人不能审批自己的复核（不相容职务分离）')
+    auth.require_separate(user, auth.investigators(s, item.id), '发起该案件调查的人员不能审批同一案件（不相容职务分离）')
+    row = Approval(case_id=item.id, snapshot_id=snap.id, review_id=review_row.id, user_id=user.id,
+                   decision=body.decision, comment=body.comment)
+    s.add(row)
+    s.add(Audit(book_id=book.id, action='approval.recorded', details={
+        'case_id': item.id, 'review_id': review_row.id, 'decision': body.decision, 'user_id': user.id}))
     s.commit()
     return serialize(row)
 
@@ -588,6 +655,14 @@ def export_case(identity: str, format: str = 'markdown', s=Depends(session)):
                  f"当前是否过期：{report['stale']}", '', '## 发现', '', report['explanation'], '', '## 来源证据', '']
         for e in report['evidence']:
             lines.append(f"- {e['id']}：{e['document_name']} {json.dumps(e['locator'], ensure_ascii=False)}；来源编号 {e['source_id']}")
+        actors = report.get('actors', {})
+        lines += ['', '## 复核与审批', '']
+        for r in report.get('reviews', []):
+            who = actors.get(r.get('user_id'), {}).get('display_name', '单用户本地记录')
+            lines.append(f"- 复核 {r['created_at']}：{r['decision']}（{who}）快照 {r['snapshot_id']} {r['comment']}")
+        for a in report.get('approvals', []):
+            who = actors.get(a['user_id'], {}).get('display_name', a['user_id'])
+            lines.append(f"- 审批 {a['created_at']}：{a['decision']}（{who}）复核 {a['review_id']} {a['comment']}")
         lines += ['', '## 完整机器可读结果', '', '```json', json.dumps(report, ensure_ascii=False, indent=2), '```']
         content, media, extension = '\n'.join(lines), 'text/markdown', 'md'
     return Response(content, media_type=media, headers={'Content-Disposition': f'attachment; filename="case-{identity}.{extension}"'})

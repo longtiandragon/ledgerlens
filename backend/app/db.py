@@ -167,6 +167,7 @@ class Run(Entity):
     usage: Mapped[dict] = mapped_column(JSON, default=dict)
     result: Mapped[dict] = mapped_column(JSON, default=dict)
     error: Mapped[str | None]
+    created_by: Mapped[str | None]  # user id in multi-user mode; None in single-user mode
 
 
 class Simulation(Entity):
@@ -183,6 +184,36 @@ class Review(Entity):
     snapshot_id: Mapped[str]
     decision: Mapped[str]
     comment: Mapped[str]
+    user_id: Mapped[str | None]  # reviewer in multi-user mode; None in single-user mode
+
+
+class Approval(Entity):
+    """Append-only approver sign-off of one review on the snapshot it reviewed."""
+    __tablename__ = 'approvals'
+    case_id: Mapped[str] = mapped_column(index=True)
+    snapshot_id: Mapped[str]
+    review_id: Mapped[str] = mapped_column(index=True)
+    user_id: Mapped[str]
+    decision: Mapped[str]
+    comment: Mapped[str]
+
+
+class User(Entity):
+    __tablename__ = 'users'
+    username: Mapped[str] = mapped_column(unique=True)
+    display_name: Mapped[str]
+    roles: Mapped[list] = mapped_column(JSON)
+    password_salt: Mapped[str]
+    password_hash: Mapped[str]
+    active: Mapped[bool] = mapped_column(default=True)
+
+
+class UserSession(Entity):
+    __tablename__ = 'user_sessions'
+    user_id: Mapped[str] = mapped_column(index=True)
+    token_hash: Mapped[str] = mapped_column(unique=True)  # SHA-256 of the bearer token; token itself is never stored
+    expires_at: Mapped[str]
+    revoked_at: Mapped[str | None]
 
 
 class Audit(Entity):

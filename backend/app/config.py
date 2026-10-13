@@ -1,4 +1,7 @@
 from pathlib import Path
+from typing import Literal
+
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -23,6 +26,10 @@ class Settings(BaseSettings):
     reference_index_catalog: Path | None = None
     retrieval_db_port: int = 55439
     retrieval_timeout_seconds: int = 120
+    # 'single_user' keeps the original local workflow; 'multi_user' requires login and
+    # enforces separated preparer/reviewer/approver duties (see app/auth.py).
+    auth_mode: Literal['single_user', 'multi_user'] = 'single_user'
+    session_hours: int = Field(default=12, ge=1, le=72)
 
 
 settings = Settings()
