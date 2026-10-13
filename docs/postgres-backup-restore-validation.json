@@ -1,0 +1,108 @@
+{
+  "schema_version": "postgres-backup-restore-validation-v1",
+  "date": "2026-10-14",
+  "status": "passed",
+  "tool": "scripts/postgres_backup.py",
+  "tool_sha256": "4233dc880e4347ef01aa653f2430baca10c035b92a3a61b5471da98248a59b0d",
+  "unit_tests": {
+    "file": "backend/tests/test_postgres_backup.py",
+    "passed": 17,
+    "failed": 0,
+    "regression": "inventory() walked the unresolved root for relative paths; the new test failed (1 failed/16 passed) on the old line and passes after the fix"
+  },
+  "method": [
+    "Writers api/worker/scheduler stopped; postgres running and healthy",
+    "Per-table fingerprints (row count, md5 over sorted per-row md5) before and after pg_dump -Fc",
+    "API data directory copied except celerybeat schedule and ocr-cache; documents checked by hash",
+    "Dump restored into a throwaway container of the same Compose image; every table compared before the backup directory is published",
+    "Restore builds a new STORAGE_ROOT through the same throwaway procedure and re-compares"
+  ],
+  "live_v1": {
+    "backup": {
+      "path": ".local/backups/pg-backup-v1-20261014",
+      "manifest_sha256": "b53e4171f5d9b0fa2037ba7a66c2153e5b4972004d959529273c3d8537604d02",
+      "image": "pgvector/pgvector:pg17",
+      "server_version": "17.10 (Debian 17.10-1.pgdg12+1)",
+      "alembic_revision": "0006",
+      "tables": 26,
+      "rows": 1586,
+      "documents": 10,
+      "files": 14,
+      "dump_bytes": 157896,
+      "excluded_app_entries": [
+        "celerybeat"
+      ]
+    },
+    "backup_seconds": 48.5,
+    "restore_seconds": 21.4,
+    "refused_while_writers_running": {
+      "exit_code": 1,
+      "output_created": false,
+      "staging_left": 0
+    },
+    "refused_existing_storage_root": {
+      "exit_code": 1
+    },
+    "restored_stack": {
+      "compose_project": "ledgerlens-restore",
+      "alembic_current": "0006 (head)",
+      "api_view_identical": true,
+      "view_sha256": "4b2c84882acb62af10e2a59f25696d1e6d363e6eaa8e155e568478778800f639",
+      "books": 10,
+      "cases": 20,
+      "runs": 27,
+      "documents_downloaded_hash_match": true,
+      "acceptance_checks": "20/20",
+      "acceptance_passed": true
+    },
+    "original_app_files_unchanged_after_backup": true,
+    "code_note": "Ran before the relative-path inventory fix; every call used resolved absolute paths, so behaviour matches the committed code. Repeated as live_v2 with the final code."
+  },
+  "live_v2": {
+    "backup": {
+      "path": ".local/backups/pg-backup-v2-20261014",
+      "manifest_sha256": "59d2b37709e124043abb39497ea61526c476fa8f8c425ff429962719ac85697b",
+      "image": "pgvector/pgvector:pg17",
+      "server_version": "17.10 (Debian 17.10-1.pgdg12+1)",
+      "alembic_revision": "0006",
+      "tables": 26,
+      "rows": 1586,
+      "documents": 10,
+      "files": 14,
+      "dump_bytes": 157896,
+      "excluded_app_entries": [
+        "celerybeat"
+      ]
+    },
+    "backup_seconds": 42.2,
+    "restore_seconds": 21.2,
+    "restore_with_deployment_stopped": true,
+    "same_tables_documents_revision_as_v1": true,
+    "dump_bytes_differ_from_v1": true
+  },
+  "cleanup": {
+    "throwaway_containers_left": 0,
+    "restore_project_removed_with_local_images": true,
+    "original_stack_stopped": true,
+    "docker_desktop_stopped": true,
+    "restored_storage_roots_kept": [
+      ".local/restore-tests/pg-restore-v1-20261014",
+      ".local/restore-tests/pg-restore-v2-20261014"
+    ]
+  },
+  "model_requests": 0,
+  "new_dependencies": 0,
+  "limitations": [
+    "Requires stopping writers; no online or point-in-time recovery and no WAL archiving.",
+    "Redis is not backed up; queued runs depend on the scheduled stale-run recovery.",
+    "Same development host and Docker Desktop; restore onto another machine is unverified.",
+    "Manifest hashes detect changed files, not a maliciously rewritten manifest; no encryption.",
+    "Synthetic acceptance data only (10 books, 26 tables, 1586 rows); large databases untested."
+  ],
+  "sha256": {
+    "api_view.py": "1a4223ae52dda1b15ddbe6c5e98659f4051f0ce2466696d2fa68fe32007bccaa",
+    "view-original.json": "d8b455c065161df2a099404f8d547451381ffce0b78314634a0eb17980d2074c",
+    "view-restored.json": "d8b455c065161df2a099404f8d547451381ffce0b78314634a0eb17980d2074c",
+    "acceptance-restored.json": "722b93d8d6a3cefaf58832588f26f2d1fedbbd21afb8e6cc3ecf9d8c176d611c"
+  }
+}

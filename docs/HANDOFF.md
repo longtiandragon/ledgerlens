@@ -14,7 +14,7 @@
 |流程规则包|`bpi2019-process-rules-v1`，9 条；流程模型解释 `process-investigation-v1`|
 |数据库迁移|冻结至 `0006`（参考检索任务和人工选择版本；只允许向前迁移）；SQLite及真实PostgreSQL临时schema迁移8项通过，见postgres-migration-validation.json|
 |本地旧库升级|启动器执行结构核验、自动备份和向前迁移；无版本旧库仅接管完整匹配的冻结结构。30项专项及隔离启动器实跑通过，原工作库仅做副本演练，见LOCAL_DATABASE_UPGRADE|
-|本地备份恢复|v2逐文件哈希与检查点清单，复制前后核验；32项专项通过，实际副本3257行业务数据和4179行检查点保持，199快照/26OCR/117参考上下文重验通过，见BACKUP_RESTORE。另建合成库两个规则调查进程中断点恢复、预算保持及重复派发通过，见RESTORED_RUN；非空白机器完整灾难恢复|
+|本地备份恢复|v2逐文件哈希与检查点清单，复制前后核验；32项专项通过，实际副本3257行业务数据和4179行检查点保持，199快照/26OCR/117参考上下文重验通过，见BACKUP_RESTORE。另建合成库两个规则调查进程中断点恢复、预算保持及重复派发通过，见RESTORED_RUN；非空白机器完整灾难恢复。Compose PostgreSQL用`scripts/postgres_backup.py`停写备份／新STORAGE_ROOT恢复，恢复栈API视图一致、容器验收20/20，见BACKUP_RESTORE末节|
 |测试|提交ce7caf2干净源码基础环境2131通过、52项可选/本机条件跳过；网页42通过、9项可选场景跳过，见CLEAN_CHECKOUT。此前启用实际PG/本机模型资料的后端全量2017通过、2项Windows文件链接权限跳过（144.31秒）；浏览器48通过、0跳过（4.4分钟），两种环境范围不同，不互相替代。GitHub CI（全新ubuntu-24.04）后端2153通过/38可选跳过、480/30规则契约及空库网页42通过/9可选跳过，见github-ci-validation.json|
 |DeepSeek 余额|¥2.60（2026-10-12 查询）；配置模型 `deepseek-flash`|
 
@@ -113,7 +113,7 @@ docker compose -f infra/erpnext/compose.yaml up -d
 7. **ERPNext有限场景差分已完成**：外币账户／本位币、多公司、库存21项；订单→部分收货→发票→部分付款21项；含税采购→部分退货24项。各自重复执行记录一致；测试税率不代表税法。保留日期覆盖失败账套，USD本位币仍拒绝，复杂税费、退款、取消、汇兑与真实业务未验证，详见 [ERPNEXT_SEMANTICS](ERPNEXT_SEMANTICS.md) 和 [ERPNEXT_TAX_RETURN](ERPNEXT_TAX_RETURN.md)。
 8. **需要外部条件**：企业授权真实账套试点、会计专业复核、多用户审签与社区发布。
 
-本地交付已补做[干净源码复现](CLEAN_CHECKOUT.md)：最新从提交ce7caf2导出、不带本机资料/模型/密钥，以完整现有缓存重新安装、生成480规则案例并在空库跑网页。保留npm缺缓存和可选依赖测试夹具不完整的两次失败；修复后全流程通过。另补[WSL Linux核心子集](LINUX_CORE.md)：提交562f255导出，480规则、30参考例和68项匹配/备份恢复检查通过，无跳过；包含Windows因权限跳过的12项真实链接边界。仅重用五个锁定纯Python测试包。2026-10-14起由私有GitHub远端CI补足完整Linux依赖、后端、规则基准与空库网页及无缓存联网安装，见github-ci-validation.json。容器Dockerfile已补齐原因调查及4份数值评测公开摘要，按文件清单隔离读取的50项相关检查通过，见packaged-evaluation-validation.json；容器验收器已改为读取当前源码迁移头、预检失败即停止及报告路径独占创建，见container-runner-validation.json；停机演练异常退出时的自有服务恢复先以33项离线检查验证，见container-restoration-validation.json。Docker宿主启动错误（cross-platform-readiness.json）经用户同意清除遗留套接字后解决：当前镜像构建运行、20项验收连续两次、真实0003→0006升级旧行保持、两次真实中断后的worker/scheduler恢复均通过，见container-revalidation-validation.json；强制终止、宿主崩溃、容器内长时间模型调查和PostgreSQL备份恢复仍未验证。
+本地交付已补做[干净源码复现](CLEAN_CHECKOUT.md)：最新从提交ce7caf2导出、不带本机资料/模型/密钥，以完整现有缓存重新安装、生成480规则案例并在空库跑网页。保留npm缺缓存和可选依赖测试夹具不完整的两次失败；修复后全流程通过。另补[WSL Linux核心子集](LINUX_CORE.md)：提交562f255导出，480规则、30参考例和68项匹配/备份恢复检查通过，无跳过；包含Windows因权限跳过的12项真实链接边界。仅重用五个锁定纯Python测试包。2026-10-14起由私有GitHub远端CI补足完整Linux依赖、后端、规则基准与空库网页及无缓存联网安装，见github-ci-validation.json。容器Dockerfile已补齐原因调查及4份数值评测公开摘要，按文件清单隔离读取的50项相关检查通过，见packaged-evaluation-validation.json；容器验收器已改为读取当前源码迁移头、预检失败即停止及报告路径独占创建，见container-runner-validation.json；停机演练异常退出时的自有服务恢复先以33项离线检查验证，见container-restoration-validation.json。Docker宿主启动错误（cross-platform-readiness.json）经用户同意清除遗留套接字后解决：当前镜像构建运行、20项验收连续两次、真实0003→0006升级旧行保持、两次真实中断后的worker/scheduler恢复均通过，见container-revalidation-validation.json；PostgreSQL停写备份与新目录恢复随后实测通过（postgres-backup-restore-validation.json）；强制终止、宿主崩溃、容器内长时间模型调查及在线／异机恢复仍未验证。
 
 ## 8. 交接时的状态核对
 

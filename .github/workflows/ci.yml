@@ -11,6 +11,37 @@ jobs:
       - run: uv run pytest -q -rs
       - run: uv run ruff check backend scripts datasets benchmarks
       - run: uv run python scripts/generate_contracts.py --check
+  # Opt-in checks that the default job skips: live PostgreSQL migrations and the
+  # persistent pgvector index (same credentials as the local retrieval service),
+  # plus the pinned Beancount evaluator. Any skip here fails the job.
+  optional:
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env: {POSTGRES_USER: retrieval, POSTGRES_PASSWORD: local-retrieval-only, POSTGRES_DB: retrieval}
+        ports: ['55439:5432']
+        options: >-
+          --health-cmd "pg_isready -U retrieval" --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      MIGRATION_POSTGRES_TESTS: '1'
+      RETRIEVAL_INDEX_TESTS: '1'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+        with: {version: '0.11.28'}
+      - run: uv sync --frozen --python 3.12
+      - run: uv pip install -r benchmarks/requirements-beancount.txt
+      - run: >-
+          .venv/bin/python -m pytest -q -rs --junitxml="$RUNNER_TEMP/optional.xml"
+          backend/tests/test_migrations_postgres.py backend/tests/test_retrieval_index.py
+          backend/tests/test_beancount_differential.py
+      - name: Require that every optional check executed
+        run: >-
+          .venv/bin/python -c "import sys, xml.etree.ElementTree as ET;
+          suites = list(ET.parse(sys.argv[1]).getroot().iter('testsuite'));
+          counts = {k: sum(int(s.get(k, 0)) for s in suites) for k in ('tests', 'skipped')};
+          print(counts); sys.exit(counts['skipped'] > 0 or counts['tests'] == 0)" "$RUNNER_TEMP/optional.xml"
   frontend:
     runs-on: ubuntu-24.04
     defaults:

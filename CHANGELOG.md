@@ -5,6 +5,7 @@
 - 用户同意后建立私有GitHub远端：CI在全新ubuntu-24.04无缓存安装锁定依赖，后端2153通过／38可选跳过，前端构建通过；main指向首个提交的历史失败保留。
 - CI新增reproduce作业：重新生成合成数据、`benchmarks.evaluate --require-acceptance`强制原480/30契约，再在空库无密钥环境运行浏览器测试，42通过／9可选跳过；Action改用Node 24大版本并固定ubuntu-24.04。
 - 清除Docker Desktop非正常停止遗留的推理套接字后，当前镜像容器验收20项连续两次通过；真实0003→0006升级保留全部旧行；验收器在真实容器中断后恢复worker／scheduler两个场景通过。付费请求0。
+- 新增`scripts/postgres_backup.py`：停写后的Compose PostgreSQL备份（逐表指纹、一次性容器复核后发布）与新STORAGE_ROOT恢复；恢复栈API视图与原部署一致、容器验收20/20，17项单元检查通过。
 
 ## 未发布 — 2026-10-13
 

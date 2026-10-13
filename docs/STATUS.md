@@ -120,7 +120,7 @@ BPI2019完整原XES已真实下载、官方MD5核验；首次1000个完整trace�
 |三类场景、两套制度|采购／资金／期间的受控合成任务，两套政策配置及差错处理说明。|全部场景包专业覆盖；重要性判断、追溯重述报表等专用规则。支持两套配置不代表覆盖全部准则。|
 |证据与人工闭环|当前快照查询、来源定位、模拟、复核、底稿与迟到资料产生新快照；补证事项登记、较新快照候选匹配与人工确认。|扫描件字段与区域定位、跨来源冲突处理的业务覆盖。|
 |单Agent与多Agent|真实单Agent及v8／v10／v16主动产品验收；v15／v16完整3次重复四组试跑，选择器、累计观察、定义去重及计划修复已接入。|固定多Agent稳定完成，正常案例误报与主动识别质量；扩展场景公平对照、根因分类与消融、费用／质量增益。|
-|运行恢复与部署|本地持久化、租约、幂等、备份恢复；PostgreSQL、Redis、Celery真实容器联调、重复投递、停机排队、失效租约恢复及全栈重启验收；当前镜像复验、真实旧库升级保持及验收器中断后服务恢复。|调查执行中途被强杀的真实中断、PostgreSQL备份恢复、真实模型调查在容器中的运行、长时间负载。|
+|运行恢复与部署|本地持久化、租约、幂等、备份恢复；PostgreSQL、Redis、Celery真实容器联调、重复投递、停机排队、失效租约恢复及全栈重启验收；当前镜像复验、真实旧库升级保持及验收器中断后服务恢复；停写后的PostgreSQL容器备份与新STORAGE_ROOT恢复。|调查执行中途被强杀的真实中断、在线／时间点及异机PostgreSQL恢复、真实模型调查在容器中的运行、长时间负载。|
 |解析与检索技术栈|文本PDF、openpyxl/CSV、中文词法检索，可选PaddleOCR/bge适配器。|OCR及bge模型真实运行、pgvector索引、Polars批量解析与生产解析质量。|
 |公开与外部数据|32条官方问答、883条FinQA dev、30份三年官方年报、1000个真实BPI完整trace；BPI和年报独立只读证据接入，BPI流程观察规则及底稿导出，480合成任务及30自建参考例。|官方规则一致性验收、年报完整勾稽和独立财务真值；FinQA未见题与全dev模型组件评测、BPI模型调查与反证、两方匹配真实样本及独立异常真值。|
 |成熟软件借鉴与差分|Beancount 9/9基础差分、39项回归；ERPNext v16真实服务联调，总账导出与ERPNext试算平衡表一致；BPI解析适配器，项目及许可文档。|ERPNext多币种、多公司、库存与单据链语义对齐差分；更复杂业务差分。不得把基础余额正确解释成准则或科目业务选择正确。|
@@ -626,3 +626,12 @@ Docker Desktop此前无法启动的直接原因是其推理服务自身遗留的
 随后扩展工作流（提交83f14a8）：固定ubuntu-24.04、改用Node 24版本的官方Action大版本、Ruff检查范围与文档一致（backend scripts datasets benchmarks）、pytest打印跳过原因；新增reproduce作业：重新生成合成数据，`benchmarks.evaluate --require-acceptance`强制原有480/30契约（新增8项契约单测，期望值手写，不取自生产输出），再在空SQLite、无模型密钥的API和Vite上运行Playwright。结果三项作业通过：后端2153通过、38跳过（Beancount20、PG检索索引9、PG迁移2、原PDF4、v2数据1、官方原HTML1、v16报告1）；Windows因权限跳过的14项真实链接检查在Linux实际执行通过；规则基准480/480、失败0、参考例30/30、模型调用0；健康检查mode=local、model_configured=false、初始账套0；浏览器42通过、9跳过（OCR6、BPI1、BGE1、年报1，均需本机数据或模型），0失败、0 flaky（117.6秒）。Python缓存仍为冷启动，npm命中首轮缓存。
 
 边界：托管机器证明全新Linux环境可复现，不等于其他人按README在自己机器上复现；可选Beancount、OCR、BGE/pgvector、PostgreSQL迁移与本机真实数据未在CI执行；Windows不在CI中，仍以本机干净源码复现为准；后续运行可能命中缓存。规则契约与空库网页通过不说明模型质量，原因调查研究结论不变。工件保留30天，本地副本在`.local/reports/github-ci`，摘要与哈希见[github-ci-validation.json](github-ci-validation.json)。付费请求0、新依赖0；v26开发冒烟与新封存集继续暂缓。
+
+
+## PostgreSQL容器部署备份与恢复（2026-10-14）
+
+补齐运行手册早已要求、但未实现的PostgreSQL备份：新增`scripts/postgres_backup.py`（backup／restore），不复用SQLite工具。它从`docker compose config`读取实际镜像、账号和绑定目录；备份要求postgres健康、api/worker/scheduler未运行，`pg_dump -Fc`前后逐表指纹（行数＋排序后逐行md5）必须一致，复制API数据目录（排除Celery beat调度文件与ocr-cache），逐个Document核对容器路径与原件SHA-256，并把转储恢复进同一镜像的一次性容器逐表比较，通过后才发布清单。恢复同样经一次性容器生成新的STORAGE_ROOT并复查，不接触运行中部署的目录。
+
+17项单元检查通过（含首个实跑后发现的相对路径清单缺陷：新回归在旧代码上1失败/16通过，修复后通过）。实跑：写入方运行时拒绝且无残留；停写后备份48.5秒（26表1586行、10个Document、PG17.10、迁移0006），恢复21.4秒，重复恢复到已存在目录被拒绝。以独立Compose项目在恢复目录启动全栈：迁移保持0006（head），只读API视图（10账套、记录、10个Document下载哈希、20案件、27运行、快照）与原部署SHA-256完全一致，完整容器验收20/20。原部署数据文件备份后未变。用修复后的最终代码重复：备份42.2秒，部署全部停止时恢复21.2秒，表、Document和修订与首轮一致，转储字节因时间戳不同。一次性容器0残留，恢复项目连同本地构建镜像已删除，原栈与Docker Desktop均已停止。
+
+边界：需要停写，没有在线／时间点恢复、WAL归档或加密；Redis不在备份内，排队运行依赖定时失效租约恢复重新派发（该恢复会重新投递全部queued运行）；同一开发机验证，异机与大库未测；清单哈希不能证明被恶意重写的清单可信。付费请求0、新依赖0。摘要见[postgres-backup-restore-validation.json](postgres-backup-restore-validation.json)，原始证据在`runtime/postgres-backup-v1`、`.local/backups/pg-backup-v1/v2-20261014`与`.local/restore-tests`。

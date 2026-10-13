@@ -40,7 +40,7 @@
 .venv\Scripts\python.exe scripts/backup.py --runtime runtime --output F:\LedgerLensBackups\backup-001
 ```
 
-备份包含业务SQLite、可选检查点SQLite、来源文件及v2清单（逐文件SHA-256、字节数和检查点是否包含）。校验成功才发布到全新目录。单数据库backup操作一致，但多个文件的整体一致性要求暂停写入。PostgreSQL使用pg_dump，并同时复制来源文件；不得把SQLite备份命令套用到PostgreSQL。
+备份包含业务SQLite、可选检查点SQLite、来源文件及v2清单（逐文件SHA-256、字节数和检查点是否包含）。校验成功才发布到全新目录。单数据库backup操作一致，但多个文件的整体一致性要求暂停写入。PostgreSQL容器部署先`docker compose stop api worker scheduler`，再用`scripts/postgres_backup.py backup --output <新目录>`；恢复用`restore --backup <备份> --storage-root <新目录>`后以该STORAGE_ROOT启动，步骤与限制见[备份恢复](BACKUP_RESTORE.md)。不得把SQLite备份命令套用到PostgreSQL。
 
 恢复到新目录，先校验所有文件哈希和SQL完整性，再指向新DATA_DIR/DATABASE_URL。业务Document保存的原始存储路径需要迁移，不能仅移动数据库就声称来源可读取。恢复脚本提供显式路径修复，保留原备份不修改。
 
