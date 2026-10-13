@@ -1,0 +1,127 @@
+{
+  "schema_version": "reference-retrieval-queries-v1",
+  "period": "2026-10",
+  "authorship": "New implementer-authored synthetic questions; no independent expert validation; frozen before predictions.",
+  "queries": [
+    {
+      "id": "heldout-answer-01",
+      "framework": "CAS",
+      "text": "股东把存货投入企业，初始成本依据什么确定，有什么例外？"
+    },
+    {
+      "id": "heldout-answer-02",
+      "framework": "CAS",
+      "text": "原先导致存货减值的因素消失后，跌价准备能否恢复，转回上限是什么？"
+    },
+    {
+      "id": "heldout-answer-03",
+      "framework": "CAS",
+      "text": "企业自己建造机器设备，哪些期间发生的必要支出组成资产成本？"
+    },
+    {
+      "id": "heldout-answer-04",
+      "framework": "CAS",
+      "text": "固定资产按什么频率计提折旧，费用去向如何按用途确定？"
+    },
+    {
+      "id": "heldout-answer-05",
+      "framework": "CAS",
+      "text": "缺少商业实质的非货币性资产交换，收入准则怎样处理收入确认？"
+    },
+    {
+      "id": "heldout-answer-06",
+      "framework": "CAS",
+      "text": "合同变更新增可区分商品，新增价格又反映单独售价，应将变更作为原合同还是单独合同？"
+    },
+    {
+      "id": "heldout-answer-07",
+      "framework": "CAS",
+      "text": "合同开始时判断过是否包含租赁，以后在什么变化下才需要重新评估？"
+    },
+    {
+      "id": "heldout-answer-08",
+      "framework": "CAS",
+      "text": "承租人把合同中的租赁和非租赁服务分开后，合同总对价按什么比例分摊？"
+    },
+    {
+      "id": "heldout-answer-09",
+      "framework": "SCAS",
+      "text": "购买短期投资的付款中包含已宣告但尚未发放的股利，小企业要把它算进投资成本吗？"
+    },
+    {
+      "id": "heldout-answer-10",
+      "framework": "SCAS",
+      "text": "小企业出售短期投资时，售价扣除账面余额和相关税费后的净额记到哪里？"
+    },
+    {
+      "id": "heldout-answer-11",
+      "framework": "CAS",
+      "text": "会计软件用外币记账时，对人民币财务会计报告应提供什么支持？"
+    },
+    {
+      "id": "heldout-answer-12",
+      "framework": "CAS",
+      "text": "会计数据录入除了手工输入，规范还列出了哪两种方式？"
+    },
+    {
+      "id": "heldout-absent-01",
+      "framework": "CAS",
+      "text": "庚公司的销售合同S021订购存货数量具体有多少件？"
+    },
+    {
+      "id": "heldout-absent-02",
+      "framework": "CAS",
+      "text": "辛公司打包购买两台设备，评估报告列明各自公允价值是多少？"
+    },
+    {
+      "id": "heldout-absent-03",
+      "framework": "CAS",
+      "text": "壬公司本月预计客户退货需要退款的总金额是多少？"
+    },
+    {
+      "id": "heldout-absent-04",
+      "framework": "CAS",
+      "text": "癸公司的租赁合同L019每月约定租金是多少元？"
+    },
+    {
+      "id": "heldout-absent-05",
+      "framework": "SCAS",
+      "text": "甲乙小企业出售股票投资取得的实际价款和手续费各是多少？"
+    },
+    {
+      "id": "heldout-absent-06",
+      "framework": "CAS",
+      "text": "本单位会计软件管理员设置的当前登录密码是什么？"
+    },
+    {
+      "id": "heldout-absent-07",
+      "framework": "CAS",
+      "text": "2026年度企业所得税季度预缴的具体法定截止日期是哪天？"
+    },
+    {
+      "id": "heldout-absent-08",
+      "framework": "CAS",
+      "text": "固定资产采购合同的印花税减免办理窗口地址在哪里？"
+    },
+    {
+      "id": "heldout-absent-09",
+      "framework": "CAS",
+      "text": "租赁厂房发生火灾时该拨打哪个属地保险公司的理赔电话？"
+    },
+    {
+      "id": "heldout-absent-10",
+      "framework": "CAS",
+      "text": "怎样在PostgreSQL中用一条命令给会计数据库建立pgvector扩展？"
+    },
+    {
+      "id": "heldout-absent-11",
+      "framework": "SCAS",
+      "text": "小企业为职工缴纳社保时，2026年深圳养老保险缴费基数上限是多少？"
+    },
+    {
+      "id": "heldout-absent-12",
+      "framework": "CAS",
+      "text": "选择会计云软件时，服务商的99.99%可用性承诺每月赔偿比例是多少？"
+    }
+  ]
+}

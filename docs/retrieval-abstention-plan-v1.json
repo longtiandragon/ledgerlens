@@ -1,0 +1,54 @@
+{
+  "schema_version": "reference-abstention-plan-v1",
+  "date": "2026-10-13",
+  "splits": {
+    "dev": {
+      "queries": "benchmarks/retrieval-abstention-dev-queries-v1.json",
+      "truth": "benchmarks/retrieval-abstention-dev-truth-v1.json"
+    },
+    "heldout": {
+      "queries": "benchmarks/retrieval-abstention-heldout-queries-v1.json",
+      "truth": "benchmarks/retrieval-abstention-heldout-truth-v1.json"
+    }
+  },
+  "assets": {
+    "corpus": ".local/retrieval-corpus-v1.json",
+    "registry": "docs/retrieval-sources-v1.json"
+  },
+  "input_sha256": {
+    ".local/retrieval-corpus-v1.json": "c98585a2ac90627199e56e8a82d5bdee596757b58672a4e2ca6914c9e9a1e1d9",
+    "docs/retrieval-sources-v1.json": "473012feccb6f74a3001e97c50d1453ca187e70f41696b96d235a1de7ec66741",
+    "benchmarks/retrieval-abstention-dev-queries-v1.json": "0ece2061414de6f481c2a408af72f5b2614f2cbad727ce4aba4ec997292b70e8",
+    "benchmarks/retrieval-abstention-dev-truth-v1.json": "0ce32143402f624739776c287e1b4fb809b1917ccc70dcd2dd2aa18796bb6c16",
+    "benchmarks/retrieval-abstention-heldout-queries-v1.json": "6de28fdbd18e0f1cfbf5059a677c4d6b38617554793ad08799660f44f18eff2d",
+    "benchmarks/retrieval-abstention-heldout-truth-v1.json": "cf8a7ad86c6a34bb66949f1732bcec85a4b1dfc78643d559f02211154d2ce708"
+  },
+  "source_sha256": {
+    "benchmarks/reference_abstention.py": "6569286942e05a386d494c9842be29826bf3b577b5821970fd90a584d7b11471",
+    "benchmarks/reference_retrieval.py": "19ab9be02e4f1867cfa5867bbd1c9f5082877668a7218cc019fac66b4fe43d52",
+    "backend/app/retrieval_vectors.py": "3894894ff0afb5753e0d99eee8c9ba8d131a6d8bc880f5fbe481e55e96c0bbd6",
+    "backend/app/knowledge.py": "f68a5c41fd0074f0dadaf12207808306f8a069b4b88bcfa1c844e9f0962e6825",
+    "backend/app/reference_sources.py": "8c6e3fc4711e80d876a327dc54864f77d0ffd664424eeef220e857c8cce6466e",
+    "docs/retrieval-model-v1.json": "588ee2f1da01c50d4f19a3b9bfa847b67e22c8af2623c08843e5b10c2e7c94e3"
+  },
+  "pre_registration_sha256": "54cd57034fa0ecb3808abef501f64cd31363f798787f52e931a82dc2bca7235b",
+  "methods": [
+    "keyword",
+    "bge_numpy"
+  ],
+  "top_k": 6,
+  "same_segments": true,
+  "threshold_scope": "Query-level top-1 gate; retain unchanged top-6 or reject all",
+  "fit": "Development only; maximize balanced answerability accuracy, then fewer false accepts, then more correct top-6 hits, then lower threshold",
+  "heldout_gate": {
+    "answerable": 12,
+    "unanswerable": 12,
+    "failures_max": 0,
+    "false_accepts_max": 1,
+    "correct_hits_kept_min": 9,
+    "correct_hits_lost_max": 1
+  },
+  "blindness": "All predictions saved before reading any labels; threshold artifact saved before held-out labels opened",
+  "post_result_changes": "Forbidden on these splits; preserve negative outcome; no default switch",
+  "author": "Implementer-authored synthetic queries after reading frozen originals; not independent expert or real-user validation"
+}

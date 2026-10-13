@@ -1,0 +1,127 @@
+{
+  "schema_version": "reference-retrieval-queries-v1",
+  "period": "2026-10",
+  "authorship": "New implementer-authored synthetic questions; no independent expert validation; frozen before predictions.",
+  "queries": [
+    {
+      "id": "dev-answer-01",
+      "framework": "CAS",
+      "text": "把购入商品认作存货，需要同时具备哪两项确认条件？"
+    },
+    {
+      "id": "dev-answer-02",
+      "framework": "CAS",
+      "text": "把货物运进仓库的运输、装卸和保险支出是否属于采购成本？"
+    },
+    {
+      "id": "dev-answer-03",
+      "framework": "CAS",
+      "text": "一台设备的部件使用寿命不同，应该整体入账还是分别确认为资产？"
+    },
+    {
+      "id": "dev-answer-04",
+      "framework": "CAS",
+      "text": "打包购买几项设备但没有逐项报价，怎样把总价分配给各项固定资产？"
+    },
+    {
+      "id": "dev-answer-05",
+      "framework": "CAS",
+      "text": "收入定义中的经济利益流入，是否包括股东投入的资本？"
+    },
+    {
+      "id": "dev-answer-06",
+      "framework": "CAS",
+      "text": "适用收入准则的合同是否一定要采用书面形式？"
+    },
+    {
+      "id": "dev-answer-07",
+      "framework": "CAS",
+      "text": "会计上的租赁，是双方就资产哪一种权利和对价作出的安排？"
+    },
+    {
+      "id": "dev-answer-08",
+      "framework": "CAS",
+      "text": "供应商能随时替换指定设备并从替换中获益，这还属于租赁中的已识别资产吗？"
+    },
+    {
+      "id": "dev-answer-09",
+      "framework": "SCAS",
+      "text": "小企业会计准则下，资产按什么基础计量，是否计提资产减值准备？"
+    },
+    {
+      "id": "dev-answer-10",
+      "framework": "SCAS",
+      "text": "原来执行小企业会计准则的公司公开发行股票后，需要转用什么会计准则？"
+    },
+    {
+      "id": "dev-answer-11",
+      "framework": "CAS",
+      "text": "会计软件界面应该优先使用哪种语言，能否同时提供其他文字？"
+    },
+    {
+      "id": "dev-answer-12",
+      "framework": "CAS",
+      "text": "为了接入其他信息系统，会计软件应采用怎样的架构和数据接口？"
+    },
+    {
+      "id": "dev-absent-01",
+      "framework": "CAS",
+      "text": "甲仓库在2026年9月30日实际结存多少吨铜料？"
+    },
+    {
+      "id": "dev-absent-02",
+      "framework": "CAS",
+      "text": "乙公司的生产设备A017最初购入的原价是多少元？"
+    },
+    {
+      "id": "dev-absent-03",
+      "framework": "CAS",
+      "text": "丙公司合同R009约定客户在交货后多少天付款？"
+    },
+    {
+      "id": "dev-absent-04",
+      "framework": "CAS",
+      "text": "丁公司租赁L008实际采用的增量借款利率是多少？"
+    },
+    {
+      "id": "dev-absent-05",
+      "framework": "SCAS",
+      "text": "戊公司本期已经核销的坏账总额具体是多少元？"
+    },
+    {
+      "id": "dev-absent-06",
+      "framework": "CAS",
+      "text": "己公司的会计软件一年度订阅费报价是多少？"
+    },
+    {
+      "id": "dev-absent-07",
+      "framework": "CAS",
+      "text": "在哪里能找到用于深圳个人工资薪金扣缴的完整税率表和速算扣除数？"
+    },
+    {
+      "id": "dev-absent-08",
+      "framework": "CAS",
+      "text": "收入准则是否给出了Oracle数据库恢复时专用的SQL命令？请列出该命令。"
+    },
+    {
+      "id": "dev-absent-09",
+      "framework": "CAS",
+      "text": "采购存货跨境进口的海关商品编码850440对应现行关税税率是多少？"
+    },
+    {
+      "id": "dev-absent-10",
+      "framework": "CAS",
+      "text": "申请租赁纠纷诉讼时应该缴纳多少法院受理费？"
+    },
+    {
+      "id": "dev-absent-11",
+      "framework": "SCAS",
+      "text": "小企业申请高新技术企业认证须使用哪个在线提交网址？"
+    },
+    {
+      "id": "dev-absent-12",
+      "framework": "CAS",
+      "text": "会计软件接入银行网关时，这家银行要求的OAuth授权端点是什么？"
+    }
+  ]
+}

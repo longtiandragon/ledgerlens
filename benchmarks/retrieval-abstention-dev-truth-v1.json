@@ -1,0 +1,161 @@
+{
+  "schema_version": "reference-retrieval-truth-v1",
+  "labels": [
+    {
+      "id": "dev-answer-01",
+      "source_id": "cas1-inventory",
+      "anchor": "与该存货有关的经济利益很可能流入企业；（二）该存货的成本能够可靠地计量。",
+      "kind": "answerable"
+    },
+    {
+      "id": "dev-answer-02",
+      "source_id": "cas1-inventory",
+      "anchor": "存货的采购成本，包括购买价款、相关税费、运输费、装卸费、保险费以及其他可归属于存货采购成本的费用。",
+      "kind": "answerable"
+    },
+    {
+      "id": "dev-answer-03",
+      "source_id": "cas4-fixed-assets",
+      "anchor": "应当分别将各组成部分确认为单项固定资产。",
+      "kind": "answerable"
+    },
+    {
+      "id": "dev-answer-04",
+      "source_id": "cas4-fixed-assets",
+      "anchor": "应当按照各项固定资产公允价值比例对总成本进行分配，分别确定各项固定资产的成本。",
+      "kind": "answerable"
+    },
+    {
+      "id": "dev-answer-05",
+      "source_id": "cas14-revenue",
+      "anchor": "与所有者投入资本无关的经济利益的总流入。",
+      "kind": "answerable"
+    },
+    {
+      "id": "dev-answer-06",
+      "source_id": "cas14-revenue",
+      "anchor": "合同有书面形式、口头形式以及其他形式。",
+      "kind": "answerable"
+    },
+    {
+      "id": "dev-answer-07",
+      "source_id": "cas21-leases",
+      "anchor": "出租人将资产的使用权让与承租人以获取对价的合同。",
+      "kind": "answerable"
+    },
+    {
+      "id": "dev-answer-08",
+      "source_id": "cas21-leases",
+      "anchor": "如果资产的供应方在整个使用期间拥有对该资产的实质性替换权，则该资产不属于已识别资产。",
+      "kind": "answerable"
+    },
+    {
+      "id": "dev-answer-09",
+      "source_id": "scas-full",
+      "anchor": "小企业的资产应当按照成本计量，不计提资产减值准备。",
+      "kind": "answerable"
+    },
+    {
+      "id": "dev-answer-10",
+      "source_id": "scas-full",
+      "anchor": "执行本准则的小企业公开发行股票或债券的，应当转为执行《企业会计准则》",
+      "kind": "answerable"
+    },
+    {
+      "id": "dev-answer-11",
+      "source_id": "software-specification",
+      "anchor": "会计软件的界面应当优先使用中文",
+      "kind": "answerable"
+    },
+    {
+      "id": "dev-answer-12",
+      "source_id": "software-specification",
+      "anchor": "采用开放式体系架构，提供易于理解的标准数据接口，支持通用的数据传输协议和数据格式",
+      "kind": "answerable"
+    },
+    {
+      "id": "dev-absent-01",
+      "source_id": null,
+      "anchor": null,
+      "kind": "private_inventory",
+      "rationale": "Frozen corpus contains no company stock ledger."
+    },
+    {
+      "id": "dev-absent-02",
+      "source_id": null,
+      "anchor": null,
+      "kind": "private_asset",
+      "rationale": "No entity equipment register in corpus."
+    },
+    {
+      "id": "dev-absent-03",
+      "source_id": null,
+      "anchor": null,
+      "kind": "private_contract",
+      "rationale": "No R009 contract or payment terms in corpus."
+    },
+    {
+      "id": "dev-absent-04",
+      "source_id": null,
+      "anchor": null,
+      "kind": "private_lease",
+      "rationale": "Generic rate guidance does not supply L008 rate."
+    },
+    {
+      "id": "dev-absent-05",
+      "source_id": null,
+      "anchor": null,
+      "kind": "private_bad_debt",
+      "rationale": "No company transactions in source corpus."
+    },
+    {
+      "id": "dev-absent-06",
+      "source_id": null,
+      "anchor": null,
+      "kind": "private_software",
+      "rationale": "Function specification contains no vendor quotation."
+    },
+    {
+      "id": "dev-absent-07",
+      "source_id": null,
+      "anchor": null,
+      "kind": "absent_payroll_tax",
+      "rationale": "Six documents are not the personal income tax table."
+    },
+    {
+      "id": "dev-absent-08",
+      "source_id": null,
+      "anchor": null,
+      "kind": "absent_database_command",
+      "rationale": "Accounting standard contains no database recovery procedure."
+    },
+    {
+      "id": "dev-absent-09",
+      "source_id": null,
+      "anchor": null,
+      "kind": "absent_customs_rate",
+      "rationale": "No customs tariff schedule in corpus."
+    },
+    {
+      "id": "dev-absent-10",
+      "source_id": null,
+      "anchor": null,
+      "kind": "absent_court_fee",
+      "rationale": "Lease accounting standard contains no court fee schedule."
+    },
+    {
+      "id": "dev-absent-11",
+      "source_id": null,
+      "anchor": null,
+      "kind": "absent_certification_portal",
+      "rationale": "No certification application portal in six source documents."
+    },
+    {
+      "id": "dev-absent-12",
+      "source_id": null,
+      "anchor": null,
+      "kind": "absent_bank_endpoint",
+      "rationale": "No bank-specific API specification in corpus."
+    }
+  ]
+}

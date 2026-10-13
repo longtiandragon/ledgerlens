@@ -1,0 +1,161 @@
+{
+  "schema_version": "reference-retrieval-truth-v1",
+  "labels": [
+    {
+      "id": "heldout-answer-01",
+      "source_id": "cas1-inventory",
+      "anchor": "投资者投入存货的成本，应当按照投资合同或协议约定的价值确定，但合同或协议约定价值不公允的除外。",
+      "kind": "answerable"
+    },
+    {
+      "id": "heldout-answer-02",
+      "source_id": "cas1-inventory",
+      "anchor": "并在原已计提的存货跌价准备金额内转回，转回的金额计入当期损益。",
+      "kind": "answerable"
+    },
+    {
+      "id": "heldout-answer-03",
+      "source_id": "cas4-fixed-assets",
+      "anchor": "自行建造固定资产的成本，由建造该项资产达到预定可使用状态前所发生的必要支出构成。",
+      "kind": "answerable"
+    },
+    {
+      "id": "heldout-answer-04",
+      "source_id": "cas4-fixed-assets",
+      "anchor": "固定资产应当按月计提折旧，并根据用途计入相关资产的成本或者当期损益。",
+      "kind": "answerable"
+    },
+    {
+      "id": "heldout-answer-05",
+      "source_id": "cas14-revenue",
+      "anchor": "没有商业实质的非货币性资产交换，不确认收入。",
+      "kind": "answerable"
+    },
+    {
+      "id": "heldout-answer-06",
+      "source_id": "cas14-revenue",
+      "anchor": "应当将该合同变更部分作为一份单独的合同进行会计处理。",
+      "kind": "answerable"
+    },
+    {
+      "id": "heldout-answer-07",
+      "source_id": "cas21-leases",
+      "anchor": "除非合同条款和条件发生变化，企业无需重新评估合同是否为租赁或者包含租赁。",
+      "kind": "answerable"
+    },
+    {
+      "id": "heldout-answer-08",
+      "source_id": "cas21-leases",
+      "anchor": "承租人应当按照各租赁部分单独价格及非租赁部分的单独价格之和的相对比例分摊合同对价",
+      "kind": "answerable"
+    },
+    {
+      "id": "heldout-answer-09",
+      "source_id": "scas-full",
+      "anchor": "应当单独确认为应收股利或应收利息，不计入短期投资的成本。",
+      "kind": "answerable"
+    },
+    {
+      "id": "heldout-answer-10",
+      "source_id": "scas-full",
+      "anchor": "出售短期投资，出售价款扣除其账面余额、相关税费后的净额，应当计入投资收益。",
+      "kind": "answerable"
+    },
+    {
+      "id": "heldout-answer-11",
+      "source_id": "software-specification",
+      "anchor": "以人民币以外币种记账的，应当支持折算为人民币编报财务会计报告。",
+      "kind": "answerable"
+    },
+    {
+      "id": "heldout-answer-12",
+      "source_id": "software-specification",
+      "anchor": "支持网络报文传输、文件导入和手工录入等输入方式。",
+      "kind": "answerable"
+    },
+    {
+      "id": "heldout-absent-01",
+      "source_id": null,
+      "anchor": null,
+      "kind": "private_order",
+      "rationale": "No S021 sales contract in corpus."
+    },
+    {
+      "id": "heldout-absent-02",
+      "source_id": null,
+      "anchor": null,
+      "kind": "private_fair_value",
+      "rationale": "No entity valuation report in corpus."
+    },
+    {
+      "id": "heldout-absent-03",
+      "source_id": null,
+      "anchor": null,
+      "kind": "private_returns",
+      "rationale": "Generic return accounting cannot supply entity refund amount."
+    },
+    {
+      "id": "heldout-absent-04",
+      "source_id": null,
+      "anchor": null,
+      "kind": "private_rent",
+      "rationale": "No L019 lease terms in corpus."
+    },
+    {
+      "id": "heldout-absent-05",
+      "source_id": null,
+      "anchor": null,
+      "kind": "private_investment",
+      "rationale": "No entity investment transaction in corpus."
+    },
+    {
+      "id": "heldout-absent-06",
+      "source_id": null,
+      "anchor": null,
+      "kind": "private_password",
+      "rationale": "No user credential records in corpus."
+    },
+    {
+      "id": "heldout-absent-07",
+      "source_id": null,
+      "anchor": null,
+      "kind": "absent_filing_calendar",
+      "rationale": "No dated tax filing calendar in frozen sources."
+    },
+    {
+      "id": "heldout-absent-08",
+      "source_id": null,
+      "anchor": null,
+      "kind": "absent_tax_office",
+      "rationale": "No local tax service address directory in corpus."
+    },
+    {
+      "id": "heldout-absent-09",
+      "source_id": null,
+      "anchor": null,
+      "kind": "absent_insurer_contact",
+      "rationale": "No insurance contact directory in corpus."
+    },
+    {
+      "id": "heldout-absent-10",
+      "source_id": null,
+      "anchor": null,
+      "kind": "absent_postgres_command",
+      "rationale": "Software standard is not a PostgreSQL command manual."
+    },
+    {
+      "id": "heldout-absent-11",
+      "source_id": null,
+      "anchor": null,
+      "kind": "absent_social_insurance",
+      "rationale": "No current local social insurance schedule in corpus."
+    },
+    {
+      "id": "heldout-absent-12",
+      "source_id": null,
+      "anchor": null,
+      "kind": "absent_vendor_sla",
+      "rationale": "Generic service specification contains no vendor-specific SLA compensation percentage."
+    }
+  ]
+}
