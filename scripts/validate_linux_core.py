@@ -13,6 +13,7 @@ import json
 import os
 from pathlib import Path
 import platform
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -122,11 +123,34 @@ def linux_worker(output):
         source_hashes = {p.relative_to(checkout).as_posix(): digest(p) for p in checkout.rglob('*') if p.is_file()}
         require(not any((checkout / p).exists() for p in ('.env', '.local', 'runtime', '.venv', 'frontend/node_modules')), 'Source contains local state')
         require(not (vendor / 'ortools').exists(), 'Unexpected native solver')
+        # Capture inside the same Linux lifetime: WSL may clear /tmp after exit.
+        probe = '''import importlib.util,json,subprocess
+from pathlib import Path
+import pytest
+from app.matching import match_transactions
+from app.domain import rule_identity
+row={'id':'a','kind':'invoice','amount':'0.30','currency':'CNY','counterparty':'synthetic','order_id':'PO','business_date':'2026-09-20'}
+result=match_transactions([row],[dict(row,id='b',amount='0.10'),dict(row,id='c',amount='0.20')])
+print(json.dumps({'ortools_present':importlib.util.find_spec('ortools') is not None,
+    'backend':result['backend'],'amount':result['candidates'][0]['amount'],
+    'pytest_path':pytest.__file__,'rule_identity':rule_identity(),
+    'filesystem':subprocess.check_output(['stat','-f','-c','%T',str(Path.cwd())],text=True).strip()}))
+'''
+        command('platform-probe', [sys.executable, '-c', probe])
+        report['platform_probe'] = json.loads((output / 'platform-probe.log').read_text(encoding='utf-8'))
+        observed = report['platform_probe']
+        require(observed['ortools_present'] is False and observed['backend'] == 'bounded_enumeration', 'Wrong matching backend')
+        require(observed['amount'] == '0.30' and Path(observed['pytest_path']).is_relative_to(vendor), 'Unexpected amount or test runtime')
+        require(observed['filesystem'] not in {'9p', 'drvfs'}, 'Tests must run on the Linux filesystem')
         command('rules', [sys.executable, '-m', 'benchmarks.evaluate'])
         rules = json.loads((output / 'rules.log').read_text(encoding='utf-8'))
         require(rules['case_count'] == 480 and rules['exact_label_match_rate'] == 1 and not rules['failures'], 'Rule benchmark failed')
         require(rules['reference_cases']['case_count'] == rules['reference_cases']['passed'] == 30, 'Reference cases failed')
         report['rules'] = rules
+        report['retained_benchmark_reports'] = {}
+        for name in ('rules-all.json', 'reference-cases.json'):
+            shutil.copyfile(checkout / '.local/reports' / name, output / name)
+            report['retained_benchmark_reports'][name] = digest(output / name)
         config = workspace / 'pytest.ini'
         config.write_text('[pytest]\n', encoding='utf-8')
         command('tests', [sys.executable, '-m', 'pytest', '-q', '-c', str(config),
