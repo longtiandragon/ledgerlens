@@ -1,0 +1,25 @@
+{
+  "schema_version": "cross-platform-readiness-v1",
+  "date": "2026-10-13",
+  "status": "blocked_before_validation",
+  "docker_start_command": "docker desktop start --timeout 45",
+  "start_exit_code": 1,
+  "start_error": "Failed to start Docker Desktop; Docker Desktop is still starting: context deadline exceeded",
+  "api_probe_exit_code": 1,
+  "api_probe_error": "dockerDesktopLinuxEngine named pipe not found",
+  "backend_error": "starting services: initializing Inference manager: listening on unix://C:/Users/20987/AppData/Local/Docker/run/dockerInference: remove C:/Users/20987/AppData/Local/Docker/run/dockerInference: The file cannot be accessed by the system. (listener: The filename, directory name, or volume label syntax is incorrect.)",
+  "backend_error_utc": "2026-10-13T12:32:21.976109600Z",
+  "backend_log": "C:/Users/20987/AppData/Local/Docker/log/host/com.docker.backend.exe.log",
+  "backend_shutdown_utc": "2026-10-13T12:34:55.505528600Z",
+  "observations": [
+    "Before start: Ubuntu and docker-desktop WSL distributions both stopped",
+    "After start: Docker Desktop and backend processes existed",
+    "Final: startup command exited 1; backend log recorded service cancellation and shutdown"
+  ],
+  "project_containers_started_by_validation": false,
+  "linux_tests_executed": false,
+  "new_images_requested": false,
+  "host_configuration_changed": false,
+  "local_socket_or_docker_data_deleted": false,
+  "scope": "Readiness diagnostic only; does not prove a project or operating-system test outcome"
+}

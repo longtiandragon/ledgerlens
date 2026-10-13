@@ -509,3 +509,10 @@ v3验证提交aebfada：后端2004通过、40跳过、0失败，pytest124.37秒�
 11项独立合成评分回归通过（0.40秒），Ruff通过。汇总器重核原文坐标、输入和代码哈希、预测顺序、范围、开发阈值、留出指标与失败门槛。另对报告副本注入通过标记、替换阈值、缺失预测三种篡改，全部被拒绝；未改原始数据或答案。原始报告.local/retrieval-abstention-v1、摘要v1及审计目录均保留。已有整段720 tokens分词提示仍出现，实际编码为预检480-token窗口，无任务失败。
 
 详见冻结设计[RETRIEVAL_ABSTENTION](RETRIEVAL_ABSTENTION.md)、结果[RETRIEVAL_ABSTENTION_RESULTS](RETRIEVAL_ABSTENTION_RESULTS.md)及[公开摘要](retrieval-abstention-validation.json)。没有新增依赖、下载、付费调用、前端/生产代码变更或全量重跑。当前简单阈值未达到可靠拒答门槛，独立专家样本和业务适用性仍未验证；原20查询负面结论不变，v26付费冒烟和新封存集仍暂缓。
+
+
+## 跨平台复现前置条件检查（2026-10-13）
+
+检索实验归档后检查Linux容器复现条件：初始Docker API不可用、Ubuntu和docker-desktop WSL均停止。使用Docker自带启动命令（timeout 45）后，Desktop和backend进程确实出现；保留原进程观察，未重复拉起。API探测仍找不到引擎管道，随后启动命令退出1，backend日志明确记录服务初始化失败并退出。
+
+实际错误发生在本机Docker Inference manager通信端点C:/Users/20987/AppData/Local/Docker/run/dockerInference：系统无法访问文件、监听路径语法错误。记录为[跨平台前置条件失败](cross-platform-readiness.json)。没有开始Linux测试、请求新镜像或修改/删除Docker宿主配置与数据；不是项目测试失败，也不能标记跨平台验收通过。需要运行环境恢复后再做真实验证，已有本地检索实验结论不受影响。
