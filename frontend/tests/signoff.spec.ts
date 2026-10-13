@@ -11,12 +11,16 @@ async function bearer(request:APIRequestContext, username:string) {
   return { Authorization: `Bearer ${(await response.json()).token}` }
 }
 
-async function signIn(page:import('@playwright/test').Page, username:string) {
+async function signIn(page:import('@playwright/test').Page, username:string, caseTitle:string) {
   await expect(page.getByRole('heading', { name: '登录账证智核' })).toBeVisible()
   await page.getByLabel('用户名').fill(username)
   await page.getByLabel('密码').fill(PASSWORD)
   await page.getByRole('button', { name: '登录', exact: true }).click()
   await expect(page.getByRole('heading', { name: '登录账证智核' })).toBeHidden()
+  // Initialisation opens the case named in the URL on the investigation page; navigating
+  // before it finishes would be undone by that final step.
+  await expect(page.getByRole('heading', { name: '异常调查', level: 1 })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 2, name: caseTitle })).toBeVisible()
 }
 
 test('调查、复核与审批由不同账户完成，签署链完整可追溯', async ({ page, request }) => {
@@ -26,12 +30,13 @@ test('调查、复核与审批由不同账户完成，签署链完整可追溯',
   const demo = await (await request.post(`/api/v1/books/${book.id}/demo`, { headers: paul })).json()
   const checks = await (await request.post('/api/v1/check-runs', { headers: paul, data: { book_id: book.id, snapshot_id: demo.snapshot_id } })).json()
   const caseId = checks.cases[0].id
+  const caseTitle = checks.cases[0].title
   expect((await request.post(`/api/v1/cases/${caseId}/investigate`, { headers: paul, data: { mode: 'rules' } })).ok()).toBe(true)
   const ownReview = await request.post('/api/v1/reviews', { headers: paul, data: { case_id: caseId, expected_snapshot_id: demo.snapshot_id, decision: 'accepted', comment: '' } })
   expect(ownReview.status()).toBe(403)   // preparer lacks the reviewer duty
 
   await page.goto(`/?book=${book.id}&case=${caseId}`)
-  await signIn(page, 'rita')
+  await signIn(page, 'rita', caseTitle)
   await page.locator('nav').getByRole('button', { name: /复核底稿/ }).click()
   await page.getByLabel('复核结论').selectOption('accepted')
   await page.getByLabel('意见与未决事项').fill('规则结果与来源证据核对一致。')
@@ -44,7 +49,7 @@ test('调查、复核与审批由不同账户完成，签署链完整可追溯',
   await expect(chain.getByRole('button', { name: '审批签发' })).toHaveCount(0)
 
   await page.getByRole('button', { name: '退出', exact: true }).click()
-  await signIn(page, 'amy')
+  await signIn(page, 'amy', caseTitle)
   await page.locator('nav').getByRole('button', { name: /复核底稿/ }).click()
   await chain.getByLabel('审批意见').fill('同意签发。')
   await chain.getByRole('button', { name: '审批签发' }).click()
