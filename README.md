@@ -19,6 +19,8 @@ powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1
 
 已经安装依赖时：`powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1 -SkipInstall`。
 
+启动前会核验本地SQLite结构，并在需要升级时先备份再执行冻结迁移。未知旧库结构会拒绝自动处理，见[本地数据库升级](docs/LOCAL_DATABASE_UPGRADE.md)。
+
 停止：`powershell -ExecutionPolicy Bypass -File scripts/stop-local.ps1`。启动器仅管理自身记录的进程。
 
 已有完整依赖缓存时，可执行 `.venv/Scripts/python.exe scripts/validate_clean_checkout.py --output .local/clean-checkout-new`，从Git提交导出干净源码，在独立空库重跑安装、数据生成、规则与网页验收。条件、保留的失败及验证边界见[干净源码复现](docs/CLEAN_CHECKOUT.md)。

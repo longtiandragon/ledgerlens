@@ -4,6 +4,8 @@
 
 开发模式运行 `scripts/start-local.ps1`。默认本地SQLite，单API进程；不要使用多个uvicorn worker，本地恢复假设只存在一个调度进程。前端Vite代理 `/api` 到8000。
 
+本地启动器现会在服务启动前核验数据库结构并执行向前迁移：已知无版本旧库只在完整结构匹配时接管，变更前生成SQLite备份，未知结构或迁移失败拒绝启动。`-SkipInstall`也执行此步骤，详见[本地数据库升级](LOCAL_DATABASE_UPGRADE.md)。业务库备份不包含来源文件和检查点，完整备份仍按下文执行。
+
 确认首版基础流程不依赖已有账套和密钥，可运行 `scripts/validate_clean_checkout.py --output .local/clean-checkout-new`。它从Git提交导出源码、离线按锁文件安装依赖，再以独立空库执行数据生成、规则和网页验收；需要完整依赖缓存及已安装Chrome，详见[干净源码复现](CLEAN_CHECKOUT.md)。不会停止当前8000/5188服务。
 
 容器模式先确认Docker服务、镜像存储目录和磁盘余量，再 `docker compose config --quiet` 与 `docker compose up --build -d`。绑定127.0.0.1:8080/8000；8080被占用时设置`WEB_PORT`（如8088）。数据库默认口令仅用于不对外暴露的本机环境，可在.env设置POSTGRES_PASSWORD。STORAGE_ROOT指定宿主数据目录，不代表Docker镜像虚拟盘已经迁移。

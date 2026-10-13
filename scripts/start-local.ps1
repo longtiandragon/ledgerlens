@@ -30,6 +30,8 @@ if (-not $SkipInstall) {
     try { npm ci; if ($LASTEXITCODE -ne 0) { throw 'Frontend dependency installation failed' } }
     finally { Pop-Location }
 }
+& "$projectRoot\.venv\Scripts\python.exe" "$projectRoot\scripts\prepare_local_database.py"
+if ($LASTEXITCODE -ne 0) { throw 'Local database preparation failed. No API or frontend process was started.' }
 $owned = @()
 function Register-Owned($process) {
     @{ id=$process.Id; startTicks=$process.StartTime.ToUniversalTime().Ticks.ToString() }

@@ -1,0 +1,92 @@
+{
+  "schema_version": "local-database-upgrade-validation-v1",
+  "status": "passed",
+  "date": "2026-10-13",
+  "target_revision": "0006",
+  "tests": {
+    "passed": 30,
+    "new_cases": 24,
+    "skipped": 0,
+    "seconds": 12.0,
+    "ruff": "passed"
+  },
+  "copy_rehearsal": {
+    "status": "passed",
+    "original_database": "runtime/ledgerlens.sqlite",
+    "original_database_write_attempts": 0,
+    "scope": "Consistent read-only SQLite copy; migration applied to copy only",
+    "preparation": {
+      "status": "upgraded",
+      "from_revision": "0006",
+      "revision": "0006",
+      "adopted": true,
+      "backup": "F:\\Code\\Project\\Project18\\.local\\migration-rehearsal-v2\\schema-backups\\ledgerlens-20261013T070338Z-5ec8e08d11bd439aa7f240398ace48f7.sqlite",
+      "backup_sha256": "1dc8e29c564d6eb649e86b33910986621bc4c9d2a232738eb350cbe03fb1c6cd"
+    },
+    "replay": {
+      "status": "current",
+      "revision": "0006",
+      "adopted": false,
+      "backup": null
+    },
+    "all_table_rows_unchanged": true,
+    "row_counts": {
+      "agent_runs": 130,
+      "audit_events": 489,
+      "books": 192,
+      "cases": 170,
+      "check_runs": 87,
+      "documents": 266,
+      "evaluations": 0,
+      "evidence_request_events": 9,
+      "evidence_requests": 9,
+      "imports": 266,
+      "investigation_policy_contexts": 57,
+      "ocr_reviews": 26,
+      "ocr_runs": 26,
+      "policy_check_runs": 2,
+      "policy_observation_versions": 2,
+      "records": 1247,
+      "reference_choices": 8,
+      "reference_searches": 4,
+      "reviews": 34,
+      "simulations": 34,
+      "snapshots": 199
+    },
+    "rows_digest": "e525ed2e6d329a202d10fe8b14e7ab67b1f88482942c0f005c182329b8c40e98"
+  },
+  "launcher": {
+    "status": "passed",
+    "checks": {
+      "unknown_schema_stops_before_services": true,
+      "api_demo_import_and_rules_after_upgrade": true,
+      "frontend_ready": true,
+      "unversioned_0004_upgraded_and_history_preserved": true,
+      "backup_has_original_history_and_no_stamp": true,
+      "owned_process_record_removed": true
+    },
+    "source_files": {
+      "scripts/start-local.ps1": "fc4ac78b63ab6b881fd4244235f6c60f41428167b5693383d0a0e2f06ac8f419",
+      "scripts/prepare_local_database.py": "230b41803b28cf2e44944bbdb9d325877c49b4001a85a082e82e71daa9cd817c"
+    },
+    "checkout_source_overlay_restored": true
+  },
+  "clean_source_files_restored": 366,
+  "evidence_sha256": {
+    ".local/migration-rehearsal-v2/report.json": "cb6b9a6d11e3ba65fe761d66006300fd363c17896808b40ced63edc2e4120f3d",
+    ".local/local-launcher-v2/report.json": "9d74736e0950027ab6a4c034829e68e3e60d8dc2e6e016826b12e90ff8f59e3f",
+    "runtime/local-database-preparation-v1.xml": "2f0ee3d5267e64fd1c8155da438f4893b2eb9be48671abe0291b35ffb752765c",
+    "scripts/prepare_local_database.py": "230b41803b28cf2e44944bbdb9d325877c49b4001a85a082e82e71daa9cd817c",
+    "scripts/start-local.ps1": "fc4ac78b63ab6b881fd4244235f6c60f41428167b5693383d0a0e2f06ac8f419",
+    "backend/tests/test_local_database_preparation.py": "038422d001efc6437e20281f2fe8fa90e4c963ca9c1a7d7f49cdad413b17dd22"
+  },
+  "limitations": [
+    "Original workspace database was copied read-only; only copies were prepared.",
+    "Direct uvicorn still bypasses launcher preparation.",
+    "Database-only backup; source files and checkpoint database need separate full backup.",
+    "No new whole-suite or browser run; only startup, API rule/demo and migration checks.",
+    "Unknown schemas, future versions, power loss and online PostgreSQL upgrades not covered."
+  ],
+  "paid_requests": 0,
+  "new_dependencies": 0
+}
