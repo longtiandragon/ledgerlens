@@ -1,4 +1,4 @@
-import type { OcrReviewInput } from './generated/contracts'
+import type { OcrReviewInput, OcrBatchReviewInput } from './generated/contracts'
 
 export interface OcrLine {
   observation_id: string; text: string; confidence: number
@@ -12,5 +12,5 @@ export interface OcrRun {
   id: string; document_id: string; document_name: string; media_type: string; status: string
   result_digest: string; book_revision: number; stale: boolean; error?: string
   result: { observations?: OcrLine[]; image?: { width: number; height: number }; pages?: OcrPage[] }
-  reviews: { id: string; version: number; created_at: string; import_id: string; import_status: string; payload: OcrReviewInput }[]
+  reviews: { id: string; version: number; created_at: string; import_id: string; import_status: string; payload: OcrReviewInput | OcrBatchReviewInput }[]
 }

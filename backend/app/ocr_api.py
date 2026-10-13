@@ -2,7 +2,7 @@ from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPExcepti
 from sqlalchemy import select
 from .db import session, Book, OcrRun
 from .config import settings
-from .ocr_contract import OcrReviewInput
+from .ocr_contract import OcrReviewInput, OcrBatchReviewInput
 from . import ocr_workflow as workflow
 
 router = APIRouter(prefix='/api/v1/ocr', tags=['OCR人工核实'])
@@ -41,7 +41,7 @@ def detail(identity: str, book_id: str, s=Depends(session)):
 
 
 @router.post('/runs/{identity}/reviews', status_code=201)
-def review(identity: str, book_id: str, body: OcrReviewInput, s=Depends(session)):
+def review(identity: str, book_id: str, body: OcrReviewInput | OcrBatchReviewInput, s=Depends(session)):
     run = workflow.get(s, OcrRun, identity)
     if run.book_id != book_id:
         raise HTTPException(404, '当前账套中没有该识别任务')

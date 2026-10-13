@@ -1,0 +1,130 @@
+{
+  "schema_version": "ocr-batch-workflow-validation-v1",
+  "date": "2026-10-13",
+  "status": "passed",
+  "scope": "Manual multi-record review and atomic import on synthetic scans; no OCR accuracy improvement claim",
+  "contract": {
+    "schema_version": "ocr-batch-review-v1",
+    "min_records": 1,
+    "max_records": 100,
+    "legacy_single_record_supported": true,
+    "original_ocr_confirmation": "unconfirmed",
+    "record_locator_index_base": 1
+  },
+  "checks": {
+    "backend": {
+      "passed": 1995,
+      "skipped": 2,
+      "seconds": 129.45,
+      "skip_reason": "Windows file-link permissions",
+      "live_pg_index_and_migrations_enabled": true,
+      "warnings": [
+        "Existing record_property is incompatible with the selected JUnit xunit2 report format; assertions passed"
+      ]
+    },
+    "targeted_backend": {
+      "passed": 43,
+      "new_cases": 20,
+      "seconds": 19.91
+    },
+    "browser": {
+      "passed": 46,
+      "skipped": 0,
+      "reported_duration": "3.8m",
+      "directory": "runtime/ocr-batch-all-e2e-v2"
+    },
+    "raw_evidence_followup": {
+      "passed": 1,
+      "seconds": 32.4,
+      "directory": "runtime/ocr-batch-e2e-v3"
+    },
+    "build_seconds": 16.65,
+    "ruff": "passed",
+    "contracts": "passed"
+  },
+  "offline_reverification": {
+    "status": "passed",
+    "source_sha256": "ed064f7c84ef7ef1e701441e180622475bb3fa5c077311b3fc08d2151647956e",
+    "run_id": "0e27f591-fca3-4fc1-b205-cd522990a02b",
+    "review_versions": [
+      1,
+      2
+    ],
+    "ordered_preview_canonical_match": true,
+    "independent_printed_amounts": [
+      "1394.99",
+      "8008.08"
+    ],
+    "independent_printed_dates": [
+      "2026-09-12",
+      "2026-09-18"
+    ],
+    "amount_source_pages": [
+      1,
+      2
+    ],
+    "snapshot_membership": true,
+    "raw_api_json_used": true,
+    "paid_model_requests": 0
+  },
+  "evidence": [
+    {
+      "path": "runtime/ocr-batch-backend-v1.xml",
+      "sha256": "b51bc511e15fb00e49a384d205e7bcea5368343293ec3e6fce753350909bc5f1"
+    },
+    {
+      "path": "runtime/ocr-batch-e2e-v3/ocr-batch-扫描-PDF-多页逐条核实、修订、整批导入与历史保持/ocr-batch-desktop.png",
+      "sha256": "f3bcc9dcc8c6c428dbf6400b6574575501a198bc7ccfbdc18715bd81ca511411"
+    },
+    {
+      "path": "runtime/ocr-batch-e2e-v3/ocr-batch-扫描-PDF-多页逐条核实、修订、整批导入与历史保持/ocr-batch-evidence.json",
+      "sha256": "86ff3773ac050fe66ab3bb0ce15d62b76a8b4613cd66c88e8634ebdd21a96b87"
+    },
+    {
+      "path": "runtime/ocr-batch-e2e-v3/ocr-batch-扫描-PDF-多页逐条核实、修订、整批导入与历史保持/ocr-batch-imports.json",
+      "sha256": "1b4259d34a295b27842b4cc661888b8b07883552dfead368bb91ef26bc9d4f2a"
+    },
+    {
+      "path": "runtime/ocr-batch-e2e-v3/ocr-batch-扫描-PDF-多页逐条核实、修订、整批导入与历史保持/ocr-batch-mobile.png",
+      "sha256": "f6426224c1ce4291a7da9da364eadc972c64f94ae7c33db562a9dabf39e20c2c"
+    },
+    {
+      "path": "runtime/ocr-batch-e2e-v3/ocr-batch-扫描-PDF-多页逐条核实、修订、整批导入与历史保持/ocr-batch-run.json",
+      "sha256": "a5a7f55aafaac693a47159b4151b3e9143ae20dcb834a26b436fbd5cc33ec1eb"
+    },
+    {
+      "path": "runtime/ocr-batch-e2e-v3/ocr-batch-扫描-PDF-多页逐条核实、修订、整批导入与历史保持/ocr-batch-snapshot.json",
+      "sha256": "a7161db8b752f862591b1f6b22155a4ba00f6ce0fd4e3ff7ab6d050093d9e906"
+    },
+    {
+      "path": "runtime/ocr-batch-e2e-v3/ocr-batch-扫描-PDF-多页逐条核实、修订、整批导入与历史保持/offline-reverification.json",
+      "sha256": "21833c7d63cd1bf8d7c5dae5c140f153e03f1bff7166aeee05efad7ff292d150"
+    }
+  ],
+  "source_sha256": {
+    "backend/app/ocr_contract.py": "79bcd7c60db21755bcde59852dc96f750c396ecf4c627a661e5ffd3c7eeb1d16",
+    "backend/app/ocr_api.py": "b13863d317db1f87c7481fe3c66d8d5355993bd0508a931fc391e21fc2cf2376",
+    "backend/app/ocr_workflow.py": "45210a68fda7935ca0588ffe4fc16d38238969dd5832ed02a7842e3511c52224",
+    "backend/tests/test_ocr_batch_review.py": "40f9d4a7ba499951c2a622621fb8be9091c45b3f653639be4116a9e2eed82513",
+    "frontend/src/components/OcrReviewPanel.vue": "73101a238d34efed8fa1519cc4a6c6c92efffb4c5d3728bf71dcdcc4855fc400",
+    "frontend/src/ocr.ts": "8d7e06fc6d3e4db7e2e0ae11ba4a9a4b7a7ec517ef60b892ce89298079bb03b1",
+    "frontend/tests/ocr-batch.spec.ts": "db1c3944dcc649fac1ff3724add185b70d7f6ba4bf5e6b8cc81bc896f2fbd7e7",
+    "scripts/generate_contracts.py": "f8eaf2466d25abfd204babb739905652481a908e1713afe3b5b9089c094460dd"
+  },
+  "paid_model_requests": 0,
+  "new_dependencies": 0,
+  "new_migrations": 0,
+  "failure_retained": {
+    "stage": "Initial evidence re-verification",
+    "problem": "Parsed browser imports were JSON-stringified, changing 1.0 coordinates to 1; semantic equality passed but canonical hashes differed",
+    "resolution": "Preserve raw imports and snapshot API responses as well as the raw OCR run; repeat the affected browser scenario and strict verification",
+    "prior_evidence_directory": "runtime/ocr-batch-e2e-v1"
+  },
+  "limitations": [
+    "Manual field entry and source selection only",
+    "No table-grid reconstruction or automatic field extraction",
+    "One browser-selected line per field; API permits bounded multiple lines",
+    "Real enterprise documents handwriting and professional accounting review untested",
+    "Single local process; no organization approval workflow"
+  ]
+}

@@ -15,6 +15,7 @@ from sqlalchemy import func, select, update
 from .config import settings
 from .db import Session, Book, Document, OcrRun, OcrReview, ImportBatch, Audit, uid, serialize
 from .ocr_observations import canonical, normalize, sha
+from .ocr_contract import OcrReviewInput, OcrBatchReviewInput
 
 ROOT = Path(__file__).resolve().parents[2]
 GATE = Lock()
@@ -243,6 +244,39 @@ def detail(s, run):
     return result
 
 
+def reviewed_rows(body, book, run, doc, review_id):
+    """Validate the whole review before any preview is persisted; preserve old payloads."""
+    batch_mode = isinstance(body, OcrBatchReviewInput)
+    entries = body.entries if batch_mode else [body]
+    refs = {r['observation_id']: r for r in observations(run.result)}
+    context_fields = {'source_id', 'kind', 'period', 'currency'}
+    payload, rows, identities = body.model_dump(mode='json'), [], set()
+    for index, entry in enumerate(entries, 1):
+        record = entry.record.model_dump(mode='json', exclude_none=True)
+        if record['period'] != book.period or record['currency'] != book.currency:
+            raise HTTPException(422, f'第{index}条记录的期间和币种必须属于当前账套')
+        identity = record['kind'], record['source_id']
+        if identity in identities:
+            raise HTTPException(422, f'第{index}条记录的类型与来源编号在本批重复，未生成预览')
+        identities.add(identity)
+        required = {k for k, v in record.items() if v not in ('', None) and k not in context_fields}
+        if (not required or set(entry.field_evidence) != required
+                or any(not ids or len(ids) > 20 or len(set(ids)) != len(ids)
+                       or any(identity not in refs for identity in ids) for ids in entry.field_evidence.values())):
+            raise HTTPException(422, f'第{index}条记录的每个填写字段必须选择当前识别结果的原文行；不接受其他任务或失败页的引用')
+        locator = {'ocr_run_id': run.id, 'ocr_review_id': review_id, 'source_sha256': doc.sha256,
+                   'result_digest': run.result_digest, 'confirmation': 'human_confirmed',
+                   'field_evidence': {k: [{'observation_id': identity, **refs[identity]['locator']}
+                                          for identity in ids] for k, ids in entry.field_evidence.items()}}
+        if batch_mode:
+            locator['review_record_index'] = index
+            payload['entries'][index - 1]['record'] = record
+        else:
+            payload['record'] = record
+        rows.append({'record': record, 'locator': locator})
+    return payload, rows
+
+
 def review(s, run, body):
     s.execute(update(Book).where(Book.id == run.book_id).values(revision=Book.revision))
     book = get(s, Book, run.book_id)
@@ -257,35 +291,17 @@ def review(s, run, body):
         raise HTTPException(409, '字段复核已有新版本，请刷新')
     if previous and get(s, ImportBatch, previous.import_id).status == 'confirmed':
         raise HTTPException(409, '已导入记录不能覆盖；请使用新的源资料修订，调整只进入模拟分支')
-    record = body.record.model_dump(mode='json', exclude_none=True)
-    if record['period'] != book.period or record['currency'] != book.currency:
-        raise HTTPException(422, '人工确认的期间和币种必须属于当前账套')
-    refs = {r['observation_id']: r for r in observations(run.result)}
-    context_fields = {'source_id', 'kind', 'period', 'currency'}
-    required = {k for k, v in record.items() if v not in ('', None) and k not in context_fields}
-    if set(body.field_evidence) != required or any(not ids or len(ids) > 20 or len(set(ids)) != len(ids)
-                                                  or any(identity not in refs for identity in ids)
-                                                  for ids in body.field_evidence.values()):
-        raise HTTPException(422, '每个填写字段必须选择当前识别结果的原文行；不接受其他任务或失败页的引用')
-    if len(required) == 0:
-        raise HTTPException(422, '没有已核对字段')
-    # A single review is one manually entered record; OCR text remains unconfirmed.
-    payload = body.model_dump(mode='json')
-    payload['record'] = record
     batch_id, review_id = uid(), uid()
-    locator = {'ocr_run_id': run.id, 'ocr_review_id': review_id, 'source_sha256': doc.sha256,
-               'result_digest': run.result_digest, 'confirmation': 'human_confirmed',
-               'field_evidence': {k: [{'observation_id': identity, **refs[identity]['locator']}
-                                      for identity in ids] for k, ids in body.field_evidence.items()}}
-    batch = ImportBatch(id=batch_id, book_id=book.id, document_id=doc.id, rows=[{'record': record, 'locator': locator}],
+    payload, rows = reviewed_rows(body, book, run, doc, review_id)
+    batch = ImportBatch(id=batch_id, book_id=book.id, document_id=doc.id, rows=rows,
                         errors=[], columns=[], mapping={'_origin': 'ocr_human_review'})
     saved = OcrReview(id=review_id, book_id=book.id, run_id=run.id, version=previous.version + 1 if previous else 1,
                       parent_id=previous.id if previous else None, book_revision=book.revision, book_version=book.version,
                       payload=payload, digest=sha(canonical(payload)), import_id=batch_id)
     s.add_all([batch, saved, Audit(book_id=book.id, action='ocr.fields_confirmed',
-                                 details={'review_id': review_id, 'run_id': run.id, 'import_id': batch_id})])
+                                 details={'review_id': review_id, 'run_id': run.id, 'import_id': batch_id, 'record_count': len(rows)})])
     s.commit()
-    return {'review': serialize(saved), 'preview': {**serialize(batch), 'record_count': 1}}
+    return {'review': serialize(saved), 'preview': {**serialize(batch), 'record_count': len(rows)}}
 
 
 def require_current_review(s, batch):
@@ -299,12 +315,17 @@ def require_current_review(s, batch):
     latest = s.scalar(select(OcrReview).where(OcrReview.run_id == run.id).order_by(OcrReview.version.desc()))
     if latest.id != saved.id or book.version != saved.book_version or book.revision != saved.book_revision:
         raise HTTPException(409, '字段确认后账套或复核版本已改变，请重新核实后建立新预览')
-    if saved.digest != sha(canonical(saved.payload)) or len(batch.rows) != 1 or batch.rows[0]['record'] != saved.payload['record']:
-        raise HTTPException(409, '人工确认记录与导入预览不一致')
-    refs = {r['observation_id']: r for r in observations(run.result)}
-    expected_locator = {'ocr_run_id': run.id, 'ocr_review_id': saved.id, 'source_sha256': run.result['source_sha256'],
-                        'result_digest': run.result_digest, 'confirmation': 'human_confirmed',
-                        'field_evidence': {k: [{'observation_id': identity, **refs[identity]['locator']}
-                                              for identity in ids] for k, ids in saved.payload['field_evidence'].items()}}
-    if batch.rows[0]['locator'] != expected_locator:
-        raise HTTPException(409, '人工确认字段的原文定位已改变')
+    try:
+        if (saved.digest != sha(canonical(saved.payload)) or batch.book_id != saved.book_id
+                or batch.document_id != run.document_id or run.book_id != saved.book_id):
+            raise ValueError('Review or import scope changed')
+        contract = OcrBatchReviewInput if 'schema_version' in saved.payload else OcrReviewInput
+        body = contract.model_validate(saved.payload)
+        if body.expected_result_digest != run.result_digest or body.expected_book_revision != saved.book_revision:
+            raise ValueError('Review context changed')
+        doc = get(s, Document, run.document_id)
+        _, expected_rows = reviewed_rows(body, book, run, doc, saved.id)
+        if canonical(batch.rows) != canonical(expected_rows):
+            raise ValueError('Review records or field locators changed')
+    except (ValueError, TypeError, KeyError, HTTPException) as exc:
+        raise HTTPException(409, '人工确认记录、字段原文定位与导入预览不一致') from exc

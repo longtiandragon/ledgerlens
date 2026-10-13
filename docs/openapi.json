@@ -1976,7 +1976,15 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OcrReviewInput"
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/OcrReviewInput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/OcrBatchReviewInput"
+                  }
+                ],
+                "title": "Body"
               }
             }
           }
@@ -4194,7 +4202,7 @@
         ],
         "title": "LedgerInput"
       },
-      "OcrReviewInput": {
+      "OcrBatchReviewInput": {
         "properties": {
           "expected_parent_id": {
             "anyOf": [
@@ -4217,6 +4225,46 @@
             "minimum": 0.0,
             "title": "Expected Book Revision"
           },
+          "confirmed": {
+            "type": "boolean",
+            "const": true,
+            "title": "Confirmed"
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Comment"
+          },
+          "schema_version": {
+            "type": "string",
+            "const": "ocr-batch-review-v1",
+            "title": "Schema Version"
+          },
+          "entries": {
+            "items": {
+              "$ref": "#/components/schemas/OcrRecordInput"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "minItems": 1,
+            "title": "Entries"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_result_digest",
+          "expected_book_revision",
+          "confirmed",
+          "comment",
+          "schema_version",
+          "entries"
+        ],
+        "title": "OcrBatchReviewInput"
+      },
+      "OcrRecordInput": {
+        "properties": {
           "record": {
             "$ref": "#/components/schemas/LedgerInput"
           },
@@ -4230,6 +4278,52 @@
             "type": "object",
             "maxProperties": 20,
             "title": "Field Evidence"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "record",
+          "field_evidence"
+        ],
+        "title": "OcrRecordInput"
+      },
+      "OcrReviewInput": {
+        "properties": {
+          "record": {
+            "$ref": "#/components/schemas/LedgerInput"
+          },
+          "field_evidence": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "maxProperties": 20,
+            "title": "Field Evidence"
+          },
+          "expected_parent_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Parent Id"
+          },
+          "expected_result_digest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Expected Result Digest"
+          },
+          "expected_book_revision": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Expected Book Revision"
           },
           "confirmed": {
             "type": "boolean",
@@ -4246,14 +4340,15 @@
         "additionalProperties": false,
         "type": "object",
         "required": [
-          "expected_result_digest",
-          "expected_book_revision",
           "record",
           "field_evidence",
+          "expected_result_digest",
+          "expected_book_revision",
           "confirmed",
           "comment"
         ],
-        "title": "OcrReviewInput"
+        "title": "OcrReviewInput",
+        "description": "Retained single-record request and historical payload contract."
       },
       "PolicyAnnotationEnvelope": {
         "properties": {
