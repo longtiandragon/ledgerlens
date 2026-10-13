@@ -20,8 +20,6 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'backend'))
 
-from app.knowledge import search  # noqa: E402
-
 VERSION = 'official-query-retrieval-v1'
 STANDARDS = {'存货': 'cas1-inventory', '固定资产': 'cas4-fixed-assets', '收入': 'cas14-revenue', '租赁': 'cas21-leases'}
 NAMED = re.compile(r'《企业会计准则第\d+号——(存货|固定资产|收入|租赁)》|(存货|固定资产|收入|租赁)准则|(小企业会计准则)')
@@ -53,10 +51,42 @@ def build(archive: Path, chunks: list[dict]) -> tuple[list[dict], dict]:
     return queries, truth
 
 
-def evaluate(queries: list[dict], truth: dict, chunks: list[dict], limit: int = 6) -> dict:
+def keyword_ranker(chunks):
+    from app.knowledge import search
+    return lambda item, limit: search(chunks, item['query'], item['framework'], '2026-09', limit=limit)
+
+
+def bge_ranker(chunks, model_path: Path):
+    """Pinned local BGE; chunks windowed like the product adapter, chunk score = best window cosine."""
+    from sentence_transformers import SentenceTransformer
+    model = SentenceTransformer(str(model_path), device='cpu')
+    model.max_seq_length = 512
+    texts, owners = [], []
+    for index, chunk in enumerate(chunks):
+        ids = model.tokenizer.encode(chunk['text'], add_special_tokens=False)
+        for start in range(0, max(1, len(ids)), 400):
+            texts.append(model.tokenizer.decode(ids[start:start + 480]))
+            owners.append(index)
+    windows = model.encode(texts, batch_size=8, normalize_embeddings=True, show_progress_bar=False)
+    prefix = '为这个句子生成表示以用于检索相关文章：'   # BGE zh query instruction
+
+    def rank(item, limit):
+        allowed = {i for i, c in enumerate(chunks) if c['framework'] in (item['framework'], 'BOTH')}
+        query = model.encode([prefix + item['query']], normalize_embeddings=True, show_progress_bar=False)[0]
+        best = {}
+        for owner, vector in zip(owners, windows):
+            if owner in allowed:
+                best[owner] = max(best.get(owner, -2.0), float(vector @ query))
+        order = sorted(best, key=lambda i: (-best[i], chunks[i]['chunk_id']))[:limit]
+        return [{**chunks[i], 'score': best[i]} for i in order]
+    return rank
+
+
+def evaluate(queries: list[dict], truth: dict, chunks: list[dict], limit: int = 6, ranker=None) -> dict:
+    ranker = ranker or keyword_ranker(chunks)
     rows = []
     for item in queries:
-        ranked = search(chunks, item['query'], item['framework'], '2026-09', limit=limit)
+        ranked = ranker(item, limit)
         sources = [r['source_id'] for r in ranked]
         ids = [r['chunk_id'] for r in ranked]
         want = truth[item['query_id']]
@@ -83,6 +113,8 @@ def main(argv=None) -> int:
     parser.add_argument('--queries', type=Path, help='frozen query file to evaluate')
     parser.add_argument('--truth', type=Path, help='frozen truth file to evaluate')
     parser.add_argument('--output', type=Path)
+    parser.add_argument('--method', choices=['keyword', 'bge'], default='keyword')
+    parser.add_argument('--model', type=Path, default=ROOT / '.local/bge-small-zh-v1.5')
     options = parser.parse_args(argv)
     corpus = json.loads(options.corpus.read_text(encoding='utf-8'))
     chunks = corpus['chunks']
@@ -97,11 +129,14 @@ def main(argv=None) -> int:
         parser.error('--queries, --truth and a new --output are required to evaluate')
     queries = json.loads(options.queries.read_text(encoding='utf-8'))
     truth = json.loads(options.truth.read_text(encoding='utf-8'))
-    result = {'schema_version': VERSION, 'method': 'product keyword search (app.knowledge.search), limit 6',
+    ranker = keyword_ranker(chunks) if options.method == 'keyword' else bge_ranker(chunks, options.model)
+    method = ('product keyword search (app.knowledge.search), limit 6' if options.method == 'keyword' else
+              f'local BGE {options.model.name} cosine, best window per chunk, limit 6')
+    result = {'schema_version': VERSION, 'method': method,
               'corpus_sha256': hashlib.sha256(options.corpus.read_bytes()).hexdigest(),
               'queries_sha256': hashlib.sha256(options.queries.read_bytes()).hexdigest(),
               'truth_sha256': hashlib.sha256(options.truth.read_bytes()).hexdigest(),
-              **evaluate(queries, truth, chunks)}
+              **evaluate(queries, truth, chunks, ranker=ranker)}
     options.output.write_text(json.dumps(result, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
     print(json.dumps({k: v for k, v in result.items() if k != 'rows'}, ensure_ascii=False))
     return 0
