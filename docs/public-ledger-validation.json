@@ -1,0 +1,89 @@
+{
+  "schema_version": "public-ledger-checks-v1",
+  "source": {
+    "publisher": "State of Oklahoma, Office of Management and Enterprise Services",
+    "catalog": "https://catalog.data.gov/dataset/general-ledger",
+    "license": "CC-BY (opendefinition.org/licenses/cc-by)",
+    "url": "https://data.ok.gov/dataset/dd1ecf41-4abc-4886-ab0f-b84d7662d8d4/resource/0c2a7e42-610e-4f1d-826f-f6b267fba68a/download/ledger_fy24_qtr4.csv"
+  },
+  "scope": "Real public-sector posted totals (USD fund accounting); not an enterprise ledger, not CAS/SCAS.",
+  "file_sha256": "141e2d5524f6aa9d25c7331bc56f623f43da9a1f00cdfee42b7c5f3ccf6fc0fe",
+  "file_bytes": 113856733,
+  "encoding": "cp1252",
+  "utf8_decode_failed_at_byte": 13788263,
+  "rows": 373357,
+  "money_rejected": 20,
+  "rejected_examples": [
+    {
+      "row": 6075,
+      "reason": "money() rejected",
+      "independent_parse": "-0.072"
+    },
+    {
+      "row": 52311,
+      "reason": "money() rejected",
+      "independent_parse": "554.002"
+    },
+    {
+      "row": 52312,
+      "reason": "money() rejected",
+      "independent_parse": "340.968"
+    },
+    {
+      "row": 52522,
+      "reason": "money() rejected",
+      "independent_parse": "-0.002"
+    },
+    {
+      "row": 52523,
+      "reason": "money() rejected",
+      "independent_parse": "0.004"
+    }
+  ],
+  "independent_parse_disagreements": 0,
+  "exact_duplicate_rows": 0,
+  "fiscal_periods": [
+    "2024-10",
+    "2024-11",
+    "2024-12"
+  ],
+  "account_classes": {
+    "1": {
+      "rows": 5194,
+      "net": "579653622.10"
+    },
+    "4": {
+      "rows": 20130,
+      "net": "-14684185664.18"
+    },
+    "5": {
+      "rows": 347237,
+      "net": "14023552778.02"
+    },
+    "6": {
+      "rows": 776,
+      "net": "0.00"
+    }
+  },
+  "net_by_period": {
+    "2024-10": "-42470261.23",
+    "2024-11": "12844504.07",
+    "2024-12": "-51353506.90"
+  },
+  "trial_balance_testable": false,
+  "actuals_groups": 617,
+  "actuals_unbalanced_groups": 382,
+  "date": "2026-10-14",
+  "report_sha256": "ef70d224a8d384002af79d6fcb1236ea8f7d5894ce4db443960291e5962d1baf",
+  "findings": [
+    "The file is cp1252, not UTF-8; a UTF-8-only importer would fail on real public data.",
+    "20 posted totals carry more than two decimals; money() rejects them instead of rounding silently.",
+    "All 373,337 accepted amounts parse identically under an independent Decimal parse.",
+    "The extract contains asset (mostly cash), revenue and expenditure classes but no liability or fund-balance accounts, so double-entry balance cannot be tested on it; the 382 non-zero groups reflect extract coverage, not errors in the State ledger."
+  ],
+  "limitations": [
+    "One quarter (FY24 Q4) of one public-sector ledger; USD fund accounting, not CAS/SCAS or a company.",
+    "The product CNY import was not used; only its money() parser ran on these amounts.",
+    "No anomaly truth exists for this data; no detection accuracy is claimed."
+  ]
+}
