@@ -1,0 +1,63 @@
+import { test, expect } from '@playwright/test'
+
+test('参考检索展示真实负面结果、试验边界与只读刷新',async({page},testInfo)=>{
+ const writes:string[]=[],errors:string[]=[]
+ page.on('request',r=>{if(!['GET','HEAD'].includes(r.method()))writes.push(r.url())})
+ page.on('pageerror',e=>errors.push(e.message))
+ await page.goto('/')
+ await page.getByRole('button',{name:'评测中心',exact:true}).click()
+ const panel=page.getByRole('region',{name:'参考检索评测'})
+ await expect(panel).toContainText('当前默认仍为关键词检索')
+ await expect(panel.getByRole('row').filter({hasText:'BGE＋pgvector'})).toContainText('15/18')
+ await expect(panel.getByRole('row').filter({hasText:'BGE＋NumPy'})).toContainText('10/12')
+ await expect(panel.getByRole('row').filter({hasText:'BGE＋NumPy'})).toContainText('2/12')
+ await expect(panel.getByRole('cell',{name:'未通过',exact:true})).toHaveCount(2)
+ await expect(panel).toContainText('本次没有运行 PostgreSQL')
+ await expect(panel).toContainText('未经过独立专家盲测')
+ await panel.getByText('摘要来源与指纹',{exact:true}).last().click()
+ await expect(panel).toContainText('retrieval-abstention-validation.json')
+ await panel.scrollIntoViewIfNeeded()
+ await panel.screenshot({path:testInfo.outputPath('retrieval-desktop.png')})
+ await page.setViewportSize({width:390,height:844})
+ await expect.poll(()=>page.locator('.sidebar').evaluate(element=>element.getBoundingClientRect().right)).toBeLessThanOrEqual(0)
+ await expect(panel).toBeVisible()
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1)).toBe(true)
+ const table=panel.getByLabel('可横向滚动的拒答试验结果')
+ await expect(table).toHaveAttribute('tabindex','0')
+ await table.evaluate(element=>{element.scrollLeft=element.scrollWidth})
+ expect(await table.evaluate(element=>element.scrollLeft)).toBeGreaterThan(0)
+ await expect(panel.getByRole('cell',{name:'未通过',exact:true})).toHaveCount(2)
+ await panel.screenshot({path:testInfo.outputPath('retrieval-mobile.png')})
+ await panel.getByRole('button',{name:'刷新参考检索结果'}).click()
+ await expect(panel.getByRole('cell',{name:'未通过',exact:true})).toHaveCount(2)
+ expect(writes).toEqual([]);expect(errors).toEqual([])
+})
+
+test('缺失与损坏摘要隔离展示，网络失败不残留旧结果',async({page})=>{
+ await page.goto('/')
+ await page.getByRole('button',{name:'评测中心',exact:true}).click()
+ const panel=page.getByRole('region',{name:'参考检索评测'})
+ await expect(panel.getByRole('cell',{name:'未通过',exact:true})).toHaveCount(2)
+ await page.route('**/api/v1/evaluations/retrieval',async route=>{
+   const response=await route.fetch();const data=await response.json()
+   data.abstention={source:'retrieval-abstention-validation.json',status:'invalid',notice:'摘要结构或计数校验失败；未展示推断结果。'}
+   await route.fulfill({json:data})
+ })
+ await panel.getByRole('button',{name:'刷新参考检索结果'}).click()
+ await expect(panel.getByRole('status')).toContainText('校验失败')
+ await expect(panel.getByRole('cell',{name:'未通过',exact:true})).toHaveCount(0)
+ await expect(panel.getByRole('row').filter({hasText:'BGE＋pgvector'})).toContainText('15/18')
+ await page.unroute('**/api/v1/evaluations/retrieval')
+ await page.route('**/api/v1/evaluations/retrieval',route=>route.fulfill({json:{
+   baseline:{source:'retrieval-validation.json',status:'unavailable',notice:'摘要缺失或无法读取；未补零或推断结果。'},
+   abstention:{source:'retrieval-abstention-validation.json',status:'unavailable',notice:'摘要缺失或无法读取；未补零或推断结果。'},notice:'只读公开历史摘要',
+ }}))
+ await panel.getByRole('button',{name:'刷新参考检索结果'}).click()
+ await expect(panel.getByRole('status')).toHaveCount(2)
+ await expect(panel.getByRole('table')).toHaveCount(0)
+ await page.unroute('**/api/v1/evaluations/retrieval')
+ await page.route('**/api/v1/evaluations/retrieval',route=>route.fulfill({status:503,json:{detail:'离线测试：摘要服务暂不可用'}}))
+ await panel.getByRole('button',{name:'刷新参考检索结果'}).click()
+ await expect(panel.getByRole('alert')).toContainText('摘要服务暂不可用')
+ await expect(panel.getByRole('table')).toHaveCount(0)
+})

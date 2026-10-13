@@ -1,0 +1,75 @@
+{
+  "schema_version": "retrieval-evaluation-ui-validation-v1",
+  "date": "2026-10-13",
+  "status": "passed",
+  "scope": "Read-only display of saved public retrieval results; no rerun or quality improvement claim",
+  "backend_tests": {
+    "passed": 47,
+    "failures": 0,
+    "skipped": 0,
+    "seconds": "1.311"
+  },
+  "browser": {
+    "status": "passed",
+    "steps": [
+      {
+        "name": "build",
+        "exit_code": 0,
+        "seconds": 16.91
+      },
+      {
+        "name": "browser",
+        "exit_code": 0,
+        "seconds": 6.38
+      }
+    ],
+    "api_port": 50296,
+    "ui_port": 50297,
+    "health": {
+      "status": "ok",
+      "mode": "local",
+      "model_configured": false
+    },
+    "browser": {
+      "startTime": "2026-10-13T13:12:58.270Z",
+      "duration": 5368.359,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "owned_processes_stopped": true
+  },
+  "static_checks": [
+    "Ruff passed",
+    "Generated API contracts consistent",
+    "git diff --check passed"
+  ],
+  "visual_review": {
+    "desktop": "passed",
+    "mobile_390px": "passed, horizontal table scroll reaches failed gate column",
+    "first_run_note": "3 browser tests passed; first mobile screenshot caught the sidebar transition. Retained v1 artifacts; v2 waits for sidebar closure."
+  },
+  "paid_requests": 0,
+  "new_dependencies": 0,
+  "limitations": [
+    "Public summary structure and aggregate consistency only; raw reports and expert truth are not verified by this endpoint.",
+    "Container packaging updated, but Docker build/run not repeated because the host engine is unavailable.",
+    "No full backend suite rerun; prior full-suite totals are unchanged.",
+    "v26 paid development smoke and new sealed evaluation remain deferred."
+  ],
+  "sha256": {
+    "runtime/retrieval-evaluation-unit-v1.xml": "1cf0e0bdb51b7f208f2b9ef9531ad491926052ec4f75c36c77d92e74c58fe440",
+    "runtime/retrieval-evaluation-browser-v2/report.json": "bed18f8f441e1185f247de90c5fe210fc9b6a3adf2966e0dbca119094cc8dc3e",
+    "runtime/retrieval-evaluation-browser-v2/build.log": "4349c7ae63a0ecb7549f0ff8ba96d0d2b8660127f08465b8af0df21ae67bf878",
+    "runtime/retrieval-evaluation-browser-v2/browser.log": "b4cf7262659c0d379f1841729d09292f4085342864f9506c452ed1d3c993e1a6",
+    "docs/retrieval-validation.json": "8c419c40c249b3fbc1a5589003d83b2c02f09036ccfeca1eb63a3b52ffa02422",
+    "docs/retrieval-abstention-validation.json": "1ffe67bd5ee42b5af8107435915533b91a507d136c28492a9d795016911fa868",
+    "backend/app/retrieval_results.py": "9275d8225e6312317bc71e2772d34ac16771b9e51c83d0160c163f636eb70ed6",
+    "backend/tests/test_retrieval_results.py": "611630e31a9bcb11c597f34325e0216e62ea183cdc610b5bfcd2e9f6b44f6aa2",
+    "frontend/src/components/RetrievalEvaluation.vue": "a681143bd8ed56c6ee61ac40b8fd8ebff230ca2848805a6d9e807d69b91a0dc1",
+    "frontend/tests/retrieval-evaluation.spec.ts": "a4a570f3587fd558f81d476303d28c60d46b77544ad3c70c5dd7cadd3b506396",
+    "runtime/retrieval-evaluation-browser-v2/artifacts/retrieval-evaluation-参考检索展示真实负面结果、试验边界与只读刷新/retrieval-desktop.png": "be15dcf5dcf808e42dcbaba6957897eda2d2a4eb8ff38996291f19b0a14e20eb",
+    "runtime/retrieval-evaluation-browser-v2/artifacts/retrieval-evaluation-参考检索展示真实负面结果、试验边界与只读刷新/retrieval-mobile.png": "2d0b106926e17496b8588a25e25062c1d35db7eb1f7e34dfd1efac4ec2c9c5bf"
+  }
+}

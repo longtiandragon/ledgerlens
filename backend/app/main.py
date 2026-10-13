@@ -20,6 +20,7 @@ from .business_chain import business_chain
 from .process_api import router as process_router
 from .numeric_evaluation import router as numeric_evaluation_router
 from .root_cause_results import router as root_cause_results_router
+from .retrieval_results import router as retrieval_results_router
 from .evidence_requests import router as evidence_requests_router
 from .statement_api import router as statement_router
 from .policy_api import router as policy_router
@@ -82,6 +83,7 @@ app = FastAPI(title='账证智核 LedgerLens', version='0.1.0', lifespan=lifespa
 app.include_router(process_router)
 app.include_router(numeric_evaluation_router)
 app.include_router(root_cause_results_router)
+app.include_router(retrieval_results_router)
 app.include_router(evidence_requests_router)
 app.include_router(statement_router)
 app.include_router(policy_router)

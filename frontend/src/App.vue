@@ -13,6 +13,7 @@ const ProcessEvidence=defineAsyncComponent(()=>import('./components/ProcessEvide
 const StatementEvidence=defineAsyncComponent(()=>import('./components/StatementEvidence.vue'))
 const NumericEvaluation=defineAsyncComponent(()=>import('./components/NumericEvaluation.vue'))
 const RootCauseEvaluation=defineAsyncComponent(()=>import('./components/RootCauseEvaluation.vue'))
+const RetrievalEvaluation=defineAsyncComponent(()=>import('./components/RetrievalEvaluation.vue'))
 const PolicyChecks=defineAsyncComponent(()=>import('./components/PolicyChecks.vue'))
 const ReferenceIndexes=defineAsyncComponent(()=>import('./components/ReferenceIndexes.vue'))
 const OcrReviewPanel=defineAsyncComponent(()=>import('./components/OcrReviewPanel.vue'))
@@ -144,6 +145,7 @@ onBeforeUnmount(()=>{stopStream();navigationMedia?.removeEventListener('change',
       <div class="evaluation-intro"><div><div class="eyebrow">MEASURE, DON'T ASSUME</div><h2>效果来自实验，<br/>不来自 Agent 数量。</h2><p>规则基线、单 Agent、固定多 Agent 与主动补证，<br/>在相同模型、工具和预算条件下比较。</p></div><div class="evaluation-boundaries"><div v-for="(limitation,i) in evaluations?.limitations||[]" :key="i"><span>0{{ i+1 }}</span>{{ limitation }}</div><div v-if="!evaluations?.limitations?.length"><span>01</span>尚无评测报告；运行规则基准后查看实际结果。</div></div></div><section class="panel spaced"><div class="panel-heading"><div><span class="section-number">01</span><h2>规则基准记录</h2></div><span class="tiny-label">{{ evaluations?.runs.length||0 }} 次运行</span></div><div v-if="!evaluations?.runs.length" class="empty-panel"><Icon name="chart" :size="32"/><h3>还没有可报告的规则基准结果</h3><p>点击“运行规则基准”，执行确定性测试集。AI 对照需要显式配置模型和预算。</p></div><div v-for="(item,i) in evaluations?.runs" :key="i" class="evaluation-run"><div><span class="badge neutral">规则基线</span><code>{{ short(item.id) }}</code><span>{{ item.created_at }}</span></div><pre>{{ show(item.result||item) }}</pre></div></section><section class="panel spaced"><div class="panel-heading"><div><span class="section-number">02</span><h2>数据集边界</h2></div></div><div class="policy-note"><p>合成任务用于工程和可控场景验证，公开报告用于文档组件验证。尚未实施的真实企业试点与专业复核不会计入已验证能力。</p><pre>{{ show(evaluations?.dataset_summary||{}) }}</pre><p class="caption">目标数量不代表已完成任务；以每次运行报告中的实际任务数为准。</p></div></section>
       <NumericEvaluation/>
       <RootCauseEvaluation/>
+    <RetrievalEvaluation/>
      </template>
     </template>
     <footer class="workspace-footer"><span>账证智核 <i>/</i> Evidence before conclusion.</span><span>原账只读 · 版本可追溯 · 结果有边界</span></footer>

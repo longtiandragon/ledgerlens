@@ -8,6 +8,7 @@ COPY backend ./backend
 COPY datasets ./datasets
 COPY benchmarks ./benchmarks
 COPY docs/data-sources.json ./docs/data-sources.json
+COPY docs/retrieval-validation.json docs/retrieval-abstention-validation.json ./docs/
 ENV PYTHONPATH=/app/backend:/app
 ENV PATH=/app/.venv/bin:$PATH
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

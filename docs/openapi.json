@@ -862,6 +862,25 @@
         }
       }
     },
+    "/api/v1/evaluations/retrieval": {
+      "get": {
+        "tags": [
+          "evaluations"
+        ],
+        "summary": "Retrieval Results",
+        "operationId": "retrieval_results_api_v1_evaluations_retrieval_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/cases/{case_id}/evidence-requests": {
       "get": {
         "tags": [
