@@ -1,0 +1,80 @@
+{
+  "schema_version": "packaged-evaluation-validation-v1",
+  "date": "2026-10-14",
+  "status": "passed_with_runtime_unverified",
+  "scope": "Stage literal docs COPY entries into temporary directory and exercise real FastAPI routers on Windows; not a Docker build",
+  "before_and_after": {
+    "runtime/packaged-evaluations-before-v1.xml": {
+      "tests": "1",
+      "failures": "1",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.643"
+    },
+    "runtime/packaged-evaluations-before-v2.xml": {
+      "tests": "3",
+      "failures": "2",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.691"
+    },
+    "runtime/packaged-evaluations-after-v1.xml": {
+      "tests": "50",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "1.558"
+    }
+  },
+  "new_packaged_public_summaries": [
+    "root-cause-results.json",
+    "finqa-program-replay-v3-summary.json",
+    "finqa-model-pilot-v1-summary.json",
+    "finqa-model-pilot-v2-summary.json",
+    "finqa-model-pilot-v2-next32-summary.json"
+  ],
+  "preserved_results": {
+    "root_cause_single_failures": "6/18",
+    "finqa_v1_correct": 9,
+    "finqa_v1_failed": 12,
+    "finqa_next32_correct": 18,
+    "finqa_next32_abstained": 1,
+    "retrieval_heldout_false_accepts": [
+      "2/12",
+      "2/12"
+    ],
+    "retrieval_gates": [
+      false,
+      false
+    ]
+  },
+  "docker_probe": {
+    "command": "docker info --format {{.ServerVersion}}",
+    "exit_code": 1,
+    "error": "dockerDesktopLinuxEngine named pipe not found",
+    "build_or_runtime_executed": false
+  },
+  "paid_requests": 0,
+  "new_dependencies": 0,
+  "checks": [
+    "Ruff passed",
+    "git diff --check passed"
+  ],
+  "limitations": [
+    "Does not implement Docker context filtering or general Dockerfile semantics.",
+    "No Linux full dependency install or container acceptance rerun.",
+    "History is shipped as recorded; no new model or retrieval evaluation."
+  ],
+  "sha256": {
+    "runtime/packaged-evaluations-before-v1.xml": "904f046e5e81979f38c68952659c8373303e09f9fde01a8db722f52f17c428b7",
+    "runtime/packaged-evaluations-before-v2.xml": "10e945e6d95043a585c1f652f46f31480345c0041d205f0fcb72cbe6c9be6995",
+    "runtime/packaged-evaluations-after-v1.xml": "6bdb606df2e5bef79ddf1101087ee0f784aa8a8367619632173dd930693b8cc6",
+    "backend/Dockerfile": "e078ad00c6cfc202b08862a8332e721d279a2be8ddfc4bc4e8660ee806ed5b34",
+    "backend/tests/test_packaged_evaluations.py": "0ea269aab3568655071fdcff2bb086e147ed200d7f7328cd5fe35465704a34b8",
+    "docs/root-cause-results.json": "7c2040280b58a958f1bd266504c93f1f140c9445107b45999288620cae811353",
+    "docs/finqa-program-replay-v3-summary.json": "7e40192260987664d4a563ad02fcc65318e9eb2ddb1caf0619d486fe6e3c1be3",
+    "docs/finqa-model-pilot-v1-summary.json": "81d62def38252ad1780654dfed6db0898489965fc215ff6fe283fc5d3d3a300c",
+    "docs/finqa-model-pilot-v2-summary.json": "93a6ead5d65cf7af64360b588fafa93f6dfdbe2344fad73ee512b5e22bf1c820",
+    "docs/finqa-model-pilot-v2-next32-summary.json": "5a1ff96743dd2288d688ac5b1593616c491792473931be5ccc6be5b6239b4b36"
+  }
+}

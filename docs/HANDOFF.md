@@ -1,6 +1,6 @@
 # 交接文档
 
-更新：2026-10-13。本文给接手的开发者或编程 Agent 使用：先读这里，再按需查 [STATUS](STATUS.md)（逐项验证记录）、[GOALS](GOALS.md)（目标与验收门槛）和 [AGENTS.md](../AGENTS.md)（必须遵守的协作规则）。
+更新：2026-10-14。本文给接手的开发者或编程 Agent 使用：先读这里，再按需查 [STATUS](STATUS.md)（逐项验证记录）、[GOALS](GOALS.md)（目标与验收门槛）和 [AGENTS.md](../AGENTS.md)（必须遵守的协作规则）。
 
 ## 1. 一句话现状
 
@@ -111,7 +111,7 @@ docker compose -f infra/erpnext/compose.yaml up -d
 7. **ERPNext有限场景差分已完成**：外币账户／本位币、多公司、库存21项；订单→部分收货→发票→部分付款21项；含税采购→部分退货24项。各自重复执行记录一致；测试税率不代表税法。保留日期覆盖失败账套，USD本位币仍拒绝，复杂税费、退款、取消、汇兑与真实业务未验证，详见 [ERPNEXT_SEMANTICS](ERPNEXT_SEMANTICS.md) 和 [ERPNEXT_TAX_RETURN](ERPNEXT_TAX_RETURN.md)。
 8. **需要外部条件**：企业授权真实账套试点、会计专业复核、多用户审签与社区发布。
 
-本地交付已补做[干净源码复现](CLEAN_CHECKOUT.md)：从提交aebfada导出、不带本机资料/模型/密钥，以完整现有缓存重新安装、生成480规则案例并在空库跑网页。保留npm缺缓存和可选依赖测试夹具不完整的两次失败；修复后全流程通过。另补[WSL Linux核心子集](LINUX_CORE.md)：提交562f255导出，480规则、30参考例和68项匹配/备份恢复检查通过，无跳过；包含Windows因权限跳过的12项真实链接边界。仅重用五个锁定纯Python测试包，完整Linux依赖/API/浏览器、独立机器、无缓存联网安装和远端CI仍未验证。Docker宿主启动错误另见cross-platform-readiness.json。
+本地交付已补做[干净源码复现](CLEAN_CHECKOUT.md)：从提交aebfada导出、不带本机资料/模型/密钥，以完整现有缓存重新安装、生成480规则案例并在空库跑网页。保留npm缺缓存和可选依赖测试夹具不完整的两次失败；修复后全流程通过。另补[WSL Linux核心子集](LINUX_CORE.md)：提交562f255导出，480规则、30参考例和68项匹配/备份恢复检查通过，无跳过；包含Windows因权限跳过的12项真实链接边界。仅重用五个锁定纯Python测试包，完整Linux依赖/API/浏览器、独立机器、无缓存联网安装和远端CI仍未验证。容器Dockerfile已补齐原因调查及4份数值评测公开摘要，按文件清单隔离读取的50项相关检查通过；镜像构建运行尚未复验，见packaged-evaluation-validation.json。Docker宿主启动错误另见cross-platform-readiness.json。
 
 ## 8. 交接时的状态核对
 
