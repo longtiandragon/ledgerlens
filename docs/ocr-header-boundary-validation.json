@@ -1,0 +1,129 @@
+{
+  "schema_version": "ocr-header-boundary-validation-v1",
+  "date": "2026-10-13",
+  "status": "passed",
+  "candidate_version": "ocr-table-candidates-v2",
+  "before_fix": {
+    "tests": 8,
+    "failures": 7,
+    "errors": 0,
+    "skipped": 0
+  },
+  "after_fix": {
+    "tests": 30,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "ocr_regression": {
+    "passed": 76,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 7.76
+  },
+  "browser": {
+    "startTime": "2026-10-13T12:58:51.177Z",
+    "duration": 54876.189,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "build": {
+    "name": "build",
+    "exit_code": 0,
+    "seconds": 56.11
+  },
+  "owned_processes_stopped": true,
+  "cases": [
+    {
+      "variant": "clear-table",
+      "observations": 18,
+      "candidate_rows": 3,
+      "unassigned": 2,
+      "all_observations_assigned_exactly_once": true,
+      "image_sha256": "62acf2a754a5c5ea84fe03414a38bd2fb189b1896487aea25c6efa4f55b7fc39"
+    },
+    {
+      "variant": "mixed-header",
+      "observations": 18,
+      "candidate_rows": 1,
+      "unassigned": 10,
+      "all_observations_assigned_exactly_once": true,
+      "image_sha256": "86523d24f40c14f122d709452b515c02394e9d350bdff9c6593317e83fdb324d"
+    },
+    {
+      "variant": "unsupported-columns",
+      "observations": 18,
+      "candidate_rows": 0,
+      "unassigned": 18,
+      "all_observations_assigned_exactly_once": true,
+      "image_sha256": "9c4afdb08bf45791bdeb39381acd2f9028149de24d5a5b9c76de352b42012c9e"
+    }
+  ],
+  "old_algorithm": {
+    "commit": "2388d47",
+    "source_sha256": "b9d0ff700ed8daae55cd147148aa1569fc37b5f63499f4d3f81f1cf9438a939c",
+    "replayed_same_real_ocr_observations": true,
+    "wrong_copyable_candidate": {
+      "source_id": "B102",
+      "amount": "800.00"
+    }
+  },
+  "ruff": "passed",
+  "api_contracts": "consistent",
+  "screenshots_inspected": [
+    "mixed-header desktop",
+    "mixed-header 390px mobile"
+  ],
+  "model_requests": 0,
+  "new_dependencies": [],
+  "source_sha256": {
+    "backend/app/ocr_tables.py": "697c844018227ea4f6bb34b56abef5f557af038235ca9837992774e0e12dce78",
+    "backend/tests/test_ocr_tables.py": "cfe0ac9d35a1c94b2e89c121139cd473dd6db9233710419f42894e496c271d4f",
+    "frontend/src/components/OcrTableCandidates.vue": "ef5ec678d0245e31e4cbaa85f6d51286bfe4db9f9f46113d05d5ced8d03abb9e",
+    "frontend/tests/ocr-tables.spec.ts": "430b149717a90726800e1a1cb0ac7bc78ae5a9dd5fdbc4fdd14079ce301891b7",
+    "datasets/generate_ocr_header_boundary.py": "93d7686be4891cf6244f886c2fdf4011f5ca43150846fa3d2908249dfa982d92"
+  },
+  "evidence_sha256": {
+    ".local/ocr-header-boundary-v1/manifest.json": "3b9e012e8f4932bfd7559ab3f0eeeb9d614eaf43c17134ca7973cd595a23b3a3",
+    ".local/ocr-header-boundary-v1/truth/mixed-header.json": "87fafb65276dccab20b7cb05325c57db0bb9557b8114cb8a72d7f3f3b56c68e6",
+    "runtime/ocr-header-boundary-after.xml": "fc4d5a4318d13193c5958b5eb644b36dd27f2b14aa340da08e2d73475161a87a",
+    "runtime/ocr-header-boundary-before.xml": "43f1dff52acd1876c78ce9cc79b4c76c512afba17f747b3e80ca7b001fd6d2c5",
+    "runtime/ocr-header-browser-v1/api.log": "2a6d2eaf5ad5d1d7250ed74ca9966cc317c71cb111c6222cedc21b23681b713c",
+    "runtime/ocr-header-browser-v1/artifacts/.last-run.json": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：clear-table/imports.json": "06a3e2eb7f20e97f690bfa4870e9f08faf99311437126808815a7e2a226704bc",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：clear-table/ocr-run.json": "16013c357e255368d396ec86af40f286d97222cce1397b6a391adca8668598c4",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：clear-table/records.json": "526272e215adebc5a70ee2e92925240a52e0278a49d51cf1d23a136103f3d47d",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：clear-table/table-candidates-desktop.png": "90d946bc7bc87a7112e0c115b2b1bc3d87941dba0d8eb1a0f8ff9d0f1562b68c",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：clear-table/table-candidates.json": "66eb6096ba4ac4b65c8633ed99f9ce8cc5c559e42b3a11bdb581e9f374e798e9",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：clear-table/table-mobile.png": "a03214e159e9f254d43b818272dfe3a8bf7011fc89a0bd9e7f64e78cf3a0662d",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：clear-table/table-ui-checks.json": "b867e59da9f1148e6e274da4d7aa2a230de0342f2a474636fd93ef9fa4194d0d",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：mixed-header/imports.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：mixed-header/ocr-run.json": "e8eabf0f3571631f8f7156a5721bc38b5200f70394c0fbf36b44f2229ebe0165",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：mixed-header/records.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：mixed-header/table-candidates-desktop.png": "db0553635f4183d5ee61d3b1cac248615be4f51a11d21e9e20b24e5de1dc1a51",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：mixed-header/table-candidates.json": "3295423a2171a836b8e727a5b1507dbe75683c511e3e1cc3671704c38bc3f7cc",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：mixed-header/table-mobile.png": "3d295c6d6469eeef50984a5e2b22e1fe2b062f818acea54d9ecb8bee7399a780",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：mixed-header/table-ui-checks.json": "e2373adc124df233644a63a1e0d7a9f40f0bdd63fcaea66fb61240fbff209a48",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：unsupported-columns/imports.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：unsupported-columns/ocr-run.json": "59c6129f29cd46951318b3bf21152ee7e1f3ed5baa1ef17501dcb783d4c7e25a",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：unsupported-columns/records.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：unsupported-columns/table-candidates-desktop.png": "5bfbb42d4aed5fc380fe3043f7e7f5591c9b14be3199a6c969ae755fe2b05112",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：unsupported-columns/table-candidates.json": "1e47a392c4264acf887dac4f22c59000a24b0c9e361aeae17f3ec586dfa48769",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：unsupported-columns/table-mobile.png": "00f19b1c3187cc8ac85941d3b96e723727df9836c6090611d2b7f98d26dccea9",
+    "runtime/ocr-header-browser-v1/artifacts/ocr-tables-真实扫描表格候选：unsupported-columns/table-ui-checks.json": "f66c4f08a898910647aeae4a9c8504e97d4aed537f429e291966a5c9992bb861",
+    "runtime/ocr-header-browser-v1/browser.log": "7bdc9e7b30906b0ae5b9c31ce966c1ae539dbe12d3c0632db9bfe829a213ff33",
+    "runtime/ocr-header-browser-v1/build.log": "916b8e4afaaaf7d169613026c4125acf2c1748fc0344da42f79d097c7d82523f",
+    "runtime/ocr-header-browser-v1/old-algorithm-mixed-header.json": "3a6084148584e822133b16b355b78d4d92a2e3e1f26e3dd8c3a7fb1f41fbef92",
+    "runtime/ocr-header-browser-v1/report.json": "6d14d948cef8d2fe09335e9e8e3f90795e1308b2c1678830147f7353e0e91bca",
+    "runtime/ocr-header-browser-v1/web.log": "a0772bdcfc770addddf4e8351942f4d15f461bb77f874d8201d03fa2124677ee",
+    "runtime/ocr-header-regression-v1.xml": "eac4a5b9dec975f7bde4b93400ea314a584394891202f1c937179dd11bf33f04"
+  },
+  "limitations": [
+    "Exact known header labels only; arbitrary OCR header errors remain unsupported",
+    "May conservatively interrupt data rows with two exact header words",
+    "Not merged/multiline/rotated/general table extraction or real enterprise accuracy",
+    "Focused tests only; earlier full suite totals retain original scope and date"
+  ]
+}

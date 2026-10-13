@@ -10,7 +10,7 @@ from statistics import median
 
 from .ocr_observations import canonical, sha
 
-VERSION = 'ocr-table-candidates-v1'
+VERSION = 'ocr-table-candidates-v2'
 HEADERS = {
     '日期': 'business_date', '业务日期': 'business_date',
     '金额': 'amount', '业务金额': 'amount',
@@ -19,6 +19,9 @@ HEADERS = {
     '交易对手': 'counterparty', '往来单位': 'counterparty',
     '订单号': 'order_id', '发票号': 'invoice_id', '参考编号': 'reference',
 }
+# These labels identify a table boundary, not a supported field mapping. In
+# particular, income/expense or debit/credit must never inherit a prior amount.
+UNSUPPORTED_HEADERS = {'收入', '支出', '借方', '贷方', '借方金额', '贷方金额', '余额', '单价', '数量'}
 FOOTERS = ('合计', '总计', '备注', '制表', '审核')
 MAX_ROWS = 100
 
@@ -85,7 +88,8 @@ def candidates(result, page_number):
     width = page['image']['width']
     table, count = None, 0
     for group in groups:
-        keys = [HEADERS.get(re.sub(r'\s+', '', row['text'])) for row in group]
+        labels = [re.sub(r'\s+', '', row['text']) for row in group]
+        keys = [HEADERS.get(label) for label in labels]
         recognized = [key for key in keys if key]
         ids = [row['observation_id'] for row in group]
         if 'business_date' in recognized and 'amount' in recognized and len(recognized) >= 3:
@@ -109,6 +113,14 @@ def candidates(result, page_number):
                                   'left': boundaries[i], 'right': boundaries[i + 1]}
                                  for i, (key, row) in enumerate(zip(keys, group))], 'rows': []}
             output['tables'].append(table)
+            continue
+        if sum(label in HEADERS or label in UNSUPPORTED_HEADERS for label in labels) >= 2:
+            # A partial, changed or unsupported header ends the preceding table.
+            # Preserve its observations and wait for a complete supported header.
+            output['unassigned'].append({'observation_ids': ids, 'reason': 'unsupported_header_boundary'})
+            if 'unsupported_header_boundary' not in output['issues']:
+                output['issues'].append('unsupported_header_boundary')
+            table = None
             continue
         if table is None:
             output['unassigned'].append({'observation_ids': ids, 'reason': 'outside_recognized_table'})

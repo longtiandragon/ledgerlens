@@ -14,6 +14,7 @@ const selectedRows = computed(() => rows.value.filter(r => selected.value.includ
 const kinds: Record<LedgerInput['kind'], string> = { invoice: '发票', bank: '银行流水', order: '采购订单', receipt: '收货记录', journal: '会计分录', opening: '期初余额', trial_balance: '试算平衡' }
 const reasons: Record<string, string> = {
   outside_recognized_table: '未归入可识别表格', ambiguous_header: '表头重复或存在未知列', overlapping_header: '表头位置重叠',
+  unsupported_header_boundary: '发现不完整或不支持的新表头，已停止沿用前表列定义',
   footer_requires_manual_review: '合计或备注需单独核实', row_budget_exhausted: '超过每页100行候选上限',
   no_text: '本页未检出文字', failed_page_has_no_candidates: '识别失败页不能生成候选',
   crossing_or_outside_column: '文字跨列或位于列外', multiple_observations_in_cell: '一个单元格含多段文字，归属不明确',
@@ -27,7 +28,7 @@ async function extract() {
   try {
     const response = await api<OcrTables>(`/ocr/runs/${props.runId}/table-candidates?book_id=${props.bookId}&page=${props.page}`, { signal: controller.signal })
     if (current !== generation) return
-    if (response.schema_version !== 'ocr-table-candidates-v1' || response.run_id !== props.runId || response.result_digest !== props.resultDigest || response.page !== props.page) throw new Error('表格候选与当前原文不一致，请刷新识别任务。')
+    if (response.schema_version !== 'ocr-table-candidates-v2' || response.run_id !== props.runId || response.result_digest !== props.resultDigest || response.page !== props.page) throw new Error('表格候选与当前原文不一致，请刷新识别任务。')
     result.value = response
   } catch (e) { if (current === generation) error.value = e instanceof Error ? e.message : String(e) }
   finally { if (current === generation) busy.value = false }

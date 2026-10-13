@@ -3,7 +3,7 @@ import path from 'node:path'
 import { writeFile } from 'node:fs/promises'
 import type { OcrTables } from '../src/ocr'
 
-for (const variant of ['clear-table', 'unsupported-columns']) {
+for (const variant of ['clear-table', 'unsupported-columns', 'mixed-header']) {
   test(`真实扫描表格候选：${variant}`, async ({ page, request }, info) => {
     test.skip(process.env.OCR_TABLE_TESTS !== '1', '需要显式启用本地OCR与已生成表格样本，无付费调用')
     test.setTimeout(150000)
@@ -15,7 +15,8 @@ for (const variant of ['clear-table', 'unsupported-columns']) {
     await page.goto(`/?book=${book.id}`)
     await page.getByRole('button', { name: '数据接入', exact: true }).click()
     const panel = page.getByRole('region', { name: '扫描件人工核实' })
-    await panel.getByLabel('扫描原件', { exact: true }).setInputFiles(path.resolve(`../.local/ocr-tables-v1/images/${variant}.png`))
+    const fixtureDirectory = variant === 'mixed-header' ? 'ocr-header-boundary-v1' : 'ocr-tables-v1'
+    await panel.getByLabel('扫描原件', { exact: true }).setInputFiles(path.resolve(`../.local/${fixtureDirectory}/images/${variant}.png`))
     const started = page.waitForResponse(r => r.url().endsWith('/ocr/runs') && r.request().method() === 'POST')
     await panel.getByRole('button', { name: '上传并本地识别' }).click()
     const createdResponse = await started
@@ -30,6 +31,7 @@ for (const variant of ['clear-table', 'unsupported-columns']) {
     const response = await extracted
     expect(response.ok()).toBe(true)
     const candidates: OcrTables = await response.json()
+    expect(candidates.schema_version).toBe('ocr-table-candidates-v2')
     expect(await (await request.get(`/api/v1/books/${book.id}/records`)).json()).toEqual([])
     expect(await (await request.get(`/api/v1/books/${book.id}/imports`)).json()).toEqual([])
     if (variant === 'unsupported-columns') {
@@ -37,6 +39,20 @@ for (const variant of ['clear-table', 'unsupported-columns']) {
       expect(candidates.tables).toEqual([])
       await expect(candidatePanel.getByText('本页未找到支持的表格结构，请继续手工逐条核实。')).toBeVisible()
       await expect(candidatePanel.getByRole('button', { name: /加入人工草稿/ })).toHaveCount(0)
+    } else if (variant === 'mixed-header') {
+      const rows = candidates.tables.flatMap(t => t.rows)
+      expect(rows.map(r => r.record)).toEqual([{ business_date: '2026-09-03', source_id: 'A101', description: '办公采购', amount: '10.00' }])
+      expect(candidates.unassigned.some(g => g.reason === 'unsupported_header_boundary')).toBe(true)
+      await expect(candidatePanel.getByText('发现不完整或不支持的新表头，已停止沿用前表列定义', { exact: true })).toBeVisible()
+      await expect(candidatePanel.getByLabel('选择候选记录 1', { exact: true })).not.toBeChecked()
+      await expect(candidatePanel.getByLabel('选择候选记录 2', { exact: true })).toHaveCount(0)
+      await candidatePanel.getByText(/未归类文字（/).click()
+      const boundary = candidatePanel.locator('li').filter({ hasText: '发现不完整或不支持的新表头' })
+      await boundary.getByRole('button', { name: '查看原文 1', exact: true }).click()
+      await expect(panel.getByLabel('所选原文行定位框')).toBeVisible()
+      await expect(candidatePanel.getByRole('button', { name: /加入人工草稿/ })).toBeDisabled()
+      expect(await (await request.get(`/api/v1/books/${book.id}/records`)).json()).toEqual([])
+      expect(await (await request.get(`/api/v1/books/${book.id}/imports`)).json()).toEqual([])
     } else {
       const rows = candidates.tables.flatMap(t => t.rows)
       // Handwritten expected values from the printed fixture; not inferred from candidates.

@@ -94,6 +94,47 @@ def test_unknown_income_expense_layout_does_not_invent_a_single_amount():
     assert sum(len(g['observation_ids']) for g in result['unassigned']) == 12
 
 
+def observed_membership(result):
+    return [identity for table in result['tables'] for identity in (
+        *[h['observation_id'] for h in table['headers']],
+        *[identity for row in table['rows'] for identity in row['observation_ids']])
+    ] + [identity for group in result['unassigned'] for identity in group['observation_ids']]
+
+
+@pytest.mark.parametrize('unsupported', [
+    ['日期', '编号', '收入', '支出'], ['日期', '编号', '摘要', '金颚'],
+    ['业务日期', '流水号', '摘要', '余额'], ['来源编号', '摘要', '单价', '数量'],
+    ['项目', '收入', '支出', '余额'], ['科目', '借方金额', '贷方金额', '余额'],
+])
+def test_unsupported_later_header_cannot_inherit_previous_amount_column(unsupported):
+    source = fixture(rows=[['2026-09-03', 'A', '明确金额', '10.00'], unsupported,
+                           ['2026-09-10', 'B', '900.00', '800.00']])
+    original = deepcopy(source)
+    result = candidates(source, 1)
+    assert source == original
+    assert len(result['tables']) == 1
+    assert [r['record']['source_id'] for r in result['tables'][0]['rows']] == ['A']
+    assert [g['reason'] for g in result['unassigned']] == ['unsupported_header_boundary', 'outside_recognized_table']
+    assert sorted(observed_membership(result)) == sorted(r['observation_id'] for r in source['observations'])
+
+
+def test_supported_table_after_unsupported_header_starts_its_own_binding():
+    source = fixture(rows=[['2026-09-03', 'A', '首张表', '10.00'], ['日期', '编号', '收入', '支出'],
+                           ['2026-09-10', 'B', '900.00', '800.00'], ['日期', '编号', '摘要', '金额'],
+                           ['2026-09-21', 'C', '新表', '30.00']])
+    result = candidates(source, 1)
+    assert [[r['record']['source_id'] for r in t['rows']] for t in result['tables']] == [['A'], ['C']]
+    assert len({t['table_id'] for t in result['tables']}) == 2
+    assert sorted(observed_membership(result)) == sorted(r['observation_id'] for r in source['observations'])
+
+
+def test_one_header_word_inside_data_description_is_still_a_data_row():
+    source = fixture(rows=[['2026-09-03', 'A', '金额', '10.00']])
+    row = candidates(source, 1)['tables'][0]['rows'][0]
+    assert row['copyable'] and not row['issues']
+    assert row['record']['description'] == '金额'
+
+
 def test_footer_and_notes_remain_explicitly_unassigned():
     result = candidates(fixture(rows=[['2026-09-03', 'X', '测试', '1'], ['合计', None, None, '1'],
                                     ['审核人', None, None, None]]), 1)
