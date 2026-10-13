@@ -10,7 +10,7 @@
 |---|---|
 |产品版本|0.1.0（本地工程与仿真版本；2026-10-14起推送到用户同意的私有GitHub远端 `origin`，CI通过；未公开发布）|
 |调查提示/工具版本|`investigation-v26` / `snapshot-tools-v11`；root_cause已改窄契约，真实模型尚未验证|
-|政策规则包|`policy-consistency-v4`，20 条（CAS 18 / SCAS 2），101 个手写投影全部通过|
+|政策规则包|`policy-consistency-v5`，33 条（CAS 31 / SCAS 2）覆盖全部32份归档问答，191 个手写投影全部通过；专业判断须人工确认|
 |流程规则包|`bpi2019-process-rules-v1`，9 条；流程模型解释 `process-investigation-v1`|
 |数据库迁移|冻结至 `0006`（参考检索任务和人工选择版本；只允许向前迁移）；SQLite及真实PostgreSQL临时schema迁移8项通过，见postgres-migration-validation.json|
 |本地旧库升级|启动器执行结构核验、自动备份和向前迁移；无版本旧库仅接管完整匹配的冻结结构。30项专项及隔离启动器实跑通过，原工作库仅做副本演练，见LOCAL_DATABASE_UPGRADE|
@@ -105,7 +105,7 @@ docker compose -f infra/erpnext/compose.yaml up -d
 ## 7. 未完成事项（按建议顺序）
 
 1. **原因调查v3真实模型验证**：窄契约、270例新数据、逐请求及人民币费用预留、冻结开发计划均已实现；还未调用模型。开发/验证确定性基线、新计划与命令见 [ROOT_CAUSE_V3](ROOT_CAUSE_V3.md)。开发冒烟预计¥0.50–0.90，保守高峰价预留上限¥1.20、60次请求，用户已明确“暂不付费，继续离线工作”，保留计划但不执行，也不反复询问费用。旧计划已因investigation.py的参考条文选择校验改动失效；替代root-cause-v3-smoke-plan-v2.json只刷新对应哈希，校验通过但未授权或运行，原参数／数据不变，见v26-plan-preparation-validation.json。新封存集仍未运行，最终3次重复另行冻结与审批。
-2. **官方问答离线扩展已完成一轮**：新增5条规则；剩余12条已逐条阅读并记录缺失材料与实现路径，见 [POLICY_RULE_PACKAGE](POLICY_RULE_PACKAGE.md)。暂不把专业判断自动化为事实。
+2. **官方问答已全部实现**：v4新增5条；v5把其余12份问答建为13条人工确认条件规则（191/191），见 [POLICY_RULE_PACKAGE](POLICY_RULE_PACKAGE.md)。暂不把专业判断自动化为事实。
 3. **时间快照与模拟复核的效果测量**：已有4个时间挑战、6份草稿的离线机制消融，保留了“合法且平衡的错误业务用途仍能通过”反例，见 [ROOT_CAUSE_V3](ROOT_CAUSE_V3.md)。真实模型闭环与去反证实验仍未测。
 4. **检索离线对比及本地人工接入已完成**：独立语料6份原文94段、156窗口；20条人工查询中18条有答案，关键词前6命中16/18、BGE＋pgvector为15/18，两者对2条无答案查询仍返回候选。保留负面结果与2个502来源，不在本批查询调参。持久索引重启回放一致；本地API和网页现支持选择父条文并冻结新快照、恢复默认与历史选择查看，真实BGE查询及规则调查通过。默认关键词不变；评测中心已增加两批检索历史摘要、失败门槛和试验边界，刷新只读，损坏摘要隔离，见STATUS中的检索评测展示记录。新增48条手写查询的阈值实验在留出集均误接纳2/12无答案问题，未达门槛，见 [RETRIEVAL_ABSTENTION_RESULTS](RETRIEVAL_ABSTENTION_RESULTS.md)。独立专家查询、可靠无答案拒答、规模性能及专业复核仍未完成，见 [REFERENCE_WORKFLOW](REFERENCE_WORKFLOW.md)、[PERSISTENT_RETRIEVAL](PERSISTENT_RETRIEVAL.md) 和 [RETRIEVAL_VALIDATION](RETRIEVAL_VALIDATION.md)。
 5. **OCR图像、扫描PDF及多记录人工核实已完成，有限表格候选已接入**：6图及其6页纯图像PDF均实跑，23/24字串、28/35整行，空白页正确；保留混淆错误。PDF原页/像素/坐标可回查，页数与像素预算预检、失败页保留。网页支持原件高亮、逐字段引用、1至100条人工记录、追加复核与整批导入快照；图像/单条PDF以及跨页两条记录的真实CPU闭环通过。修订使旧预览失效，任一来源冲突整批回滚。明确表头和单行单元格可按OCR坐标提取待核实字段，两张独立合成图分别验证三行12字段和不支持双金额列；不自动判定业务类型或入账。v2已修复同页后续不支持表头继承前表金额列的问题，76项回归及3个真实OCR网页场景通过，见 [OCR_HEADER_BOUNDARY](OCR_HEADER_BOUNDARY.md)。真实单据、复杂结构及通用字段提取仍未完成，见 [OCR_TABLES](OCR_TABLES.md)、[OCR_WORKFLOW](OCR_WORKFLOW.md) 与 [OCR_PDF_VALIDATION](OCR_PDF_VALIDATION.md)。

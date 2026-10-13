@@ -1,44 +1,44 @@
 {
   "schema_version": "official-policy-consistency-evaluation-v1",
-  "generated_at": "2026-10-12T10:02:20.195840+00:00",
+  "generated_at": "2026-10-13T19:40:24.016241+00:00",
   "policy_rule_identity": {
-    "version": "policy-consistency-v4",
-    "source_sha256": "33833996c8eda3cc9e94b0b96f0aa261e7d0131634145f0761294fadc219b677"
+    "version": "policy-consistency-v5",
+    "source_sha256": "25e1681c3ac838990d7cb9900a7c8a927f66fd4a4e84bddaac7f5bd897226310"
   },
-  "fixture_version": "mof-policy-projections-v4",
-  "fixture_source_sha256": "c363c223d546e9bf5ab2589966109b30acb581dfccfa1c761c97234185fcfce2",
+  "fixture_version": "mof-policy-projections-v5",
+  "fixture_source_sha256": "3dfe39985e2335d92607407830d722ce31a3f4a4033656a5421967f1442da746",
   "evaluator_source_sha256": "9479b84c140c5c73f3fdab02cee56e4df8a95bdc35e7487ff2b214810ff71052",
-  "selected_official_source_count": 20,
+  "selected_official_source_count": 32,
   "collected_source_count": 32,
-  "unimplemented_source_count": 12,
-  "tasks": 101,
-  "passed": 101,
+  "unimplemented_source_count": 0,
+  "tasks": 191,
+  "passed": 191,
   "failed": 0,
   "groups": {
     "anchor": {
-      "tasks": 27,
-      "passed": 27
+      "tasks": 40,
+      "passed": 40
     },
     "contrast": {
-      "tasks": 74,
-      "passed": 74
+      "tasks": 151,
+      "passed": 151
     }
   },
   "frameworks": {
     "CAS": {
-      "tasks": 86,
-      "passed": 86
+      "tasks": 163,
+      "passed": 163
     },
     "SCAS": {
-      "tasks": 15,
-      "passed": 15
+      "tasks": 28,
+      "passed": 28
     }
   },
   "expected_status_distribution": {
-    "normal": 27,
-    "supported": 22,
-    "insufficient": 25,
-    "unsupported": 27
+    "normal": 52,
+    "supported": 44,
+    "insufficient": 43,
+    "unsupported": 52
   },
   "model_requests": 0,
   "actual_ledger_records_read": 0,
@@ -52,7 +52,7 @@
     "No real enterprise, model investigation, simulation, professional review or full standards coverage is proven.",
     "Answer-zone separation is a software contract; no OS permission boundary is asserted."
   ],
-  "report_sha256": "437821825440fd5023ce7006a79e48aaa5c8a562bb9cfbcbba1076fba7d96eb8",
+  "report_sha256": "d2f3bac56ef29508e712a2bbb66ab59a4a129586f18b7c494adf452c80a97f3b",
   "source_verification": {
     "checked": 32,
     "passed": 32,
@@ -219,6 +219,102 @@
       "answer_sha256": "a460676a842da9828f2dc49b311e6070c1811f88ec673ad4f0f09984191fbf9f",
       "tasks": 6,
       "passed": 6
+    },
+    {
+      "source_id": "mof-qa-3962188",
+      "source_sha256": "ea4b0ddb46f90dea332ad1b16b130dcbbb5aa40d81d62b85785ba7a8e00948c2",
+      "question_sha256": "6839f4c56adf51b2c2ac0f8317c97f4312ae053a188ce3c31f599d5e8b2a48eb",
+      "answer_sha256": "fa05ddc05bd7273a104c789e8dd90e95db0406980cd308ed879891ed18857b6b",
+      "tasks": 13,
+      "passed": 13
+    },
+    {
+      "source_id": "mof-qa-3946594",
+      "source_sha256": "f681211b5dc8c2a5d578384fff60b88aa12a3952216827bbf9d12557b0ee126d",
+      "question_sha256": "4537c9180ac52ed8bec2a4879cfd766a52fb195645e951eb1a1fa954be45fa2c",
+      "answer_sha256": "1fb9337b68b402c22c2e41aa69ff057dd1433a4f88b50fbdd4d397c8f8bbe3c5",
+      "tasks": 8,
+      "passed": 8
+    },
+    {
+      "source_id": "mof-qa-3895086",
+      "source_sha256": "3f7cf05d5f01ea61a53ccf5175aceefda3e547268608c6bc51d6cf6bc0fe0dce",
+      "question_sha256": "a4f33442f3d205bafe8ddb0446d873b4845955e64da0eb1abc4938c70fc1b227",
+      "answer_sha256": "5772f48797a936e74fc575aa270d8407d130f763f4c20fcedab1145c8a1f6a85",
+      "tasks": 7,
+      "passed": 7
+    },
+    {
+      "source_id": "mof-qa-3895087",
+      "source_sha256": "03af4a44716dad45381884f3f48eaa10e44f6b57da9328e8b0ba75746158b8a4",
+      "question_sha256": "cec8910cdd2901e6a52db7db95efb78edbac507ad4be8bc86da763b15adb0d03",
+      "answer_sha256": "083e13151eab5f413f17959701b60b4c2146954f30bc861b4c1d8f068e72f040",
+      "tasks": 6,
+      "passed": 6
+    },
+    {
+      "source_id": "mof-qa-3691695",
+      "source_sha256": "fef454b7da8faf6d9af254037bc016a2c0b6f40e37cfa748c2717d5703a9344a",
+      "question_sha256": "26c32a69354ca6394244e8f9e5eff7485442b305988b7b20595b5b1459783349",
+      "answer_sha256": "c044b276aabfe0e0f3666cc4a460602fa003de75d8a441ac3413392d1718526b",
+      "tasks": 7,
+      "passed": 7
+    },
+    {
+      "source_id": "mof-qa-3664187",
+      "source_sha256": "f03753c448f22a95d57afbdae9e42f507562d43ae850c0007a360cc4c48e50e0",
+      "question_sha256": "9c553351765bac7564ba1070f227a0602dd598424e701fb7107ad1646cdeae4f",
+      "answer_sha256": "cafa6d7631b5e264bb19c206ccd0e7cc2cb2a68e9cce4a91dfd647228fc91621",
+      "tasks": 7,
+      "passed": 7
+    },
+    {
+      "source_id": "mof-qa-3991864",
+      "source_sha256": "1ae29b3b7795d55c5f6b5a069f3a9e265138b477042e35622fb79a33aeccf398",
+      "question_sha256": "76c71644cb55e347e3770758a5191d1f6db5b86de92e4dc9fd94cefb7c2c6205",
+      "answer_sha256": "18347258acecd24d80172e920c0ba491a85e222158429374399390b5be4c778f",
+      "tasks": 7,
+      "passed": 7
+    },
+    {
+      "source_id": "mof-qa-3991866",
+      "source_sha256": "ff59c6e493640ff9280909fe4ba83a6c80810a9ae6d205fb4c65da93004ff3b6",
+      "question_sha256": "6b93a6323df4acefc53bce89ce0c44aa109cfb82bae4367b600b7001e824ce40",
+      "answer_sha256": "0c0ad54f28d761662ce429ab5a473f6435913b7e1a7ddc0521b46d9a09c8c355",
+      "tasks": 7,
+      "passed": 7
+    },
+    {
+      "source_id": "mof-qa-3634037",
+      "source_sha256": "dbf4c36357e746e3f63fbf58e093cde295e9a806b84eca795d404c0924db8cff",
+      "question_sha256": "aa310979dbe6e877007fb8482fea9b3878e2e4d553ce37265ea5f293636f23b1",
+      "answer_sha256": "df6eff7fa1d042fda3c7fa80a7f0d753d48e2420054bfc21b97e39b67d432c5a",
+      "tasks": 7,
+      "passed": 7
+    },
+    {
+      "source_id": "mof-qa-3994211",
+      "source_sha256": "35822076a90491de8e5317edc9e346691a391f54aca4931f2d822fb1c628c5c4",
+      "question_sha256": "a9f9f9ed32ec536295d5fbdd89b8439302a3bdf8fffdd30b66fd885a042ef4fc",
+      "answer_sha256": "d1af88a151ab0136597ff99bd9370ee15c63fdc6a94d0fecadf2b123ce690e94",
+      "tasks": 7,
+      "passed": 7
+    },
+    {
+      "source_id": "mof-qa-3717408",
+      "source_sha256": "0a21c3f1376ee54b3778cfd3effab18a674769b9f20269757c961c89c0f028c2",
+      "question_sha256": "2fac6d7cbdf2967004e3bb5c1cc2c3cdaf8b88b22012055b33e9743715f94909",
+      "answer_sha256": "deeadc961a0f51e6df02ac0866f2441232fe6a84b54823667bdaafcd6ea632e0",
+      "tasks": 7,
+      "passed": 7
+    },
+    {
+      "source_id": "mof-qa-3962193",
+      "source_sha256": "5d5d886b02afccc860470093d60e75f339f7a8a6f464d0535fb092f8930fac9f",
+      "question_sha256": "2aee6e17af3804a1a1ab481facdf80756e61cee3250cac82d4c7a2451f3c7be8",
+      "answer_sha256": "71b6cbdd195734ace4685f871bc65845d5007ef64eab23283280e2f1ad475877",
+      "tasks": 7,
+      "passed": 7
     }
   ]
 }

@@ -20,7 +20,8 @@ SOURCE_URL = 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/chzzsswd/202301/t20230103_38
 SELECTED_IDS = {'mof-qa-3861813', 'mof-qa-3762834', 'mof-qa-3962191',
                 'mof-qa-3664183', 'mof-qa-3664190', 'mof-qa-3634036', 'mof-qa-3819697', 'mof-qa-3896761',
                 'mof-qa-3819699', 'mof-qa-3819702', 'mof-qa-3762844', 'mof-qa-3691864', 'mof-qa-3691861',
-                'mof-qa-3762833', 'mof-qa-3634031', 'mof-qa-3634035', 'mof-qa-3691863', 'mof-qa-3664191', 'mof-qa-3664186', 'mof-qa-3634029'}
+                'mof-qa-3762833', 'mof-qa-3634031', 'mof-qa-3634035', 'mof-qa-3691863', 'mof-qa-3664191', 'mof-qa-3664186', 'mof-qa-3634029',
+                'mof-qa-3634037', 'mof-qa-3664187', 'mof-qa-3691695', 'mof-qa-3717408', 'mof-qa-3895086', 'mof-qa-3895087', 'mof-qa-3946594', 'mof-qa-3962188', 'mof-qa-3962193', 'mof-qa-3991864', 'mof-qa-3991866', 'mof-qa-3994211'}
 
 
 def handwritten_case(identity='independent-inventory'):
@@ -243,10 +244,10 @@ LOCAL_ARCHIVE_PRESENT = (LOCAL_ARCHIVE / 'acquisition-report.json').is_file() an
 @pytest.mark.skipif(not LOCAL_ARCHIVE_PRESENT, reason='Original official HTML stays in optional local storage')
 def test_actual_six_source_benchmark_reverifies_archive_and_all_thirty_projections():
     report = benchmark.evaluate()
-    assert (report['tasks'], report['passed'], report['failed']) == (101, 101, 0)
-    assert report['selected_official_source_count'] == 20
+    assert (report['tasks'], report['passed'], report['failed']) == (191, 191, 0)
+    assert report['selected_official_source_count'] == 32
     assert report['collected_source_count'] == 32
-    assert report['unimplemented_source_count'] == 12
+    assert report['unimplemented_source_count'] == 0
     assert report['source_verification']['failed'] == 0
     assert {item['source_id'] for item in report['results']} == SELECTED_IDS
     assert all(all(item['checks'].values()) for item in report['results'])

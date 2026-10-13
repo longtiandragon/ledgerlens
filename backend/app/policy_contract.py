@@ -7,7 +7,12 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 Topic = Literal['resale_inventory', 'routine_repair', 'previous_expensed_prototype',
                 'vat_credit_refund', 'personal_tax_withholding_fee', 'short_term_lease', 'lease_cash_flow',
                 'transport_fulfillment_cost', 'advance_receipt', 'contract_asset_impairment', 'lessee_improvement', 'foreign_currency_advance', 'debt_restructuring_inventory', 'cash_discount',
-                'group_share_payment', 'debt_release_timing', 'initial_revenue_ecl', 'rent_subsidy', 'voluntary_share_cancellation']
+                'group_share_payment', 'debt_release_timing', 'initial_revenue_ecl', 'rent_subsidy', 'voluntary_share_cancellation',
+                'renovation_useful_life', 'renovation_replaced_part', 'data_resource_development',
+                'equity_method_impairment', 'goodwill_cgu_allocation', 'debt_restructuring_asset_measurement',
+                'debt_to_equity_classification', 'construction_progress_grant', 'custom_equipment_borrowing_cost',
+                'land_use_right_borrowing_cost', 'non_exchangeable_currency_rate', 'one_year_lease_term',
+                'prior_period_error_materiality']
 Treatment = Literal['inventory', 'fixed_asset', 'period_expense', 'inventory_cost', 'management_expense',
                     'selling_expense', 'reverse_prior_expense', 'keep_prior_expense', 'tax_refunds_received',
                     'other_operating_cash_received', 'taxes_paid', 'other_income_and_operating_revenue',
@@ -17,7 +22,17 @@ Treatment = Literal['inventory', 'fixed_asset', 'period_expense', 'inventory_cos
                     'equity_settled_share_payment', 'cash_settled_share_payment', 'defer_debt_restructuring_gain',
                     'recognize_debt_restructuring_gain', 'opening_retained_earnings_no_comparative_restatement',
                     'restate_comparative_ecl', 'income_related_grant', 'asset_related_grant',
-                    'accelerate_vesting_keep_prior_expense', 'reverse_share_payment_expense', 'unknown', 'other']
+                    'accelerate_vesting_keep_prior_expense', 'reverse_share_payment_expense',
+                    'revise_remaining_useful_life', 'keep_useful_life_estimate',
+                    'capitalize_and_derecognize_replaced_part', 'capitalize_without_derecognition', 'expense_renovation',
+                    'data_resource_intangible_asset', 'estimate_recoverable_amount_higher_of',
+                    'share_price_as_recoverable_amount', 'no_impairment_test', 'goodwill_allocated_to_qualifying_cgu',
+                    'reallocate_goodwill_to_qualifying_cgu', 'waived_claim_fair_value_basis',
+                    'received_asset_fair_value_basis', 'claim_carrying_amount_basis', 'debt_to_equity_restructuring',
+                    'not_debt_to_equity_restructuring', 'capitalize_borrowing_costs', 'expense_borrowing_costs',
+                    'capitalization_base_includes_land_cost', 'capitalization_base_excludes_land_cost',
+                    'observable_rate_unadjusted', 'first_rate_after_restoration', 'other_estimation_technique',
+                    'retrospective_restatement_of_comparatives', 'current_period_adjustment', 'unknown', 'other']
 
 PREDICATES = {
     'resale_inventory': {'ordinary_course', 'held_for_sale', 'economic_benefits_probable', 'cost_reliably_measurable'},
@@ -42,6 +57,30 @@ PREDICATES = {
     'rent_subsidy': {'government_grant', 'compensates_property_rental_costs', 'not_for_acquiring_long_term_assets'},
     'voluntary_share_cancellation': {'equity_award_cancelled_during_vesting', 'employee_voluntary_exit',
                                      'not_cancelled_for_failure_of_vesting_conditions'},
+    'renovation_useful_life': {'asset_renovated', 'conclusive_evidence_life_extended'},
+    'renovation_replaced_part': {'renovation_capitalization_criteria_met'},
+    'data_resource_development': {'development_phase', 'technical_feasibility', 'intention_to_complete',
+                                  'benefit_generation_demonstrated', 'adequate_resources',
+                                  'expenditure_reliably_measured'},
+    'equity_method_impairment': {'equity_method_investment', 'market_price_significant_decline'},
+    'goodwill_cgu_allocation': {'goodwill_from_business_combination', 'cgu_benefits_from_synergies',
+                                'lowest_internal_monitoring_level', 'not_larger_than_reporting_segment'},
+    'debt_restructuring_asset_measurement': {'creditor_receives_non_financial_asset', 'arms_length_market_transaction',
+                                             'waived_claim_fair_value_exceeds_carrying_balance'},
+    'debt_to_equity_classification': {'debtor_repurchase_obligation', 'mandatory_dividend_right',
+                                      'compound_instrument_with_liability_component',
+                                      'classified_as_equity_under_cas37'},
+    'construction_progress_grant': {'government_grant', 'grant_conditioned_on_constructing_long_term_assets'},
+    'custom_equipment_borrowing_cost': {'qualifying_asset_long_construction', 'asset_expenditure_incurred',
+                                        'borrowing_cost_incurred', 'manufacturer_production_started',
+                                        'asset_ready_for_intended_use'},
+    'land_use_right_borrowing_cost': {'developer_builds_for_sale', 'self_constructed_own_use_building'},
+    'non_exchangeable_currency_rate': {'currency_not_exchangeable', 'estimate_reflects_orderly_exchange',
+                                       'estimation_disclosed'},
+    'one_year_lease_term': {'contract_term_not_over_12_months', 'renewal_or_non_termination_reasonably_certain',
+                            'improvements_amortized_beyond_lease_term'},
+    'prior_period_error_materiality': {'prior_period_error_confirmed', 'material_to_discovery_period',
+                                       'material_to_comparative_period'},
 }
 
 

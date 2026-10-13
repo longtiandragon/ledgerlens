@@ -1,4 +1,4 @@
-"""Bounded consistency checks against six archived MOF implementation Q&A.
+"""Bounded consistency checks against the 32 archived MOF implementation Q&A.
 
 This component consumes explicit, source-bound observations. It neither reads
 the evaluator answer store nor infers business conditions from model output.
@@ -14,7 +14,7 @@ from pathlib import Path
 
 from .policy_contract import PREDICATES, PolicyCheckContext, PolicyObservation
 
-POLICY_VERSION = 'policy-consistency-v4'
+POLICY_VERSION = 'policy-consistency-v5'
 _SOURCE_SHA256 = hashlib.sha256(b'\0'.join(
     name.encode() + b'\0' + Path(__file__).with_name(name).read_text(encoding='utf-8').encode()
     for name in ('policy_contract.py', 'policy_consistency.py')
@@ -259,6 +259,168 @@ _DEFINITIONS = (
         'treatment_captions': {'accelerate_vesting_keep_prior_expense': '加速行权，剩余金额计入损益及资本公积，不冲回以前费用',
                                'reverse_share_payment_expense': '冲回以前确认的股份支付费用'},
     },
+    # v5: the twelve remaining archived answers. Each professional judgement the
+    # answer depends on is an explicit human-confirmed condition; the rule only
+    # checks that the recorded treatment follows the answer given those inputs.
+    {
+        'rule_id': 'POLICY_CAS_RENOVATION_USEFUL_LIFE', 'framework': 'CAS',
+        'topic': 'renovation_useful_life', 'title': '更新改造后折旧年限的变更依据',
+        'source_id': 'mof-qa-3962188', 'publication_date': '2025-04-17',
+        'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/gdzczzsswd/202504/t20250417_3962188.htm',
+        'source_sha256': 'ea4b0ddb46f90dea332ad1b16b130dcbbb5aa40d81d62b85785ba7a8e00948c2',
+        'applicable_conditions': '固定资产发生更新改造并复核使用寿命；只有确凿证据表明主体确因改造延长寿命且符合相关法律法规时，才调整剩余折旧年限。',
+        'unsupported_conditions': ['未发生更新改造的使用寿命复核不由本规则判断'],
+        'known_limits': ['确凿证据是否充分须人工确认；不能仅因发生改造认定年限变更', '不计算新的折旧额或预计净残值'],
+        'treatment_captions': {'revise_remaining_useful_life': '按新的预期使用寿命调整剩余折旧年限',
+                               'keep_useful_life_estimate': '维持原使用寿命估计，不因改造本身变更折旧年限'},
+    },
+    {
+        'rule_id': 'POLICY_CAS_RENOVATION_REPLACED_PART', 'framework': 'CAS',
+        'topic': 'renovation_replaced_part', 'title': '资本化改造支出时终止确认被替换部分',
+        'source_id': 'mof-qa-3962188', 'publication_date': '2025-04-17',
+        'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/gdzczzsswd/202504/t20250417_3962188.htm',
+        'source_sha256': 'ea4b0ddb46f90dea332ad1b16b130dcbbb5aa40d81d62b85785ba7a8e00948c2',
+        'applicable_conditions': '更新改造支出已确认满足固定资产后续支出资本化条件。',
+        'unsupported_conditions': ['不满足资本化条件的改造支出按日常修理等其他路径判断'],
+        'known_limits': ['资本化条件须人工确认', '不计算被替换部分账面价值或改造成本'],
+        'treatment_captions': {'capitalize_and_derecognize_replaced_part': '计入固定资产成本，同时终止确认被替换部分的账面价值',
+                               'capitalize_without_derecognition': '计入固定资产成本但不终止确认被替换部分',
+                               'expense_renovation': '改造支出费用化'},
+    },
+    {
+        'rule_id': 'POLICY_CAS_DATA_RESOURCE_DEVELOPMENT', 'framework': 'CAS',
+        'topic': 'data_resource_development', 'title': '内部数据资源研发支出的资本化条件',
+        'source_id': 'mof-qa-3946594', 'publication_date': '2024-10-31',
+        'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/sjzykjclsswd/202410/t20241030_3946594.htm',
+        'source_sha256': 'f681211b5dc8c2a5d578384fff60b88aa12a3952216827bbf9d12557b0ee126d',
+        'applicable_conditions': '企业内部数据资源研究开发项目：研究阶段支出费用化；开发阶段支出同时满足技术可行性、完成意图、产生经济利益方式、足够资源和可靠计量五项条件才确认为无形资产。',
+        'unsupported_conditions': ['外购数据资源或非研发项目支出不由本规则判断'],
+        'known_limits': ['阶段划分及五项条件的证据是否充分须人工确认', '不计算可资本化金额或多项目分摊'],
+        'treatment_captions': {'data_resource_intangible_asset': '确认为数据资源无形资产',
+                               'period_expense': '费用化计入当期损益'},
+    },
+    {
+        'rule_id': 'POLICY_CAS_EQUITY_METHOD_IMPAIRMENT', 'framework': 'CAS',
+        'topic': 'equity_method_impairment', 'title': '权益法投资市价大幅下跌时的可收回金额',
+        'source_id': 'mof-qa-3895086', 'publication_date': '2023-07-10',
+        'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/zcjzzzsswd/202307/t20230710_3895086.htm',
+        'source_sha256': '3f7cf05d5f01ea61a53ccf5175aceefda3e547268608c6bc51d6cf6bc0fe0dce',
+        'applicable_conditions': '权益法核算的长期股权投资，被投资单位市价当期大幅下跌且明显高于正常预期，构成减值迹象。',
+        'unsupported_conditions': ['不是权益法核算的投资，或未确认市价大幅下跌这一减值迹象'],
+        'known_limits': ['不估计公允价值减处置费用或未来现金流量现值', '不计算减值金额'],
+        'treatment_captions': {'estimate_recoverable_amount_higher_of': '按公允价值减处置费用后的净额与未来现金流量现值两者较高者估计可收回金额',
+                               'share_price_as_recoverable_amount': '直接以股价计算可收回金额',
+                               'no_impairment_test': '未进行减值测试'},
+    },
+    {
+        'rule_id': 'POLICY_CAS_GOODWILL_CGU_ALLOCATION', 'framework': 'CAS',
+        'topic': 'goodwill_cgu_allocation', 'title': '商誉分摊资产组的基本条件',
+        'source_id': 'mof-qa-3895087', 'publication_date': '2023-07-10',
+        'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/zcjzzzsswd/202307/t20230710_3895087.htm',
+        'source_sha256': '03af4a44716dad45381884f3f48eaa10e44f6b57da9328e8b0ba75746158b8a4',
+        'applicable_conditions': '企业合并形成的商誉分摊至预计从协同效应受益的资产组或组合；该组合代表内部管理监控商誉的最低水平，且不大于报告分部（经营分部）。',
+        'unsupported_conditions': ['并非企业合并形成的商誉'],
+        'known_limits': ['协同效应范围、监控层级和分部边界须人工确认', '不进行商誉减值测试或计算减值'],
+        'treatment_captions': {'goodwill_allocated_to_qualifying_cgu': '商誉分摊至满足条件的资产组或资产组组合',
+                               'reallocate_goodwill_to_qualifying_cgu': '现有分摊对象不满足条件，须重新分摊'},
+    },
+    {
+        'rule_id': 'POLICY_CAS_DEBT_RESTRUCTURING_ASSET_MEASUREMENT', 'framework': 'CAS',
+        'topic': 'debt_restructuring_asset_measurement', 'title': '债务重组受让非金融资产的初始计量基础',
+        'source_id': 'mof-qa-3691695', 'publication_date': '2021-04-25',
+        'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/zwcz/202104/t20210425_3691695.htm',
+        'source_sha256': 'fef454b7da8faf6d9af254037bc016a2c0b6f40e37cfa748c2717d5703a9344a',
+        'applicable_conditions': '债权人以资产清偿方式受让非金融资产；公平交易的市场环境中，放弃债权公允价值通常与受让资产公允价值相等，且通常不高于放弃债权账面余额。',
+        'unsupported_conditions': ['债权人并非受让非金融资产'],
+        'known_limits': ['是否公平交易及公允价值须人工确认', '“通常”关系不作为无条件恒等式；不计算计量金额'],
+        'treatment_captions': {'waived_claim_fair_value_basis': '以放弃债权的公允价值和可直接归属成本计量',
+                               'received_asset_fair_value_basis': '以受让资产公允价值作为放弃债权公允价值的计量依据',
+                               'claim_carrying_amount_basis': '以放弃债权的账面余额计量'},
+    },
+    {
+        'rule_id': 'POLICY_CAS_DEBT_TO_EQUITY_CLASSIFICATION', 'framework': 'CAS',
+        'topic': 'debt_to_equity_classification', 'title': '名义债转股是否属于债务转为权益工具方式',
+        'source_id': 'mof-qa-3664187', 'publication_date': '2021-03-02',
+        'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/zwcz/202103/t20210302_3664187.htm',
+        'source_sha256': 'f03753c448f22a95d57afbdae9e42f507562d43ae850c0007a360cc4c48e50e0',
+        'applicable_conditions': '只有按金融工具列报准则分类为权益工具时才属于债转股方式；约定回购、强制分红或包含负债成分的复合工具不属于该方式。',
+        'unsupported_conditions': [],
+        'known_limits': ['金融工具分类须人工依据完整合同条款确认', '不处理复合工具拆分或重组损益'],
+        'treatment_captions': {'debt_to_equity_restructuring': '按债务转为权益工具方式处理',
+                               'not_debt_to_equity_restructuring': '不属于债务转为权益工具方式'},
+    },
+    {
+        'rule_id': 'POLICY_CAS_CONSTRUCTION_PROGRESS_GRANT', 'framework': 'CAS',
+        'topic': 'construction_progress_grant', 'title': '以项目建设为前提的进度奖励补助分类',
+        'source_id': 'mof-qa-3991864', 'publication_date': '2026-06-18',
+        'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/zfbzzzsswd/202606/t20260618_3991864.htm',
+        'source_sha256': '1ae29b3b7795d55c5f6b5a069f3a9e265138b477042e35622fb79a33aeccf398',
+        'applicable_conditions': '政府补助经综合政策依据、申请、审批及验收等材料判断，以购建或形成长期资产（项目建设）为前提的属于与资产相关。',
+        'unsupported_conditions': ['并非政府补助'],
+        'known_limits': ['不能仅因未限制用途或补助晚于资产支出认定为与收益相关；前提条件须人工综合确认', '不判断确认期间、金额或总额/净额法'],
+        'treatment_captions': {'asset_related_grant': '与资产相关的政府补助', 'income_related_grant': '与收益相关的政府补助'},
+    },
+    {
+        'rule_id': 'POLICY_CAS_CUSTOM_EQUIPMENT_BORROWING_COST', 'framework': 'CAS',
+        'topic': 'custom_equipment_borrowing_cost', 'title': '定制设备专门借款费用的资本化期间',
+        'source_id': 'mof-qa-3991866', 'publication_date': '2026-06-18',
+        'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/jkwd/202606/t20260618_3991866.htm',
+        'source_sha256': 'ff59c6e493640ff9280909fe4ba83a6c80810a9ae6d205fb4c65da93004ff3b6',
+        'applicable_conditions': '符合资本化条件的定制设备：资产支出和借款费用已发生，且确有证据表明生产商已开始必要的购建或生产活动时开始资本化，至设备达到预定可使用状态为止。',
+        'unsupported_conditions': ['不是需要相当长时间购建或生产的符合资本化条件的资产'],
+        'known_limits': ['生产活动开始与预定可使用状态须人工依据证据确认', '不计算资本化金额或利率'],
+        'treatment_captions': {'capitalize_borrowing_costs': '借款费用资本化计入资产成本',
+                               'expense_borrowing_costs': '借款费用费用化计入当期损益'},
+    },
+    {
+        'rule_id': 'POLICY_CAS_LAND_USE_RIGHT_BORROWING_COST', 'framework': 'CAS',
+        'topic': 'land_use_right_borrowing_cost', 'title': '土地使用权与借款费用资本化基础',
+        'source_id': 'mof-qa-3634037', 'publication_date': '2020-12-11',
+        'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/jkwd/202012/t20201211_3634037.htm',
+        'source_sha256': 'dbf4c36357e746e3f63fbf58e093cde295e9a806b84eca795d404c0924db8cff',
+        'applicable_conditions': '自行开发建造厂房等自用建筑物：以建造支出（含建造期间计入在建工程的土地摊销）而非土地使用权支出为基础；房地产开发企业建造对外出售的房屋：以包括土地使用权支出的建造成本为基础。',
+        'unsupported_conditions': ['同一土地同时用于两种用途须拆分；不属于开发建造房屋建筑物的土地使用权'],
+        'known_limits': ['用途分类须人工确认', '不计算资本化金额或借款分配'],
+        'treatment_captions': {'capitalization_base_includes_land_cost': '以包括土地使用权支出的建造成本为资本化基础',
+                               'capitalization_base_excludes_land_cost': '以建造支出为基础，不含土地使用权支出'},
+    },
+    {
+        'rule_id': 'POLICY_CAS_NON_EXCHANGEABLE_CURRENCY_RATE', 'framework': 'CAS',
+        'topic': 'non_exchangeable_currency_rate', 'title': '缺乏可兑换性时即期汇率的估计方法',
+        'source_id': 'mof-qa-3994211', 'publication_date': '2026-07-23',
+        'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/wbzs/202607/t20260723_3994211.htm',
+        'source_sha256': '35822076a90491de8e5317edc9e346691a391f54aca4931f2d822fb1c628c5c4',
+        'applicable_conditions': '货币不可兑换时，可观察汇率、可兑换性恢复后首个汇率或其他估计方法没有优先次序；估计汇率须如实反映有序兑换交易汇率，并在附注披露所用汇率及估计过程。',
+        'unsupported_conditions': ['货币可以兑换'],
+        'known_limits': ['是否如实反映有序兑换交易汇率须人工确认', '不计算或推荐具体汇率'],
+        'treatment_captions': {'observable_rate_unadjusted': '采用未经调整的可观察汇率（含其他目的下的可观察汇率）',
+                               'first_rate_after_restoration': '采用可兑换性恢复后的首个汇率',
+                               'other_estimation_technique': '采用其他估计方法'},
+    },
+    {
+        'rule_id': 'POLICY_CAS_ONE_YEAR_LEASE_TERM', 'framework': 'CAS',
+        'topic': 'one_year_lease_term', 'title': '一年期租赁合同的租赁期判断',
+        'source_id': 'mof-qa-3717408', 'publication_date': '2021-06-10',
+        'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/zlzzsswd/202106/t20210610_3717408.htm',
+        'source_sha256': '0a21c3f1376ee54b3778cfd3effab18a674769b9f20269757c961c89c0f028c2',
+        'applicable_conditions': '合同期限不超过一年时不能直接认定短期租赁；合理确定将续租或不终止时租赁期超过一年。确定为一年的，改良支出等其他估计须在一年内摊销。',
+        'unsupported_conditions': ['合同约定期限超过十二个月'],
+        'known_limits': ['是否合理确定续租须人工依据全部事实确认；逐年续签惯例或关联方时尤须谨慎', '不计量使用权资产或租赁负债'],
+        'treatment_captions': {'right_of_use_asset_and_lease_liability': '确认使用权资产和租赁负债',
+                               'short_term_lease_simplified': '按短期租赁简化处理'},
+    },
+    {
+        'rule_id': 'POLICY_CAS_PRIOR_PERIOD_ERROR_MATERIALITY', 'framework': 'CAS',
+        'topic': 'prior_period_error_materiality', 'title': '前期差错重要性的判断期间',
+        'source_id': 'mof-qa-3962193', 'publication_date': '2025-04-17',
+        'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/kjzckjgjbgzzsswd/202504/t20250417_3962193.htm',
+        'source_sha256': '5d5d886b02afccc860470093d60e75f339f7a8a6f464d0535fb092f8930fac9f',
+        'applicable_conditions': '已认定构成前期差错；综合考虑对差错发现当期及比较期间报表的影响，对任一期间重要即作为重要前期差错追溯调整比较数据。',
+        'unsupported_conditions': ['尚未认定构成前期差错'],
+        'known_limits': ['金额与性质的重要性判断须人工确认，不引入任意百分比门槛', '不生成追溯调整分录'],
+        'treatment_captions': {'retrospective_restatement_of_comparatives': '作为重要前期差错追溯调整前期比较数据',
+                               'current_period_adjustment': '作为不重要前期差错调整发现当期相关项目'},
+    },
 )
 
 
@@ -415,6 +577,158 @@ def evaluate_policy(observation: PolicyObservation, context: PolicyCheckContext)
                 expected = 'financing_cash_outflow'
         elif simplified == 'no' and variable == 'no' and financing == ['no', 'no']:
             return finish('unsupported', '并非本问答所列的租赁相关付款。')
+    elif observation.topic == 'renovation_useful_life':
+        if values.get('asset_renovated') == 'no':
+            return finish('unsupported', '未发生更新改造；其他使用寿命复核不由本规则判断。')
+        if not missing:
+            expected = ('revise_remaining_useful_life' if values['conclusive_evidence_life_extended'] == 'yes'
+                        else 'keep_useful_life_estimate')
+    elif observation.topic == 'renovation_replaced_part':
+        if values.get('renovation_capitalization_criteria_met') == 'no':
+            return finish('unsupported', '改造支出不满足资本化条件，应按日常修理等其他路径判断。')
+        if not missing:
+            expected = 'capitalize_and_derecognize_replaced_part'
+    elif observation.topic == 'data_resource_development':
+        five = ('technical_feasibility', 'intention_to_complete', 'benefit_generation_demonstrated',
+                'adequate_resources', 'expenditure_reliably_measured')
+        phase = values.get('development_phase', 'unknown')
+        # Research-phase spending, or a development phase failing any of the
+        # five conditions, is expensed whatever the other inputs are.
+        if phase == 'no' or (phase == 'yes' and any(values.get(name) == 'no' for name in five)):
+            missing.clear()
+            expected = 'period_expense'
+        elif not missing:
+            expected = 'data_resource_intangible_asset'
+    elif observation.topic == 'equity_method_impairment':
+        if values.get('equity_method_investment') == 'no':
+            return finish('unsupported', '并非权益法核算的长期股权投资。')
+        if values.get('market_price_significant_decline') == 'no':
+            return finish('unsupported', '未确认市价大幅下跌这一减值迹象；其他减值迹象不由本规则判断。')
+        if not missing:
+            expected = 'estimate_recoverable_amount_higher_of'
+    elif observation.topic == 'goodwill_cgu_allocation':
+        if values.get('goodwill_from_business_combination') == 'no':
+            return finish('unsupported', '并非企业合并形成的商誉。')
+        conditions = ('cgu_benefits_from_synergies', 'lowest_internal_monitoring_level',
+                      'not_larger_than_reporting_segment')
+        if values.get('goodwill_from_business_combination') == 'yes' and any(
+                values.get(name) == 'no' for name in conditions):
+            missing.clear()
+            expected = 'reallocate_goodwill_to_qualifying_cgu'
+        elif not missing:
+            expected = 'goodwill_allocated_to_qualifying_cgu'
+    elif observation.topic == 'debt_restructuring_asset_measurement':
+        scope = values.get('creditor_receives_non_financial_asset')
+        if scope == 'no':
+            return finish('unsupported', '债权人并非受让非金融资产。')
+        if scope != 'yes':
+            return finish('insufficient', '必要业务条件未获人工确认；模型建议和来源陈述不能替代确认。',
+                          ['creditor_receives_non_financial_asset'])
+        arms_length = values.get('arms_length_market_transaction')
+        reported = observation.reported_treatment
+        expected = 'waived_claim_fair_value_basis'
+        if arms_length == 'yes' and values.get('waived_claim_fair_value_exceeds_carrying_balance') == 'yes':
+            return finish('insufficient', '公平交易中放弃债权的公允价值通常不高于其账面余额；该公允价值需复核。',
+                          ['waived_claim_fair_value_exceeds_carrying_balance'], expected)
+        if reported == 'unknown':
+            return finish('insufficient', '条件已确认，但缺少当前账务处理的来源证据。', ['reported_treatment'], expected)
+        if reported == expected:
+            return finish('normal', '以放弃债权的公允价值等计量，与本归档问答一致。', expected=expected)
+        if reported == 'received_asset_fair_value_basis':
+            if arms_length == 'yes':
+                return finish('normal', '公平交易的市场环境中，放弃债权公允价值通常与受让资产公允价值相等。',
+                              expected=expected)
+            if arms_length == 'no':
+                return finish('insufficient', '非公平交易时不能默认两者相等，需单独确定放弃债权的公允价值。',
+                              ['arms_length_market_transaction'], expected)
+            return finish('insufficient', '尚未确认是否公平交易，不能以受让资产公允价值替代放弃债权公允价值。',
+                          ['arms_length_market_transaction'], expected)
+        return finish('supported', '已确认条件下，当前处理与本归档问答的规定路径不一致。', expected=expected)
+    elif observation.topic == 'debt_to_equity_classification':
+        flags = ('debtor_repurchase_obligation', 'mandatory_dividend_right', 'compound_instrument_with_liability_component')
+        # Any confirmed repurchase, mandatory dividend or liability component, or a
+        # non-equity classification, excludes the debt-to-equity method on its own.
+        if any(values.get(name) == 'yes' for name in flags) or values.get('classified_as_equity_under_cas37') == 'no':
+            missing.clear()
+            expected = 'not_debt_to_equity_restructuring'
+        elif not missing:
+            expected = 'debt_to_equity_restructuring'
+    elif observation.topic == 'construction_progress_grant':
+        if values.get('government_grant') == 'no':
+            return finish('unsupported', '并非政府补助。')
+        if not missing:
+            expected = ('asset_related_grant' if values['grant_conditioned_on_constructing_long_term_assets'] == 'yes'
+                        else 'income_related_grant')
+    elif observation.topic == 'custom_equipment_borrowing_cost':
+        qualifying = values.get('qualifying_asset_long_construction')
+        if qualifying == 'no':
+            return finish('unsupported', '并非需要相当长时间购建或生产的符合资本化条件的资产。')
+        start = ('asset_expenditure_incurred', 'borrowing_cost_incurred', 'manufacturer_production_started')
+        # Ended (ready for use) or not yet started: either way the period's cost is expensed.
+        if qualifying == 'yes' and (values.get('asset_ready_for_intended_use') == 'yes'
+                                    or any(values.get(name) == 'no' for name in start)):
+            missing.clear()
+            expected = 'expense_borrowing_costs'
+        elif not missing:
+            expected = 'capitalize_borrowing_costs'
+    elif observation.topic == 'land_use_right_borrowing_cost':
+        developer, own_use = values.get('developer_builds_for_sale'), values.get('self_constructed_own_use_building')
+        if developer == 'yes' and own_use == 'yes':
+            return finish('unsupported', '同一土地同时用于对外出售开发和自用建造时须拆分后分别检查。')
+        if developer == 'no' and own_use == 'no':
+            return finish('unsupported', '并非本问答所述开发建造房屋建筑物取得的土地使用权。')
+        if not missing:
+            expected = ('capitalization_base_includes_land_cost' if developer == 'yes'
+                        else 'capitalization_base_excludes_land_cost')
+    elif observation.topic == 'non_exchangeable_currency_rate':
+        if values.get('currency_not_exchangeable') == 'no':
+            return finish('unsupported', '货币可以兑换；本规则只处理缺乏可兑换性时的即期汇率估计。')
+        if missing:
+            return finish('insufficient', '必要业务条件未获人工确认；模型建议和来源陈述不能替代确认。', missing)
+        reported = observation.reported_treatment
+        methods = ('observable_rate_unadjusted', 'first_rate_after_restoration', 'other_estimation_technique')
+        if reported == 'unknown':
+            return finish('insufficient', '条件已确认，但缺少当前账务处理的来源证据。', ['reported_treatment'])
+        if reported not in methods:
+            return finish('supported', '应采用可观察汇率、可兑换性恢复后首个汇率或其他估计方法之一估计即期汇率。')
+        # The three methods have no priority order; the reported one is the expected one.
+        if values['estimate_reflects_orderly_exchange'] == 'no':
+            return finish('supported', '估计的汇率未如实反映有序兑换交易所采用的汇率；方法本身没有优先次序。',
+                          expected=reported)
+        if values['estimation_disclosed'] == 'no':
+            return finish('supported', '未在附注披露所采用的即期汇率及其估计过程。', expected=reported)
+        return finish('normal', '估计方法无优先次序要求，且如实反映与披露条件已确认。', expected=reported)
+    elif observation.topic == 'one_year_lease_term':
+        term = values.get('contract_term_not_over_12_months')
+        if term == 'no':
+            return finish('unsupported', '合同约定期限超过十二个月，不属于本问答所述情形。')
+        renewal = values.get('renewal_or_non_termination_reasonably_certain')
+        if term == 'yes' and renewal == 'yes':
+            missing.clear()
+            expected = 'right_of_use_asset_and_lease_liability'
+        elif not missing:
+            reported = observation.reported_treatment
+            choices = ('short_term_lease_simplified', 'right_of_use_asset_and_lease_liability')
+            if reported == 'unknown':
+                return finish('insufficient', '条件已确认，但缺少当前账务处理的来源证据。', ['reported_treatment'])
+            if values['improvements_amortized_beyond_lease_term'] == 'yes':
+                return finish('supported', '租赁期确定为一年的，改良支出等其他会计估计应在一年内摊销，与租赁期一致。',
+                              expected=reported if reported in choices else None)
+            if reported in choices:
+                # Short-term simplification is an election; recognising the lease is also permitted.
+                return finish('normal', '已合理确定租赁期不超过十二个月，且相关摊销与租赁期一致。', expected=reported)
+            return finish('supported', '已确认条件下，当前处理与本归档问答的规定路径不一致。',
+                          expected='short_term_lease_simplified')
+    elif observation.topic == 'prior_period_error_materiality':
+        confirmed = values.get('prior_period_error_confirmed')
+        if confirmed == 'no':
+            return finish('unsupported', '尚未认定构成前期差错。')
+        materiality = (values.get('material_to_discovery_period'), values.get('material_to_comparative_period'))
+        if confirmed == 'yes' and 'yes' in materiality:
+            missing.clear()
+            expected = 'retrospective_restatement_of_comparatives'
+        elif not missing:
+            expected = 'current_period_adjustment'
     elif observation.topic in SIMPLE_RULES:
         # Every condition must be human-confirmed "yes"; any "no" leaves the Q&A scope.
         if any(values.get(name) == 'no' for name in PREDICATES[observation.topic]):

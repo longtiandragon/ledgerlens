@@ -291,8 +291,8 @@ def test_locator_requires_original_confirmed_source_row(environment, tamper):
 
 def test_catalog_has_separate_pack_identity_and_no_truth_access(environment):
     result = environment[0].get('/api/v1/policy-checks/catalog').json()
-    assert len(result['rules']) == 20
-    assert result['policy_rule_identity']['version'] == 'policy-consistency-v4'
+    assert len(result['rules']) == 33
+    assert result['policy_rule_identity']['version'] == 'policy-consistency-v5'
     assert 'answer' not in result and 'sql' not in result
 
 

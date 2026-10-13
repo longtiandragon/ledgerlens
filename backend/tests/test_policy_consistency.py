@@ -21,6 +21,71 @@ from app.policy_consistency import evaluate_policy, policy_rule_catalog, policy_
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE_BASE = 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/'
 PINNED_SOURCES = {
+    'POLICY_CAS_RENOVATION_USEFUL_LIFE': {
+        'source_id': 'mof-qa-3962188', 'publication_date': '2025-04-17', 'locator': 'div.TRS_Editor',
+        'url': SOURCE_BASE + 'gdzczzsswd/202504/t20250417_3962188.htm',
+        'source_sha256': 'ea4b0ddb46f90dea332ad1b16b130dcbbb5aa40d81d62b85785ba7a8e00948c2',
+    },
+    'POLICY_CAS_RENOVATION_REPLACED_PART': {
+        'source_id': 'mof-qa-3962188', 'publication_date': '2025-04-17', 'locator': 'div.TRS_Editor',
+        'url': SOURCE_BASE + 'gdzczzsswd/202504/t20250417_3962188.htm',
+        'source_sha256': 'ea4b0ddb46f90dea332ad1b16b130dcbbb5aa40d81d62b85785ba7a8e00948c2',
+    },
+    'POLICY_CAS_DATA_RESOURCE_DEVELOPMENT': {
+        'source_id': 'mof-qa-3946594', 'publication_date': '2024-10-31', 'locator': 'div.TRS_Editor',
+        'url': SOURCE_BASE + 'sjzykjclsswd/202410/t20241030_3946594.htm',
+        'source_sha256': 'f681211b5dc8c2a5d578384fff60b88aa12a3952216827bbf9d12557b0ee126d',
+    },
+    'POLICY_CAS_EQUITY_METHOD_IMPAIRMENT': {
+        'source_id': 'mof-qa-3895086', 'publication_date': '2023-07-10', 'locator': 'div.TRS_Editor',
+        'url': SOURCE_BASE + 'zcjzzzsswd/202307/t20230710_3895086.htm',
+        'source_sha256': '3f7cf05d5f01ea61a53ccf5175aceefda3e547268608c6bc51d6cf6bc0fe0dce',
+    },
+    'POLICY_CAS_GOODWILL_CGU_ALLOCATION': {
+        'source_id': 'mof-qa-3895087', 'publication_date': '2023-07-10', 'locator': 'div.TRS_Editor',
+        'url': SOURCE_BASE + 'zcjzzzsswd/202307/t20230710_3895087.htm',
+        'source_sha256': '03af4a44716dad45381884f3f48eaa10e44f6b57da9328e8b0ba75746158b8a4',
+    },
+    'POLICY_CAS_DEBT_RESTRUCTURING_ASSET_MEASUREMENT': {
+        'source_id': 'mof-qa-3691695', 'publication_date': '2021-04-25', 'locator': 'div.TRS_Editor',
+        'url': SOURCE_BASE + 'zwcz/202104/t20210425_3691695.htm',
+        'source_sha256': 'fef454b7da8faf6d9af254037bc016a2c0b6f40e37cfa748c2717d5703a9344a',
+    },
+    'POLICY_CAS_DEBT_TO_EQUITY_CLASSIFICATION': {
+        'source_id': 'mof-qa-3664187', 'publication_date': '2021-03-02', 'locator': 'div.TRS_Editor',
+        'url': SOURCE_BASE + 'zwcz/202103/t20210302_3664187.htm',
+        'source_sha256': 'f03753c448f22a95d57afbdae9e42f507562d43ae850c0007a360cc4c48e50e0',
+    },
+    'POLICY_CAS_CONSTRUCTION_PROGRESS_GRANT': {
+        'source_id': 'mof-qa-3991864', 'publication_date': '2026-06-18', 'locator': 'div.TRS_Editor',
+        'url': SOURCE_BASE + 'zfbzzzsswd/202606/t20260618_3991864.htm',
+        'source_sha256': '1ae29b3b7795d55c5f6b5a069f3a9e265138b477042e35622fb79a33aeccf398',
+    },
+    'POLICY_CAS_CUSTOM_EQUIPMENT_BORROWING_COST': {
+        'source_id': 'mof-qa-3991866', 'publication_date': '2026-06-18', 'locator': 'div.TRS_Editor',
+        'url': SOURCE_BASE + 'jkwd/202606/t20260618_3991866.htm',
+        'source_sha256': 'ff59c6e493640ff9280909fe4ba83a6c80810a9ae6d205fb4c65da93004ff3b6',
+    },
+    'POLICY_CAS_LAND_USE_RIGHT_BORROWING_COST': {
+        'source_id': 'mof-qa-3634037', 'publication_date': '2020-12-11', 'locator': 'div.TRS_Editor',
+        'url': SOURCE_BASE + 'jkwd/202012/t20201211_3634037.htm',
+        'source_sha256': 'dbf4c36357e746e3f63fbf58e093cde295e9a806b84eca795d404c0924db8cff',
+    },
+    'POLICY_CAS_NON_EXCHANGEABLE_CURRENCY_RATE': {
+        'source_id': 'mof-qa-3994211', 'publication_date': '2026-07-23', 'locator': 'div.TRS_Editor',
+        'url': SOURCE_BASE + 'wbzs/202607/t20260723_3994211.htm',
+        'source_sha256': '35822076a90491de8e5317edc9e346691a391f54aca4931f2d822fb1c628c5c4',
+    },
+    'POLICY_CAS_ONE_YEAR_LEASE_TERM': {
+        'source_id': 'mof-qa-3717408', 'publication_date': '2021-06-10', 'locator': 'div.TRS_Editor',
+        'url': SOURCE_BASE + 'zlzzsswd/202106/t20210610_3717408.htm',
+        'source_sha256': '0a21c3f1376ee54b3778cfd3effab18a674769b9f20269757c961c89c0f028c2',
+    },
+    'POLICY_CAS_PRIOR_PERIOD_ERROR_MATERIALITY': {
+        'source_id': 'mof-qa-3962193', 'publication_date': '2025-04-17', 'locator': 'div.TRS_Editor',
+        'url': SOURCE_BASE + 'kjzckjgjbgzzsswd/202504/t20250417_3962193.htm',
+        'source_sha256': '5d5d886b02afccc860470093d60e75f339f7a8a6f464d0535fb092f8930fac9f',
+    },
     'POLICY_CAS_GROUP_SHARE_PAYMENT': {
         'source_id': 'mof-qa-3664183', 'publication_date': '2021-03-02', 'locator': 'div.TRS_Editor',
         'url': SOURCE_BASE + 'gfzzsswd/202103/t20210302_3664183.htm',
@@ -446,14 +511,14 @@ def test_irrelevant_snapshot_evidence_does_not_change_conclusion():
 
 def test_identity_is_explicit_and_source_bound():
     identity = policy_rule_identity()
-    assert identity['version'] == 'policy-consistency-v4'
+    assert identity['version'] == 'policy-consistency-v5'
     assert re.fullmatch(r'[0-9a-f]{64}', identity['source_sha256'])
     assert identity == policy_rule_identity()
 
 
-def test_catalog_exposes_exact_six_reviewed_sources_without_claiming_all_32():
+def test_catalog_exposes_exactly_the_reviewed_sources():
     catalog = policy_rule_catalog()
-    assert len(catalog) == 20
+    assert len(catalog) == 33
     assert {item['rule_id'] for item in catalog} == set(PINNED_SOURCES)
     for item in catalog:
         assert item['source'] == PINNED_SOURCES[item['rule_id']]
