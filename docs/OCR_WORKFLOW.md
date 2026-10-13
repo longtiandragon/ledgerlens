@@ -24,7 +24,7 @@ $env:OCR_MODELS_DIR = (Resolve-Path '.local/ocr-models').Path
 & scripts/start-local.ps1 -SkipInstall
 ```
 
-缺少配置时网页显示未启用，上传返回 503；路径存在但环境/权重不匹配时任务明确失败。启动脚本使用的本地 `create_all` 会增加新表；部署的 Alembic 冻结迁移新增 `0005`，只向前迁移。迁移测试覆盖从 `0004` 保留已有原件行升级，禁止破坏性降级。PostgreSQL 的新迁移尚未实库验收。
+缺少配置时网页显示未启用，上传返回 503；路径存在但环境/权重不匹配时任务明确失败。启动脚本使用的本地 `create_all` 会增加新表；部署的 Alembic 冻结迁移新增 `0005`，只向前迁移。迁移测试覆盖从 `0004` 保留已有原件行升级，禁止破坏性降级。后续已在真实PostgreSQL临时schema补验0004→0005→0006，原件、快照、OCR观察及人工复核保持，见[迁移补验](REFERENCE_WORKFLOW.md#postgresql-迁移补验)；没有执行生产部署。
 
 ## 已执行验证与限制
 

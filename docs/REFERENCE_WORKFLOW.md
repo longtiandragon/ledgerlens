@@ -74,3 +74,14 @@ npm run build
 最终测试数量、时长、源文件及原始证据哈希见 [reference-workflow-validation.json](reference-workflow-validation.json)。保留首次定向真实查询记录 `runtime/reference-e2e-v1` 和全量记录 `runtime/reference-all-e2e-v2`。
 
 未验证：独立未见查询上的检索改进、无答案拒答能力、条文适用性的专业判断、规模性能、多进程任务队列及组织权限。没有改提示词/窗口/模型，没有再次调试或打分原有20条评测查询，没有调用付费模型。
+
+### PostgreSQL 迁移补验
+
+产品接入完成后，另在本机专用 PostgreSQL 的随机临时 schema 实跑两条升级路径：空库至0006；0004保留原件和快照，0005加入OCR观察及人工复核后再升0006。两条路径均与ORM表、字段、类型、索引和约束完全一致；旧JSON与金额字符串原样保留，参考选择的账套版本/父版本唯一约束拒绝重复，重复升级不增数据。整个外层事务最后回滚，新连接确认临时schema不存在，未改专用持久索引或实际应用数据。
+
+迁移专项8项通过、0跳过（18.28秒），含2项实际PG；其余6项为SQLite和SQL生成检查。此追加验证未重跑全部前端/后端，上一节全量记录不变。详情见 [postgres-migration-validation.json](postgres-migration-validation.json)。这不等于生产部署或远程应用库迁移。
+
+```powershell
+$env:MIGRATION_POSTGRES_TESTS='1'
+.venv/Scripts/python.exe -m pytest backend/tests/test_migrations.py backend/tests/test_migrations_postgres.py -q
+```

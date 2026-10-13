@@ -12,7 +12,7 @@
 |调查提示/工具版本|`investigation-v26` / `snapshot-tools-v11`；root_cause已改窄契约，真实模型尚未验证|
 |政策规则包|`policy-consistency-v4`，20 条（CAS 18 / SCAS 2），101 个手写投影全部通过|
 |流程规则包|`bpi2019-process-rules-v1`，9 条；流程模型解释 `process-investigation-v1`|
-|数据库迁移|冻结至 `0006`（参考检索任务和人工选择版本；只允许向前迁移）|
+|数据库迁移|冻结至 `0006`（参考检索任务和人工选择版本；只允许向前迁移）；SQLite及真实PostgreSQL临时schema迁移8项通过，见postgres-migration-validation.json|
 |测试|最新后端全量1973通过、2项Windows文件链接权限跳过（116.65秒，含9项实际PG）；浏览器45通过、0跳过（3.2分钟），含真实OCR及BGE人工选择/快照/规则调查闭环，见REFERENCE_WORKFLOW|
 |DeepSeek 余额|¥2.60（2026-10-12 查询）；配置模型 `deepseek-flash`|
 

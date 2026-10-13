@@ -1,0 +1,54 @@
+{
+  "schema_version": "postgres-migration-validation-v1",
+  "date": "2026-10-13",
+  "status": "passed",
+  "target_revision": "0006",
+  "connection": "dedicated loopback test PostgreSQL on 127.0.0.1:55439",
+  "migration_suite": {
+    "passed": 8,
+    "skipped": 0,
+    "seconds": 18.28
+  },
+  "live_cases": [
+    {
+      "name": "test_live_postgres_forward_migrations_preserve_evidence_and_constraints[base]",
+      "seconds": 2.621
+    },
+    {
+      "name": "test_live_postgres_forward_migrations_preserve_evidence_and_constraints[0004]",
+      "seconds": 1.472
+    }
+  ],
+  "checks": [
+    "fresh schema upgrades from base to head",
+    "0004 document and snapshot rows retained through 0005 and 0006",
+    "0005 OCR output and human review retained through 0006",
+    "live table columns types indexes and constraints match ORM metadata",
+    "choice book/version and parent uniqueness reject duplicates",
+    "head upgrade is idempotent",
+    "outer transaction stays active",
+    "all schema DDL and fixture rows rolled back",
+    "fresh connection confirms generated schema absent"
+  ],
+  "report": {
+    "path": "runtime/postgres-migration-v1.xml",
+    "sha256": "4c3dc92280300323a31b59c618d2dc6b83cb58ea691825e2b43a43ed09a4a2e7"
+  },
+  "source_sha256": {
+    "backend/tests/test_migrations_postgres.py": "755f74b12e169fe6513173995e2b889bc28366c4651d961944f0aec3ae3d5acb",
+    "backend/migrations/env.py": "47c866fc74179a444a55d2a3658246304d7289dabcad6bf3f52daa36d9d3fbf5",
+    "backend/migrations/versions/0001_initial.py": "3f310287409b2587d03e8db329596715e80c676975e799e9e493da3681ff3de0",
+    "backend/migrations/versions/0002_policy_checks.py": "566775a7d0f68c2ede15e61730911f94cc8dd371429be56dd9ef5da233fa0318",
+    "backend/migrations/versions/0003_investigation_policy_context.py": "2fe1e92c72608c63dfd51d4cea59b0c0aa4cfa1f3277953efc7b8acd9b1b05b1",
+    "backend/migrations/versions/0004_evidence_requests.py": "b093c01a461589104c76e7230e24c014bfb27ae6cff286ebf3eb414af664b1fc",
+    "backend/migrations/versions/0005_ocr_reviews.py": "796b87890519e43119443ac7ccb2f35e8c2285ef266c3c42a286a22c891dbbf5",
+    "backend/migrations/versions/0006_reference_choices.py": "b0c0ddf5812d5dec484ca08b77d01db5a76dea5b1e63dcf19b79a0962327943e"
+  },
+  "paid_model_requests": 0,
+  "business_ledger_writes": 0,
+  "limitations": [
+    "Tests use temporary schema and synthetic fixtures on dedicated local PostgreSQL",
+    "Does not test remote production permissions multi-process workers or backup recovery",
+    "No deployment or live application database migration performed"
+  ]
+}
