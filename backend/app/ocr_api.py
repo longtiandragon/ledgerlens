@@ -1,4 +1,4 @@
-from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPException, UploadFile, Query
 from sqlalchemy import select
 from .db import session, Book, OcrRun
 from .config import settings
@@ -46,3 +46,19 @@ def review(identity: str, book_id: str, body: OcrReviewInput | OcrBatchReviewInp
     if run.book_id != book_id:
         raise HTTPException(404, '当前账套中没有该识别任务')
     return workflow.review(s, run, body)
+
+
+@router.get('/runs/{identity}/table-candidates')
+def table_candidates(identity: str, book_id: str, page: int = Query(default=1, ge=1, le=20), s=Depends(session)):
+    from .ocr_tables import candidates
+    run = workflow.get(s, OcrRun, identity)
+    if run.book_id != book_id:
+        raise HTTPException(404, '当前账套中没有该识别任务')
+    book = workflow.get(s, Book, book_id)
+    if run.status not in {'complete', 'partial'} or (run.book_version, run.period) != (book.version, book.period):
+        raise HTTPException(409, '识别任务未完成或账套政策已改变，不能生成表格候选')
+    workflow.verified(s, run)
+    try:
+        return {**candidates(run.result, page), 'run_id': run.id}
+    except ValueError as exc:
+        raise HTTPException(422, '该页不存在或文字几何无法解析') from exc

@@ -1,4 +1,15 @@
-import type { OcrReviewInput, OcrBatchReviewInput } from './generated/contracts'
+import type { OcrReviewInput, OcrBatchReviewInput, LedgerInput } from './generated/contracts'
+
+export interface OcrTableCandidate {
+  candidate_id: string; observation_ids: string[]; record: Partial<LedgerInput>
+  field_evidence: Record<string, string[]>; issues: string[]; copyable: boolean
+  cells: Record<string, { text: string; observation_ids: string[] }>
+}
+export interface OcrTables {
+  schema_version: string; run_id: string; result_digest: string; page: number; status: string
+  tables: { table_id: string; headers: { field: string; text: string; observation_id: string }[]; rows: OcrTableCandidate[] }[]
+  unassigned: { observation_ids: string[]; reason: string }[]; issues: string[]
+}
 
 export interface OcrLine {
   observation_id: string; text: string; confidence: number

@@ -1,0 +1,259 @@
+{
+  "schema_version": "ocr-table-validation-v1",
+  "date": "2026-10-13",
+  "status": "passed",
+  "scope": "Limited explicit-header single-line table candidates, human review and import on synthetic scans only",
+  "algorithm": "ocr-table-candidates-v1",
+  "paid_requests": 0,
+  "new_dependencies": 0,
+  "checks": {
+    "backend": {
+      "passed": 2017,
+      "skipped": 2,
+      "seconds": 144.31,
+      "live_pg_index_and_migrations": true,
+      "skip_reason": "Windows file-link permissions",
+      "warning": "Existing record_property/xunit2 report compatibility"
+    },
+    "targeted_backend": {
+      "passed": 22,
+      "seconds": 2.54
+    },
+    "browser": {
+      "passed": 48,
+      "skipped": 0,
+      "reported_duration": "4.4m"
+    },
+    "final_screenshot_followup": {
+      "passed": 2,
+      "seconds": 39.9
+    },
+    "build_seconds": 19.56,
+    "ruff": "passed",
+    "contracts": "passed"
+  },
+  "offline_reverification": {
+    "source_result_hashes": "passed",
+    "candidate_replay": "passed",
+    "observation_coverage_unique_and_complete": "passed",
+    "manual_expected_fields": 12,
+    "human_import_field_values_and_locators": "passed",
+    "zero_amount_preserved": true
+  },
+  "cases": [
+    {
+      "case_id": "clear-table",
+      "directory": "runtime/ocr-tables-all-e2e-v2",
+      "status": "passed",
+      "observations": 18,
+      "candidate_records": 3,
+      "confirmed_records": 3,
+      "artifacts": [
+        {
+          "path": "runtime/ocr-tables-all-e2e-v2/ocr-tables-真实扫描表格候选：clear-table/imports.json",
+          "sha256": "7acac7cab839f0f9257aafff69d3ef4959c368a9420dc3da2977398ae7aaf303"
+        },
+        {
+          "path": "runtime/ocr-tables-all-e2e-v2/ocr-tables-真实扫描表格候选：clear-table/ocr-run.json",
+          "sha256": "412ea754b66e9190624b69dfefc115ec204c312a21377e3517470ea2040f1ae8"
+        },
+        {
+          "path": "runtime/ocr-tables-all-e2e-v2/ocr-tables-真实扫描表格候选：clear-table/records.json",
+          "sha256": "a7070ca75838b64b8eb7efb41bc8c0c755417e74dc81d9ca99782fa464d45f52"
+        },
+        {
+          "path": "runtime/ocr-tables-all-e2e-v2/ocr-tables-真实扫描表格候选：clear-table/table-candidates-desktop.png",
+          "sha256": "90d946bc7bc87a7112e0c115b2b1bc3d87941dba0d8eb1a0f8ff9d0f1562b68c"
+        },
+        {
+          "path": "runtime/ocr-tables-all-e2e-v2/ocr-tables-真实扫描表格候选：clear-table/table-candidates.json",
+          "sha256": "3f738fbcc06d9ddda229bd1edafe2633e1a300c788b32e7d7a766e177187c4fb"
+        },
+        {
+          "path": "runtime/ocr-tables-all-e2e-v2/ocr-tables-真实扫描表格候选：clear-table/table-mobile.png",
+          "sha256": "f5bda0573d6622be722c39ab790f03c5dbcfb8bb9d8023b5aa7834cb6af6bf2d"
+        },
+        {
+          "path": "runtime/ocr-tables-all-e2e-v2/ocr-tables-真实扫描表格候选：clear-table/table-ui-checks.json",
+          "sha256": "66eedbce2e91a5875850d8d9d09c80b5c402147df6cbba9324f6cf36a7c3bab0"
+        }
+      ]
+    },
+    {
+      "case_id": "clear-table",
+      "directory": "runtime/ocr-tables-e2e-v3",
+      "status": "passed",
+      "observations": 18,
+      "candidate_records": 3,
+      "confirmed_records": 3,
+      "artifacts": [
+        {
+          "path": "runtime/ocr-tables-e2e-v3/ocr-tables-真实扫描表格候选：clear-table/imports.json",
+          "sha256": "864940e569f1a9342759c825ed98f364c1a752718fd84c7be7347794364965b9"
+        },
+        {
+          "path": "runtime/ocr-tables-e2e-v3/ocr-tables-真实扫描表格候选：clear-table/ocr-run.json",
+          "sha256": "6e9a35d9893dbd66b6f723755b361bf0586585fa215f37ae5fa6c08b4ca9cda8"
+        },
+        {
+          "path": "runtime/ocr-tables-e2e-v3/ocr-tables-真实扫描表格候选：clear-table/records.json",
+          "sha256": "7a0c9aa43322615a7ea506988c45a31dfb3372e4dcb41aa9ba991ad40deaee78"
+        },
+        {
+          "path": "runtime/ocr-tables-e2e-v3/ocr-tables-真实扫描表格候选：clear-table/table-candidates-desktop.png",
+          "sha256": "90d946bc7bc87a7112e0c115b2b1bc3d87941dba0d8eb1a0f8ff9d0f1562b68c"
+        },
+        {
+          "path": "runtime/ocr-tables-e2e-v3/ocr-tables-真实扫描表格候选：clear-table/table-candidates.json",
+          "sha256": "c8069183b32dfb0c793ee98bc32ee54458969513508fa75fb7cac429ab18af0f"
+        },
+        {
+          "path": "runtime/ocr-tables-e2e-v3/ocr-tables-真实扫描表格候选：clear-table/table-mobile.png",
+          "sha256": "a03214e159e9f254d43b818272dfe3a8bf7011fc89a0bd9e7f64e78cf3a0662d"
+        },
+        {
+          "path": "runtime/ocr-tables-e2e-v3/ocr-tables-真实扫描表格候选：clear-table/table-ui-checks.json",
+          "sha256": "c935bbcbe9eecc223131912f4f933d7a068bf06fa5aadf6174a54d58ab8d160e"
+        }
+      ]
+    },
+    {
+      "case_id": "unsupported-columns",
+      "directory": "runtime/ocr-tables-all-e2e-v2",
+      "status": "passed",
+      "observations": 18,
+      "candidate_records": 0,
+      "confirmed_records": 0,
+      "artifacts": [
+        {
+          "path": "runtime/ocr-tables-all-e2e-v2/ocr-tables-真实扫描表格候选：unsupported-columns/imports.json",
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "path": "runtime/ocr-tables-all-e2e-v2/ocr-tables-真实扫描表格候选：unsupported-columns/ocr-run.json",
+          "sha256": "806bf158e6a7c26c67d72371ac19bf0a6e19d512482fdd8895f06b743435f9b7"
+        },
+        {
+          "path": "runtime/ocr-tables-all-e2e-v2/ocr-tables-真实扫描表格候选：unsupported-columns/records.json",
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "path": "runtime/ocr-tables-all-e2e-v2/ocr-tables-真实扫描表格候选：unsupported-columns/table-candidates-desktop.png",
+          "sha256": "66a7064f43b16f8291f8d02019027230a99a996551f95b8b8da7642515825e25"
+        },
+        {
+          "path": "runtime/ocr-tables-all-e2e-v2/ocr-tables-真实扫描表格候选：unsupported-columns/table-candidates.json",
+          "sha256": "cb49d864d4273b2bcd568c83883f70c10a8544e5bf2ce0035cf00c59c77ddb8e"
+        },
+        {
+          "path": "runtime/ocr-tables-all-e2e-v2/ocr-tables-真实扫描表格候选：unsupported-columns/table-mobile.png",
+          "sha256": "7683758c56876f6c09edce7648667be6ddee6d1067b9355762b246ace557ad16"
+        },
+        {
+          "path": "runtime/ocr-tables-all-e2e-v2/ocr-tables-真实扫描表格候选：unsupported-columns/table-ui-checks.json",
+          "sha256": "ce958e25bde7245f83e9c98a566b3daa77b9329bb059220a167351d23a9a39f3"
+        }
+      ]
+    },
+    {
+      "case_id": "unsupported-columns",
+      "directory": "runtime/ocr-tables-e2e-v3",
+      "status": "passed",
+      "observations": 18,
+      "candidate_records": 0,
+      "confirmed_records": 0,
+      "artifacts": [
+        {
+          "path": "runtime/ocr-tables-e2e-v3/ocr-tables-真实扫描表格候选：unsupported-columns/imports.json",
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "path": "runtime/ocr-tables-e2e-v3/ocr-tables-真实扫描表格候选：unsupported-columns/ocr-run.json",
+          "sha256": "45e61bb061d4adbdc32c7e042e5f50177092227633bc22dbe6b93d6bbc3d3eaa"
+        },
+        {
+          "path": "runtime/ocr-tables-e2e-v3/ocr-tables-真实扫描表格候选：unsupported-columns/records.json",
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "path": "runtime/ocr-tables-e2e-v3/ocr-tables-真实扫描表格候选：unsupported-columns/table-candidates-desktop.png",
+          "sha256": "66a7064f43b16f8291f8d02019027230a99a996551f95b8b8da7642515825e25"
+        },
+        {
+          "path": "runtime/ocr-tables-e2e-v3/ocr-tables-真实扫描表格候选：unsupported-columns/table-candidates.json",
+          "sha256": "6d5da61c50991c2918b503fbf53639c4c5d3815bcf346668ab08174396b83685"
+        },
+        {
+          "path": "runtime/ocr-tables-e2e-v3/ocr-tables-真实扫描表格候选：unsupported-columns/table-mobile.png",
+          "sha256": "33a75b5d31bbb598d0cd5f29c85284162460be41ab4b8c1dad83e2d4ffe24995"
+        },
+        {
+          "path": "runtime/ocr-tables-e2e-v3/ocr-tables-真实扫描表格候选：unsupported-columns/table-ui-checks.json",
+          "sha256": "2968208bb95343d91fee93d2e84264670195c1c142d7d34bea10e2fb0bd49220"
+        }
+      ]
+    }
+  ],
+  "fixture_manifest": {
+    "path": ".local/ocr-tables-v1/manifest.json",
+    "sha256": "64ce419106be32b0ff19876351b091f85ce736b9be1cb252d8caf04f8e35d306"
+  },
+  "local_predictions": [
+    {
+      "path": ".local/ocr-tables-v1/clear-prediction-v1.json",
+      "sha256": "a9a3b9dc19b22dd5fad85b1bda9981f14004d3a4e9546a45abcb54709751feed"
+    },
+    {
+      "path": ".local/ocr-tables-v1/unsupported-prediction-v1.json",
+      "sha256": "b5858c68dd547264f89f1a6e0508eacd3f788539fb0d06d7bfbe3667f967a61b"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "backend/app/ocr_tables.py",
+      "sha256": "b9d0ff700ed8daae55cd147148aa1569fc37b5f63499f4d3f81f1cf9438a939c"
+    },
+    {
+      "path": "backend/app/ocr_api.py",
+      "sha256": "22e5388c81dc9d1cebb11baf63b7942947542f233dd0c595f20eafcc9b9ba2af"
+    },
+    {
+      "path": "backend/tests/test_ocr_tables.py",
+      "sha256": "b2e24fde808359000f806c0476a37339bb3604ef53fd9ca86fb689e7e6c5dbca"
+    },
+    {
+      "path": "datasets/generate_ocr_tables.py",
+      "sha256": "fbc5a0c5543fc7c955e659ada19b7cc840f7654969e564207aeca0fc89d6a9b9"
+    },
+    {
+      "path": "frontend/src/components/OcrTableCandidates.vue",
+      "sha256": "a74d9bd4c5f26321bcc2d872404f06f39a2b560e7fd7af00e5b16ab6d13c2446"
+    },
+    {
+      "path": "frontend/src/components/OcrReviewPanel.vue",
+      "sha256": "e31af5e32a25f134c5f8a43eebdc5e5be6e8b4506360014b3f0773db6c7d547c"
+    },
+    {
+      "path": "frontend/tests/ocr-tables.spec.ts",
+      "sha256": "75a7b3f0991e37674087e29925886f776ded28063ff08846e071f71f0eafd0f6"
+    },
+    {
+      "path": "runtime/verify_ocr_tables_v1.py",
+      "sha256": "292435492621c10a36c6b48e692f98ad1e1dfe450e674a763f2781219cc107fe"
+    }
+  ],
+  "backend_junit": {
+    "path": "runtime/ocr-tables-backend-v1.xml",
+    "sha256": "c26dd18dbf0ee654c1e683b2bb6f3496b74f87bd74958ec7b3b9b3c3b4887382"
+  },
+  "retained_findings": [
+    "Initial mobile screenshots caught sidebar closing transition; capture now waits until sidebar is offscreen. Two final followup tests and visual inspection passed.",
+    "Previous six-image/PDF OCR score remains 23/24 strings and 28/35 full lines; no accuracy claim from human corrections."
+  ],
+  "limitations": [
+    "Only two independent manually specified synthetic layouts; no general OCR accuracy estimate.",
+    "Merged, multiline, rotated, complex, handwritten and real business tables unverified or unsupported.",
+    "Valid-looking OCR substitutions can still be wrong; every candidate requires human verification.",
+    "No paid v26 smoke or sealed evaluation executed."
+  ]
+}

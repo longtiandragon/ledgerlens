@@ -2,8 +2,9 @@
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { api, type ImportPreview } from '../api'
 import type { LedgerInput, OcrRecordInput, OcrBatchReviewInput } from '../generated/contracts'
-import type { OcrRun, OcrLine, OcrPage } from '../ocr'
+import type { OcrRun, OcrLine, OcrPage, OcrTableCandidate } from '../ocr'
 import OcrSourcePreview from './OcrSourcePreview.vue'
+import OcrTableCandidates from './OcrTableCandidates.vue'
 
 const props = defineProps<{ bookId: string; period: string; currency: string }>()
 const emit = defineEmits<{ preview: [value: ImportPreview] }>()
@@ -49,6 +50,18 @@ function resetForm() {
 function selectRecord(index: number) { activeRecord.value = index; selectedLine.value = undefined }
 function addRecord() { if (drafts.value.length >= 100) return; drafts.value.push(blank()); selectRecord(drafts.value.length - 1) }
 function removeRecord() { if (drafts.value.length <= 1) return; drafts.value.splice(activeRecord.value, 1); selectRecord(Math.min(activeRecord.value, drafts.value.length - 1)) }
+function locateObservation(id: string) { const line = lines.value.find(l => l.observation_id === id); if (line) inspect(line) }
+function appendCandidates(rows: OcrTableCandidate[], recordKind: LedgerInput['kind']) {
+  if (!canReview.value || busy.value) return
+  const empty = drafts.value.length === 1 && !drafts.value[0]!.sourceId && !Object.values(drafts.value[0]!.values).some(Boolean)
+  const existing = empty ? [] : drafts.value
+  if (existing.length + rows.length > 100) { error.value = '本批最多100条记录，未加入候选；请减少选择或分批处理。'; return }
+  const additions = rows.map(row => ({ kind: recordKind, sourceId: row.record.source_id || '',
+    values: Object.fromEntries(Object.entries(row.record).filter(([k]) => k !== 'source_id').map(([k,v]) => [k,String(v)])),
+    bindings: Object.fromEntries(Object.entries(row.field_evidence).map(([k,ids]) => [k,ids[0] || ''])) }))
+  drafts.value = [...existing, ...additions]; selectRecord(existing.length); confirmed.value = false
+  message.value = `已加入 ${additions.length} 条待核实草稿，请逐条核对来源编号、日期、金额和原文引用。`
+}
 function collectEntries(): OcrRecordInput[] {
   const identities = new Set<string>()
   return drafts.value.map((item, index) => {
@@ -148,6 +161,7 @@ onBeforeUnmount(() => { disposed = true; selection++; controller.abort(); clearT
           <div class="ocr-lines" aria-label="待核实原文行"><button v-for="line in currentPage?.observations || []" :key="line.observation_id" type="button" :class="{selected:selectedLine?.observation_id===line.observation_id}" @click="inspect(line)"><span>{{ line.locator.line }}</span><strong>{{ line.text }}</strong><small>{{ (line.confidence*100).toFixed(1) }}%</small></button><p v-if="!currentPage?.observations?.length" class="intro">{{ currentPage?.status==='failed'?'本页没有可用引用。':'本页未检出文字，不会自动生成空记录。' }}</p></div>
         </div>
         <form class="field-column" @submit.prevent="save"><h3>02 / 人工填写字段</h3><p class="intro">一份原件可核实多条业务记录。逐条填写并选择原文行，全部核实后整批生成预览；无内容的可选字段请留空。</p>
+          <OcrTableCandidates :run-id="run.id" :result-digest="run.result_digest" :book-id="bookId" :page="page" :disabled="!canReview || busy" @append="appendCandidates" @locate="locateObservation"/>
           <div class="record-list" aria-label="本次复核记录"><button v-for="(item,index) in drafts" :key="index" class="record-tab" type="button" :aria-pressed="activeRecord===index" :disabled="busy" @click="selectRecord(index)"><span>{{ String(index+1).padStart(2,'0') }}</span><strong>{{ item.sourceId || '待填写来源编号' }}</strong><small>{{ kinds[item.kind] }}</small></button></div>
           <fieldset :disabled="!canReview || busy"><div class="record-actions"><strong>记录 {{ activeRecord+1 }} / {{ drafts.length }}</strong><button class="text-button" type="button" :disabled="drafts.length>=100" @click="addRecord">新增一条记录</button><button class="text-button" type="button" :disabled="drafts.length<=1" @click="removeRecord">移除当前草稿</button></div><div class="context-grid"><label>记录类型<select v-model="kind" aria-label="OCR记录类型"><option v-for="(label,key) in kinds" :key="key" :value="key">{{ label }}</option></select></label><label>来源编号<input v-model="sourceId" aria-label="OCR来源编号" required maxlength="200" placeholder="填写账套内唯一编号"/></label></div><p class="context-note">会计期间 {{ period }} · 币种 {{ currency }} · 每批最多 100 条</p>
             <div v-for="field in fields" :key="field" class="field-binding"><label :for="`ocr-value-${field}`">{{ labels[field] }}<span v-if="required(field)"> *</span></label><input :id="`ocr-value-${field}`" v-model="values[field]" :type="field==='business_date'?'date':'text'" :inputmode="['amount','debit','credit'].includes(field)?'decimal':undefined" :required="required(field)" :maxlength="field==='description'?2000:200"/><select v-model="bindings[field]" :aria-label="`${labels[field]}原文行`" :required="!!values[field]?.trim()" @change="locate(field)"><option value="">选择支持该字段的原文行</option><option v-for="line in lines" :key="line.observation_id" :value="line.observation_id">P{{ line.locator.page }} · {{ line.locator.line }} · {{ line.text }}</option></select></div>
