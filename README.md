@@ -21,6 +21,8 @@ powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1
 
 停止：`powershell -ExecutionPolicy Bypass -File scripts/stop-local.ps1`。启动器仅管理自身记录的进程。
 
+已有完整依赖缓存时，可执行 `.venv/Scripts/python.exe scripts/validate_clean_checkout.py --output .local/clean-checkout-new`，从Git提交导出干净源码，在独立空库重跑安装、数据生成、规则与网页验收。条件、保留的失败及验证边界见[干净源码复现](docs/CLEAN_CHECKOUT.md)。
+
 ## 体验完整流程
 
 1. 建立账套，选择 CAS（企业会计准则）或 SCAS（小企业会计准则），期间选择 `2026-09`。

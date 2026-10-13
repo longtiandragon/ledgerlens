@@ -13,7 +13,7 @@
 |政策规则包|`policy-consistency-v4`，20 条（CAS 18 / SCAS 2），101 个手写投影全部通过|
 |流程规则包|`bpi2019-process-rules-v1`，9 条；流程模型解释 `process-investigation-v1`|
 |数据库迁移|冻结至 `0006`（参考检索任务和人工选择版本；只允许向前迁移）；SQLite及真实PostgreSQL临时schema迁移8项通过，见postgres-migration-validation.json|
-|测试|最新后端全量2017通过、2项Windows文件链接权限跳过（144.31秒，含实际PG索引和迁移）；浏览器48通过、0跳过（4.4分钟），含OCR有限表格候选、跨页多记录整批导入与BGE选择/快照闭环，见OCR_TABLES、OCR_WORKFLOW及REFERENCE_WORKFLOW|
+|测试|干净源码基础环境2004通过、40项可选/本机条件跳过；网页40通过、8项可选场景跳过，见CLEAN_CHECKOUT。此前启用实际PG/本机模型资料的后端全量2017通过、2项Windows文件链接权限跳过（144.31秒）；浏览器48通过、0跳过（4.4分钟），两种环境范围不同，不互相替代|
 |DeepSeek 余额|¥2.60（2026-10-12 查询）；配置模型 `deepseek-flash`|
 
 ## 2. 启动与常用命令（PowerShell，仓库根目录）
@@ -108,6 +108,8 @@ docker compose -f infra/erpnext/compose.yaml up -d
 6. **观测**：OpenTelemetry本地span与费用未知值处理已实现、真实规则调查验收通过；Langfuse和远端Collector未接入，见 [OBSERVABILITY](OBSERVABILITY.md)。
 7. **ERPNext有限场景差分已完成**：外币账户／本位币、多公司、库存21项；订单→部分收货→发票→部分付款21项；含税采购→部分退货24项。各自重复执行记录一致；测试税率不代表税法。保留日期覆盖失败账套，USD本位币仍拒绝，复杂税费、退款、取消、汇兑与真实业务未验证，详见 [ERPNEXT_SEMANTICS](ERPNEXT_SEMANTICS.md) 和 [ERPNEXT_TAX_RETURN](ERPNEXT_TAX_RETURN.md)。
 8. **需要外部条件**：企业授权真实账套试点、会计专业复核、多用户审签与社区发布。
+
+本地交付已补做[干净源码复现](CLEAN_CHECKOUT.md)：从提交aebfada导出、不带本机资料/模型/密钥，以完整现有缓存重新安装、生成480规则案例并在空库跑网页。保留npm缺缓存和可选依赖测试夹具不完整的两次失败；修复后全流程通过。无缓存联网安装、独立操作系统与远端CI仍未验证。
 
 ## 8. 交接时的状态核对
 
