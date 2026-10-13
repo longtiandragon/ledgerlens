@@ -1,0 +1,138 @@
+{
+  "schema_version": "linux-core-validation-summary-v1",
+  "status": "passed",
+  "steps": [
+    {
+      "name": "platform-probe",
+      "exit_code": 0,
+      "seconds": 0.42,
+      "sha256": "ec987130b56fd3a82e7c54f10bb7e42309f14a3e82906b1ba87cd2e29e5b585e"
+    },
+    {
+      "name": "rules",
+      "exit_code": 0,
+      "seconds": 0.42,
+      "sha256": "481a68b01b2ec103622609ed85074430c0cc0cec07c82fe932cba3145d684d4a"
+    },
+    {
+      "name": "tests",
+      "exit_code": 0,
+      "seconds": 1.52,
+      "sha256": "549abc1f2ff45b8efc5cbb0616b98cd5f9841ffaaa3323c752bd0c59a27ceacf"
+    }
+  ],
+  "source_commit": "562f255f42066cb174fe3bd4e963f8beff7587a8",
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+  "started_at": "2026-10-13T12:46:50.729643+00:00",
+  "scope": "Standard-library rule benchmark, bounded-enumeration matching and SQLite backup/restore on WSL Linux",
+  "model_requests": 0,
+  "system_packages_installed": 0,
+  "network_downloads": 0,
+  "platform_probe": {
+    "ortools_present": false,
+    "backend": "bounded_enumeration",
+    "amount": "0.30",
+    "pytest_path": "/tmp/ledgerlens-linux-core-pf_3vky7/test-packages/pytest/__init__.py",
+    "rule_identity": {
+      "version": "0.1.0",
+      "source_sha256": "68feb372169d79ad1af4cf996639e4794b73daafe66bfa817adda4736b5fe729"
+    },
+    "filesystem": "ext2/ext3"
+  },
+  "retained_benchmark_reports": {
+    "rules-all.json": "e1a5f0d18e2b32ab4ef384679971cf933c3046b0d74882b8c39975785ab845c1",
+    "reference-cases.json": "5d4cba30fffc719fefc8534f8bdb69f03dec618cae86e4bc27aa1677e8e61c23"
+  },
+  "tests": {
+    "tests": 68,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "source_files_unchanged": 393,
+  "seconds": 2.79,
+  "rule_cases": {
+    "passed": 480,
+    "total": 480,
+    "normal": 160,
+    "independent_references_passed": 30
+  },
+  "test_modules": {
+    "test_matching": 24,
+    "test_restore": 11,
+    "test_backup_manifest": 21,
+    "test_backup_links": 12
+  },
+  "windows_new_link_tests": {
+    "passed": 0,
+    "skipped": 12,
+    "reason": "Windows link creation privilege unavailable"
+  },
+  "rule_identity_equal_windows_linux": true,
+  "packages": [
+    {
+      "name": "pytest",
+      "version": "9.1.1",
+      "license": "MIT",
+      "wheel": "Wheel-Version: 1.0\nGenerator: setuptools (82.0.1)\nRoot-Is-Purelib: true\nTag: py3-none-any\n\n",
+      "files": 91
+    },
+    {
+      "name": "pluggy",
+      "version": "1.6.0",
+      "license": "MIT",
+      "wheel": "Wheel-Version: 1.0\nGenerator: setuptools (80.7.1)\nRoot-Is-Purelib: true\nTag: py3-none-any\n\n",
+      "files": 16
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.1",
+      "license": "MIT",
+      "wheel": "Wheel-Version: 1.0\nGenerator: setuptools (84.0.0)\nRoot-Is-Purelib: true\nTag: py3-none-any\n\n",
+      "files": 12
+    },
+    {
+      "name": "packaging",
+      "version": "26.3",
+      "license": "Apache-2.0 OR BSD-2-Clause",
+      "wheel": "Wheel-Version: 1.0\nGenerator: flit 3.12.0\nRoot-Is-Purelib: true\nTag: py3-none-any\n",
+      "files": 31
+    },
+    {
+      "name": "pygments",
+      "version": "2.21.0",
+      "license": "BSD-2-Clause",
+      "wheel": "Wheel-Version: 1.0\nGenerator: hatchling 1.32.0\nRoot-Is-Purelib: true\nTag: py3-none-any\n",
+      "files": 351
+    }
+  ],
+  "raw_report": ".local/linux-core-v2/report.json",
+  "evidence_sha256": {
+    ".local/linux-core-v2/bundle.json": "77e0b112cb81107c8c6eb94cbb329675fad986edf867fbe0de78603fa50e0bda",
+    ".local/linux-core-v2/reference-cases.json": "5d4cba30fffc719fefc8534f8bdb69f03dec618cae86e4bc27aa1677e8e61c23",
+    ".local/linux-core-v2/report.json": "d833958a9180d82100581683b0fe41c1a9a006b7662f0a17761b42eee3a24bcf",
+    ".local/linux-core-v2/rules-all.json": "e1a5f0d18e2b32ab4ef384679971cf933c3046b0d74882b8c39975785ab845c1",
+    ".local/linux-core-v2/platform-probe.log": "ec987130b56fd3a82e7c54f10bb7e42309f14a3e82906b1ba87cd2e29e5b585e",
+    ".local/linux-core-v2/rules.log": "481a68b01b2ec103622609ed85074430c0cc0cec07c82fe932cba3145d684d4a",
+    ".local/linux-core-v2/tests.log": "549abc1f2ff45b8efc5cbb0616b98cd5f9841ffaaa3323c752bd0c59a27ceacf",
+    ".local/linux-core-v2/worker.log": "22f844e15a4d03a30e124ff8be984a4c2343b0fc7b6d22d9b693e0e4f448ef64",
+    ".local/linux-core-v2/tests.xml": "282fcc4b33a9826eba07be42bb9e43b09c6502962fddc9d4cef260e7b6291e9f",
+    ".local/linux-core-v2/source.zip": "cc818fcc4ca7e360c0419a60a4ad90242c967352a084fb3acbc6d8140dc35521",
+    ".local/linux-core-v2/test-packages.zip": "c329e71734d99ddd7e2d408f238219051f5d5a20a1e3a497f1fd6332c65b42ee",
+    "runtime/backup-links-windows-v1.xml": "39bfadf86381fa9dab6761c5f50b2fdbd00572bcf64465090dd543f357733a1d"
+  },
+  "initial_run": {
+    "report": ".local/linux-core-v1/report.json",
+    "sha256": "ca525c2e69a339839f0e17bec58f491fe54dc34fb44c4a4712239dc14df7731a",
+    "status": "passed_with_less_retained_evidence",
+    "note": "WSL temporary workspace was absent during post-run probe; v2 captures platform and full reports before exiting."
+  },
+  "limitations": [
+    "WSL Linux on same Windows host, not an independent machine or full Linux deployment",
+    "Existing locked pure test packages copied with RECORD and license metadata; not a Linux lockfile install",
+    "No OR-Tools native solver, Hypothesis native dependency, full backend, HTTP, browser, PostgreSQL or Docker tests",
+    "No paid model or new root-cause sealed evaluation",
+    "Linux temporary workspace may disappear; archives, logs and full benchmark reports retained on host"
+  ]
+}

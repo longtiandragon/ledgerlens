@@ -516,3 +516,14 @@ v3验证提交aebfada：后端2004通过、40跳过、0失败，pytest124.37秒�
 检索实验归档后检查Linux容器复现条件：初始Docker API不可用、Ubuntu和docker-desktop WSL均停止。使用Docker自带启动命令（timeout 45）后，Desktop和backend进程确实出现；保留原进程观察，未重复拉起。API探测仍找不到引擎管道，随后启动命令退出1，backend日志明确记录服务初始化失败并退出。
 
 实际错误发生在本机Docker Inference manager通信端点C:/Users/20987/AppData/Local/Docker/run/dockerInference：系统无法访问文件、监听路径语法错误。记录为[跨平台前置条件失败](cross-platform-readiness.json)。没有开始Linux测试、请求新镜像或修改/删除Docker宿主配置与数据；不是项目测试失败，也不能标记跨平台验收通过。需要运行环境恢复后再做真实验证，已有本地检索实验结论不受影响。
+
+
+## WSL Linux核心子集离线复现（2026-10-13）
+
+Docker启动故障后，现有Ubuntu WSL可运行Python 3.12.3，但未安装完整API依赖。新增验收器从Git导出源码，只复用uv.lock固定且py3-none-any的pytest/pluggy/iniconfig/packaging/pygments五个测试包，核对purelib与RECORD、保留许可元数据和文件；解压后逐文件再验。没有新增依赖、系统安装或下载，不宣称完整Linux锁文件安装。
+
+首轮提交2eb1ca2在Linux临时目录运行，480规则案例、30独立参考例及68项专项通过。补取平台证据时发现临时目录已不存在、pytest不可导入；保留此限制，未当补取成功。提交562f255把平台探针和完整原始基准报告导出移到同一Linux进程生命周期内，第二轮再次全部通过：480/480、30/30、68测试0失败0跳过，pytest1.15秒，验证子进程总2.79秒。393个归档源码文件未变。
+
+平台探针确认Linux文件系统ext2/ext3、原生Python3.12.3，未安装OR-Tools，生产匹配走bounded_enumeration；0.10加0.20精确匹配0.30。Windows与Linux规则指纹完全相同。测试组成24项匹配、11项原恢复、21项v2备份清单、12项新增真实符号链接边界；后者在Windows因创建权限不足12项全部跳过，而Linux全部执行通过。拒绝源/目标路径中真实链接，未改变原测试答案或生产逻辑。
+
+后验逐项核对源码及测试包ZIP、所有包文件、日志、480条完整基准输出、30参考例和68项JUnit；完整结果保存在宿主.local/linux-core-v2，不依赖临时目录继续存在。首轮.local/linux-core-v1保留。范围、命令和许可见[LINUX_CORE](LINUX_CORE.md)，摘要及哈希见[linux-core-validation.json](linux-core-validation.json)。没有付费请求或新原因调查封存集运行；完整LinuxAPI/浏览器、原生求解器、PG/容器、独立机器和远端CI仍未验证。Docker宿主配置和数据未改动。
