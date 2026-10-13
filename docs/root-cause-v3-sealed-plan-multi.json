@@ -1,0 +1,82 @@
+{
+  "schema_version": "root-cause-experiment-plan-v1",
+  "status": "frozen_for_sealed_final",
+  "dataset_version": "root-cause-v3.0.0",
+  "dataset_manifest_sha256": "7c78e480895d197335cff8ef02be997f0caeb2868d948d93b500d9a69b435971",
+  "source_sha256": {
+    "backend/app/investigation.py": "032fdbbd8016b037950c25bfb5b0d243aa32eefd7c6010e5f0fa644da93ec8e1",
+    "backend/app/model_contract.py": "698602de854cb3ab4ac39b750812ec9f7e3f2e7b3f64919d3052f2930b32294e",
+    "backend/app/model_gateway.py": "e95d9b789ca4bb492c34d15859cd9eeb73118af99458f8b3b5e28b04cfb08cb8",
+    "backend/app/domain.py": "b49e39dd9e544b4bf4568aa04bf7ec54dc63a591efa123fd925331989e693a75",
+    "backend/app/evidence_planning.py": "09f5896d9987682b2d8c8839908aad46b46356edc82f1497882e3d3215c5432c",
+    "backend/app/evidence_selection.py": "7be0a02484dc00c4b7b00d07060b4b0f6ab838c535fccf014691a482070a0b77",
+    "benchmarks/root_cause_v2.py": "51423ef82bf5188c458c233347234edcb93732a93d7b3405b0e4923cd7ec98e3",
+    "benchmarks/root_cause_v2_models.py": "41f8ed30206c618ead3da657e92a6b8327a933e7ad9359ddd2650ab2a2d863dc",
+    "benchmarks/run_agents.py": "ac4fdb0e0c98b17d40c62a55aa4107891bb5e16c0d0bd5d1529eaff56f103820",
+    "benchmarks/paid_budget.py": "894f65b7a756fe0769e2442687b0cb4b30a43b2a2a1517ddede89062a66d0095",
+    "datasets/generate.py": "e37e9746ffabfc94d7400bc72441751b2598764f75759c0e9e3a5a8cf7cd1d0a",
+    "datasets/generate_v2.py": "2c249d5fc2a99e48fc8542fbd21a14028c9e56a77beda348aac8d8fcd8ffe2f9",
+    "datasets/generate_v3.py": "4db3d6db6c56414915d1286871c1fff32d25fe3ab4a9c5ffefdcfab5430dca2f"
+  },
+  "path_source_sha256": {
+    "backend/app/business_chain.py": "2c21e00894a94ad6b53ba2119ce5f684aafd24ee83276b76808145c63bb62303",
+    "backend/app/context_transport.py": "c60bafff748d7be284010bcf60ad991ce501a027d5051aebf5499bb343c817a9",
+    "backend/app/policy_context_contract.py": "f3f02132b913c982fd6b4564d77ef3a521a926f479efe2410ef4c8e2a295cf86",
+    "backend/app/reference_selection.py": "f63cdf043b19dd75edfb8bf48e249a3a9646ab211c895caad121f976d4267619",
+    "backend/app/knowledge.py": "f68a5c41fd0074f0dadaf12207808306f8a069b4b88bcfa1c844e9f0962e6825",
+    "backend/app/matching.py": "202a991fb11901abba3026ebeca37cc24326310653d7b79d72f9521cce8da270",
+    "backend/app/financial_math.py": "dfc814c22101d19bf4139647545da8f1fab6ff9f01432d7a0e9a9f4cc520d58b",
+    "backend/app/config.py": "7e733e0c8f99feb059f83033c46c71376f11e3d16505ab7e3b4f1046b3aaf313"
+  },
+  "prompt_version": "investigation-v27",
+  "runner_version": "rc-runner-v3",
+  "model": "deepseek-flash",
+  "split": "sealed_test",
+  "per_family": 1,
+  "repeat": 1,
+  "modes": [
+    "multi"
+  ],
+  "selected_case_ids": [
+    "rc3-c-41b090d8aaaa",
+    "rc3-c-16c2545a2463",
+    "rc3-c-4bcb582a5903",
+    "rc3-c-08afbbf21eea",
+    "rc3-c-8ec2fb8f6893",
+    "rc3-c-03db578d4574",
+    "rc3-c-2eac03d051b5",
+    "rc3-c-18e41f3d0b53",
+    "rc3-c-1cca3cca62eb"
+  ],
+  "max_paid_requests": 320,
+  "max_cny": "8.00",
+  "based_on_smoke": {
+    "report": ".local/reports/root-cause-v3-smoke-v27.json",
+    "sha256": "a4930e3ecd7fefe28ba36acf9414011f7264cd9da04fe0292a7eb64dcffcce2f",
+    "status": "running",
+    "paid_requests": 159
+  },
+  "stop_policy": "Peak-price pre-dispatch reservation under max_cny; external guard; retain every failure, unknown attempt and budget stop in the denominator.",
+  "preregistered_analysis": {
+    "primary_metric": "cause category macro-F1 per method over all samples, failures scored as wrong",
+    "secondary_metrics": [
+      "conclusion accuracy",
+      "decisive evidence obtained",
+      "output failures",
+      "paid requests and tokens per sample"
+    ],
+    "strongest_same_budget_baseline": "best deterministic method on this sealed run (expected keyword_request from validation)",
+    "targets_from_plan": {
+      "macro_f1": ">= 0.85",
+      "insufficient_or_valid_request": ">= 0.90",
+      "gain_over_strongest_baseline": ">= +0.05 F1, or quality loss <= 0.02 with cost reduction >= 20%"
+    },
+    "uncertainty": "family-level bootstrap interval (cases resampled by family, repeats kept)",
+    "no_tuning": "Sealed split never used before; no prompt, contract, keyword or parameter change after any sealed result is seen."
+  },
+  "limitations": [
+    "Same-author synthetic data; not real-ledger evidence.",
+    "Small sample: one case per family unless per_family > 1.",
+    "deepseek-flash now serves DeepSeek-V4.1-Flash; earlier v2 runs used an older model."
+  ]
+}
