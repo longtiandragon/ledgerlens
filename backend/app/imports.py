@@ -132,9 +132,11 @@ def make_snapshot(s, book):
     corpus_file = settings.data_dir / 'knowledge' / 'corpus-v2.json'
     has_corpus = corpus_file.exists() or corpus_file.is_symlink()
     policy['reference_integrity'] = 'not_configured'
-    if not has_corpus and (corpus_file.parent / 'corpus.json').exists():
+    from .reference_selection import apply_choice
+    selected_references = apply_choice(s, book, policy)
+    if not selected_references and not has_corpus and (corpus_file.parent / 'corpus.json').exists():
         policy['reference_integrity'] = 'legacy_unverified'
-    if has_corpus:
+    if not selected_references and has_corpus:
         try:
             corpus = load_verified_corpus(corpus_file, source_root=settings.data_dir / 'public-sources')
         except (ValueError, OSError) as exc:

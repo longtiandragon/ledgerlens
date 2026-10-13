@@ -14,6 +14,7 @@ const StatementEvidence=defineAsyncComponent(()=>import('./components/StatementE
 const NumericEvaluation=defineAsyncComponent(()=>import('./components/NumericEvaluation.vue'))
 const RootCauseEvaluation=defineAsyncComponent(()=>import('./components/RootCauseEvaluation.vue'))
 const PolicyChecks=defineAsyncComponent(()=>import('./components/PolicyChecks.vue'))
+const ReferenceIndexes=defineAsyncComponent(()=>import('./components/ReferenceIndexes.vue'))
 const OcrReviewPanel=defineAsyncComponent(()=>import('./components/OcrReviewPanel.vue'))
 const DocumentPreview=defineAsyncComponent(()=>import('./components/DocumentPreview.vue'))
 const pdfOpen=ref(false);const pdfSource=ref<{documentId:string;name:string;extracted:{page:number;text:string;status:string}[]}>()
@@ -111,6 +112,7 @@ onBeforeUnmount(()=>{stopStream();navigationMedia?.removeEventListener('change',
      <template v-else-if="page==='books'">
       <section class="panel"><div class="panel-heading"><div><span class="section-number">01</span><h2>当前账套</h2></div><button class="button" @click="openBook(true)">修改政策配置</button></div><div class="detail-grid"><div><label>账套名称</label><strong>{{ book?.name }}</strong></div><div><label>适用制度</label><strong>{{ framework(book?.framework) }}</strong></div><div><label>会计期间</label><strong class="mono">{{ book?.period }}</strong></div><div><label>政策版本</label><strong class="mono">v{{ book?.version }}</strong></div><div><label>科目范围</label><strong class="mono">{{ book?.accounts.join(' / ') }}</strong></div><div><label>锁定期间</label><strong>{{ book?.locked_periods.join('、')||'未配置' }}</strong></div></div></section>
       <section class="panel spaced"><div class="panel-heading"><div><span class="section-number">02</span><h2>规则覆盖矩阵</h2></div><span class="tiny-label">以已实现规则为边界</span></div><div class="table-wrap"><table><thead><tr><th>规则 / 编号</th><th>适用制度</th><th>状态</th><th>说明与依据</th></tr></thead><tbody><tr v-for="(p,i) in policies" :key="i"><td><strong>{{ p.name||p.title||p.id||p.rule_id }}</strong><small class="block mono">{{ p.id||p.rule_id }}</small></td><td>{{ Array.isArray(p.frameworks)?p.frameworks.map(framework).join(' / '):show(p.framework||'通用') }}</td><td><span :class="['badge',tone(p.status)]">{{ status(p.status||'experimental') }}</span></td><td class="wrap-text">{{ p.description||p.scope||p.conditions||p.limitations||'见规则说明' }}<a v-if="typeof p.source==='string'&&p.source.startsWith('https://')" :href="p.source" target="_blank" rel="noopener noreferrer">查看依据 ↗</a></td></tr><tr v-if="!policies.length"><td colspan="4" class="table-empty">暂无规则目录。</td></tr></tbody></table></div><div class="panel-foot"><Icon name="info" :size="14"/>两套制度分别配置和验证；检索到条款不代表系统已实现该条款。</div></section>
+      <ReferenceIndexes v-if="book" :key="`${book.id}-${book.version}`" :book-id="book.id" :snapshot-id="overview?.latest_snapshot_id??null" @changed="refreshBook"/>
       <PolicyChecks v-if="bookId" :book-id="bookId" :snapshot-id="overview?.latest_snapshot_id??null" :framework="book?.framework==='SCAS'?'SCAS':'CAS'" :records="records"/>
      </template>
 

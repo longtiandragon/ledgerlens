@@ -19,6 +19,10 @@ class Settings(BaseSettings):
     ocr_python: Path | None = None
     ocr_models_dir: Path | None = None
     ocr_timeout_seconds: int = 180
+    retrieval_python: Path | None = None
+    reference_index_catalog: Path | None = None
+    retrieval_db_port: int = 55439
+    retrieval_timeout_seconds: int = 120
 
 
 settings = Settings()

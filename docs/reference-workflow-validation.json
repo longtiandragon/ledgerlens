@@ -1,0 +1,116 @@
+{
+  "schema_version": "reference-workflow-validation-v1",
+  "date": "2026-10-13",
+  "status": "passed",
+  "scope": "Local manual reference selection and snapshot integrity; no new relevance or model-quality evaluation.",
+  "index_id": "3e814e281f4349aeed5afc6c7b200accfdd32945e30cbb9135ee1fd0180d0d8c",
+  "verified_segments": 156,
+  "browser_assertions": {
+    "status": "passed",
+    "book_id": "1737d5a0-d423-4489-9e6e-e41f8664784b",
+    "index_id": "3e814e281f4349aeed5afc6c7b200accfdd32945e30cbb9135ee1fd0180d0d8c",
+    "snapshot_before": "1690a285-ab8b-4ce4-ab52-f05964cda7b6",
+    "snapshot_frozen": "f5a6a227-1e3d-4a38-9bf8-cc9dacdc9197",
+    "search_id": "30357e47-4aa7-4ba2-b243-5b7610864907",
+    "choice_versions": [
+      1,
+      2
+    ],
+    "original_records_unchanged": true,
+    "old_snapshots_unchanged": true,
+    "rule_investigation_id": "d6a0a3b5-01f3-43f5-9307-1d25c20ad08d",
+    "paid_model_requests": 0,
+    "page_errors": [],
+    "viewport": 390
+  },
+  "offline_reverification": {
+    "query_result_digest": true,
+    "source_bindings": true,
+    "choice_scope": true,
+    "selected_parent_matches": true,
+    "snapshot_record_ids_unchanged": true
+  },
+  "checks": {
+    "backend": {
+      "passed": 1973,
+      "skipped": 2,
+      "skip_reason": "Windows file-link permission",
+      "seconds": 116.65,
+      "live_pg_enabled": true
+    },
+    "browser": {
+      "passed": 45,
+      "skipped": 0,
+      "reported_duration": "3.2m",
+      "directory": "runtime/reference-all-e2e-v2"
+    },
+    "targeted_workflow_and_migration": {
+      "passed": 34,
+      "seconds": 11.27
+    },
+    "build_seconds": 20.29,
+    "ruff": "passed",
+    "generated_contracts": "passed"
+  },
+  "evidence": [
+    {
+      "path": "runtime/reference-all-e2e-v2/reference-indexes-真实本地-BGE-查询、人工冻结、规则调查和恢复默认/reference-before.json",
+      "sha256": "434b82174d1e214cf2a608de3c26afc7467a8266e0edea7e9723aec0f9aa7aa0"
+    },
+    {
+      "path": "runtime/reference-all-e2e-v2/reference-indexes-真实本地-BGE-查询、人工冻结、规则调查和恢复默认/reference-candidates-desktop.png",
+      "sha256": "ef8f827beb6e2f9a7d4c65c95b3bd6cdadad762f733af383c4882b127a91d3cc"
+    },
+    {
+      "path": "runtime/reference-all-e2e-v2/reference-indexes-真实本地-BGE-查询、人工冻结、规则调查和恢复默认/reference-frozen-mobile.png",
+      "sha256": "c87ea32de41207d730a4944a4dcb08bce2710bbc04919375edab97cb6846a907"
+    },
+    {
+      "path": "runtime/reference-all-e2e-v2/reference-indexes-真实本地-BGE-查询、人工冻结、规则调查和恢复默认/reference-frozen.json",
+      "sha256": "818b1f00161f7557d0970321c851ad39866840aa7f42b609cb8a074b91784573"
+    },
+    {
+      "path": "runtime/reference-all-e2e-v2/reference-indexes-真实本地-BGE-查询、人工冻结、规则调查和恢复默认/reference-mobile-viewport.png",
+      "sha256": "cb5995be37cf2950954b014ac67f292dac6422788a72a583386126a59020a27a"
+    },
+    {
+      "path": "runtime/reference-all-e2e-v2/reference-indexes-真实本地-BGE-查询、人工冻结、规则调查和恢复默认/reference-query.json",
+      "sha256": "f2778ff4799b1013d680ce959eb5fb87fedfbad95a8d1269039fe41c6a80e9e8"
+    },
+    {
+      "path": "runtime/reference-all-e2e-v2/reference-indexes-真实本地-BGE-查询、人工冻结、规则调查和恢复默认/reference-validation.json",
+      "sha256": "48ea5189ba15a7b64a58eff81fe6f307eaeb68bff38bf2667e2d73da36dbffe3"
+    }
+  ],
+  "source_sha256": {
+    "backend/app/reference_api.py": "8f3ea857f2991ba2f19052332671c54f228613a0db218bef946018842fbed086",
+    "backend/app/reference_contract.py": "4dc2cfa1f5716e049d542bc43c0bb53f7f5638a98bb69f880e3510a17eb322be",
+    "backend/app/reference_selection.py": "f63cdf043b19dd75edfb8bf48e249a3a9646ab211c895caad121f976d4267619",
+    "backend/app/reference_workflow.py": "9c644a94acac4c2a6faf9a310da00ecf99cb87cec4213b66247a077f7251822f",
+    "backend/app/imports.py": "259af330b8b260baca71377058e9423220fd682c514e8e8f568fb1064f299b90",
+    "backend/app/investigation.py": "10e9d7c7f6df48b217ec00ed50119d197775254eaec59f86a16420e378f623f4",
+    "backend/app/jobs.py": "80c6393fb2227ec645478f7b9da52f2d12c239630a918f6b262a0a5bb822facd",
+    "backend/app/main.py": "788bda2638beaa9c76dd70953e315d443a818090bded31823cd5e2608c9db641",
+    "backend/app/db.py": "4cfb23b516f57f90550b6ec7c1d351295c03ff050b336e2ba6b080c57f806b43",
+    "backend/app/config.py": "41d1117f6a40694566fddddd4511053d9f5949c11637da849f0fb6757a01809f",
+    "backend/migrations/versions/0006_reference_choices.py": "b0c0ddf5812d5dec484ca08b77d01db5a76dea5b1e63dcf19b79a0962327943e",
+    "backend/tests/test_reference_workflow.py": "2a73a790ad2f0e9492178832a9058948db18753e8f43fa176bbd82aa56c0afd1",
+    "backend/tests/test_migrations.py": "10c6cbef2d94355a22ba2be165854e9b5cbd4b84d3c1cd4acc6e55bf8d6df633",
+    "frontend/src/components/ReferenceIndexes.vue": "ec35adaa38d6dff07357a94dbeb795fa3dccee8c49036299cd631da66bb0dd23",
+    "frontend/tests/reference-indexes.spec.ts": "1198ca20a4680b5a7756a41164d6e686abfd376937a15b68a4c181c94807e67d"
+  },
+  "paid_model_requests": 0,
+  "new_dependencies": 0,
+  "default_keyword_retrieval_changed": false,
+  "failures_retained": [
+    "Initial workflow test omitted required ToolContext RunBudget argument; fixed test invocation without changing expected outcome."
+  ],
+  "limitations": [
+    "Existing negative relevance comparison unchanged",
+    "Unseen-query relevance and no-answer rejection untested",
+    "Professional applicability judgment required",
+    "Local single-process worker only",
+    "Organization permissions and scale performance untested",
+    "Application migration tested on SQLite and PostgreSQL SQL generation, not a live PostgreSQL application database"
+  ]
+}

@@ -1,6 +1,6 @@
 # 可选持久化参考索引
 
-2026-10-13，BGE/pgvector 已从连接临时表扩展到独立数据库中的版本化持久表。**当前是已验证的索引基础设施和管理命令，尚未接入产品 API、用户开关或调查快照选择器。默认关键词检索保持不变。** 前轮向量检索未优于关键词的[负面结果](RETRIEVAL_VALIDATION.md)原样保留，本轮没有新的相关性成绩或模型有效性结论。
+2026-10-13，BGE/pgvector 已从连接临时表扩展到独立数据库中的版本化持久表。索引基础设施和管理命令完成后，现已接入本地产品 API、人工父条文选择与快照冻结，见 [REFERENCE_WORKFLOW](REFERENCE_WORKFLOW.md)。**默认关键词检索保持不变。** 前轮向量检索未优于关键词的[负面结果](RETRIEVAL_VALIDATION.md)原样保留，没有新的相关性成绩或模型有效性结论。
 
 ## 版本、来源与失败边界
 
@@ -42,4 +42,4 @@ $env:RETRIEVAL_INDEX_TESTS='1'
 .venv/Scripts/python.exe -m pytest backend/tests/test_retrieval_index.py backend/tests/test_retrieval_vectors.py -q
 ```
 
-后续需要把用户明确选择的索引和返回父条文绑定到新调查快照，历史快照保持原参考资料；还需 API/网页状态、失败呈现与边界回归。在完成这些之前，不把管理命令的通过当作产品检索接入完成。独立相关性/无答案验证、专业复核及规模性能仍待验证。
+后续产品接入已单独完成并记录于 [REFERENCE_WORKFLOW](REFERENCE_WORKFLOW.md)：人工选择返回父条文、固定索引及查询来源、追加快照、历史保持、明确失败与边界回归。上方27项及55项是索引基础设施当时的检查数量，不能替代后续产品验收。独立相关性/无答案验证、专业复核及规模性能仍待验证。

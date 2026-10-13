@@ -33,6 +33,8 @@ powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1
 
 “账套与政策”另有独立政策检查：选择本制度支持的主题，填写条件、引用当前快照资料并明确人工确认，保存条件版本后执行检查、导出JSON底稿。修订只追加版本；资料更新后旧底稿仍可查看，但不能用当前资料重写历史判断。现覆盖六条归档问答的限定路径，尚未接入多智能体、调整模拟或专业审批，见[规则与来源](docs/POLICY_RULE_PACKAGE.md)。
 
+该页面也支持可选的本地参考索引：查询后人工阅读、选择父条文并冻结到新快照，旧选择可回查，也可追加版本恢复默认关键词。BGE尚未优于关键词，不自动切换默认检索，见[配置与验收](docs/REFERENCE_WORKFLOW.md)。
+
 ## DeepSeek
 
 在本地 `.env` 设置 `DEEPSEEK_API_KEY`，必要时调整 `DEEPSEEK_BASE_URL` 和 `DEEPSEEK_MODEL`，然后重启后端。密钥只由后端读取，不进入浏览器、导出或 Git。

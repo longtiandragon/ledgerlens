@@ -56,3 +56,5 @@ docker run -d --name ledgerlens-retrieval-pg --memory 512m -e POSTGRES_PASSWORD=
 已存在的运行报告、模型目录和摘要拒绝覆盖；下载中断保留partial供排查，新尝试用新目录。准备脚本使用已取得的11个官方文件进行本地回放，文件大小与哈希全部通过，未重复联网。未来原站内容变动或两个失败源恢复会产生不同语料，不应称为同一冻结实验重放。源码换行字节变化也会改变哈希，应保留原报告并产生新记录。
 
 本次没有测试扫描PDF、真实企业资料、专业意见正确性、大规模近似索引、跨进程索引共享或生产切换。模型仅输出向量，SQL仅由程序执行固定语句，不向运行Agent开放任意查询。
+
+后续工程进展（2026-10-13）：跨进程持久索引与重启回放见 [PERSISTENT_RETRIEVAL](PERSISTENT_RETRIEVAL.md)，本地网页人工选择及快照冻结见 [REFERENCE_WORKFLOW](REFERENCE_WORKFLOW.md)。这些是新增工程验证，上方相关性成绩、失败源与当时的实验范围保持不变。

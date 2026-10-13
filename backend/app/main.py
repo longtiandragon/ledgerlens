@@ -25,6 +25,7 @@ from .statement_api import router as statement_router
 from .policy_api import router as policy_router
 from .policy_context_contract import InvestigationPolicyContextResponse
 from .ocr_api import router as ocr_router
+from .reference_api import router as reference_router
 
 
 def get(s, cls, identity):
@@ -56,6 +57,8 @@ async def lifespan(app):
     from .ocr_workflow import recover
     with Session() as s:
         recover(s)
+        from .reference_workflow import recover as recover_reference_searches
+        recover_reference_searches(s)
     # Recover queued/interrupted local work after a single-process local server restart.
     recovery = []
     if settings.task_mode == 'local':
@@ -83,6 +86,7 @@ app.include_router(evidence_requests_router)
 app.include_router(statement_router)
 app.include_router(policy_router)
 app.include_router(ocr_router)
+app.include_router(reference_router)
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=['127.0.0.1', 'localhost', 'testserver', 'api'])
 app.add_middleware(CORSMiddleware, allow_origins=['http://127.0.0.1:5188', 'http://localhost:5188',
                                                 'http://127.0.0.1:8080', 'http://localhost:8080'],
@@ -343,9 +347,9 @@ def start_investigation(identity: str, body: InvestigateInput, background: Backg
     item = get(s, Case, identity)
     snap = require_case_rules(s, item)
     if body.mode != 'rules':
-        from .knowledge import verify_frozen_references
+        from .reference_selection import verify_snapshot_references
         try:
-            verify_frozen_references(get(s, Snapshot, item.snapshot_id).policy.get('reference_passages', []))
+            verify_snapshot_references(snap.policy, snap.book_id)
         except (ValueError, OSError) as exc:
             raise HTTPException(409, '该快照的参考片段未通过来源绑定校验；请创建新快照重新检查，历史底稿仍可查看') from exc
     if body.mode != 'rules' and not settings.deepseek_api_key:

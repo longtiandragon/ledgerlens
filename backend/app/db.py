@@ -87,6 +87,35 @@ class OcrReview(Entity):
     import_id: Mapped[str] = mapped_column(unique=True)
 
 
+class ReferenceSearch(Entity):
+    __tablename__ = 'reference_searches'
+    book_id: Mapped[str] = mapped_column(index=True)
+    book_version: Mapped[int]
+    book_revision: Mapped[int]
+    framework: Mapped[str]
+    period: Mapped[str]
+    query: Mapped[str]
+    registry_key: Mapped[str]
+    manifest: Mapped[dict] = mapped_column(JSON)
+    status: Mapped[str] = mapped_column(default='queued')
+    worker_token: Mapped[str | None]
+    result: Mapped[dict] = mapped_column(JSON, default=dict)
+    result_digest: Mapped[str | None]
+    error: Mapped[str | None]
+
+
+class ReferenceChoice(Entity):
+    __tablename__ = 'reference_choices'
+    __table_args__ = (UniqueConstraint('book_id', 'version'), UniqueConstraint('parent_id'),)
+    book_id: Mapped[str] = mapped_column(index=True)
+    book_version: Mapped[int]
+    version: Mapped[int]
+    parent_id: Mapped[str | None]
+    payload: Mapped[dict] = mapped_column(JSON)
+    digest: Mapped[str]
+    snapshot_id: Mapped[str | None]
+
+
 class Record(Entity):
     __tablename__ = 'records'
     __table_args__ = (UniqueConstraint('book_id', 'kind', 'source_id'),)

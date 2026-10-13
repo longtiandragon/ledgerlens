@@ -99,8 +99,8 @@ async def _execute_owned(identity: str):
                       'investigation_policy_context': load_policy_context(s, run, snap)}
             finding, mode, usage = case.finding, run.mode, run.usage
         if mode != 'rules':
-            from .knowledge import verify_frozen_references
-            verify_frozen_references(policy.get('reference_passages', []))
+            from .reference_selection import verify_snapshot_references
+            verify_snapshot_references(policy)
         gateway = DeepSeekGateway(settings.deepseek_api_key, base_url=settings.deepseek_base_url,
                                   model=settings.deepseek_model) if mode != 'rules' else None
         async with saver_context() as saver:

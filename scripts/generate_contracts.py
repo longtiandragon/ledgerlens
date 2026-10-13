@@ -11,6 +11,7 @@ from app import schemas  # noqa: E402
 from app import statement_store, statement_api  # noqa: E402
 from app import policy_contract, policy_api, policy_responses, policy_context_contract  # noqa: E402
 from app.ocr_contract import OcrReviewInput  # noqa: E402
+from app.reference_contract import ReferenceSearchInput, ReferenceChoiceInput  # noqa: E402
 
 
 def ts_type(schema):
@@ -42,6 +43,8 @@ def artifacts():
     for name in names:
         content += f'export type {name} = {ts_type(getattr(schemas, name).model_json_schema())}\n'
     content += f'export type OcrReviewInput = {ts_type(OcrReviewInput.model_json_schema())}\n'
+    for cls in (ReferenceSearchInput, ReferenceChoiceInput):
+        content += f'export type {cls.__name__} = {ts_type(cls.model_json_schema())}\n'
     statement_names = ('TextLine', 'SourceLine', 'LabelFragment', 'StatementContext', 'ColumnHeader',
                        'StatementObservation', 'BalanceObservation', 'StatementReport', 'StatementDataset')
     for name in statement_names:

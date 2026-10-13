@@ -519,9 +519,12 @@ class ToolContext:
         }
         self.verified_finding: dict | None = None
         self.references = []
+        if policy.get("reference_choice") is not None:
+            from .reference_selection import verify_snapshot_references
+            verify_snapshot_references(policy)
         for raw in policy.get("reference_passages", []):
             passage = ReferencePassage.model_validate(raw)
-            if passage.source_binding is not None:
+            if passage.source_binding is not None and policy.get("reference_choice") is None:
                 from .knowledge import verify_frozen_references
                 verify_frozen_references([raw])
             if passage.framework not in {policy["framework"], 'BOTH'}:
