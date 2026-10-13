@@ -1,9 +1,285 @@
 {
   "schema_version": "root-cause-results-v1",
-  "created_at": "2026-10-12T01:07:06.625718+00:00",
-  "track_version": "root-cause-track-v2",
-  "dataset_version": "root-cause-v2.0.0",
+  "created_at": "2026-10-13T22:50:29.302527+00:00",
+  "track_version": "root-cause-track-v3",
+  "dataset_version": "root-cause-v3.0.0",
+  "earlier_dataset_versions": [
+    "root-cause-v2.0.0"
+  ],
   "runs": [
+    {
+      "id": "v3-sealed-single",
+      "label": "v3最终对比 · 封存测试集（单Agent与基线）",
+      "split": "sealed_test",
+      "role": "final",
+      "validity": "有效；冻结配置，9个未用封存案例×3次重复；按预注册方法分析，见root-cause-v3-sealed-partial-analysis.json",
+      "report": "root-cause-v3-sealed-single.json",
+      "report_sha256": "8da561c3d844721645e98047b6fbb4404dd35ae66eec5be66b6efea7272803a0",
+      "prompt_version": "investigation-v27",
+      "runner_version": "rc-runner-v3",
+      "repeat": 3,
+      "paid_requests": 126,
+      "offpeak_cost_cny_estimate": "1.524",
+      "status": "completed",
+      "methods": {
+        "rule_only": {
+          "samples": 27,
+          "failures": 0,
+          "category_macro_f1": 0.1458,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "0/18"
+        },
+        "rule_fixed_request": {
+          "samples": 27,
+          "failures": 0,
+          "category_macro_f1": 0.5625,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "9/18"
+        },
+        "keyword_request": {
+          "samples": 27,
+          "failures": 0,
+          "category_macro_f1": 0.5625,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "9/18"
+        },
+        "single": {
+          "samples": 27,
+          "failures": 0,
+          "category_macro_f1": 0.5083,
+          "conclusion_accuracy": 0.7037,
+          "decisive_evidence_obtained": "9/18"
+        }
+      }
+    },
+    {
+      "id": "v3-sealed-active-interrupted",
+      "label": "v3主动调查 · 封存测试集（中断）",
+      "split": "sealed_test",
+      "role": "final",
+      "validity": "中断：主机内存不足且会话空闲时被Claude Code终止，守护进程同被终止，未重启；计划18个样本完成8个（第1次重复的8案），仅作描述，不作预注册对比",
+      "report": "root-cause-v3-sealed-active.json",
+      "report_sha256": "2294a7b24eef096d178dd6d00afcce02a8663f2b1c981ab7b4a54935bcace9e6",
+      "prompt_version": "investigation-v27",
+      "runner_version": "rc-runner-v3",
+      "repeat": 1,
+      "paid_requests": 66,
+      "offpeak_cost_cny_estimate": "1.552",
+      "status": "interrupted",
+      "methods": {
+        "active": {
+          "samples": 8,
+          "failures": 2,
+          "category_macro_f1": 0.5238,
+          "conclusion_accuracy": 0.5,
+          "decisive_evidence_obtained": "2/5"
+        }
+      }
+    },
+    {
+      "id": "v3-sealed-multi-interrupted",
+      "label": "v3固定多Agent · 封存测试集（中断）",
+      "split": "sealed_test",
+      "role": "final",
+      "validity": "中断：主机内存不足且会话空闲时被Claude Code终止，守护进程同被终止，未重启；计划9个样本完成6个，仅作描述，不作预注册对比",
+      "report": "root-cause-v3-sealed-multi.json",
+      "report_sha256": "96db3d3fd5a3ce023818105244531c5bcc22d0ae61e98795bb451155e3801895",
+      "prompt_version": "investigation-v27",
+      "runner_version": "rc-runner-v3",
+      "repeat": 1,
+      "paid_requests": 134,
+      "offpeak_cost_cny_estimate": "1.792",
+      "status": "interrupted",
+      "methods": {
+        "multi": {
+          "samples": 6,
+          "failures": 0,
+          "category_macro_f1": 0.8,
+          "conclusion_accuracy": 1.0,
+          "decisive_evidence_obtained": "2/3"
+        }
+      }
+    },
+    {
+      "id": "v3-smoke-development-v27",
+      "label": "v27三模式冒烟 · 开发集（中断）",
+      "split": "development",
+      "role": "smoke",
+      "validity": "中断：主机内存不足被终止；仅4个三模式共同案例计分；13个模型样本无拒绝；按余额差实际¥2.26",
+      "report": "root-cause-v3-smoke-v27.json",
+      "report_sha256": "a4930e3ecd7fefe28ba36acf9414011f7264cd9da04fe0292a7eb64dcffcce2f",
+      "prompt_version": "investigation-v27",
+      "runner_version": "rc-runner-v3",
+      "repeat": 1,
+      "paid_requests": 159,
+      "offpeak_cost_cny_estimate": "2.370",
+      "status": "interrupted",
+      "methods": {
+        "rule_only": {
+          "samples": 4,
+          "failures": 0,
+          "category_macro_f1": 0.3333,
+          "conclusion_accuracy": 0.75,
+          "decisive_evidence_obtained": "0/2"
+        },
+        "rule_fixed_request": {
+          "samples": 4,
+          "failures": 0,
+          "category_macro_f1": 0.6667,
+          "conclusion_accuracy": 0.75,
+          "decisive_evidence_obtained": "1/2"
+        },
+        "keyword_request": {
+          "samples": 4,
+          "failures": 0,
+          "category_macro_f1": 1.0,
+          "conclusion_accuracy": 1.0,
+          "decisive_evidence_obtained": "2/2"
+        },
+        "single": {
+          "samples": 4,
+          "failures": 0,
+          "category_macro_f1": 0.6667,
+          "conclusion_accuracy": 0.5,
+          "decisive_evidence_obtained": "2/2"
+        },
+        "multi": {
+          "samples": 4,
+          "failures": 0,
+          "category_macro_f1": 1.0,
+          "conclusion_accuracy": 0.75,
+          "decisive_evidence_obtained": "2/2"
+        },
+        "active": {
+          "samples": 4,
+          "failures": 0,
+          "category_macro_f1": 1.0,
+          "conclusion_accuracy": 0.5,
+          "decisive_evidence_obtained": "1/2"
+        }
+      }
+    },
+    {
+      "id": "v3-smoke-development-v26",
+      "label": "v26单Agent冒烟 · 开发集",
+      "split": "development",
+      "role": "smoke",
+      "validity": "有效；1/9结构失败，未达冒烟标准，促成v27解析修订",
+      "report": "root-cause-v3-smoke-v26.json",
+      "report_sha256": "4124d481f1adc5d87b0a83b02e95541716a3aa437e7fa55e165a6014d5b71caa",
+      "prompt_version": "investigation-v26",
+      "runner_version": "rc-runner-v3",
+      "repeat": 1,
+      "paid_requests": 43,
+      "offpeak_cost_cny_estimate": "0.490",
+      "status": "completed_with_failures",
+      "methods": {
+        "rule_only": {
+          "samples": 9,
+          "failures": 0,
+          "category_macro_f1": 0.1458,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "0/6"
+        },
+        "rule_fixed_request": {
+          "samples": 9,
+          "failures": 0,
+          "category_macro_f1": 0.5625,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "3/6"
+        },
+        "keyword_request": {
+          "samples": 9,
+          "failures": 0,
+          "category_macro_f1": 0.875,
+          "conclusion_accuracy": 1.0,
+          "decisive_evidence_obtained": "5/6"
+        },
+        "single": {
+          "samples": 9,
+          "failures": 1,
+          "category_macro_f1": 0.5417,
+          "conclusion_accuracy": 0.6667,
+          "decisive_evidence_obtained": "3/6"
+        }
+      }
+    },
+    {
+      "id": "v3-baselines-validation",
+      "label": "v3 确定性基线 · 验证集",
+      "split": "validation",
+      "role": "baseline",
+      "validity": "有效；已查看，未用于调参",
+      "report": "root-cause-v3-validation-baselines.json",
+      "report_sha256": "546daa756a128d40771eda062c6d485e5e10e4e25f838021fb1c028f76146e02",
+      "prompt_version": null,
+      "runner_version": null,
+      "repeat": 1,
+      "paid_requests": 0,
+      "offpeak_cost_cny_estimate": null,
+      "status": "completed",
+      "methods": {
+        "rule_only": {
+          "samples": 90,
+          "failures": 0,
+          "category_macro_f1": 0.1458,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "0/60"
+        },
+        "rule_fixed_request": {
+          "samples": 90,
+          "failures": 0,
+          "category_macro_f1": 0.5625,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "30/60"
+        },
+        "keyword_request": {
+          "samples": 90,
+          "failures": 0,
+          "category_macro_f1": 0.5852,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "31/60"
+        }
+      }
+    },
+    {
+      "id": "v3-baselines-development",
+      "label": "v3 确定性基线 · 开发集",
+      "split": "development",
+      "role": "baseline",
+      "validity": "有效",
+      "report": "root-cause-v3-development-baselines.json",
+      "report_sha256": "90abb1bb11fcc68d6acf2d1f53e9fd02bc366673d544b2a1e823c15c2c826cd7",
+      "prompt_version": null,
+      "runner_version": null,
+      "repeat": 1,
+      "paid_requests": 0,
+      "offpeak_cost_cny_estimate": null,
+      "status": "completed",
+      "methods": {
+        "rule_only": {
+          "samples": 90,
+          "failures": 0,
+          "category_macro_f1": 0.1458,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "0/60"
+        },
+        "rule_fixed_request": {
+          "samples": 90,
+          "failures": 0,
+          "category_macro_f1": 0.5625,
+          "conclusion_accuracy": 0.7778,
+          "decisive_evidence_obtained": "30/60"
+        },
+        "keyword_request": {
+          "samples": 90,
+          "failures": 0,
+          "category_macro_f1": 0.9583,
+          "conclusion_accuracy": 1.0,
+          "decisive_evidence_obtained": "55/60"
+        }
+      }
+    },
     {
       "id": "v2-baselines-development",
       "label": "v2 确定性基线 · 开发集",
@@ -261,10 +537,11 @@
       }
     }
   ],
-  "conclusion": "在封存测试集上，单Agent（原因F1 0.438、结论38.9%、6/18输出失败）低于同预算确定性基线（关键词补证0.688／77.8%）；主动补证与模型优于确定性方法的主张未获支持。",
+  "conclusion": "核心主张“模型＋主动补证优于同预算确定性方法”在两代独立封存测试上均未获支持。v3封存集（新数据、v27窄契约，9例×3次）：单Agent原因F1 0.508、结论70.4%、结构失败0/27，仍低于同预算最强确定性基线（规则＋固定补证与关键词补证均为0.563／77.8%），差值−0.054（场景族自助区间−0.547至+0.400）；F1≥0.85、增益≥0.05、补证≥90%三项预注册目标均未达成。v2封存集单Agent为0.438／38.9%、6/18输出失败。窄契约消除了结构失败，剩余差距来自推理。主动调查与固定多Agent的封存运行被中断（8/18、6/9样本）：已完成样本中主动调查0.524／50.0%（2次结构失败），固定多Agent 0.800／100%，但样本少、仅1次重复、每样本请求20.7次（单Agent 4.7次），未完成预注册对比，不能作为支持证据。",
   "limitations": [
-    "合成数据，为检验补证与文字理解能力而设计，不能外推为真实账套效果。",
-    "封存集仅9个场景族、2次重复，低于规划的3次。",
-    "费用为按官方低谷价的列表价估算，不是账单。"
+    "合成数据，为检验补证与文字理解能力而设计，不能外推为真实账套效果；数据与真值由同一作者编写。",
+    "封存集仅9个场景族；单Agent差值的自助区间跨越零，样本量不足以排除小幅差异。",
+    "主动调查与固定多Agent的封存运行未完成，其数字只是已完成样本的描述，不是预注册结果。",
+    "费用为按官方低谷价的列表价估算，不是账单；中断运行按守护进程同一公式事后计算。"
   ]
 }

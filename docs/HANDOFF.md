@@ -4,19 +4,19 @@
 
 ## 1. 一句话现状
 
-账证智核（LedgerLens）是本地运行的会计复核研究与辅助平台：导入账套 → 固定快照 → 确定性规则检查 → 证据调查（规则或 DeepSeek 模型）→ 隔离模拟 → 复核底稿，另有官方政策检查、BPI 流程证据、年报勾稽和 ERPNext 只读接入。工程主链路已完成分阶段验证，当前基础复现结果和跳过范围见下表；**核心研究主张（模型＋主动补证优于同预算确定性方法）在本项目自建的封存测试上未获支持**，见 [原因调查轨道](ROOT_CAUSE_TRACK.md)。
+账证智核（LedgerLens）是本地运行的会计复核研究与辅助平台：导入账套 → 固定快照 → 确定性规则检查 → 证据调查（规则或 DeepSeek 模型）→ 隔离模拟 → 复核底稿，另有官方政策检查、BPI 流程证据、年报勾稽和 ERPNext 只读接入。工程主链路已完成分阶段验证，当前基础复现结果和跳过范围见下表；**核心研究主张（模型＋主动补证优于同预算确定性方法）在本项目两次自建封存测试（v2、v3）上均未获支持**，见 [原因调查轨道](ROOT_CAUSE_TRACK.md)。
 
 |项|当前值|
 |---|---|
 |产品版本|0.1.0（本地工程与仿真版本；2026-10-14起推送到用户同意的私有GitHub远端 `origin`，CI通过；未公开发布）|
-|调查提示/工具版本|`investigation-v26` / `snapshot-tools-v11`；root_cause已改窄契约，真实模型尚未验证|
+|调查提示/工具版本|`investigation-v27` / `snapshot-tools-v11`；root_cause窄契约（v27只改JSON解析与修复提示）；v3封存集单Agent 0.508、0/27结构失败，未超过基线，见ROOT_CAUSE_V3|
 |政策规则包|`policy-consistency-v5`，33 条（CAS 31 / SCAS 2）覆盖全部32份归档问答，191 个手写投影全部通过；专业判断须人工确认|
 |流程规则包|`bpi2019-process-rules-v1`，9 条；流程模型解释 `process-investigation-v1`|
-|数据库迁移|冻结至 `0006`（参考检索任务和人工选择版本；只允许向前迁移）；SQLite及真实PostgreSQL临时schema迁移8项通过，见postgres-migration-validation.json|
+|数据库迁移|冻结至 `0007`（多用户审签：用户、会话、审批表与可空归属列，只追加；只允许向前迁移）；CI optional作业在真实PostgreSQL上迁移至head通过，0006及以前的本机记录见postgres-migration-validation.json|
 |本地旧库升级|启动器执行结构核验、自动备份和向前迁移；无版本旧库仅接管完整匹配的冻结结构。30项专项及隔离启动器实跑通过，原工作库仅做副本演练，见LOCAL_DATABASE_UPGRADE|
 |本地备份恢复|v2逐文件哈希与检查点清单，复制前后核验；32项专项通过，实际副本3257行业务数据和4179行检查点保持，199快照/26OCR/117参考上下文重验通过，见BACKUP_RESTORE。另建合成库两个规则调查进程中断点恢复、预算保持及重复派发通过，见RESTORED_RUN；非空白机器完整灾难恢复。Compose PostgreSQL用`scripts/postgres_backup.py`停写备份／新STORAGE_ROOT恢复，恢复栈API视图一致、容器验收20/20，见BACKUP_RESTORE末节|
 |测试|提交ce7caf2干净源码基础环境2131通过、52项可选/本机条件跳过；网页42通过、9项可选场景跳过，见CLEAN_CHECKOUT。此前启用实际PG/本机模型资料的后端全量2017通过、2项Windows文件链接权限跳过（144.31秒）；浏览器48通过、0跳过（4.4分钟），两种环境范围不同，不互相替代。GitHub CI（全新ubuntu-24.04）后端2170通过/38可选跳过、480/30规则契约及空库网页42通过/9可选跳过；optional作业以pgvector服务和固定Beancount执行默认作业跳过的31项（所在3个文件共68项全部执行、0跳过），见github-ci-validation.json及github-ci-optional-validation.json|
-|DeepSeek 余额|¥2.60（2026-10-12 查询）；配置模型 `deepseek-flash`|
+|DeepSeek 余额|¥5.79（2026-10-14 06:41 查询；当日付费实际¥6.79）；配置模型 `deepseek-flash`|
 
 ## 2. 启动与常用命令（PowerShell，仓库根目录）
 
@@ -104,7 +104,7 @@ docker compose -f infra/erpnext/compose.yaml up -d
 
 ## 7. 未完成事项（按建议顺序）
 
-1. **原因调查v3真实模型验证**：窄契约、270例新数据、逐请求及人民币费用预留、冻结开发计划均已实现；还未调用模型。开发/验证确定性基线、新计划与命令见 [ROOT_CAUSE_V3](ROOT_CAUSE_V3.md)。开发冒烟预计¥0.50–0.90，保守高峰价预留上限¥1.20、60次请求，用户已明确“暂不付费，继续离线工作”，保留计划但不执行，也不反复询问费用。旧计划已因investigation.py的参考条文选择校验改动失效；替代root-cause-v3-smoke-plan-v2.json只刷新对应哈希，校验通过但未授权或运行，原参数／数据不变，见v26-plan-preparation-validation.json。新封存集仍未运行，最终3次重复另行冻结与审批。
+1. **原因调查**：v3开发冒烟、三份封存计划与单Agent封存对比已完成，单Agent仍未超过同预算确定性基线（见 [ROOT_CAUSE_V3](ROOT_CAUSE_V3.md) 末节）。主动调查与固定多Agent封存运行在完成8/18、6/9样本时被Claude Code内存回收终止，只作描述。补跑须用户同意：运行器无续跑，只能按冻结计划整批重跑；须低谷时段、保持会话活跃（等待时不要结束回合）或以 `CLAUDE_CODE_DISABLE_BG_SHELL_PRESSURE_REAP=1` 启动Claude Code。v3封存集已用，固定多Agent或“规则＋模型”混合须在新生成数据上预注册检验。
 2. **官方问答已全部实现**：v4新增5条；v5把其余12份问答建为13条人工确认条件规则（191/191），见 [POLICY_RULE_PACKAGE](POLICY_RULE_PACKAGE.md)。暂不把专业判断自动化为事实。
 3. **时间快照与模拟复核的效果测量**：已有4个时间挑战、6份草稿的离线机制消融，保留了“合法且平衡的错误业务用途仍能通过”反例，见 [ROOT_CAUSE_V3](ROOT_CAUSE_V3.md)。真实模型闭环与去反证实验仍未测。
 4. **检索离线对比及本地人工接入已完成**：独立语料6份原文94段、156窗口；20条人工查询中18条有答案，关键词前6命中16/18、BGE＋pgvector为15/18，两者对2条无答案查询仍返回候选。保留负面结果与2个502来源，不在本批查询调参。持久索引重启回放一致；本地API和网页现支持选择父条文并冻结新快照、恢复默认与历史选择查看，真实BGE查询及规则调查通过。默认关键词不变；评测中心已增加两批检索历史摘要、失败门槛和试验边界，刷新只读，损坏摘要隔离，见STATUS中的检索评测展示记录。新增48条手写查询的阈值实验在留出集均误接纳2/12无答案问题，未达门槛，见 [RETRIEVAL_ABSTENTION_RESULTS](RETRIEVAL_ABSTENTION_RESULTS.md)。独立专家查询、可靠无答案拒答、规模性能及专业复核仍未完成，见 [REFERENCE_WORKFLOW](REFERENCE_WORKFLOW.md)、[PERSISTENT_RETRIEVAL](PERSISTENT_RETRIEVAL.md) 和 [RETRIEVAL_VALIDATION](RETRIEVAL_VALIDATION.md)。
