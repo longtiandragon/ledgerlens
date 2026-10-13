@@ -184,6 +184,9 @@ def test_missing_optional_dependency_is_not_a_success(monkeypatch):
 
 def test_unpinned_dependency_version_requires_new_validation(monkeypatch):
     monkeypatch.setattr(metadata, "version", lambda _: "99.0.0")
+    # Simulate the entire installed package metadata, including on fresh hosts
+    # where this optional dependency is absent. No oracle is loaded in this path.
+    monkeypatch.setattr(metadata, "metadata", lambda _: {"License": "test fixture only"})
     result = run()
     assert result["status"] == "unsupported_dependency_version"
     assert result["passed"] == 0 and result["cases"] == []
