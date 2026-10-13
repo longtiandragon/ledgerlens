@@ -593,3 +593,12 @@ verify的普通异常和KeyboardInterrupt均保留已取得的账套ID、检查�
 独立空库网页42通过、9可选跳过，0失败／重试通过（71.97秒），包括新增检索负面结果面板、导入、规则调查、证据、模拟、复核与导出。后验408个源码文件与Git归档一致，ZIP／脚本／步骤日志／JUnit／浏览器报告哈希相符；实际4次调查均rules/complete，calls/tokens/tools/reserved_tokens为0。手机工作台、检索面板截图和导出底稿已检查；自有API／Vite已停止。
 
 本轮52项后端跳过包括可选Beancount20、Windows链接14、PG索引／迁移11、原PDF4及其他本机原HTML／报告／数据3；网页9项缺少本机OCR／BGE／BPI／年报条件。3条既有弃用／JUnit提示保留，不能用本轮基础复现覆盖可选能力实测。无缓存安装、独立机器、Linux完整后端／网页、Docker复验和远端发布仍未完成。旧成功及失败记录不覆盖，详情见[CLEAN_CHECKOUT](CLEAN_CHECKOUT.md)和[整合复验摘要](clean-checkout-refresh-validation.json)。
+
+
+## 目标门槛复核与v26冻结计划续接（2026-10-14）
+
+对照GOALS逐项复核研究结论、近期计划和中期验证边界。当前基础复现通过不改变原因分类F1、有效补证及同预算增益未达标，也不证明检索拒答、真实OCR／政策专业判断或独立部署完成；接续条件列入GOALS第6节。git remote仍无配置，付费开发冒烟和新封存集报告未产生。
+
+复核发现原root-cause-v3-smoke-plan.json的13份源码哈希中investigation.py一份漂移，来自b8563a6人工参考条文选择校验；其余12份及数据manifest不变。现有validate_plan实测拒绝旧计划。保留原文件，新增root-cause-v3-smoke-plan-v2.json，只更新该源码哈希及修订说明，所有模型／案例／划分／模式／次数／预算参数不变；现有校验器接受新计划。9个开发案例的18份可见／扣留资料哈希相符，policy均没有reference_choice或reference_passages；只读取manifest和开发输入，不读truth或封存案例文件，不调用run或模型Gateway。
+
+结果见[v26-plan-preparation-validation.json](v26-plan-preparation-validation.json)，原始核对在runtime/v26-plan-refresh-v1。文档中的未来执行命令改指向新计划，但用户“暂不付费”继续有效；准备不是授权、不是模型冒烟或效果改善证据。保留旧费用估计的日期，未来执行前须重新核验价格，未查询余额或发起模型请求。没有新增付费请求、依赖、成绩或生产逻辑修改。

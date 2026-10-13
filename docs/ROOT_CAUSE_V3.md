@@ -1,6 +1,6 @@
 # 原因调查 v3 接续实验
 
-更新：2026-10-12。实现与离线验证已经完成，真实模型冒烟尚未运行，不能据此宣称模型效果提升。v2 的失败报告、封存结果和负面结论保留。
+更新：2026-10-14。实现与离线验证已经完成，真实模型冒烟尚未运行，不能据此宣称模型效果提升。v2 的失败报告、封存结果和负面结论保留。
 
 ## 输出接口
 
@@ -30,7 +30,7 @@
 
 2026-10-12用户明确选择“暂不付费，继续离线工作”。本计划保留但不执行；不会因文档中存在运行命令而发起请求。
 
-冻结配置：[root-cause-v3-smoke-plan.json](root-cause-v3-smoke-plan.json)，固定9个案例、源代码哈希、manifest哈希、模型与运行参数。修改配置或代码后旧计划校验失败，须重新准备和复核。
+当前待执行冻结配置：[root-cause-v3-smoke-plan-v2.json](root-cause-v3-smoke-plan-v2.json)，固定9个案例、源代码哈希、manifest哈希、模型与运行参数。原[root-cause-v3-smoke-plan.json](root-cause-v3-smoke-plan.json)保留；因后续人工参考条文接入修改investigation.py，旧计划现已校验失败。2026-10-14只准备替代计划，没有授权或运行实验，详见文末。
 
 - 单Agent每案一次，另有三个零费用基线；最多60次实际请求（包括重试、结构修复和第二轮）。
 - 预计30–60万Token，低谷费用约¥0.50–0.90，估计来自旧冒烟，不能保证完成率。
@@ -41,7 +41,7 @@
 批准后命令（运行前核实服务端时间、余额和 `.env` 模型为 `deepseek-flash`）：
 
 ```powershell
-.venv\Scripts\python.exe scripts/guard_paid_run.py F:\Code\Project\Project18 1.20 .local/reports/root-cause-v3-smoke-v26.json .venv\Scripts\python.exe -m benchmarks.root_cause_v2_models --dataset .local/datasets-v3 --split development --per-family 1 --modes rule_only rule_fixed_request keyword_request single --repeat 1 --max-paid-requests 60 --max-cny 1.20 --plan docs/root-cause-v3-smoke-plan.json --env-file .env --report .local/reports/root-cause-v3-smoke-v26.json
+.venv\Scripts\python.exe scripts/guard_paid_run.py F:\Code\Project\Project18 1.20 .local/reports/root-cause-v3-smoke-v26.json .venv\Scripts\python.exe -m benchmarks.root_cause_v2_models --dataset .local/datasets-v3 --split development --per-family 1 --modes rule_only rule_fixed_request keyword_request single --repeat 1 --max-paid-requests 60 --max-cny 1.20 --plan docs/root-cause-v3-smoke-plan-v2.json --env-file .env --report .local/reports/root-cause-v3-smoke-v26.json
 ```
 
 该计划只覆盖开发冒烟。新封存集3次重复的最终对比须另行冻结并批准费用；开发冒烟有结构失败时先分析，不自动重复已失败配置。
@@ -56,3 +56,12 @@
 | 6份草稿，其中5份有错 | 程序复算放过错误1/5，总判定正确5/6 | 直接相信建议放过错误5/5，总判定正确1/6 |
 
 复算识别了影响说明差一分、借贷不平、锁定期间和未知科目；**合法科目之间的错误业务用途仍可通过**。全部源资料哈希保持一致，模型请求0次。此处只是固定挑战的机制覆盖，不是模型消融、真实错误率或原因分类提升。去掉反证阶段、真实模型建议到模拟的闭环效果仍未测量。
+
+
+## 冻结计划接续核对（2026-10-14）
+
+完成当前提交基础复现后重新核对计划：13份冻结源码中12份一致，investigation.py因提交b8563a6的人工参考条文选择校验而变化；数据manifest仍与冻结SHA一致。直接调用现有validate_plan已证实旧计划被拒绝，没有实例化模型Gateway或调用实验run。
+
+新修订v2保留原9个开发案例、划分、模式、次数、预算和全部数据哈希，只替换变化的源码哈希并补充修订溯源。重新选择案例、核对其18份observed/on_demand文件，均匹配manifest；这9案的policy均无reference_choice或reference_passages。未读取truth文件或sealed_test案例文件，未生成预测或成绩。现有validate_plan接受新计划，旧文件哈希前后保持，记录见[v26-plan-preparation-validation.json](v26-plan-preparation-validation.json)。
+
+源码差异限定为引用选择校验，不由此推断真实模型输出相同或更好。计划状态仍为prepared_not_authorized_or_run；用户暂不付费的决定继续有效。费用估计保留2026-10-12原记录，未查询当前价格／余额／模型可用性；将来明确获准执行时须重新核验。新封存集最终计划仍未准备或运行，不能由开发计划授权代替。

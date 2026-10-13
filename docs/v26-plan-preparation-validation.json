@@ -1,0 +1,50 @@
+{
+  "schema_version": "v26-plan-preparation-validation-v1",
+  "date": "2026-10-14",
+  "status": "prepared_not_authorized_or_run",
+  "old_plan_rejected": "Experiment differs from its frozen plan; prepare and review a new plan",
+  "old_plan_preserved": true,
+  "changed_sources": {
+    "backend/app/investigation.py": {
+      "old": "2a2ef8c859920a36e2154349de3b89a830fa1703d618076ace0187edc48553a8",
+      "new": "10e9d7c7f6df48b217ec00ed50119d197775254eaec59f86a16420e378f623f4"
+    }
+  },
+  "unchanged_source_count": 12,
+  "manifest_matches": true,
+  "selected_development_cases": 9,
+  "observable_files_verified": 18,
+  "selected_policies_have_no_reference_choice_or_passages": true,
+  "new_plan_accepted_by_existing_validator": true,
+  "new_plan_sha256": "7bd96b1ddf6768fc4414bba85ee91351021df38ba6ed4fdc0cc33cb2d764f5cd",
+  "old_plan_sha256": "db5ead82070997a0b50e0508283c03658e48d7f2e99ee592c60eb3e168eeb1b4",
+  "model_requests": 0,
+  "truth_files_read": 0,
+  "sealed_case_files_read": 0,
+  "experiment_run_invoked": false,
+  "checked_files": [
+    ".local/datasets-v3/observed/rc3-c-1e5315a794bf.json",
+    ".local/datasets-v3/on_demand/rc3-c-1e5315a794bf.json",
+    ".local/datasets-v3/observed/rc3-c-32cf68652c93.json",
+    ".local/datasets-v3/on_demand/rc3-c-32cf68652c93.json",
+    ".local/datasets-v3/observed/rc3-c-094ed4554e6c.json",
+    ".local/datasets-v3/on_demand/rc3-c-094ed4554e6c.json",
+    ".local/datasets-v3/observed/rc3-c-135d7e248230.json",
+    ".local/datasets-v3/on_demand/rc3-c-135d7e248230.json",
+    ".local/datasets-v3/observed/rc3-c-46b55f716ee3.json",
+    ".local/datasets-v3/on_demand/rc3-c-46b55f716ee3.json",
+    ".local/datasets-v3/observed/rc3-c-0913974e57ac.json",
+    ".local/datasets-v3/on_demand/rc3-c-0913974e57ac.json",
+    ".local/datasets-v3/observed/rc3-c-1547a87a6a34.json",
+    ".local/datasets-v3/on_demand/rc3-c-1547a87a6a34.json",
+    ".local/datasets-v3/observed/rc3-c-0dca0e003f95.json",
+    ".local/datasets-v3/on_demand/rc3-c-0dca0e003f95.json",
+    ".local/datasets-v3/observed/rc3-c-1c4bedf6d803.json",
+    ".local/datasets-v3/on_demand/rc3-c-1c4bedf6d803.json"
+  ],
+  "limitations": [
+    "Validation of plan and development inputs only, not a model smoke or effectiveness result",
+    "No current pricing/availability check; previously recorded estimates retained as historical only",
+    "Preparing the replacement plan does not grant paid execution or new sealed evaluation authorization"
+  ]
+}
