@@ -96,7 +96,106 @@
   "limitations": [
     "Small set: 11 document-level and 5 article-level queries; corpus lacks CAS 17/28 and two sources failed collection.",
     "Article matching uses article headings in chunk text, so a chunk that only refers to the article can count.",
-    "Keyword method only so far; BGE comparison on these queries is not run.",
+    "BGE was run once after the keyword result with the product windowing and no tuning; each method did better on 2 of 11 queries, so no reliable difference at this size.",
     "Question and answer text stay in the local archive because redistribution rights are unclear."
-  ]
+  ],
+  "bge_comparison": {
+    "date": "2026-10-14",
+    "method": "local BGE bge-small-zh-v1.5 cosine, best window per chunk, limit 6",
+    "model": "BAAI/bge-small-zh-v1.5 (local copy, CPU, offline)",
+    "model_safetensors_sha256": "354763b9b1357bc9c44f62c6be2276321081ed2567773608c0d0785b61d5a026",
+    "report_sha256": "b2fe1833a0e134aa128a95acb0c3622f5fae6c6c9bfa7c09e6b9ee13770bc0ca",
+    "run_once_after_keyword_result": true,
+    "parameters_tuned_on_these_queries": false,
+    "queries": 11,
+    "document_hit_at_1": 9,
+    "document_hit_at_6": 11,
+    "document_mrr_at_6": 0.8864,
+    "article_queries": 5,
+    "article_hit_at_6": 3,
+    "queries_where_one_method_did_better": {
+      "bge": 2,
+      "keyword": 2
+    },
+    "identical_queries": 7,
+    "rows": [
+      {
+        "query_id": "mof-qa-3634031",
+        "document_hit_at_1": true,
+        "document_hit_at_6": true,
+        "article_query": false,
+        "article_hit_at_6": null
+      },
+      {
+        "query_id": "mof-qa-3634036",
+        "document_hit_at_1": true,
+        "document_hit_at_6": true,
+        "article_query": false,
+        "article_hit_at_6": null
+      },
+      {
+        "query_id": "mof-qa-3664186",
+        "document_hit_at_1": false,
+        "document_hit_at_6": true,
+        "article_query": true,
+        "article_hit_at_6": false
+      },
+      {
+        "query_id": "mof-qa-3691861",
+        "document_hit_at_1": true,
+        "document_hit_at_6": true,
+        "article_query": true,
+        "article_hit_at_6": true
+      },
+      {
+        "query_id": "mof-qa-3691863",
+        "document_hit_at_1": true,
+        "document_hit_at_6": true,
+        "article_query": true,
+        "article_hit_at_6": false
+      },
+      {
+        "query_id": "mof-qa-3691864",
+        "document_hit_at_1": true,
+        "document_hit_at_6": true,
+        "article_query": true,
+        "article_hit_at_6": true
+      },
+      {
+        "query_id": "mof-qa-3717408",
+        "document_hit_at_1": true,
+        "document_hit_at_6": true,
+        "article_query": true,
+        "article_hit_at_6": true
+      },
+      {
+        "query_id": "mof-qa-3762844",
+        "document_hit_at_1": true,
+        "document_hit_at_6": true,
+        "article_query": false,
+        "article_hit_at_6": null
+      },
+      {
+        "query_id": "mof-qa-3819702",
+        "document_hit_at_1": true,
+        "document_hit_at_6": true,
+        "article_query": false,
+        "article_hit_at_6": null
+      },
+      {
+        "query_id": "mof-qa-3962188",
+        "document_hit_at_1": true,
+        "document_hit_at_6": true,
+        "article_query": false,
+        "article_hit_at_6": null
+      },
+      {
+        "query_id": "mof-qa-3962191",
+        "document_hit_at_1": false,
+        "document_hit_at_6": true,
+        "article_query": false,
+        "article_hit_at_6": null
+      }
+    ]
+  }
 }

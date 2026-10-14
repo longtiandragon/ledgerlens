@@ -1,0 +1,105 @@
+{
+  "schema_version": "cord-ocr-validation-v1",
+  "date": "2026-10-14",
+  "dataset": {
+    "name": "naver-clova-ix/cord-v2",
+    "revision": "7f0115a4b758a71d6473b8d085751692da2fef98",
+    "split": "test",
+    "license": "cc-by-4.0",
+    "parquet_sha256": "51c65f1788faff392abe2a0b55b023eb23e9be551c509138eaa3a832514224e7",
+    "manifest_sha256": "0a8703742e2c1f3b0c349a988b3ebb8581bfd92ebf9de0a5e19fef2e6dec00fa",
+    "images": 100,
+    "source": "https://huggingface.co/datasets/naver-clova-ix/cord-v2"
+  },
+  "engine": {
+    "paddleocr": "3.7.0",
+    "paddlepaddle": "3.3.1",
+    "paddlex": "3.7.2",
+    "models_sha256": "3308911c08f709a8a4334a85f139ba4d4345a6f8af7dbb9f0c0758543d523879",
+    "device": "cpu"
+  },
+  "scope": "Real Indonesian restaurant receipts (Latin script). Literal recovery of ground-truth words, the receipt total and item prices in the recognised text; not field extraction, posting or Chinese invoices.",
+  "runs": [
+    {
+      "id": "v1",
+      "note": "Validator rejected the whole receipt when any detected box had empty recognised text",
+      "report_sha256": "73351f211494eb0ff24db5f0202768da0f88465b8435dabf4557ba88c6c3ce56",
+      "source_sha256": {
+        "benchmarks\\cord_ocr_eval.py": "e6e28c12c8e31ff77a6a8dda769140c338fc30cc25a5c4b07a3169a2eee8f83a",
+        "backend\\app\\ocr_observations.py": "253bc8f25c8e2310c1976cf7d08dcfeb06d0c21366b7e27da0b5175c9e2a3876",
+        "docs\\ocr-model-sources.json": "98830626d48543261d9fabc89ab6ec31ba1c666d78b4b02960842fba5f6b2632"
+      },
+      "status": "completed_with_failures",
+      "cases": 100,
+      "failed_cases": 40,
+      "failure_messages": {
+        "Invalid OCR text": 40
+      },
+      "receipts_with_unreadable_regions": 0,
+      "unreadable_regions": 0,
+      "totals": {
+        "word_hits": 1107,
+        "word_total": 2356,
+        "total_present": 95,
+        "total_hit": 48,
+        "price_hits": 105,
+        "price_total": 246
+      },
+      "word_recovery": 0.4699,
+      "total_recovery": 0.5053,
+      "price_recovery": 0.4268,
+      "network_attempts_blocked": 0,
+      "ledger_writes": 0,
+      "duration_seconds": 494.1
+    },
+    {
+      "id": "v2",
+      "note": "Empty-text boxes recorded as unreadable regions with their location; readable lines kept",
+      "report_sha256": "639c04cf0f732ba0db802fca96d8428ba47038c4a879c14b12dca1842b7912ff",
+      "source_sha256": {
+        "benchmarks\\cord_ocr_eval.py": "e6e28c12c8e31ff77a6a8dda769140c338fc30cc25a5c4b07a3169a2eee8f83a",
+        "backend\\app\\ocr_observations.py": "e2d298ea4ebe57ed1e777ea2302dbd7b805097870840d735fa4da88e4b35e57c",
+        "docs\\ocr-model-sources.json": "98830626d48543261d9fabc89ab6ec31ba1c666d78b4b02960842fba5f6b2632"
+      },
+      "status": "completed",
+      "cases": 100,
+      "failed_cases": 0,
+      "failure_messages": {},
+      "receipts_with_unreadable_regions": 40,
+      "unreadable_regions": 83,
+      "totals": {
+        "word_hits": 2119,
+        "word_total": 2356,
+        "total_present": 95,
+        "total_hit": 78,
+        "price_hits": 221,
+        "price_total": 246
+      },
+      "word_recovery": 0.8994,
+      "total_recovery": 0.8211,
+      "price_recovery": 0.8984,
+      "network_attempts_blocked": 0,
+      "ledger_writes": 0,
+      "duration_seconds": 500.2
+    }
+  ],
+  "v1_to_v2": {
+    "receipts_ok_in_both": 60,
+    "identical_text_in_both": 60,
+    "receipts_recovered_by_v2": 40,
+    "scores_on_recovered_receipts": {
+      "word_hits": 1012,
+      "word_total": 1113,
+      "total_present": 40,
+      "total_hit": 30,
+      "price_hits": 116,
+      "price_total": 129
+    }
+  },
+  "limitations": [
+    "Literal substring recovery after removing whitespace; a hit does not prove the value was read into the right field.",
+    "Indonesian receipts in Latin script exercise the shared OCR engine only; Chinese VAT invoices remain untested.",
+    "Unreadable regions are shown to the reviewer as a warning; they may hide amounts or dates.",
+    "Single CPU run per version; images and ground truth stay local (CC BY 4.0, attribution: NAVER CLOVA)."
+  ]
+}
