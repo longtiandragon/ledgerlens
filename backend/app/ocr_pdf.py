@@ -55,7 +55,9 @@ def locate_page(prediction, page_number, geometry, converter, source_hash, engin
     return {'page': page_number, 'status': prediction['status'], 'confirmation': 'unconfirmed',
             'rendered_rgb_sha256': prediction['source_sha256'],
             'image': {'width': width, 'height': height}, 'geometry': geometry,
-            'bitmap_to_pdf': transform, 'observations': observations}
+            'bitmap_to_pdf': transform, 'observations': observations,
+            # Rendered-bitmap pixels; regions the recogniser detected but could not read.
+            'unreadable_regions': deepcopy(prediction.get('unreadable_regions', []))}
 
 
 def parse_pdf(path, ocr, *, dpi=144):

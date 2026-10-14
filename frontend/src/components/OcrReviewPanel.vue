@@ -24,7 +24,7 @@ let disposed = false, selection = 0, timer: ReturnType<typeof setTimeout> | unde
 const labels: Record<string, string> = { business_date: '业务日期', amount: '业务金额', invoice_id: '发票号', order_id: '订单号', counterparty: '交易对手', reference: '参考编号', description: '摘要', voucher_id: '凭证号', account: '科目', debit: '借方金额', credit: '贷方金额', direction: '收付方向' }
 const kinds: Record<LedgerInput['kind'], string> = { invoice: '发票', bank: '银行流水', order: '采购订单', receipt: '收货记录', journal: '会计分录', opening: '期初余额', trial_balance: '试算平衡' }
 const statuses: Record<string, string> = { queued: '排队中', running: '本地识别中', complete: '待人工核实', partial: '部分页面失败', failed: '识别失败' }
-const pages = computed<OcrPage[]>(() => run.value?.result.pages || [{ page: 1, status: run.value?.status || '', image: run.value?.result.image, observations: run.value?.result.observations || [] }])
+const pages = computed<OcrPage[]>(() => run.value?.result.pages || [{ page: 1, status: run.value?.status || '', image: run.value?.result.image, observations: run.value?.result.observations || [], unreadable_regions: run.value?.result.unreadable_regions || [] }])
 const currentPage = computed(() => pages.value.find(p => p.page === page.value))
 const lines = computed(() => pages.value.flatMap(p => p.observations || []))
 const latest = computed(() => run.value?.reviews.at(-1))
@@ -158,6 +158,7 @@ onBeforeUnmount(() => { disposed = true; selection++; controller.abort(); clearT
         <div class="source-column"><div class="page-bar"><h3>01 / 对照原件</h3><label v-if="pages.length>1">页码<select v-model="page" aria-label="页码"><option v-for="p in pages" :key="p.page" :value="p.page">第 {{ p.page }} 页{{ p.status==='failed'?' · 失败':'' }}</option></select></label></div>
           <OcrSourcePreview :key="run.document_id" :document-id="run.document_id" :media-type="run.media_type" :page="page" :line="selectedLine" :image="currentPage?.image"/>
           <p v-if="currentPage?.status==='failed'" class="notice error">本页识别失败：{{ currentPage.error?.type }}</p>
+          <p v-if="currentPage?.unreadable_regions?.length" class="notice warning" role="status">本页有 {{ currentPage.unreadable_regions.length }} 个检测区域未能识别出文字，可能含金额或日期；请对照原件核实，不要据此判断原件没有该信息。</p>
           <div class="ocr-lines" aria-label="待核实原文行"><button v-for="line in currentPage?.observations || []" :key="line.observation_id" type="button" :class="{selected:selectedLine?.observation_id===line.observation_id}" @click="inspect(line)"><span>{{ line.locator.line }}</span><strong>{{ line.text }}</strong><small>{{ (line.confidence*100).toFixed(1) }}%</small></button><p v-if="!currentPage?.observations?.length" class="intro">{{ currentPage?.status==='failed'?'本页没有可用引用。':'本页未检出文字，不会自动生成空记录。' }}</p></div>
         </div>
         <form class="field-column" @submit.prevent="save"><h3>02 / 人工填写字段</h3><p class="intro">一份原件可核实多条业务记录。逐条填写并选择原文行，全部核实后整批生成预览；无内容的可选字段请留空。</p>

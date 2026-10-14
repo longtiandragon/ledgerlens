@@ -163,3 +163,53 @@ def test_summary_verifies_predictions_counts_sources_and_truth(tmp_path, corrupt
     else:
         with pytest.raises(ValueError):
             summarize(path, tmp_path)
+
+
+def test_unreadable_regions_are_recorded_not_observations_and_readable_lines_keep_their_identity():
+    # Real receipts (CORD v2) yield detected boxes with empty recognised text.
+    box = [[5, 20], [40, 20], [40, 30], [5, 30]]
+    value = raw()
+    value['res']['rec_texts'].insert(0, '')
+    value['res']['rec_scores'].insert(0, 0.0)
+    value['res']['rec_polys'].insert(0, box)
+    value['res']['rec_texts'].append('  ')
+    value['res']['rec_scores'].append(0.31)
+    value['res']['rec_polys'].append(box)
+    result = normalized(value)
+    assert result['status'] == 'requires_field_verification'
+    assert result['unreadable_regions'] == [{'engine_index': 1, 'confidence': 0.0, 'polygon_px': box},
+                                            {'engine_index': 3, 'confidence': 0.31, 'polygon_px': box}]
+    assert [line['locator']['line'] for line in result['observations']] == [1]
+    assert result['observations'] == normalized()['observations']   # same id as without the unreadable boxes
+    assert normalized()['unreadable_regions'] == []
+
+
+@pytest.mark.parametrize('change', [
+    lambda r: (r['res']['rec_texts'].__setitem__(0, ' '), r['res']['rec_texts'].append(''),
+               r['res']['rec_scores'].append(0.5), r['res']['rec_polys'].append([[1, 2], [9, 2], [9, 9], [1, 9]])),
+    lambda r: (r['res']['rec_texts'].append(''), r['res']['rec_scores'].append(0.5),
+               r['res']['rec_polys'].append([[1, 2], [999, 2], [999, 9], [1, 9]])),
+    lambda r: r['res']['rec_texts'].__setitem__(0, None),
+])
+def test_text_free_or_malformed_regions_still_fail(change):
+    result = raw()
+    change(result)
+    with pytest.raises(ValueError):
+        normalized(result)
+
+
+def test_stored_unreadable_regions_are_validated_with_the_result():
+    from app.ocr_workflow import validate_result
+    value = raw()
+    value['res']['rec_texts'].append('')
+    value['res']['rec_scores'].append(0.2)
+    value['res']['rec_polys'].append([[5, 20], [40, 20], [40, 30], [5, 30]])
+    result = normalized(value)
+    validate_result(result, 'a' * 64)
+    legacy = {k: v for k, v in result.items() if k != 'unreadable_regions'}
+    validate_result(legacy, 'a' * 64)          # results stored before this field existed
+    for broken in ([{'engine_index': 2, 'polygon_px': [[5, 20], [400, 20], [40, 30], [5, 30]]}],
+                   [{'engine_index': 0, 'polygon_px': [[5, 20], [40, 20], [40, 30], [5, 30]]}],
+                   [{'engine_index': 2, 'polygon_px': [[5, 'x'], [40, 20], [40, 30], [5, 30]]}], 'many'):
+        with pytest.raises(ValueError):
+            validate_result({**result, 'unreadable_regions': broken}, 'a' * 64)

@@ -98,6 +98,16 @@ def observations(result):
             for row in page.get('observations', [])]
 
 
+def _valid_region(region, width, height):
+    if not isinstance(region, dict) or type(region.get('engine_index')) is not int or region['engine_index'] < 1:
+        return False
+    polygon = region.get('polygon_px')
+    return isinstance(polygon, list) and len(polygon) == 4 and all(
+        isinstance(point, list) and len(point) == 2
+        and all(type(n) in (int, float) and math.isfinite(n) for n in point)
+        and 0 <= point[0] <= width and 0 <= point[1] <= height for point in polygon)
+
+
 def validate_result(result, source_hash):
     if result.get('source_sha256') != source_hash or result.get('confirmation') != 'unconfirmed' or result.get('ledger_writes') != 0:
         raise ValueError('OCR结果的来源或未确认边界无效')
@@ -126,6 +136,10 @@ def validate_result(result, source_hash):
         total_pixels += width * height
         if total_pixels > 80_000_000 or page['status'] != ('requires_field_verification' if lines else 'no_text_detected'):
             raise ValueError('OCR页状态或像素预算无效')
+        regions = page.get('unreadable_regions', [])   # absent in results stored before regions were recorded
+        if not isinstance(regions, list) or (regions and not lines) or not all(
+                _valid_region(region, width, height) for region in regions):
+            raise ValueError('OCR未识别区域记录无效')
         expected = normalize({'res': {'rec_texts': [r['text'] for r in lines], 'rec_scores': [r['confidence'] for r in lines],
                             'rec_polys': [r['locator']['polygon_px'] for r in lines]}},
                   source_hash=source_hash, width=width, height=height, engine=result['engine'])

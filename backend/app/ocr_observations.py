@@ -51,9 +51,9 @@ def normalize(raw, *, source_hash, width, height, engine):
         raise ValueError('OCR text, confidence and polygon arrays are required')
     if len(texts) > MAX_LINES or len(texts) != len(scores) or len(texts) != len(polygons):
         raise ValueError('OCR arrays disagree or exceed limit')
-    lines = []
+    lines, unreadable = [], []
     for index, (text, score, polygon) in enumerate(zip(texts, scores, polygons)):
-        if not isinstance(text, str) or not text.strip() or len(text) > 4000:
+        if not isinstance(text, str) or len(text) > 4000:
             raise ValueError('Invalid OCR text')
         if type(score) not in (float, int) or not math.isfinite(score) or not 0 <= score <= 1:
             raise ValueError('Invalid OCR confidence')
@@ -70,13 +70,22 @@ def normalize(raw, *, source_hash, width, height, engine):
                        - polygon[(i + 1) % 4][0] * polygon[i][1] for i in range(4)))
         if area == 0:
             raise ValueError('OCR polygon has zero area')
+        if not text.strip():
+            # Real receipts (CORD v2) yield detected regions with empty recognised text. They are
+            # kept with their location for the reviewer, never turned into an observation,
+            # silently dropped or allowed to make the page look text-free.
+            unreadable.append({'engine_index': index + 1, 'confidence': score, 'polygon_px': deepcopy(polygon)})
+            continue
         item = {'text': text, 'confidence': score, 'confirmation': 'unconfirmed',
-                'locator': {'page': 1, 'line': index + 1, 'polygon_px': deepcopy(polygon)}}
+                'locator': {'page': 1, 'line': len(lines) + 1, 'polygon_px': deepcopy(polygon)}}
         item['observation_id'] = 'ocr-' + sha(canonical({'source': source_hash, 'engine': engine, 'line': item}))
         lines.append(item)
+    if unreadable and not lines:
+        raise ValueError('OCR detected regions but recognised no text')
     return {'schema_version': VERSION, 'status': 'requires_field_verification' if lines else 'no_text_detected',
             'confirmation': 'unconfirmed', 'ledger_writes': 0, 'source_sha256': source_hash,
             'image': {'width': width, 'height': height, 'page_count': 1}, 'engine': deepcopy(engine), 'observations': lines,
+            'unreadable_regions': unreadable,
             'notice': 'OCR文字为待核实观察；置信度不证明金额、字段归属或业务事实，不能直接入账。'}
 
 
