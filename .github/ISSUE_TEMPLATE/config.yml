@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 使用问答与讨论
+    url: https://github.com/longtiandragon/ledgerlens/discussions
+    about: 使用问题、想法和招募信息请在 Discussions 交流
+  - name: 安全问题（私下报告）
+    url: https://github.com/longtiandragon/ledgerlens/security/advisories/new
+    about: 可利用的漏洞请勿公开提交，按 SECURITY.md 私下报告

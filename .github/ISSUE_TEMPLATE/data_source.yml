@@ -1,0 +1,42 @@
+name: 数据来源提议
+description: 建议接入新的公开数据、样例或评测集
+title: "[数据] "
+labels: ["type: data-source"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: 数据名称与发布方
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: 官方获取地址
+    validations:
+      required: true
+  - type: input
+    id: license
+    attributes:
+      label: 许可与再分发条件
+      description: 原文许可名称及链接；若未声明许可，请写“未声明”。未声明许可的资料只保存来源和哈希，不进入仓库
+    validations:
+      required: true
+  - type: dropdown
+    id: nature
+    attributes:
+      label: 数据性质
+      options:
+        - 公开真实数据
+        - 官方标准样例
+        - 合成数据
+        - 需要授权的真实业务数据（不接收原件）
+    validations:
+      required: true
+  - type: textarea
+    id: use
+    attributes:
+      label: 用途
+      description: 用来验证什么能力？是否有独立的真值或参考答案？
+    validations:
+      required: true

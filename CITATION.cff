@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "如果在研究或教学中使用本项目，请按以下信息引用。"
+title: "账证智核 LedgerLens：证据优先的会计复核研究与辅助平台"
+type: software
+authors:
+  - family-names: "何"
+    given-names: "俊浩"
+    alias: "longtiandragon"
+    email: "240200079@mail.szpu.edu.cn"
+repository-code: "https://github.com/longtiandragon/ledgerlens"
+license: Apache-2.0
+version: "0.1.0"
+keywords:
+  - accounting
+  - audit
+  - evidence
+  - llm-agents
+  - reproducible-evaluation

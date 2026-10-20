@@ -117,6 +117,10 @@ Compose 配置使用 PostgreSQL、Redis、Celery、持久化 LangGraph 检查点
 - [交付状态与未验证项目](docs/STATUS.md)
 - [成熟项目借鉴与许可](docs/THIRD_PARTY.md)
 - [实施路线图与BPI证据接入](docs/ROADMAP.md)
-- [贡献指南](CONTRIBUTING.md)
+
+## 参与与治理
+
+- [贡献指南](CONTRIBUTING.md) · [项目治理](GOVERNANCE.md)（含 AI 辅助开发规则） · [行为准则](CODE_OF_CONDUCT.md)
+- [安全策略](SECURITY.md) · [维护者与招募](MAINTAINERS.md) · [获取帮助](SUPPORT.md) · [引用本项目](CITATION.cff)
 
 自主代码采用 Apache-2.0。第三方依赖、模型与公开资料保留各自许可。

@@ -1,0 +1,56 @@
+name: 缺陷报告
+description: 报告可复现的计算、导入、调查或界面问题
+title: "[缺陷] "
+labels: ["type: bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请只附**合成数据**，不要上传真实账套、发票原件或密钥。安全问题请按 SECURITY.md 私下报告。
+  - type: input
+    id: version
+    attributes:
+      label: 版本与运行模式
+      description: 提交号或版本；本地 SQLite 还是 Compose；单用户还是 AUTH_MODE=multi_user
+      placeholder: "例如：v0.2.0，本地 SQLite，单用户"
+    validations:
+      required: true
+  - type: textarea
+    id: input
+    attributes:
+      label: 最小合成输入
+      description: 能复现问题的最小 CSV/JSON 片段，或生成它的命令
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期结果与独立依据
+      description: 预期应该得到什么，依据是什么（准则条款、手工计算等），不要用程序自身的输出当依据
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际结果
+      description: 实际输出，以及相关的规则 ID、快照 ID 或报错信息
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 建立账套 …
+        2. 导入 …
+        3. 执行 …
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 确认
+      options:
+        - label: 我附上的数据都是合成或公开数据，不含真实账套和密钥
+          required: true

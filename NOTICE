@@ -1,0 +1,8 @@
+账证智核 LedgerLens
+Copyright 2026 何俊浩 and LedgerLens contributors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It does not bundle third-party source code. Dependencies, optional models and
+public datasets keep their own licenses; see docs/THIRD_PARTY.md and the
+dependency inventories under docs/.
