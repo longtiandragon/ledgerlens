@@ -67,6 +67,69 @@ jobs:
         with: {node-version: '22', cache: npm, cache-dependency-path: frontend/package-lock.json}
       - run: npm ci
       - run: npm run build
+  # The README's Linux/macOS path, run literally: install, prepare the local
+  # database, start both services, check them, stop only what the script started.
+  quickstart-unix:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v7
+        with: {version: '0.11.28'}
+      - uses: actions/setup-node@v7
+        with: {node-version: '22', cache: npm, cache-dependency-path: frontend/package-lock.json}
+      - run: cp .env.example .env
+      - run: bash scripts/start-local.sh
+      - run: |
+          curl -fsS http://127.0.0.1:8000/api/v1/health | jq -e '.mode == "local" and .model_configured == false'
+          curl -fsS -o /dev/null http://127.0.0.1:5188/
+      - run: bash scripts/stop-local.sh && ! curl -fsS -o /dev/null --max-time 2 http://127.0.0.1:8000/api/v1/health
+      - if: failure()
+        run: tail -n 50 runtime/*.log || true
+  # The README's Windows path with the PowerShell launcher, then the full backend suite.
+  quickstart-windows:
+    runs-on: windows-2025
+    timeout-minutes: 40
+    env:
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v7
+        with: {version: '0.11.28'}
+      - uses: actions/setup-node@v7
+        with: {node-version: '22', cache: npm, cache-dependency-path: frontend/package-lock.json}
+      - shell: pwsh
+        run: |
+          Copy-Item .env.example .env
+          powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          $health = Invoke-RestMethod http://127.0.0.1:8000/api/v1/health
+          if ($health.mode -ne 'local' -or $health.model_configured) { throw 'unexpected health response' }
+          Invoke-WebRequest -UseBasicParsing http://127.0.0.1:5188 | Out-Null
+          powershell -ExecutionPolicy Bypass -File scripts/stop-local.ps1
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+      - shell: pwsh
+        run: .venv\Scripts\python.exe -m pytest -q -rs
+  # The Compose stack a reviewer would start: build, wait for health, check the web
+  # entry and its API proxy, then remove the containers and volumes.
+  docker:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      DEEPSEEK_API_KEY: ''
+    steps:
+      - uses: actions/checkout@v7
+      - run: docker compose up --build -d
+      - run: |
+          for _ in $(seq 1 90); do curl -fsS -o /dev/null http://127.0.0.1:8000/api/v1/health && break; sleep 2; done
+          curl -fsS http://127.0.0.1:8000/api/v1/health | jq -e '.mode == "celery" and .model_configured == false'
+          curl -fsS -o /dev/null http://127.0.0.1:8080/
+          curl -fsS http://127.0.0.1:8080/api/v1/books | jq -e '. == []'
+      - if: always()
+        run: |
+          docker compose ps
+          docker compose logs --no-color --tail 100
+          docker compose down -v
   # Reproduce the local demo on a fresh machine: regenerate synthetic data, hold
   # the existing 480/30 rule-label contract, then drive an empty database through
   # the browser. No model key is present, so no paid request can be made.

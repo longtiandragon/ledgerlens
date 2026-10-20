@@ -28,13 +28,10 @@ Linux／macOS：
 
 ```bash
 cp -n .env.example .env
-uv sync --frozen
-(cd frontend && npm ci)
-export PYTHONPATH=backend:.
-uv run python scripts/prepare_local_database.py
-uv run uvicorn app.main:app --host 127.0.0.1 --port 8000 &
-(cd frontend && node node_modules/vite/bin/vite.js --host 127.0.0.1 --port 5188)
+bash scripts/start-local.sh      # 已安装依赖时加 --skip-install；停止：bash scripts/stop-local.sh
 ```
+
+两种脚本行为相同：端口被占用就拒绝启动，只停止自己启动的进程，启动前先核验并按需备份、迁移本地 SQLite。CI 的 quickstart-unix 与 quickstart-windows 作业会照原样执行它们。
 
 也可以用 Docker：`docker compose up --build -d`，入口为 <http://127.0.0.1:8080>，见 [运行手册](docs/RUNBOOK.md)。规则演示不需要模型密钥。
 
