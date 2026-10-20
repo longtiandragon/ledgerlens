@@ -57,8 +57,8 @@ def github() -> dict:
     profile = json.loads(gh('api', f'repos/{REPO}/community/profile'))
     prs = len(json.loads(gh('pr', 'list', '--repo', REPO, '--state', 'all', '--limit', '500', '--json', 'number')))
     issues = len(json.loads(gh('issue', 'list', '--repo', REPO, '--state', 'all', '--limit', '500', '--json', 'number')))
-    jobs = len(re.findall(r'^  [a-z][a-z0-9-]*:\s*$', (ROOT / '.github/workflows/ci.yml').read_text(encoding='utf-8'),
-                          re.M))
+    workflow = (ROOT / '.github/workflows/ci.yml').read_text(encoding='utf-8')
+    jobs = len(re.findall(r'^  [a-z][a-z0-9_-]*:\s*$', workflow.split('\njobs:\n', 1)[1], re.M))
     return {'health': profile['health_percentage'], 'prs': prs, 'issues': issues, 'jobs': jobs}
 
 

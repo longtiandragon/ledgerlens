@@ -23,6 +23,9 @@
   th { background: var(--soft); color: #2c4a43; white-space: nowrap; }
   table.facts th { width: 28mm; }
   table.kpi th { width: 36mm; }
+  table.compare { table-layout: fixed; font-size: 8.6pt; }
+  table.compare th, table.compare td { word-break: break-word; white-space: normal; padding: 1.4mm 1.8mm; }
+  table.compare tr > :first-child { width: 17%; }
   figure { margin: 3mm 0; break-inside: avoid; }
   figure img { width: 100%; border: 1px solid var(--line); border-radius: 2mm; }
   figcaption { font-size: 9pt; color: var(--muted); text-align: center; margin-top: 1mm; }
@@ -144,7 +147,7 @@
   <h3>5.2 混合方法的预注册检验（v4）</h3>
   <div class="note">基于 v3 的观察，我们提出“确定性优先、模型兜底”的混合方法：规则触发且固定补证得出确定类别时直接采用确定性结论；否则交给单 Agent。该方法在任何 v4 模型请求之前已公开预注册（GitHub Issue #12、docs/ROOT_CAUSE_V4.md），在新生成的 v4 数据上检验五个目标（T1：宏 F1 比最强同预算基线高 0.05 以上；T2：增益的自助区间下界大于 0；T3：不低于单 Agent；T4：结构失败不超过 1；T5：每案请求不超过单 Agent 的 60%）。开发冒烟已通过（交给模型的 5 个样本结构失败 0，实际花费 ¥0.13），两份封存计划已冻结。封存运行结果无论正负都将原样公布于此。</div>
   <h3>5.3 与同类方案的比较</h3>
-  <table class="grid">
+  <table class="grid compare">
     <tr><th></th><th>通用大模型对话</th><th>商业智能财务（用友 BIP、金蝶、BlackLine 等）</th><th>开源 ERP／记账（ERPNext、Odoo、Beancount）</th><th>账证智核</th></tr>
     <tr><th>主要用途</th><td>问答与文本生成</td><td>企业财务全流程与月结自动化</td><td>记账与业务单据管理</td><td>异常调查与复核</td></tr>
     <tr><th>结论能否回查到当时可见的记录</th><td>不保证</td><td>依产品而定，公开资料未见第三方可复核的说明</td><td>不涉及（不做调查结论）</td><td>引用必须属于当前快照且已读</td></tr>
