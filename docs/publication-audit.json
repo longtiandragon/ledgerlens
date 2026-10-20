@@ -1,0 +1,40 @@
+{
+  "schema_version": "publication-audit-v1",
+  "created_at": "2026-10-20T12:39:19.326229+00:00",
+  "head": "4d68e96a5fe192fb7c23f983d2d3d2dfed33950d",
+  "blobs_scanned": 843,
+  "commit_authors": [
+    "dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
+    "longtiandragon <240200079@mail.szpu.edu.cn>",
+    "何俊浩 <240200079@mail.szpu.edu.cn>"
+  ],
+  "blocking": [],
+  "review": [
+    {
+      "kind": "e-mail address",
+      "path": "backend/tests/test_annual_reports.py",
+      "count": 1
+    },
+    {
+      "kind": "e-mail address",
+      "path": "backend/tests/test_bpi2019.py",
+      "count": 1
+    },
+    {
+      "kind": "e-mail address",
+      "path": "backend/tests/test_official_cases.py",
+      "count": 1
+    },
+    {
+      "kind": "e-mail address",
+      "path": "backend/tests/test_audit_publication.py",
+      "count": 1
+    },
+    {
+      "kind": "e-mail address",
+      "path": "docs/HANDOFF.md",
+      "count": 1
+    }
+  ],
+  "passed": true
+}
