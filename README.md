@@ -1,24 +1,65 @@
 # 账证智核 · LedgerLens
 
-面向异常调查与月结复核的开源会计辅助工作台。原始账务只读，证据与规则版本固定，调整仅进入隔离模拟。
+[![checks](https://github.com/longtiandragon/ledgerlens/actions/workflows/ci.yml/badge.svg)](https://github.com/longtiandragon/ledgerlens/actions/workflows/ci.yml) [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+
+**证据优先的开源会计复核工作台：确定性规则先判断，模型只给可核验的解释。** 原始账簿只读；每次调查固定账套、数据快照和规则版本；调整只进隔离模拟，由程序逐分复算。
+
+![月结工作台：检查结果来自当前固定的数据快照](docs/images/01-workbench.png)
+
+## 它解决什么问题
+
+月结复核中发现异常之后，还要取得证据、判断原因，并证明调整不会改坏原账。AI 直接给出的结论，常常说不清依据了哪些资料、这些资料当时是否可见。账证智核让每条结论都能回查到当前快照中的具体记录：迟到的资料会生成新快照并使旧复核失效，模型建议永远不会自动成为业务事实。
+
+适用场景：会计、审计课程的复核实训（首个可落地场景）；代账机构与企业财务的月结复核（目标场景，真实账套试点属于后续外部验证）。
+
+## 五分钟上手
+
+|方式|命令|入口|
+|---|---|---|
+|Docker（推荐）|`docker compose up --build -d`|<http://127.0.0.1:8080>|
+|Windows|`powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1`|<http://127.0.0.1:5188>|
+|Linux／macOS|`bash scripts/start-local.sh`|<http://127.0.0.1:5188>|
+
+不需要模型密钥。打开后依次：新建账套 → 载入合成演示账套 → 执行月结检查 → 打开“发票重复确认”并启动调查 → 浏览证据 → 在“模拟处理”中输入调整草稿 → 保存复核意见 → 补充迟到收货单，观察旧复核失效。三种启动方式在每次提交的 CI 中都按原样执行。
+
+## 核心能力
+
+- **导入与快照**：CSV／JSON／XLSX／文本 PDF、财政部数电发票 XML、扫描件 OCR（人工逐字段核实）；原件哈希，记录只追加。
+- **确定性检查**：16 条月结检查规则；33 条来自 32 份财政部实施问答的政策规则，专业判断须人工确认。
+- **证据调查**：规则、单 Agent、固定多 Agent、主动补证与确定性优先混合模式；只读快照工具，不提供 SQL、代码或 Shell。
+- **隔离模拟与复核**：调整草稿由程序复算，原账哈希不变；复核意见、可选的多用户职务分离审签、Markdown／JSON 底稿。
+- **公开资料闭环**：财政部公开样例一条命令完成采集、隔离 API 与浏览器验收和证据哈希汇总，复制后可离线核验。
+
+|调查结论带可回查的引用|调整只进隔离模拟|
+|---|---|
+|![规则调查的已核验结果](docs/images/02-investigation.png)|![模拟前后对比](docs/images/05-simulation.png)|
+|**迟到资料使旧复核失效**|**评测中心如实展示负面结果**|
+|![旧复核失效](docs/images/07-review-invalidated.png)|![原因调查评测](docs/images/09-evaluation.png)|
+
+## 架构
+
+![架构：资料接入、不可变来源与快照、确定性引擎、证据调查、校验模拟与复核](docs/images/architecture.svg)
+
+## 验证结果（截至 2026-10-20）
+
+|项目|结果|
+|---|---|
+|后端测试|本机 2450 通过／25 跳过；CI 每次提交在 Linux 与 Windows 上全量运行|
+|规则基准|480 个合成案例、30 个独立参考例全部通过，CI 每次重新生成数据并强制该契约|
+|政策规则|33 条规则、191 个手写投影全部通过；未经会计专业人员审阅前均为 experimental|
+|公开资料|财政部数电发票样例：API 45 项、Chrome 24 项全部通过|
+|模型效果|v2、v3 两次封存测试中，单 Agent 都没有超过同预算确定性基线（v3：宏 F1 0.508 对 0.563），见 [ROOT_CAUSE_V3](docs/ROOT_CAUSE_V3.md)|
+|混合方法|“确定性优先、模型兜底”在新数据上的预注册检验进行中：开发冒烟已通过，封存计划已冻结，见 [#12](https://github.com/longtiandragon/ledgerlens/issues/12) 与 [ROOT_CAUSE_V4](docs/ROOT_CAUSE_V4.md)|
+
+边界：数据为合成数据与公开资料；尚未在企业真实账套上试点；AI 审阅不等于会计师意见。逐项记录见 [交付状态](docs/STATUS.md)，全部文档见 [文档导航](docs/README.md)。
+
+## 接手开发
 
 当前实现是本地运行的 `0.1.0` 工程版本，不是准则全面覆盖或真实企业业务效果的声明。已实现内容和仍需验证的项目见 [交付状态](docs/STATUS.md)。
 
 接手开发请先读 [交接文档](docs/HANDOFF.md)；目标、验收门槛与当前证据见 [目标文档](docs/GOALS.md)。
 
-已保存的公开验收包现在支持[标准库离线核验](docs/OFFLINE_EVIDENCE_VERIFICATION.md)：复制到新位置后可检查原件、底稿和报告关联，无需启动API或Chrome。实际复制包22份证据及9份附件核验通过，88项专项通过；这是保存证据核验，不是重新执行业务验收。
-
-2026-10-20最新：政策v9修复运输成本摊销时点与租赁混合付款两处范围错误，经Astra限定AI复核；完整后端2450通过/25跳过，公开API45项、Chrome24项全部通过，构建/契约/Ruff通过。公开验收器v2自动核对源码变动及实际下载底稿，372份源码/配置、22份证据验证一致。[本轮摘要](docs/policy-v9-validation.json)保留失败反例、跳过项和适用边界；本次未重装环境或执行新远端CI。
-
-2026-10-14起按学生项目的公开资料范围继续交付：新增[财政部公开中文凭证样例闭环](docs/PUBLIC_DATA_CLOSURE.md)，并完成[AI会计审阅发现的租赁和借款费用边界整改](docs/AI_ACCOUNTING_REVIEW_20261014.md)。企业实账与真人签字列为未来外部验证，不作为当前公开资料版本的前置条件；模型效果未达标的记录保留。
-
-2026-10-15历史v8：Astra补做[借款利息范围复核](docs/AI_ACCOUNTING_REVIEW_20261015.md)，发现并复核关闭辅助费用被误纳入利息规则的问题。最终新目录重装验收：后端2364通过/53跳过，空库网页43通过/11跳过，另有公开样例API45和网页16全部通过；[完整摘要及范围](docs/public-checkout-v3-validation.json)。这是同机隔离复现，AI审阅不替代真人专业意见；[既有测试事故与恢复限制](docs/TEST_ISOLATION_INCIDENT_20261014.md)继续保留。
-
-后续补充4项借款范围真实网页流程，最新公开入口为API45项、Chrome20项全部通过，门控专项21项通过；核对底稿下载、补证失效和原账不变。[增量证据](docs/borrowing-live-validation.json)与前述完整安装快照分别保存，本次未重跑完整后端。
-
-依赖安装完成后，可用一条命令采集固定公开样例并在独立账库中验收API与网页：`.venv\Scripts\python.exe scripts/validate_public_delivery.py --output .local/reports/public-delivery-new`。已有官方ZIP时加`--archive .local/mof-vouchers-2025/digital-invoice.zip`即可离线复现。需已安装Node、前端依赖和Chrome；输出目录必须全新。命令保留原件、底稿、逐阶段结果与哈希清单；失败、跳过或缺失报告均不能通过。见[验收说明](docs/PUBLIC_DATA_CLOSURE.md)及[本轮结果](docs/public-delivery-validation.json)。
-
-## 本地启动
+## 运行与复现（详细）
 
 需要 Python 3.12、Node.js ≥22.13 和 uv。依赖缓存及运行资料默认放在项目所在磁盘。
 
@@ -39,6 +80,8 @@ bash scripts/start-local.sh      # 停止：bash scripts/stop-local.sh
 只装了 Docker 时：`docker compose up --build -d`，入口为 <http://127.0.0.1:8080>（见下文 PostgreSQL 部署）。
 
 打开 <http://127.0.0.1:5188>；API 文档位于 <http://127.0.0.1:8000/docs>。默认 SQLite 持久化，不需要 Docker 或模型密钥即可完成规则演示。三种启动方式在每次提交的 CI 中都按原样执行（quickstart-unix、quickstart-windows、docker 作业）。
+
+依赖安装完成后，可用一条命令采集固定公开样例并在独立账库中验收API与网页：`.venv\Scripts\python.exe scripts/validate_public_delivery.py --output .local/reports/public-delivery-new`。已有官方ZIP时加`--archive .local/mof-vouchers-2025/digital-invoice.zip`即可离线复现。需已安装Node、前端依赖和Chrome；输出目录必须全新。命令保留原件、底稿、逐阶段结果与哈希清单；失败、跳过或缺失报告均不能通过。见[验收说明](docs/PUBLIC_DATA_CLOSURE.md)及[本轮结果](docs/public-delivery-validation.json)。
 
 已经安装依赖时：`powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1 -SkipInstall`。
 
@@ -117,6 +160,8 @@ DeepSeek真实JSON、思考模式工具往返、单Agent账务调查及v8／v10�
 Compose 配置使用 PostgreSQL、Redis、Celery、持久化 LangGraph 检查点；所有对外端口绑定 loopback。2026-10-11 已实机联调：20项容器验收连续两次通过（迁移、重复投递、Worker停机、失效租约恢复、全栈重启与持久化）；2026-10-14 用当前镜像复验再次连续两次通过，并验证旧库升级保留及验收中断后的服务恢复，见[状态](docs/STATUS.md)。按 [运行手册](docs/RUNBOOK.md)执行 `docker compose up --build -d`，入口为 <http://127.0.0.1:8080>（可用 `WEB_PORT` 改端口）。
 
 ## 文档
+
+全部 52 份文档按读者分组列在 [文档导航](docs/README.md)。常用入口：
 
 - [PRD 与验收范围](docs/PRD.md)
 - [技术设计与接口](docs/TECHNICAL_DESIGN.md)
