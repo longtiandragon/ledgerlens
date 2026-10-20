@@ -37,6 +37,15 @@ SIMULATION_CHECKS = [
     ('S5', '已知缺口：合法科目之间“业务用途错误”的平衡调整（例如应冲减存货却冲减费用）目前仍会通过'),
 ]
 ANSWERS = '一致 / 部分一致 / 不一致 / 无法判断'
+# About 20 minutes: the five rules narrowed after AI review, one SCAS rule, the three
+# most debatable root-cause conventions and three simulation checks. Item ids are the
+# same as in the full kit, so answers from either version merge into one record.
+SHORT = {'policy': ('POLICY_SCAS_VAT_CREDIT_REFUND', 'POLICY_CAS_SHORT_TERM_LEASE', 'POLICY_CAS_ONE_YEAR_LEASE_TERM',
+                    'POLICY_CAS_LEASE_CASH_FLOW', 'POLICY_CAS_TRANSPORT_FULFILLMENT_COST',
+                    'POLICY_CAS_CUSTOM_EQUIPMENT_BORROWING_COST'),
+         'cause': ('gap_late_document', 'gap_order_reduced', 'invoice_voided_text'),
+         'simulation': ('S1', 'S4', 'S5')}
+DURATION = {'full': '约60–90分钟', 'short': '约20分钟'}
 
 
 def ui_labels(name: str) -> dict:
@@ -63,7 +72,7 @@ def rows():
             'question': '规则的条件和处理路径是否与官方答复一致？是否遗漏影响结论的条件？'})
     for number, (cause, (signal, categories, without, with_, decisive)) in enumerate(CAUSES.items(), 1):
         items.append({
-            'id': f'R{number:02d}', 'section': '原因调查真值口径', 'title': CAUSE_NAMES[cause],
+            'id': f'R{number:02d}', 'section': '原因调查真值口径', 'title': CAUSE_NAMES[cause], 'cause': cause,
             'applies': '类别：' + ('、'.join(CATEGORIES[c] for c in categories) or '无（无法判定）'),
             'conditions_label': '结论口径', 'conditions': [f"未取得决定性资料时结论：{CONCLUSION[without]}",
                            f"取得{('、'.join(KINDS[k] for k in decisive) or '（无需补证）')}后结论：{CONCLUSION[with_]}"],
@@ -74,7 +83,15 @@ def rows():
     return items
 
 
-def write_html(items, path: Path):
+def short_items(items):
+    keep = {*SHORT['policy'], *SHORT['cause'], *SHORT['simulation']}
+    chosen = [item for item in items if (item.get('rule_id') or item.get('cause') or item['id']) in keep]
+    if len(chosen) != len(keep):
+        raise SystemExit('Short kit selection no longer matches the catalog; update SHORT')
+    return chosen
+
+
+def write_html(items, path: Path, subset: str = 'full'):
     e = html.escape
     parts = ['<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" '
              'content="width=device-width,initial-scale=1"><title>会计专业复核材料</title><style>'
@@ -84,9 +101,11 @@ def write_html(items, path: Path):
              'small{color:#6b7a70}.answer{border-top:1px dashed #b8c2b0;margin-top:8px;padding-top:6px}</style></head><body>',
              '<h1>账证智核 · 会计专业复核材料</h1>',
              '<p>这是一个学生的开源研究项目，用合成数据和财政部公开的实施问答检验会计复核辅助工具，不含任何企业真实数据。'
-             '恳请您用约60–90分钟，就下列项目给出专业判断：在答卷（复核答卷.csv）的“复核结论”栏填写'
+             f'恳请您用{DURATION[subset]}，就下列项目给出专业判断：在答卷（复核答卷.csv）的“复核结论”栏填写'
              f'“{ANSWERS}”之一，并在“意见”栏写明理由或遗漏之处。您的意见只用于改进规则和如实记录专业复核结果；'
-             '是否署名由您决定。</p>']
+             '是否署名由您决定。</p>'
+             + ('<p><small>这是从完整版47项中选出的12项短版，编号与完整版相同；有时间时欢迎继续填写完整版。</small></p>'
+                if subset == 'short' else '')]
     section = None
     for item in items:
         if item['section'] != section:
@@ -113,17 +132,20 @@ def write_html(items, path: Path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output', type=Path, default=ROOT / 'docs/review-kit')
+    parser.add_argument('--subset', choices=['full', 'short'], default='full')
+    parser.add_argument('--output', type=Path, help='default docs/review-kit, or docs/review-kit/short for --subset short')
     options = parser.parse_args()
-    items = rows()
+    if options.output is None:
+        options.output = ROOT / ('docs/review-kit/short' if options.subset == 'short' else 'docs/review-kit')
+    items = rows() if options.subset == 'full' else short_items(rows())
     options.output.mkdir(parents=True, exist_ok=True)
-    write_html(items, options.output / 'review-kit.html')
+    write_html(items, options.output / 'review-kit.html', options.subset)
     with (options.output / '复核答卷.csv').open('w', encoding='utf-8-sig', newline='') as stream:
         writer = csv.writer(stream)
         writer.writerow(['编号', '部分', '项目', '复核结论（一致/部分一致/不一致/无法判断）', '意见', '复核人（可匿名）', '资格或职务', '日期'])
         for item in items:
             writer.writerow([item['id'], item['section'], item['title'], '', '', '', '', ''])
-    summary = {'schema_version': VERSION, 'items': len(items),
+    summary = {'schema_version': VERSION, **({'subset': 'short'} if options.subset == 'short' else {}), 'items': len(items),
                'sections': {name: sum(1 for i in items if i['section'] == name)
                             for name in dict.fromkeys(i['section'] for i in items)}}
     (options.output / 'kit.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
