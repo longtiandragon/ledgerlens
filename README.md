@@ -22,12 +22,23 @@
 
 需要 Python 3.12、Node.js ≥22.13 和 uv。依赖缓存及运行资料默认放在项目所在磁盘。
 
+Windows（PowerShell）：
+
 ```powershell
 if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1
 ```
 
-打开 <http://127.0.0.1:5188>；API 文档位于 <http://127.0.0.1:8000/docs>。默认 SQLite 持久化，不需要 Docker 或模型密钥即可完成规则演示。
+Linux／macOS：
+
+```bash
+cp -n .env.example .env
+bash scripts/start-local.sh      # 停止：bash scripts/stop-local.sh
+```
+
+只装了 Docker 时：`docker compose up --build -d`，入口为 <http://127.0.0.1:8080>（见下文 PostgreSQL 部署）。
+
+打开 <http://127.0.0.1:5188>；API 文档位于 <http://127.0.0.1:8000/docs>。默认 SQLite 持久化，不需要 Docker 或模型密钥即可完成规则演示。三种启动方式在每次提交的 CI 中都按原样执行（quickstart-unix、quickstart-windows、docker 作业）。
 
 已经安装依赖时：`powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1 -SkipInstall`。
 
