@@ -137,7 +137,7 @@ jobs:
             PLAYWRIGHT_JSON_OUTPUT_NAME="$RUNNER_TEMP/reproduce/browser-multi.json" \
             npx playwright test tests/signoff.spec.ts --reporter=list,json
       - if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: reproduce-evidence
           retention-days: 30
