@@ -102,6 +102,22 @@ def test_disabled_does_not_initialize_sdk(monkeypatch):
     assert observability.start_run('r', 'l') is None
 
 
+@pytest.mark.parametrize('order', [('first', 'resumed'), ('resumed', 'first')])
+def test_summary_orders_leases_from_one_clock_tick_by_cumulative_progress(tmp_path, monkeypatch, order):
+    # Windows time_ns() can return the same value for back-to-back leases; the span id is random.
+    from scripts.summarize_telemetry import summarize
+    monkeypatch.setattr(observability, 'time_ns', lambda: 1_800_000_000_000_000_000)
+    leases = {'first': (1, [response()]), 'resumed': (2, [response(), response(index=2)])}
+    for lease in order:
+        calls, steps = leases[lease]
+        trace = observability.RunTrace('tick-run', lease, tmp_path)
+        trace.seed({'calls': calls}, steps)
+        trace.status = 'complete'
+        trace.finish()
+    latest = summarize(tmp_path)['runs'][0]['latest_cumulative']
+    assert latest['model_calls'] == 2 and latest['known_usage_peak_estimate_cny'] == '0.0056'
+
+
 def test_summary_does_not_add_cumulative_resumed_costs_and_reports_corrupt_files(tmp_path):
     from scripts.summarize_telemetry import summarize
     for lease, calls, steps in [('first', 1, [response()]), ('resumed', 2, [response(), response(index=2)])]:

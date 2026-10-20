@@ -6,6 +6,12 @@ from pathlib import Path
 import re
 
 
+def _progress(attrs):
+    # Cumulative counters never decrease across the leases of one run, so they order leases
+    # that started within one clock tick (time_ns() on Windows can advance in ~15.6 ms steps).
+    return tuple(attrs.get(f'ledgerlens.{key}') or 0 for key in ('model_calls', 'tokens', 'tools'))
+
+
 def summarize(directory):
     runs, failures = {}, []
     for path in sorted(Path(directory).glob('*.json')):
@@ -28,7 +34,9 @@ def summarize(directory):
             failures.append({'file': path.name, 'status': 'invalid_or_unreadable'})
     summaries = []
     for identity, leases in sorted(runs.items()):
-        latest = max(leases, key=lambda value: (value[0], value[1]))
+        # Start time first; equal starts fall back to cumulative progress, then end time. The
+        # random span id only breaks a complete tie, which no longer decides between leases.
+        latest = max(leases, key=lambda value: (value[0], _progress(value[3]), value[0] + value[2], value[1]))
         # Usage is cumulative; summing cost from all leases double-counts resumes.
         attrs = {key.removeprefix('ledgerlens.'): value for key, value in latest[3].items()}
         summaries.append({'run_sha256': identity, 'leases': len(leases),
