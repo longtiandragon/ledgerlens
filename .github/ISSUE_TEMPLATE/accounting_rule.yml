@@ -1,0 +1,63 @@
+name: 会计规则请求
+description: 新增或修订一条政策／检查规则，须附官方来源、适用条件和独立回归案例
+title: "[规则] "
+labels: ["area: policy-rules"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        规则变更按 GOVERNANCE.md 执行：**来源、适用与不适用条件、独立回归案例三项缺一不可**。依赖专业判断的条件将设计为人工确认，程序不代替判断。未经会计规则评审员审阅的规则保持 experimental。
+  - type: dropdown
+    id: framework
+    attributes:
+      label: 适用准则
+      options:
+        - 企业会计准则（CAS）
+        - 小企业会计准则（SCAS）
+        - 两者都适用
+    validations:
+      required: true
+  - type: input
+    id: topic
+    attributes:
+      label: 主题
+      placeholder: "例如：短期租赁简化处理的适用条件"
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: 官方来源 URL
+      description: 财政部、准则委员会等官方页面或文件；请注明条款或问答编号
+    validations:
+      required: true
+  - type: textarea
+    id: applies
+    attributes:
+      label: 适用条件
+      description: 满足哪些条件时规则才执行；哪些条件需要人工确认
+    validations:
+      required: true
+  - type: textarea
+    id: excludes
+    attributes:
+      label: 不适用条件
+      description: 哪些情形必须退出本规则或判为证据不足
+    validations:
+      required: true
+  - type: textarea
+    id: cases
+    attributes:
+      label: 独立回归案例
+      description: 至少一个正例和一个反例；写明输入和预期结论（supported／normal／insufficient／unsupported），预期须来自来源原文或手工推理
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 确认
+      options:
+        - label: 预期结论来自官方来源或手工推理，不是从本项目程序的输出抄来的
+          required: true
+        - label: 我理解 AI 审阅意见不等于专业人员意见
+          required: true

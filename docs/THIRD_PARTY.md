@@ -43,3 +43,5 @@ BPI2019由Boudewijn van Dongen发布，来源[官方DOI](https://doi.org/10.4121
 
 
 2026-10-14新增财政部公开数电发票标准包的两份XML实例作为教学来源。未发现可据以重新分发原件的开放内容许可，原ZIP、XML及含全文的投影仅存`.local/`；仓库只保存自主转换器、独立合成测试、来源链接、哈希及摘要。无新依赖，无第三方代码复制。详见[公开资料闭环](PUBLIC_DATA_CLOSURE.md)。
+
+2026-10-20新增`CODE_OF_CONDUCT.md`，采用Contributor Covenant 2.1官方简体中文译本（取自[官方仓库](https://github.com/EthicalSource/contributor_covenant)的`content/version/2/1/code_of_conduct.zh-cn.md`），仅把联系方式占位符换成维护者邮箱，原文署名段保留。官网与仓库未对公约文本另行声明许可，仓库LICENSE为适用于网站代码的Hippocratic License 3.0；本项目按公约供社区采用的方式使用并保留署名，不把它写成Apache-2.0内容。
