@@ -48,6 +48,13 @@ def test_local_data_originals_and_large_blobs_block(tmp_path):
                                   'third-party original extension']
 
 
+def test_own_screenshots_pass_but_images_elsewhere_block(tmp_path):
+    root = repo(tmp_path, {'docs/images/01-workbench.png': b'\x89PNG own capture',
+                           'docs/raw/receipt.png': b'\x89PNG third-party scan'})
+    report = audit(root)
+    assert [item['path'] for item in report['blocking']] == ['docs/raw/receipt.png']
+
+
 def test_unknown_email_addresses_are_listed_for_review_only(tmp_path):
     root = repo(tmp_path, {'notes.md': b'ask someone@university.edu.cn\n'})
     report = audit(root)
