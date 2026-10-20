@@ -1,0 +1,10 @@
+{
+  "schema_version": "professional-review-kit-v1",
+  "subset": "short",
+  "items": 12,
+  "sections": {
+    "政策规则": 6,
+    "原因调查真值口径": 3,
+    "模拟复核规则": 3
+  }
+}
