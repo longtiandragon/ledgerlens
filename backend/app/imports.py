@@ -40,6 +40,25 @@ def validate_headers(headers):
         raise ValueError('表头不能为空或重复；请为每一列提供唯一字段名')
 
 
+def declares_public_example(value):
+    """Recognize the reserved public-example envelope, not authenticity by itself."""
+    return isinstance(value, dict) and (
+        value.get('data_nature') == 'public_standard_example_projection'
+        or str(value.get('schema_version', '')).startswith('mof-einv-example-projection-'))
+
+
+def validate_public_example(value, mapping):
+    if not declares_public_example(value):
+        return
+    from datasets.mof_vouchers import verify_package
+    try:
+        verify_package(value)
+    except ValueError as exc:
+        raise ValueError('公开教学样例包与固定原件不一致；请从官方原件重新生成投影，未导入修改内容') from exc
+    if mapping and any(key != column for key, column in mapping.items()):
+        raise ValueError('公开教学样例使用原有分录字段，不允许重新映射；教学改编须另建明确标注的资料')
+
+
 def parse_file(data: bytes, filename: str, mapping: dict | None = None):
     if mapping is not None and (not isinstance(mapping, dict) or any(not isinstance(v, str) for v in mapping.values())):
         raise ValueError('字段映射必须是字段名到列名的对象')
@@ -55,6 +74,7 @@ def parse_file(data: bytes, filename: str, mapping: dict | None = None):
             raise ValueError('CSV 存在多于表头的列，请检查逗号与引号')
     elif suffix == '.json':
         raw = json.loads(data, object_pairs_hook=unique_fields)
+        validate_public_example(raw, mapping)
         if isinstance(raw, dict):
             raw = raw.get('records', [])
         if not isinstance(raw, list) or any(not isinstance(r, dict) for r in raw):

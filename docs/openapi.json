@@ -3843,6 +3843,11 @@
             "type": "string",
             "title": "Mapping",
             "default": "{}"
+          },
+          "synthetic": {
+            "type": "boolean",
+            "title": "Synthetic",
+            "default": false
           }
         },
         "type": "object",

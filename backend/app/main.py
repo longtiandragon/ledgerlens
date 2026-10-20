@@ -15,7 +15,7 @@ from .db import (Base, engine, Session, session, serialize, Book, Document, Impo
                  Record, Snapshot, CheckRun, Case, Run, Simulation, Review, Audit, Evaluation, Approval, User)
 from .schemas import (BookInput, SnapshotInput, CheckInput, InvestigateInput, SimulationInput, ReviewInput,
                       LedgerInput, ApprovalInput)
-from .imports import parse_file, confirm_import, make_snapshot, snapshot_records, policy_for, digest
+from .imports import parse_file, confirm_import, make_snapshot, snapshot_records, policy_for, digest, declares_public_example
 from .domain import check_records, balances, simulate, rule_catalog, ensure_rule_compatibility, rule_identity_key
 from .business_chain import business_chain
 from .process_api import router as process_router
@@ -209,6 +209,10 @@ def overview(book_id: str, s=Depends(session)):
 def save_import(s, book_id, filename, content, mapping=None, synthetic=False):
     book = get(s, Book, book_id)
     rows, errors, columns, inferred, extracted = parse_file(content, filename, mapping)
+    # parse_file has already verified a recognized envelope against its pinned original.
+    # This property cannot be removed by an unchecked UI checkbox or synthetic=false.
+    if Path(filename).suffix.lower() == '.json' and declares_public_example(json.loads(content)):
+        synthetic = True
     for row in rows:
         if row['record']['period'] != book.period:
             errors.append({'row': row['locator']['row'], 'field': 'period', 'message': '记账期间不属于当前账套期间；业务日期可跨期，记账期间需要显式选择'})
@@ -229,12 +233,13 @@ def save_import(s, book_id, filename, content, mapping=None, synthetic=False):
 
 
 @app.post('/api/v1/imports')
-async def upload(book_id: str = Form(...), file: UploadFile = File(...), mapping: str = Form('{}'), s=Depends(session)):
+async def upload(book_id: str = Form(...), file: UploadFile = File(...), mapping: str = Form('{}'),
+                 synthetic: bool = Form(False), s=Depends(session)):
     content = await file.read(settings.max_upload_bytes + 1)
     if len(content) > settings.max_upload_bytes:
         raise HTTPException(413, '上传文件超过 20 MB')
     try:
-        batch = save_import(s, book_id, file.filename or 'data.csv', content, json.loads(mapping))
+        batch = save_import(s, book_id, file.filename or 'data.csv', content, json.loads(mapping), synthetic=synthetic)
     except (ValueError, UnicodeError, zipfile_error(), PDFException, PdfminerException) as exc:
         raise HTTPException(422, str(exc)) from exc
     return {**serialize(batch), 'record_count': len(batch.rows), 'rows': batch.rows[:100]}

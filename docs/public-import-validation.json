@@ -1,0 +1,110 @@
+{
+  "schema_version": "public-import-validation-v1",
+  "date": "2026-10-14",
+  "status": "functional_checks_passed_with_incident_disclosed",
+  "changes": [
+    "Recognized public-example JSON envelopes are reverified before source storage and row parsing.",
+    "Verified examples retain teaching status regardless of the submitted checkbox.",
+    "Nonidentity field remapping is rejected for verified public envelopes.",
+    "Projection comparison preserves JSON scalar type distinctions.",
+    "Pytest isolation is configured before test collection; external socket connections are rejected."
+  ],
+  "backend": {
+    "tests": 2370,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 25,
+    "passed": 2345,
+    "sha256": "e4995bc44c23471595bc55b6626842f30cb2d93c19fc2df93d4353696a659803",
+    "skip_reasons": {
+      "Filesystem link creation unavailable: OSError": 12,
+      "Explicit MIGRATION_POSTGRES_TESTS=1 requires the dedicated local PostgreSQL service": 2,
+      "Explicit RETRIEVAL_INDEX_TESTS=1 requires the local optional pgvector service": 9,
+      "Host cannot create test symlink: OSError": 2
+    }
+  },
+  "backend_seconds": 198.12,
+  "targeted": {
+    "tests": 59,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 59,
+    "sha256": "444d6223a662b0ef3a1308dac12ba4c6b07e7c0079e7b8e36ba4ac8f3c65a29e",
+    "skip_reasons": {}
+  },
+  "hostile_environment_probe": {
+    "passed": 7,
+    "log_sha256": "0424e2574836a984d2848d9f062594b4afa2d2e56ac530569a0f8fccbc669ec0"
+  },
+  "public_workflow": {
+    "report_sha256": "df180ceac3f0660d921ba26bcbfc438d4027e13e544423779f8f0a55bdda60aa",
+    "stages": [
+      {
+        "name": "collect_and_verify_sources",
+        "status": "passed",
+        "sample_count": 2
+      },
+      {
+        "name": "isolated_api_workflow",
+        "status": "passed",
+        "checks": 45
+      },
+      {
+        "name": "isolated_browser_workflow",
+        "status": "passed",
+        "stats": {
+          "startTime": "2026-10-14T08:46:58.149Z",
+          "duration": 48556.507,
+          "expected": 16,
+          "skipped": 0,
+          "unexpected": 0,
+          "flaky": 0
+        }
+      }
+    ],
+    "model_requests": 0,
+    "implementation_sha256": {
+      "scripts/validate_public_delivery.py": "458593d7b87260e53d0ce13f87dea2ff9e41b7f5c80cbb215f375dc6e03ac546",
+      "datasets/mof_vouchers.py": "02af33e181ae57e2558e71364d6230e89353835dba6dd287116acc838f34dc7f",
+      "scripts/validate_public_voucher_loop.py": "54da4e234996f539a74c5dab0a18df576dc9271e36b61d852659f946ea70db4f",
+      "scripts/validate_public_voucher_browser.py": "48e994a2ce66c72b34f1512373dd720c1df072079f03c85e7f8ae807d43bb358",
+      "backend/app/domain.py": "b49e39dd9e544b4bf4568aa04bf7ec54dc63a591efa123fd925331989e693a75",
+      "backend/app/policy_consistency.py": "9621fe576520cb2638d6176c76ff38553f3dcf42edfc6a2fc89673f16c0ed6b6",
+      "backend/app/policy_contract.py": "d6c3083ef2cfe7d7762dc09a0546aae352fdc003da3e8f2e94f3dceee17a5933",
+      "backend/app/imports.py": "30e5f20e1c8df799f20a7913f6414098e9c8c922cb8d5959519d42fb748842db",
+      "backend/app/main.py": "0e5ded00d21ac154381db364e16d942b214ceee16103362e39d97acefdbd2ad0",
+      "frontend/src/App.vue": "edb67c19dceb4d676701f827b8c4b8e39ab6c9f4d7aca554e3be429f6e7bb362",
+      "frontend/tests/public-vouchers.spec.ts": "b894b296d2eda7c4ac98784f199abf3d0da3dc189acec6cd70522447b6d9c847",
+      "frontend/tests/policy-checks.spec.ts": "f8dfeb3abc1c6b9c2e2e56b7fc418d6c452eb80a738a318f3121e17d35af19e9",
+      "frontend/tests/workbench.spec.ts": "974141e0438e3b1634ba7ce249aa36d62ec3ebe8e28460d478eb571433f7a926"
+    }
+  },
+  "frontend_build": {
+    "status": "passed",
+    "vite_seconds": 23.94
+  },
+  "ruff": "passed",
+  "api_contract": "passed",
+  "incident": {
+    "documentation": "TEST_ISOLATION_INCIDENT_20261014.md",
+    "recorded_model_calls": 8,
+    "recorded_tokens": 121677,
+    "actual_charge": "unverified",
+    "restored_business_rows": 3257,
+    "backup_at_beijing": "2026-10-13 19:48:13",
+    "post_backup_completeness": "unknown",
+    "runtime_hashes_unchanged_after_repaired_full_tests": true,
+    "restored_hashes": {
+      "ledgerlens.sqlite": "1dc8e29c564d6eb649e86b33910986621bc4c9d2a232738eb350cbe03fb1c6cd",
+      "checkpoints.sqlite": "4bfa720802f317e2b85607ed54c44d467d6bb6b271c4dc8c8ff9a05c52d1235d"
+    }
+  },
+  "limitations": [
+    "Source consistency of two pinned public examples only; no general invoice authenticity or tax eligibility claim.",
+    "Ordinary records without the reserved envelope are not certified as official.",
+    "The first interrupted test process is not a passing run.",
+    "Overall work included accidental model requests; only the isolated public-workflow harness had zero calls.",
+    "Previous clean-checkout and CI results do not cover these new changes."
+  ]
+}

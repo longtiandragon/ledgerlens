@@ -1,0 +1,116 @@
+{
+  "schema_version": "public-data-closure-validation-v1",
+  "date": "2026-10-14",
+  "status": "passed",
+  "scope": "Public-data student research auxiliary platform; scoped closure, not full research-goal achievement",
+  "backend": {
+    "tests": 2296,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 25,
+    "passed": 2271,
+    "seconds": 230.07,
+    "skip_reasons": {
+      "Filesystem link creation unavailable: OSError": 12,
+      "Explicit MIGRATION_POSTGRES_TESTS=1 requires the dedicated local PostgreSQL service": 2,
+      "Explicit RETRIEVAL_INDEX_TESTS=1 requires the local optional pgvector service": 9,
+      "Host cannot create test symlink: OSError": 2
+    },
+    "junit_sha256": "db643640d8308bff48045f9cbeb4ca9b51a874b2e2e245a1b49d49946ac0cf7f"
+  },
+  "frontend_build": {
+    "status": "passed",
+    "vite_seconds": 26.8,
+    "includes_vue_types": true
+  },
+  "ruff": "passed",
+  "api_contract_check": "passed",
+  "api_closure": {
+    "status": "passed",
+    "checks": 45,
+    "passed": 45,
+    "report": ".local/reports/public-voucher-loop-v2/report.json",
+    "report_sha256": "f5907e4ec458ea52ea8a07636a8097e6a86d188e3ff1ed428e2b9d0ac4e1027e",
+    "previous_report": ".local/reports/public-voucher-loop-v1/report.json",
+    "model_requests": 0,
+    "external_network_attempts": 0
+  },
+  "browser": {
+    "schema_version": "public-voucher-browser-v1",
+    "status": "passed",
+    "model_requests": 0,
+    "scope": "Fresh SQLite, Chrome, public examples and policy/workbench browser regressions",
+    "stats": {
+      "startTime": "2026-10-14T08:01:19.964Z",
+      "duration": 46823.898,
+      "expected": 16,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "exit_code": 0,
+    "report": ".local/reports/public-voucher-browser-v1/report.json",
+    "report_sha256": "c3b4617bbb2f080f9cf2563ec35b23ff2ae637b2858bfff0706c4aa4d7d413a5"
+  },
+  "policy": {
+    "policy_rule_identity": {
+      "version": "policy-consistency-v7",
+      "source_sha256": "48c8015ed0931016a09270f4a6daba088b9ea1b05fa0e1f2a7a900529df7a999"
+    },
+    "fixture_version": "mof-policy-projections-v7",
+    "fixture_source_sha256": "405c50b870f570ee76c404143c46637fd9b207d5022597a2010fd7e8070de17a",
+    "evaluator_source_sha256": "9479b84c140c5c73f3fdab02cee56e4df8a95bdc35e7487ff2b214810ff71052",
+    "tasks": 191,
+    "passed": 191,
+    "failed": 0,
+    "selected_official_source_count": 32
+  },
+  "independent_new_boundary_cases": {
+    "lease": 17,
+    "borrowing": 13,
+    "projection_parser": 20
+  },
+  "official_example_source": {
+    "page_url": "https://kjs.mof.gov.cn/zt/kuaijixinxihuajianshe/dzpzkjsjbzshsd/sjbz/202505/t20250519_3964020.htm",
+    "archive_sha256": "eb75e173c1315742302df5edf74cf9e5aed51c2733b820a3236d9cfbb7f0bd8b",
+    "archive_bytes": 196786,
+    "files": [
+      {
+        "filename": "einv_spcl_20231231_22442000000921291350.xml",
+        "sha256": "dd06323e0b006a98e93ef178a65778607e358b178c47e1c490f7b39ee4adfad5",
+        "record_count": 3,
+        "warnings": [
+          "Source says input VAT not transferred out but gives a nonzero transfer amount; no tax conclusion."
+        ]
+      },
+      {
+        "filename": "einv_ord_20220326_22442000000005170034.xml",
+        "sha256": "53722fc825a00fb9200ce6f79f0ce7c6487b2a8a02588f89b7f0b86fda243912",
+        "record_count": 2,
+        "warnings": [
+          "Filename invoice number differs from XML; the XML value is retained, not repaired."
+        ]
+      }
+    ]
+  },
+  "review": {
+    "agent_model": "gpt-6-astra",
+    "role": "AI accounting review, senior-accountant perspective",
+    "completed": "Lease boundary review and remediation; public example semantic review",
+    "interruption": "Workspace credits exhausted before borrowing-cost follow-up; main agent completed narrowed fix",
+    "professional_human_signoff": false
+  },
+  "model_requests": 0,
+  "new_dependencies": 0,
+  "limitations": [
+    "Two official illustrative files, not enterprise invoices or a full ledger.",
+    "PostingDate is a declared teaching convention, not transaction occurrence evidence.",
+    "Original accounting entries do not prove recognition, payment, VAT eligibility or tax compliance.",
+    "The duplicate and invoice observation are synthetic training inputs; no real fraud or refund is claimed.",
+    "In-process real API application, not a browser or network-service deployment test.",
+    "Whole project model-effect targets are still unmet; no new paid model experiment.",
+    "All 33 rules were not independently professionally audited; 3 topic boundaries were narrowed.",
+    "CI, Docker and enterprise-ledger effectiveness were not rerun in this milestone.",
+    "191 policy projections retain labels but lease and borrowing inputs have explicit new scope assumptions; not unchanged old inputs."
+  ]
+}
