@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test'
+import { test, expect, type Locator, type Page } from '@playwright/test'
 import path from 'node:path'
 
 // Screenshots and an optional captioned recording for the README, the introduction and the
@@ -32,6 +32,16 @@ async function beat(page: Page, text: string) {
   await page.waitForTimeout(pause)
 }
 
+async function toTop(page: Page, target: Locator) {
+  await target.evaluate((el) => el.scrollIntoView({ block: 'start' }))
+  await page.waitForTimeout(300)
+}
+
+async function dismiss(page: Page) {
+  const close = page.getByRole('button', { name: '关闭提示' })
+  if (await close.isVisible()) await close.click()
+}
+
 async function shot(page: Page, name: string) {
   if (!recording) await page.screenshot({ path: path.join(out, `${name}.png`) })
 }
@@ -58,6 +68,7 @@ test('演示：建账、检查、调查、证据、模拟、复核与资料更�
   await expect(page.locator('.investigation-detail').getByRole('heading', { name: '发票重复确认', exact: true })).toBeVisible()
   await page.getByRole('button', { name: '启动调查', exact: true }).click()
   await expect(page.getByRole('heading', { name: '已核验结果' })).toBeVisible({ timeout: 45_000 })
+  await toTop(page, page.getByRole('heading', { name: '已核验结果' }))
   await beat(page, '每条结论都带着可回查的引用')
   await shot(page, '02-investigation')
 
@@ -83,6 +94,7 @@ test('演示：建账、检查、调查、证据、模拟、复核与资料更�
   await page.getByLabel('第2行贷方金额', { exact: true }).fill('100000.00')
   await page.getByRole('button', { name: '计算处理影响' }).click()
   await expect(page.getByRole('heading', { name: '模拟前后对比' })).toBeVisible()
+  await toTop(page, page.getByRole('heading', { name: '模拟前后对比' }))
   await beat(page, '借贷平衡，原始账簿不变')
   await shot(page, '05-simulation')
 
@@ -106,11 +118,15 @@ test('演示：建账、检查、调查、证据、模拟、复核与资料更�
   await beat(page, '政策检查：33 条来自财政部实施问答的有限规则')
   await page.locator('nav').getByRole('button', { name: /账套与政策/ }).click()
   await expect(page.getByRole('heading', { name: '规则覆盖矩阵' })).toBeVisible()
+  await dismiss(page)
+  await toTop(page, page.getByRole('heading', { name: '先确认条件，再核对处理。' }))
   await shot(page, '08-policy')
 
   await beat(page, '评测中心：模型效果如实展示，包括负面结果')
   await page.locator('nav').getByRole('button', { name: /评测中心/ }).click()
   await expect(page.getByRole('heading', { name: '规则基准记录' })).toBeVisible()
+  await dismiss(page)
+  await toTop(page, page.locator('#root-cause-title'))
   await shot(page, '09-evaluation')
   await beat(page, '')
 })
