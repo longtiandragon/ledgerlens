@@ -6,6 +6,18 @@
 
 接手开发请先读 [交接文档](docs/HANDOFF.md)；目标、验收门槛与当前证据见 [目标文档](docs/GOALS.md)。
 
+已保存的公开验收包现在支持[标准库离线核验](docs/OFFLINE_EVIDENCE_VERIFICATION.md)：复制到新位置后可检查原件、底稿和报告关联，无需启动API或Chrome。实际复制包22份证据及9份附件核验通过，88项专项通过；这是保存证据核验，不是重新执行业务验收。
+
+2026-10-20最新：政策v9修复运输成本摊销时点与租赁混合付款两处范围错误，经Astra限定AI复核；完整后端2450通过/25跳过，公开API45项、Chrome24项全部通过，构建/契约/Ruff通过。公开验收器v2自动核对源码变动及实际下载底稿，372份源码/配置、22份证据验证一致。[本轮摘要](docs/policy-v9-validation.json)保留失败反例、跳过项和适用边界；本次未重装环境或执行新远端CI。
+
+2026-10-14起按学生项目的公开资料范围继续交付：新增[财政部公开中文凭证样例闭环](docs/PUBLIC_DATA_CLOSURE.md)，并完成[AI会计审阅发现的租赁和借款费用边界整改](docs/AI_ACCOUNTING_REVIEW_20261014.md)。企业实账与真人签字列为未来外部验证，不作为当前公开资料版本的前置条件；模型效果未达标的记录保留。
+
+2026-10-15历史v8：Astra补做[借款利息范围复核](docs/AI_ACCOUNTING_REVIEW_20261015.md)，发现并复核关闭辅助费用被误纳入利息规则的问题。最终新目录重装验收：后端2364通过/53跳过，空库网页43通过/11跳过，另有公开样例API45和网页16全部通过；[完整摘要及范围](docs/public-checkout-v3-validation.json)。这是同机隔离复现，AI审阅不替代真人专业意见；[既有测试事故与恢复限制](docs/TEST_ISOLATION_INCIDENT_20261014.md)继续保留。
+
+后续补充4项借款范围真实网页流程，最新公开入口为API45项、Chrome20项全部通过，门控专项21项通过；核对底稿下载、补证失效和原账不变。[增量证据](docs/borrowing-live-validation.json)与前述完整安装快照分别保存，本次未重跑完整后端。
+
+依赖安装完成后，可用一条命令采集固定公开样例并在独立账库中验收API与网页：`.venv\Scripts\python.exe scripts/validate_public_delivery.py --output .local/reports/public-delivery-new`。已有官方ZIP时加`--archive .local/mof-vouchers-2025/digital-invoice.zip`即可离线复现。需已安装Node、前端依赖和Chrome；输出目录必须全新。命令保留原件、底稿、逐阶段结果与哈希清单；失败、跳过或缺失报告均不能通过。见[验收说明](docs/PUBLIC_DATA_CLOSURE.md)及[本轮结果](docs/public-delivery-validation.json)。
+
 ## 本地启动
 
 需要 Python 3.12、Node.js ≥22.13 和 uv。依赖缓存及运行资料默认放在项目所在磁盘。
@@ -18,6 +30,8 @@ powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1
 打开 <http://127.0.0.1:5188>；API 文档位于 <http://127.0.0.1:8000/docs>。默认 SQLite 持久化，不需要 Docker 或模型密钥即可完成规则演示。
 
 已经安装依赖时：`powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1 -SkipInstall`。
+
+验证当前未提交源码能否在独立目录复现，可运行`.venv/Scripts/python.exe scripts/validate_clean_checkout.py --working-tree --public-archive .local/mof-vouchers-2025/digital-invoice.zip --output .local/public-checkout-new`。需要完整uv/npm缓存及Chrome；此模式封存源码并重新安装依赖，不修改Git索引或日常账库。[本轮隔离复现](docs/CLEAN_CHECKOUT.md)已完成，跳过项目与机器边界明确保留。
 
 启动前会核验本地SQLite结构，并在需要升级时先备份再执行冻结迁移。未知旧库结构会拒绝自动处理，见[本地数据库升级](docs/LOCAL_DATABASE_UPGRADE.md)。
 
