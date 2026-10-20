@@ -1,0 +1,108 @@
+{
+  "schema_version": "offline-evidence-validation-v1",
+  "date": "2026-10-20",
+  "status": "passed",
+  "test_result": {
+    "file": ".local/reports/offline-delivery-tests-final-v2-20261020.xml",
+    "sha256": "4042fa6b53cc2d8595b760a4ae24f78ee332d888f4734a3a7d1927d17837127e",
+    "tests": 88,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "negative_control": {
+    "file": ".local/reports/offline-delivery-negative-20261020.xml",
+    "sha256": "1cd87f7c7e2bdb7ac9dc5c4889eeef8dc689040deb57a179b1387b5626603be1",
+    "tests": 6,
+    "failures": 6,
+    "errors": 0,
+    "skipped": 0
+  },
+  "preserved_fixture_failure": {
+    "file": ".local/reports/offline-delivery-tests-final-20261020.xml",
+    "sha256": "2d5551c02c74b56dfa60339c836f0881facd517df8b5a97d83279df2ced82407",
+    "tests": 88,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0
+  },
+  "copied_run": ".local/reports/offline-copy-verification-20261020",
+  "copy_probe": {
+    "copied_files": 23,
+    "runtime_database_copied": false,
+    "stdlib_only_python_flags": [
+      "-B",
+      "-S"
+    ],
+    "original_reads_network_processes_writes_denied": true,
+    "copied_verification": {
+      "schema_version": "offline-public-delivery-verification-v1",
+      "status": "verified",
+      "report_sha256": "04d754105de6e5e9b6ae22532264fb9a5147939a5365dd06abcf4d5b60466387",
+      "external_anchor_supplied": true,
+      "source_projections_verified": 2,
+      "evidence_files_verified": 22,
+      "browser_attachments_verified": 9,
+      "required_policy_cases_verified": 8,
+      "reported_api_checks": 45,
+      "reported_browser_passed": 24,
+      "source_check": {
+        "status": "not_checked"
+      },
+      "execution_repeated": false,
+      "limitations": [
+        "Hashes alone prove internal consistency, not authorship or that reported tests actually executed.",
+        "An external anchor is trusted only as much as the channel that supplied it.",
+        "API names and non-policy browser cases are counted, not independently certified as a full test inventory.",
+        "No application, browser, accounting rule or model was executed; no business or professional opinion is established."
+      ]
+    },
+    "tampered_copy_rejected": true,
+    "original_report_sha256": "04d754105de6e5e9b6ae22532264fb9a5147939a5365dd06abcf4d5b60466387"
+  },
+  "probe_files": {
+    "read-only-probe.log": "f83578bd26e1269a54f3145c07f845889b6a23593cf2a5682ec10b4d38149a74",
+    "tampered-probe.log": "7579767c25d463844917fbb343f81c4deb63844b1be6e98c3e711f5648185cd7"
+  },
+  "final_copied_verification": {
+    "schema_version": "offline-public-delivery-verification-v1",
+    "status": "verified",
+    "report_sha256": "04d754105de6e5e9b6ae22532264fb9a5147939a5365dd06abcf4d5b60466387",
+    "external_anchor_supplied": true,
+    "source_projections_verified": 2,
+    "evidence_files_verified": 22,
+    "browser_attachments_verified": 9,
+    "required_policy_cases_verified": 8,
+    "reported_api_checks": 45,
+    "reported_browser_passed": 24,
+    "source_check": {
+      "status": "not_checked"
+    },
+    "execution_repeated": false,
+    "limitations": [
+      "Hashes alone prove internal consistency, not authorship or that reported tests actually executed.",
+      "An external anchor is trusted only as much as the channel that supplied it.",
+      "API names and non-policy browser cases are counted, not independently certified as a full test inventory.",
+      "No application, browser, accounting rule or model was executed; no business or professional opinion is established."
+    ]
+  },
+  "current_source_drift_correctly_rejected": true,
+  "implementation_sha256": {
+    "scripts/verify_public_delivery.py": "0e92e7f8f084b14bce242b28a0993a2cb0898ea4acf1199c9bbdca71abba6c24",
+    "scripts/validate_public_delivery.py": "7381f6f8b2c970751486a38e1482d0eda2db4989aeed3b050b2f77251fc81f8b",
+    "backend/tests/test_offline_public_delivery.py": "33c656b2e9a35ebee461a6b08a6566e533cbb392e0a9e46016cc7065d52f89d1"
+  },
+  "working_database_hashes": {
+    "ledgerlens.sqlite": "1dc8e29c564d6eb649e86b33910986621bc4c9d2a232738eb350cbe03fb1c6cd",
+    "checkpoints.sqlite": "4bfa720802f317e2b85607ed54c44d467d6bb6b271c4dc8c8ff9a05c52d1235d"
+  },
+  "new_provider_requests": 0,
+  "ruff": "passed",
+  "git_diff_check": "passed",
+  "limits": [
+    "Offline checks only; no full backend, browser, clean-install or remote CI rerun.",
+    "Self-declared hashes do not establish authorship or actual execution. Optional external anchor depends on its delivery channel.",
+    "Eight policy boundary cases validated; other API/browser counts are reported, not a complete independently fixed inventory.",
+    "Historical model negative results and incident recovery limitations remain."
+  ]
+}

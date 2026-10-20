@@ -1,0 +1,65 @@
+{
+  "schema_version": "public-delivery-validation-v1",
+  "date": "2026-10-14",
+  "status": "passed",
+  "run": ".local/reports/public-delivery-v1/report.json",
+  "report_sha256": "83d07c7428298304d2b276aee4c12757bd42203d3efab415d434ad16de129439",
+  "mode": "offline_archive",
+  "stages": [
+    {
+      "name": "collect_and_verify_sources",
+      "status": "passed",
+      "sample_count": 2
+    },
+    {
+      "name": "isolated_api_workflow",
+      "status": "passed",
+      "checks": 45
+    },
+    {
+      "name": "isolated_browser_workflow",
+      "status": "passed",
+      "stats": {
+        "startTime": "2026-10-14T08:16:44.247Z",
+        "duration": 48273.638,
+        "expected": 16,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    }
+  ],
+  "evidence_file_count": 13,
+  "evidence_hashes_rechecked": true,
+  "implementation_sha256": {
+    "scripts/validate_public_delivery.py": "fbb1fd65213997f40e767c00d214154109ff0cdd02cfb1cec6969b75ec503ca7",
+    "datasets/mof_vouchers.py": "ebf3f29a402af34b9ae92b8973dd8f6a4f908224088209900b97ee6d40b0c1b8",
+    "scripts/validate_public_voucher_loop.py": "54da4e234996f539a74c5dab0a18df576dc9271e36b61d852659f946ea70db4f",
+    "scripts/validate_public_voucher_browser.py": "48e994a2ce66c72b34f1512373dd720c1df072079f03c85e7f8ae807d43bb358",
+    "backend/app/domain.py": "b49e39dd9e544b4bf4568aa04bf7ec54dc63a591efa123fd925331989e693a75",
+    "backend/app/policy_consistency.py": "9621fe576520cb2638d6176c76ff38553f3dcf42edfc6a2fc89673f16c0ed6b6",
+    "backend/app/policy_contract.py": "d6c3083ef2cfe7d7762dc09a0546aae352fdc003da3e8f2e94f3dceee17a5933",
+    "frontend/tests/public-vouchers.spec.ts": "71d544e017060ddd001133f358e6ae2e79fb2db0337be2580479f2cb3ebd2556",
+    "frontend/tests/policy-checks.spec.ts": "f8dfeb3abc1c6b9c2e2e56b7fc418d6c452eb80a738a318f3121e17d35af19e9",
+    "frontend/tests/workbench.spec.ts": "974141e0438e3b1634ba7ce249aa36d62ec3ebe8e28460d478eb571433f7a926"
+  },
+  "targeted_tests": {
+    "tests": 41,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 41,
+    "junit_sha256": "6353a70d9fc473f623c683d6eae0cc81908658f13fe143ed9d552d1bd028dd69"
+  },
+  "ruff": "passed",
+  "model_requests": 0,
+  "new_dependencies": 0,
+  "limitations": [
+    "Installed Python dependencies, Node dependencies and Chrome are required.",
+    "Public illustrative XML plus explicitly synthetic faults, not enterprise data.",
+    "Automated teaching review, not professional human signoff or model-quality evaluation.",
+    "Current working sources; not a clean-machine installation or a published release.",
+    "The online collection path was not exercised in this run.",
+    "No commit, remote CI execution or publication in this increment."
+  ]
+}

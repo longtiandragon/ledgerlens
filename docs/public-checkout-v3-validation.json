@@ -1,0 +1,327 @@
+{
+  "schema_version": "public-checkout-validation-v3",
+  "date": "2026-10-15",
+  "verified_at_utc": "2026-10-15T05:31:50.608134+00:00",
+  "status": "passed",
+  "policy_version": "policy-consistency-v8",
+  "fixture_version": "mof-policy-projections-v8",
+  "scope": "Fresh directory, cached offline dependency installation, same Windows host; not a new machine or new remote CI run.",
+  "run": {
+    "path": ".local/public-checkout-v3-20261015/report.json",
+    "sha256": "2bd8cf697a61d91ccf0bb0a423522c8ffdb789e0fa8f6542edf16c8ab6090cf8"
+  },
+  "source": {
+    "base_commit": "ebc0595cc5d8f5f7f0addce554cc8dc1023601a5",
+    "includes_uncommitted_changes": true,
+    "files": 473,
+    "manifest": {
+      "path": ".local/public-checkout-v3-20261015/source-manifest.json",
+      "sha256": "ad5f2b592217e5d614b0770289d681fb0385e963070e563ddb8c2d5893105779"
+    },
+    "archive": {
+      "path": ".local/public-checkout-v3-20261015/source.zip",
+      "sha256": "4c5899e46c680827deaa90298478abdcbd568196249f8a9d2da3bc4f98ecb173"
+    },
+    "archived_sources_unchanged": true
+  },
+  "excluded_local_state": {
+    ".env": true,
+    ".local": true,
+    ".cache": true,
+    ".venv": true,
+    "runtime": true,
+    "frontend/node_modules": true
+  },
+  "installation": {
+    "offline": true,
+    "python_packages": 104,
+    "npm_packages": 77
+  },
+  "backend": {
+    "tests": 2417,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 53,
+    "passed": 2364,
+    "skip_reasons": [
+      "Explicit MIGRATION_POSTGRES_TESTS=1 requires the dedicated local PostgreSQL service",
+      "Explicit RETRIEVAL_INDEX_TESTS=1 requires the local optional pgvector service",
+      "Filesystem link creation unavailable: OSError",
+      "Host cannot create test symlink: OSError",
+      "Local v16 observable report is not available",
+      "Optional Beancount differential dependency is absent",
+      "Optional independently downloaded MOF archive is absent",
+      "Original official HTML stays in optional local storage",
+      "Selected original PDF is absent; no download is attempted",
+      "local v2 dataset not generated"
+    ],
+    "skip_counts": {
+      "Selected original PDF is absent; no download is attempted": 4,
+      "Filesystem link creation unavailable: OSError": 12,
+      "Optional Beancount differential dependency is absent": 20,
+      "Local v16 observable report is not available": 1,
+      "Explicit MIGRATION_POSTGRES_TESTS=1 requires the dedicated local PostgreSQL service": 2,
+      "Optional independently downloaded MOF archive is absent": 1,
+      "Original official HTML stays in optional local storage": 1,
+      "Explicit RETRIEVAL_INDEX_TESTS=1 requires the local optional pgvector service": 9,
+      "local v2 dataset not generated": 1,
+      "Host cannot create test symlink: OSError": 2
+    }
+  },
+  "browser": {
+    "startTime": "2026-10-15T05:28:45.127Z",
+    "duration": 78176.79,
+    "expected": 43,
+    "skipped": 11,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "public_delivery": {
+    "report": {
+      "path": ".local/public-checkout-v3-20261015/public-delivery/report.json",
+      "sha256": "4d7215a989b1747f083fa86379e0c56d36d799c2cc67c286d216d50c3d0bdd71"
+    },
+    "stages": [
+      {
+        "name": "collect_and_verify_sources",
+        "status": "passed",
+        "sample_count": 2
+      },
+      {
+        "name": "isolated_api_workflow",
+        "status": "passed",
+        "checks": 45
+      },
+      {
+        "name": "isolated_browser_workflow",
+        "status": "passed",
+        "stats": {
+          "startTime": "2026-10-15T05:30:11.623Z",
+          "duration": 38965.844000000005,
+          "expected": 16,
+          "skipped": 0,
+          "unexpected": 0,
+          "flaky": 0
+        }
+      }
+    ],
+    "evidence_files_verified": 13
+  },
+  "rules": {
+    "synthetic_cases": 480,
+    "independent_reference_cases": 30,
+    "status": "passed"
+  },
+  "official_policy": {
+    "tasks": 191,
+    "passed": 191,
+    "source_verification": {
+      "checked": 32,
+      "passed": 32,
+      "failed": 0
+    },
+    "report": {
+      "path": ".local/reports/official-policy-consistency-v8-interest-scope.json",
+      "sha256": "68364d449069aa1dc2516aaad8a8afb56e05c6b9fd1f65976d9dd7b614f27481"
+    },
+    "interpretation": "Developer inputs explicitly add the interest-only scope assumption; existing expected labels unchanged."
+  },
+  "accounting_review": {
+    "reviewer": "Astra AI, read-only senior-accountant perspective",
+    "finding": "P2: interest timing rule incorrectly covered auxiliary fees",
+    "resolution": "Require human-confirmed directly attributable specific-borrowing interest; other or unknown fee kinds do not receive a conclusion",
+    "followup_review": "Original P2 closed within the limited reviewed scope; no new explicit blocker found",
+    "human_professional_signoff": false,
+    "document": "docs/AI_ACCOUNTING_REVIEW_20261015.md"
+  },
+  "regressions": {
+    "new_accounting_scope_cases": 21,
+    "targeted_policy_tests_passed": 218,
+    "validation_gate_and_isolation_tests_passed": 45,
+    "v7_negative_control": {
+      "old_contract_rejections": 19,
+      "missing_scope_actual_assertion_failures": 2,
+      "report": {
+        "path": ".local/reports/borrowing-interest-scope-v7-negative.xml",
+        "sha256": "f1faf092961cd3bfaa8e85ea46a53af51f342ee9ffd0d609f621243e35ea23ff"
+      }
+    },
+    "initial_fixture_errors_preserved": [
+      ".local/reports/borrowing-interest-scope-before.xml",
+      ".local/reports/borrowing-interest-scope-after.xml"
+    ]
+  },
+  "owned_processes_stopped": true,
+  "actual_demo_run_usage": [
+    {
+      "path": "demo-data/demo.sqlite",
+      "runs": 4,
+      "rows": [
+        {
+          "mode": "rules",
+          "status": "complete",
+          "usage": {
+            "calls": 0,
+            "tokens": 0,
+            "tools": 0,
+            "reserved_tokens": 0
+          }
+        },
+        {
+          "mode": "rules",
+          "status": "complete",
+          "usage": {
+            "calls": 0,
+            "tokens": 0,
+            "tools": 0,
+            "reserved_tokens": 0
+          }
+        },
+        {
+          "mode": "rules",
+          "status": "complete",
+          "usage": {
+            "calls": 0,
+            "tokens": 0,
+            "tools": 0,
+            "reserved_tokens": 0
+          }
+        },
+        {
+          "mode": "rules",
+          "status": "complete",
+          "usage": {
+            "calls": 0,
+            "tokens": 0,
+            "tools": 0,
+            "reserved_tokens": 0
+          }
+        }
+      ]
+    },
+    {
+      "path": "public-delivery/api/runtime/ledgerlens.sqlite",
+      "runs": 1,
+      "rows": [
+        {
+          "mode": "rules",
+          "status": "complete",
+          "usage": {
+            "calls": 0,
+            "tokens": 0,
+            "tools": 0,
+            "reserved_tokens": 0
+          }
+        }
+      ]
+    },
+    {
+      "path": "public-delivery/browser/runtime/app.sqlite",
+      "runs": 3,
+      "rows": [
+        {
+          "mode": "rules",
+          "status": "complete",
+          "usage": {
+            "calls": 0,
+            "tokens": 0,
+            "tools": 0,
+            "reserved_tokens": 0
+          }
+        },
+        {
+          "mode": "rules",
+          "status": "complete",
+          "usage": {
+            "calls": 0,
+            "tokens": 0,
+            "tools": 0,
+            "reserved_tokens": 0
+          }
+        },
+        {
+          "mode": "rules",
+          "status": "complete",
+          "usage": {
+            "calls": 0,
+            "tokens": 0,
+            "tools": 0,
+            "reserved_tokens": 0
+          }
+        }
+      ]
+    }
+  ],
+  "working_database_hashes": {
+    "ledgerlens.sqlite": "1dc8e29c564d6eb649e86b33910986621bc4c9d2a232738eb350cbe03fb1c6cd",
+    "checkpoints.sqlite": "4bfa720802f317e2b85607ed54c44d467d6bb6b271c4dc8c8ff9a05c52d1235d"
+  },
+  "working_databases_match_recovered_backup": true,
+  "new_deepseek_requests_in_validation": 0,
+  "step_logs_verified": 9,
+  "evidence": [
+    {
+      "path": ".local/public-checkout-v3-20261015/python-install.log",
+      "sha256": "47612d79a0e44ed3e17b0bb29feb54aac15637da50b2b8d8d35d34a64da6b2ea"
+    },
+    {
+      "path": ".local/public-checkout-v3-20261015/frontend-install.log",
+      "sha256": "9de2ddef258c647c327fc3e023db06aefd7b9240ded2bb5665350a0f78324c08"
+    },
+    {
+      "path": ".local/public-checkout-v3-20261015/backend-tests.log",
+      "sha256": "f4b6263a0fc93fe9cdb0101e1d045657dd860b399a330354670497d140ffe537"
+    },
+    {
+      "path": ".local/public-checkout-v3-20261015/contracts.log",
+      "sha256": "ca2e7c4a35d699aa93e9905e70508a4a44ad8edc083dc13a4636f9c45b711e7f"
+    },
+    {
+      "path": ".local/public-checkout-v3-20261015/frontend-build.log",
+      "sha256": "e6c7ebdaeecf16ef27fa55be26ea7eaafa236a7752c13fe012d820457d1e1c0a"
+    },
+    {
+      "path": ".local/public-checkout-v3-20261015/generate-synthetic-data.log",
+      "sha256": "7c4a3ac465e43ec0c906e44593445014aa6b6366f2ea198ed3e89e6c0b6407fd"
+    },
+    {
+      "path": ".local/public-checkout-v3-20261015/rule-benchmark.log",
+      "sha256": "7b885a478991cb6fbfc04f99b8cbd94979cd5a53fac1502088483f1183bb6e4f"
+    },
+    {
+      "path": ".local/public-checkout-v3-20261015/browser-tests.log",
+      "sha256": "d9ef5c7a3003a948d15babf779d4c4ac2af99f1adc664182227c3b5719449854"
+    },
+    {
+      "path": ".local/public-checkout-v3-20261015/public-delivery.log",
+      "sha256": "2fd65ef9d4148b07d7c17f52e5b1d95dc2e546fe6ee64b643dc8fb42256c6f0a"
+    },
+    {
+      "path": ".local/public-checkout-v3-20261015/backend.xml",
+      "sha256": "ece03d17e31cad20614d2fc083af1cb79a5d1c2e1ce0b84de12e50b14a7e99e8"
+    },
+    {
+      "path": ".local/reports/borrowing-interest-scope-after-v2.xml",
+      "sha256": "1802447cb4a253f42ef3b7fad5618cb58b066eb8551292daf4311c987b609e79"
+    },
+    {
+      "path": ".local/reports/clean-checkout-gates-20261015.xml",
+      "sha256": "eceabf7c375cd6ab912d15ba2531b5a39f57060d08d8b795314953da834292a5"
+    }
+  ],
+  "prior_v7_reproduction": {
+    "report": {
+      "path": ".local/public-checkout-v2-20261015/report.json",
+      "sha256": "a8d09b55cb29acb476dab198b429d6170796b299875502a9dfe9022fdaf23ca5"
+    },
+    "status": "passed",
+    "not_the_final_v8_validation": true
+  },
+  "limitations": [
+    "53 backend and 11 default-browser optional checks skipped; public-sample browser checks had no skips.",
+    "No new remote CI, uncached installation or independent host verification.",
+    "AI static accounting review is not human professional approval or full standards coverage.",
+    "Model research targets remain unmet; engineering success does not imply model improvement.",
+    "The 2026-10-14 incident post-backup completeness and final unsettled-request charge remain unresolved."
+  ]
+}

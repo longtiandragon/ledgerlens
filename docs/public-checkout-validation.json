@@ -1,0 +1,189 @@
+{
+  "schema_version": "public-checkout-validation-v1",
+  "date": "2026-10-14",
+  "status": "passed",
+  "run": ".local/public-checkout-v1/report.json",
+  "report_sha256": "4c2ca051e5126e7f5592dc0e34864338db906657f4e4c2e66c6a3c4d69da3e97",
+  "source_mode": "working_tree_snapshot",
+  "base_commit": "ebc0595cc5d8f5f7f0addce554cc8dc1023601a5",
+  "includes_uncommitted_changes": true,
+  "source_files": 464,
+  "source_manifest_sha256": "06349fb45ae1eeb5f43352d5f2b1a6cbcc63801d87576e8dc0647b20814b49db",
+  "archive_sha256": "9e2fc0cfa73400c7937e394ee271089528c99d4db2a5245b4436ab41e41f9352",
+  "excluded_local_state": {
+    ".env": true,
+    ".local": true,
+    ".cache": true,
+    ".venv": true,
+    "runtime": true,
+    "frontend/node_modules": true
+  },
+  "installation": {
+    "offline": true,
+    "python_packages": 104,
+    "npm_packages": 77
+  },
+  "backend": {
+    "tests": 2348,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 53,
+    "skip_reasons": [
+      "Explicit MIGRATION_POSTGRES_TESTS=1 requires the dedicated local PostgreSQL service",
+      "Explicit RETRIEVAL_INDEX_TESTS=1 requires the local optional pgvector service",
+      "Filesystem link creation unavailable: OSError",
+      "Host cannot create test symlink: OSError",
+      "Local v16 observable report is not available",
+      "Optional Beancount differential dependency is absent",
+      "Optional independently downloaded MOF archive is absent",
+      "Original official HTML stays in optional local storage",
+      "Selected original PDF is absent; no download is attempted",
+      "local v2 dataset not generated"
+    ],
+    "passed": 2295,
+    "skip_counts": {
+      "Selected original PDF is absent; no download is attempted": 4,
+      "Filesystem link creation unavailable: OSError": 12,
+      "Optional Beancount differential dependency is absent": 20,
+      "Local v16 observable report is not available": 1,
+      "Explicit MIGRATION_POSTGRES_TESTS=1 requires the dedicated local PostgreSQL service": 2,
+      "Optional independently downloaded MOF archive is absent": 1,
+      "Original official HTML stays in optional local storage": 1,
+      "Explicit RETRIEVAL_INDEX_TESTS=1 requires the local optional pgvector service": 9,
+      "local v2 dataset not generated": 1,
+      "Host cannot create test symlink: OSError": 2
+    },
+    "junit_sha256": "b996e9f3fc5f59c11c2703f95ffff3d7e6f82ed03f89170c82edf6db7060ba71",
+    "pytest_seconds": 207.43
+  },
+  "browser": {
+    "startTime": "2026-10-14T08:27:43.090Z",
+    "duration": 92178.87299999999,
+    "expected": 43,
+    "skipped": 11,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "public_delivery": {
+    "status": "passed",
+    "stages": [
+      {
+        "name": "collect_and_verify_sources",
+        "status": "passed",
+        "sample_count": 2
+      },
+      {
+        "name": "isolated_api_workflow",
+        "status": "passed",
+        "checks": 45
+      },
+      {
+        "name": "isolated_browser_workflow",
+        "status": "passed",
+        "stats": {
+          "startTime": "2026-10-14T08:29:25.890Z",
+          "duration": 47537.917,
+          "expected": 16,
+          "skipped": 0,
+          "unexpected": 0,
+          "flaky": 0
+        }
+      }
+    ],
+    "report_sha256": "0f0bb70d4e36e0b6324a5fe0dfb3ecd7c8c154403f284303f43ec9baf5171068"
+  },
+  "rules": {
+    "cases": 480,
+    "exact_label_match_rate": 1,
+    "independent_references_passed": 30,
+    "model_calls": 0
+  },
+  "steps": [
+    {
+      "name": "python-install",
+      "status": "passed",
+      "log": "python-install.log",
+      "exit_code": 0,
+      "seconds": 3.52,
+      "sha256": "2b71ca55f4d4e8694b8daa030b384a6000f96c8564bb636a42103d91f7fe1216"
+    },
+    {
+      "name": "frontend-install",
+      "status": "passed",
+      "log": "frontend-install.log",
+      "exit_code": 0,
+      "seconds": 32.19,
+      "sha256": "abaf1af022d3de6585bfc74f85915c267aa29292f426ef1225a967f7efce3747"
+    },
+    {
+      "name": "backend-tests",
+      "status": "passed",
+      "log": "backend-tests.log",
+      "exit_code": 0,
+      "seconds": 221.59,
+      "sha256": "101ef84b3a801b50cc3bd9e9f1164f91f9982c87b134805a77111a3515a8d887"
+    },
+    {
+      "name": "contracts",
+      "status": "passed",
+      "log": "contracts.log",
+      "exit_code": 0,
+      "seconds": 2.98,
+      "sha256": "ca2e7c4a35d699aa93e9905e70508a4a44ad8edc083dc13a4636f9c45b711e7f"
+    },
+    {
+      "name": "frontend-build",
+      "status": "passed",
+      "log": "frontend-build.log",
+      "exit_code": 0,
+      "seconds": 53.19,
+      "sha256": "39549e2b6ff96d97da00259b5a2290b6fd75fc814b21d8a906c5fcb9bf95ab03"
+    },
+    {
+      "name": "generate-synthetic-data",
+      "status": "passed",
+      "log": "generate-synthetic-data.log",
+      "exit_code": 0,
+      "seconds": 1.08,
+      "sha256": "9cff64db8640fe4b53b9c820266d12ff0325756bca7da03e64e21847bb1c8fb1"
+    },
+    {
+      "name": "rule-benchmark",
+      "status": "passed",
+      "log": "rule-benchmark.log",
+      "exit_code": 0,
+      "seconds": 9.44,
+      "sha256": "dcb145f926b477ab0883bc3556c9c76e3aef2c1ab273ddddb0118d209bec69f7"
+    },
+    {
+      "name": "browser-tests",
+      "status": "passed",
+      "log": "browser-tests.log",
+      "exit_code": 0,
+      "seconds": 95.55,
+      "sha256": "5f596f26e9fd5a192a2021d44609918838d953ea0b5f8aaf22574d6ad35c123a"
+    },
+    {
+      "name": "public-delivery",
+      "status": "passed",
+      "log": "public-delivery.log",
+      "exit_code": 0,
+      "seconds": 58.19,
+      "sha256": "e334db5b8e2d410ae956c6b4f51e9929986fa1ccb49b0c67601d7be162aae25c"
+    }
+  ],
+  "source_bytes_preserved_after_run": true,
+  "step_logs_hash_verified": true,
+  "public_evidence_hashes_verified": 13,
+  "owned_processes_stopped": true,
+  "ruff": "passed",
+  "model_requests": 0,
+  "limitations": [
+    "Same Windows host, OS, Chrome and dependency caches; not an independent machine or uncached install.",
+    "53 backend and 11 default browser checks skipped with reasons retained; not counted as executed.",
+    "Default browser and public browser tests overlap; counts must not be summed as independent coverage.",
+    "Base commit alone does not identify this snapshot; ZIP and per-file manifest are required.",
+    "Documentation recording these results was added after the source snapshot; runtime code stayed unchanged.",
+    "No new model-quality claim, remote CI execution, commit, push or publication."
+  ]
+}
