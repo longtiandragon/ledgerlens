@@ -29,6 +29,9 @@ SECRETS = {
 PLACEHOLDER = re.compile(rb'(fixture|test|fake|dummy|offline|invalid|example|placeholder|xxxx)', re.I)
 LOCAL_DATA = re.compile(r'(^|/)(\.env$|\.local/|runtime/)|\.sqlite3?$|\.db$')
 ORIGINALS = re.compile(r'\.(pdf|zip|xes|gz|ofd|png|jpe?g|tiff?|xlsx)$', re.I)
+# The project's own screenshots and diagrams (scripts/capture_demo.py, hand-drawn SVG) live here;
+# they still go through the size and credential checks.
+OWN_IMAGES = re.compile(r'^docs/images/[^/]+\.(png|svg)$')
 EMAIL = re.compile(rb'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}')
 ALLOWED_EMAIL = re.compile(rb'(240200079@mail\.szpu\.edu\.cn|noreply@anthropic\.com|@users\.noreply\.github\.com|'
                            rb'noreply@github\.com|@example\.(com|org|invalid)|@ethicalsource\.dev)$')
@@ -58,7 +61,7 @@ def audit(root: Path = ROOT) -> dict:
         scanned += 1
         if LOCAL_DATA.search(path):
             blocking.append({'kind': 'local data path', 'path': path, 'blob': sha})
-        if ORIGINALS.search(path):
+        if ORIGINALS.search(path) and not OWN_IMAGES.match(path):
             blocking.append({'kind': 'third-party original extension', 'path': path, 'blob': sha})
         if size > MAX_BYTES:
             blocking.append({'kind': 'blob over 1 MB', 'path': path, 'blob': sha, 'bytes': size})

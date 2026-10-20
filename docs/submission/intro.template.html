@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>账证智核 LedgerLens 作品介绍</title>
+<style>
+  @page { size: A4; margin: 16mm; }
+  :root { --ink: #23342f; --muted: #5d6f68; --accent: #1f5f54; --line: #cfdcd6; --soft: #f3f8f6; }
+  html { background: #ffffff; }
+  body { margin: 0; color: var(--ink); background: #ffffff; font: 10.5pt/1.65 'Microsoft YaHei', 'PingFang SC', 'Noto Sans CJK SC', sans-serif; }
+  h1 { font-size: 30pt; margin: 8mm 0 4mm; color: var(--accent); letter-spacing: 1px; }
+  h2 { font-size: 16pt; color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 2mm; margin: 0 0 4mm; }
+  h3 { font-size: 12pt; margin: 5mm 0 2mm; color: #2c4a43; }
+  p, li { text-align: justify; }
+  ul, ol { padding-left: 6mm; margin: 2mm 0; }
+  li { margin: 1mm 0; }
+  section { break-before: page; }
+  section.cover { break-before: auto; padding-top: 40mm; }
+  .track { color: var(--muted); font-size: 10pt; }
+  .tagline { font-size: 14pt; color: #2c4a43; margin-bottom: 14mm; }
+  table { border-collapse: collapse; width: 100%; margin: 3mm 0; font-size: 9.8pt; break-inside: avoid; }
+  th, td { border: 1px solid var(--line); padding: 1.8mm 2.4mm; vertical-align: top; text-align: left; }
+  th { background: var(--soft); color: #2c4a43; white-space: nowrap; }
+  table.facts th { width: 28mm; }
+  table.kpi th { width: 36mm; }
+  table.compare { table-layout: fixed; font-size: 8.6pt; }
+  table.compare th, table.compare td { word-break: break-word; white-space: normal; padding: 1.4mm 1.8mm; }
+  table.compare tr > :first-child { width: 17%; }
+  figure { margin: 3mm 0; break-inside: avoid; }
+  figure img { width: 100%; border: 1px solid var(--line); border-radius: 2mm; }
+  figcaption { font-size: 9pt; color: var(--muted); text-align: center; margin-top: 1mm; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  code, pre { font-family: Consolas, 'Cascadia Mono', monospace; font-size: 9pt; }
+  pre { background: var(--soft); border: 1px solid var(--line); border-radius: 2mm; padding: 3mm; white-space: pre-wrap; }
+  .note { border-left: 3px solid #8a7a4a; background: #faf7ee; padding: 2mm 3mm; margin: 3mm 0; }
+  a { color: var(--accent); text-decoration: none; word-break: break-all; }
+</style>
+</head>
+<body>
+<section class="cover">
+  <p class="track">开源基础软件与解决方案赛道 · 行业应用平台与数据平台 / AI 开发工具链与智能体框架</p>
+  <h1>账证智核 LedgerLens</h1>
+  <p class="tagline">证据优先的开源会计复核工作台：确定性规则先判断，模型只给可核验的解释</p>
+  <table class="facts">
+    <tr><th>负责人</th><td>何俊浩（深圳职业技术大学）</td></tr>
+    <tr><th>代码仓库</th><td>{{link:repo}}</td></tr>
+    <tr><th>演示视频</th><td>{{link:video}}</td></tr>
+    <tr><th>许可</th><td>Apache-2.0（自主代码）</td></tr>
+    <tr><th>版本与日期</th><td>{{meta:version}} · {{meta:date}}</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>1 项目概述</h2>
+  <p>月结复核中，发现异常只是第一步：复核人员还要取得证据、判断原因，并证明拟议的调整不会改坏原始账簿。现有的 AI 财务工具多数直接给出结论，但结论依据了哪些资料、资料是否在当时可见、能否被第三方复核，往往说不清。</p>
+  <p>账证智核把每一次调查固定在<strong>账套、数据快照和规则版本</strong>上：确定性规则先做检查；调查只能读取当前快照中的证据；模型的建议不会自动成为业务事实；调整只进入隔离模拟并由程序逐分复算；迟到的资料会生成新快照并使旧复核失效。项目在本地即可运行，不需要模型密钥就能完成完整的规则演示。</p>
+  <table class="kpi">
+    <tr><th>后端自动化测试</th><td>{{json:policy#full_backend.passed}} 通过 / {{json:policy#full_backend.skipped}} 跳过（{{meta:test_date}}，本机）</td></tr>
+    <tr><th>官方问答政策规则</th><td>33 条有限规则覆盖 32 份财政部实施问答；{{json:policy#official_projection.passed}} 个手写投影全部通过</td></tr>
+    <tr><th>公开资料端到端验收</th><td>财政部数电发票样例：API {{json:policy#public_delivery.stages.1.checks}} 项、Chrome {{json:policy#public_delivery.stages.2.stats.expected}} 项全部通过</td></tr>
+    <tr><th>运行方式</th><td>Windows、Linux/macOS 脚本与 Docker Compose，三种方式每次提交都在 CI 全新机器上实跑</td></tr>
+    <tr><th>模型效果</th><td>两次封存测试中单 Agent 均未超过同预算确定性基线，结果原样公开；混合方法见第 5 章</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>2 背景与需求</h2>
+  <h3>2.1 复核工作的真实痛点</h3>
+  <ul>
+    <li><strong>证据分散</strong>：订单、收货、发票、付款与分录分属不同系统，复核人员要逐笔回查来源。</li>
+    <li><strong>时点错位</strong>：迟到的单据会改变判断，但旧的复核意见往往没有随之失效。</li>
+    <li><strong>调整风险</strong>：调整分录一旦直接写入账簿，错误难以追溯；需要先在副本上验证影响。</li>
+    <li><strong>AI 结论不可复核</strong>：通用大模型可以生成看似合理的解释，但无法保证引用真实存在、属于当时可见的资料。</li>
+  </ul>
+  <h3>2.2 政策依据</h3>
+  <p>财政部《会计软件基本功能和服务规范》（财会〔2024〕12号，2025年1月1日起施行）对会计软件提出了与本项目设计直接对应的要求：</p>
+  <table class="grid">
+    <tr><th>条款</th><th>要求（摘要，以原文为准）</th><th>本项目对应设计</th></tr>
+    <tr><td>第二十一条</td><td>提供不可逆的记账功能，不得删除、插入或修改已记账凭证</td><td>原始账簿只读，调整只进隔离模拟</td></tr>
+    <tr><td>第三十二条</td><td>记录用户操作日志，可按操作人员、时间和内容查询</td><td>审计记录、快照绑定与复核失效</td></tr>
+    <tr><td>第六条、第十八条</td><td>遵循电子凭证会计数据标准，解析符合标准的电子会计凭证</td><td>财政部数电发票标准样例的核验导入</td></tr>
+    <tr><td>第二十九条、第四十一条</td><td>符合国家统一标准的数据接口，不得拒绝用户导出电子会计资料</td><td>开放 API 与 Markdown/JSON 底稿导出</td></tr>
+    <tr><td>第三十八条</td><td>鼓励提供个性化、自动化、智能化核算处理功能</td><td>智能化在可核验的边界内进行</td></tr>
+  </table>
+  <p>此外，财政部《会计信息化发展规划（2021－2025年）》把会计数据标准和数字化转型列为主线；国家税务总局公告2024年第11号自2024年12月1日起在全国推广数电发票。电子凭证进入账务后，如何在不改动原账的前提下自动复核、并让结论可追溯，是这些政策落地后的直接需求。</p>
+  <h3>2.3 目标用户与场景</h3>
+  <ul>
+    <li><strong>会计实训与复核教学（首个可落地场景）</strong>：用财政部公开样例和标注明确的教学变体（如故意加入的重复凭证）组织练习，学生能看到每条结论的证据和失效规则。</li>
+    <li><strong>代账机构与企业财务的月结复核（目标场景）</strong>：在授权、脱敏的真实账套上试点，属于后续的外部验证，当前不宣称已取得业务效果。</li>
+  </ul>
+</section>
+
+<section>
+  <h2>3 技术架构</h2>
+  <figure><img src="{{asset:architecture}}" alt="账证智核架构"><figcaption>图 1　五个阶段与评测、交付验收、可选模型网关</figcaption></figure>
+  <h3>3.1 数据不变量</h3>
+  <ul>
+    <li>金额全程使用 Decimal，接口以字符串传输，精确到分；不平衡、锁定期间、未知科目单独列出。</li>
+    <li>原始账簿只读；修订只新增版本；调整只进入隔离模拟。</li>
+    <li>每次调查固定账套、数据快照、规则版本和政策上下文；新资料使旧复核失效，历史底稿仍可查看。</li>
+    <li>模型建议与确定性事实分开存储；引用必须真实存在、属于当前快照且已被读取。</li>
+    <li>运行中的 Agent 只有只读的快照查询工具，不提供任意 SQL、代码或 Shell；预算用尽或输出无效都记为失败，不冒充成功。</li>
+  </ul>
+  <h3>3.2 运行方式与技术栈</h3>
+  <p>本地模式：SQLite（WAL）＋单进程后台任务，无需 Docker 或模型密钥。部署模式：Docker Compose 编排 PostgreSQL、Redis、Celery 和 LangGraph 持久检查点，对外端口只绑定本机回环地址。前端为 Vue 3＋Naive UI 工作台，后端为 FastAPI＋Pydantic，接口契约由脚本从后端生成前端类型，CI 检查漂移。</p>
+  <p>主要开源组件均为直接依赖或可选组件，许可由 CI 门控逐一检查（见第 7 章）：FastAPI、Pydantic、SQLAlchemy、Alembic、LangGraph、OR-Tools、pdfplumber、PaddleOCR（可选）、BGE＋pgvector（可选）。</p>
+</section>
+<section>
+  <h2>4 核心流程与功能</h2>
+  <p>以下截图全部来自隔离环境中的合成演示账套（无模型密钥、规则模式），由 <code>scripts/capture_demo.py</code> 自动生成，可重复。</p>
+  <figure><img src="{{asset:shot01}}" alt="月结工作台"><figcaption>图 2　建账、载入合成演示资料并执行月结检查：结果来自当前固定的数据快照</figcaption></figure>
+  <div class="pair">
+    <figure><img src="{{asset:shot02}}" alt="规则调查"><figcaption>图 3　规则模式调查：每条结论带可回查的引用</figcaption></figure>
+    <figure><img src="{{asset:shot03}}" alt="证据关系图"><figcaption>图 4　证据关系图：记录、单据与规则的关联</figcaption></figure>
+  </div>
+  <div class="pair">
+    <figure><img src="{{asset:shot05}}" alt="隔离模拟"><figcaption>图 5　隔离模拟：调整草稿由程序逐分复算，原始账簿不变</figcaption></figure>
+    <figure><img src="{{asset:shot07}}" alt="复核失效"><figcaption>图 6　迟到资料生成新快照，旧复核自动失效</figcaption></figure>
+  </div>
+  <h3>4.1 七步复核闭环</h3>
+  <ol>
+    <li>建立账套（企业会计准则或小企业会计准则，制度建立后不能原地更换）。</li>
+    <li>导入资料：CSV／JSON／XLSX、文本 PDF、财政部数电发票 XML 或扫描件（OCR 结果须人工逐字段核实）；先预览字段和错误，缺失金额不补零。</li>
+    <li>执行月结检查：16 条确定性规则生成案件，每条发现带来源记录和限制说明。</li>
+    <li>证据调查：规则模式不调用模型；模型模式需显式启动，且只能读取当前快照。</li>
+    <li>隔离模拟：输入调整草稿，程序复算余额变化，拦截不平衡、锁定期间与未知科目。</li>
+    <li>复核与底稿：保存复核意见，导出 Markdown／JSON 底稿；可选多用户模式下，调查、复核、审批由不同账户完成。</li>
+    <li>资料更新：迟到资料生成新快照，旧复核失效；历史底稿保留，不能用新资料改写旧判断。</li>
+  </ol>
+  <h3>4.2 政策检查与公开资料闭环</h3>
+  <p>政策检查来自 32 份财政部企业会计准则实施问答，编成 33 条有限规则。每条规则记录官方原文链接与哈希、适用与不适用条件；依赖专业判断的条件必须由人工确认并引用当前快照的资料。财政部 2025 推广应用版数电发票标准包中的两份 XML 样例可以一条命令完成采集、核验投影、隔离 API 与浏览器验收和证据哈希汇总；另有标注明确的重复凭证教学变体，用于实训。</p>
+</section>
+
+<section>
+  <h2>5 技术创新</h2>
+  <p>项目不以“接入了多少模型或框架”作为创新，而是解决一个既有方案没有处理好的问题：<strong>让会计复核中的每一条自动化结论都能被第三方核验</strong>。下面五点都对应仓库里可复现的证据。</p>
+  <table class="grid">
+    <tr><th>创新点</th><th>做法</th><th>证据</th></tr>
+    <tr><td>① 快照绑定的证据调查</td><td>每次调查固定账套、资料、规则版本与政策上下文；引用必须属于当前快照且已被读取；迟到资料生成新快照，旧复核失效</td><td>4 个独立时间挑战：保留快照时判断正确 4/4，混入后来资料时只有 2/4；端到端测试覆盖旧复核失效</td></tr>
+    <tr><td>② 模型提议与业务事实分离</td><td>模型只能提出待复核的解释和调整草稿；草稿进入隔离模拟，由程序逐分复算</td><td>6 份草稿（5 份有错）：程序复算拦住 4/5，直接采信建议则 5/5 全部放过；“合法科目间业务用途错误”仍会通过，作为已知缺口公开</td></tr>
+    <tr><td>③ 官方问答驱动的可审计规则包</td><td>32 份财政部实施问答编成 33 条有限规则，记录原文哈希、适用与不适用条件；专业判断一律人工确认</td><td>{{json:policy#official_projection.passed}} 个手写投影全部通过；AI 审阅发现的范围问题逐条整改，旧版失败反例留档</td></tr>
+    <tr><td>④ 预注册封存评测</td><td>评测真值不进入运行中的 Agent；封存数据只用一次；与同预算确定性基线对比；付费运行有费用守护</td><td>v2、v3 两次封存测试中单 Agent 均未超过基线（v3：0.508 对 0.563），结果原样公开；v4 混合方法见 5.2</td></tr>
+    <tr><td>⑤ 可离线核验的交付证据</td><td>一条命令完成公开样例采集、隔离 API 与浏览器验收和哈希清单；复制后的验收包可只用标准库核验</td><td>验收前后核对 {{json:policy#public_delivery.stages.3.sources}} 份源码与配置、{{json:policy#public_delivery.stages.3.evidence}} 份证据；篡改副本被拒绝</td></tr>
+  </table>
+  <h3>5.1 为什么让确定性规则先判断</h3>
+  <p>v3 封存测试的逐类结果显示，模型擅长依赖文字线索的原因（作废重开、价格折让），确定性方法擅长需要解读补证资料的原因（错挂发票号、货物在途）。两者互补，但直接让模型做最终判断，整体效果反而低于确定性方法。因此产品的架构选择是：确定性规则能下结论时直接下结论，模型只在规则没有信号或补证没有结论时给出待复核的解释。</p>
+  <h3>5.2 混合方法的预注册检验（v4）</h3>
+  <div class="note">基于 v3 的观察，我们提出“确定性优先、模型兜底”的混合方法：规则触发且固定补证得出确定类别时直接采用确定性结论；否则交给单 Agent。该方法在任何 v4 模型请求之前已公开预注册（GitHub Issue #12、docs/ROOT_CAUSE_V4.md），在新生成的 v4 数据上检验五个目标（T1：宏 F1 比最强同预算基线高 0.05 以上；T2：增益的自助区间下界大于 0；T3：不低于单 Agent；T4：结构失败不超过 1；T5：每案请求不超过单 Agent 的 60%）。开发冒烟已通过（交给模型的 5 个样本结构失败 0，实际花费 ¥0.13），两份封存计划已冻结。封存运行结果无论正负都将原样公布于此。</div>
+  <h3>5.3 与同类方案的比较</h3>
+  <table class="grid compare">
+    <tr><th></th><th>通用大模型对话</th><th>商业智能财务（用友 BIP、金蝶、BlackLine 等）</th><th>开源 ERP／记账（ERPNext、Odoo、Beancount）</th><th>账证智核</th></tr>
+    <tr><th>主要用途</th><td>问答与文本生成</td><td>企业财务全流程与月结自动化</td><td>记账与业务单据管理</td><td>异常调查与复核</td></tr>
+    <tr><th>结论能否回查到当时可见的记录</th><td>不保证</td><td>依产品而定，公开资料未见第三方可复核的说明</td><td>不涉及（不做调查结论）</td><td>引用必须属于当前快照且已读</td></tr>
+    <tr><th>调整是否先隔离验证</th><td>不涉及</td><td>依产品而定</td><td>直接记账</td><td>只进隔离模拟，原账哈希不变</td></tr>
+    <tr><th>效果评测是否公开可复现</th><td>否</td><td>以厂商自报指标为主（如 BlackLine 自报对账匹配准确率 99%）</td><td>不涉及</td><td>预注册封存评测，负面结果公开</td></tr>
+    <tr><th>许可与部署</th><td>闭源云服务</td><td>闭源，订阅或项目制</td><td>开源（GPLv3／LGPLv3／GPL-2.0）</td><td>Apache-2.0，本地或 Compose 部署</td></tr>
+  </table>
+  <p class="source">资料来源：用友 BIP 6 发布报道、金蝶 2026 中期业绩报道、BlackLine 官网对账产品页及第三方评测（2026-10-20 检索）。商业产品的内部能力以公开资料为限，未经本项目实测。</p>
+</section>
+
+<section>
+  <h2>6 场景落地与验证</h2>
+  <h3>6.1 可部署、可运行</h3>
+  <p>提供 Windows 启动器、Linux／macOS 脚本和 Docker Compose 三种方式。每次提交，CI 都在全新的 Linux 与 Windows 机器上按 README 原样启动并检查服务，Windows 上同时运行后端全量测试；Compose 栈构建后检查健康状态与网页的接口代理。</p>
+  <h3>6.2 可测试</h3>
+  <table class="grid">
+    <tr><th>项目</th><th>结果</th></tr>
+    <tr><td>后端自动化测试</td><td>{{json:policy#full_backend.passed}} 通过 / {{json:policy#full_backend.skipped}} 跳过（{{meta:test_date}}，本机；跳过项为 Windows 链接权限与可选服务条件）</td></tr>
+    <tr><td>规则基准</td><td>480 个合成案例、30 个独立参考例全部通过，CI 每次重新生成数据并强制该契约</td></tr>
+    <tr><td>政策规则</td><td>{{json:policy#official_projection.passed}} 个手写投影通过，{{json:policy#official_projection.source_verification.passed}} 份归档官方原文核验通过</td></tr>
+    <tr><td>公开样例端到端</td><td>API {{json:policy#public_delivery.stages.1.checks}} 项、Chrome {{json:policy#public_delivery.stages.2.stats.expected}} 项全部通过，0 跳过</td></tr>
+  </table>
+  <h3>6.3 真实与仿真数据上的验证</h3>
+  <table class="grid">
+    <tr><th>数据</th><th>性质</th><th>验证内容</th></tr>
+    <tr><td>财政部 2025 数电发票标准包</td><td>官方标准样例</td><td>原 XML 分录建账、重复凭证教学变体检测、模拟恢复、篡改拒绝</td></tr>
+    <tr><td>俄克拉何马州政府公开总账</td><td>真实公开数据（CC-BY），37.3 万行</td><td>暴露 cp1252 编码与 20 条分以下金额，程序拒绝舍入并单列</td></tr>
+    <tr><td>CORD v2 收据</td><td>真实收据图像（CC BY 4.0），100 张</td><td>本地 OCR：修复后失败 0/100，字词恢复 89.9%；识别结果仍须人工核实</td></tr>
+    <tr><td>BPI2019 事件日志</td><td>真实采购流程数据（CC BY 4.0）</td><td>1000 个完整 trace、15351 个事件转为可回查的证据快照</td></tr>
+    <tr><td>合成账套</td><td>程序生成，标注“合成”</td><td>480 个规则案例；v2、v3、v4 原因调查数据集（封存集只用一次）</td></tr>
+  </table>
+  <h3>6.4 尚未完成的验证</h3>
+  <ul>
+    <li>尚未在企业真实账套上试点；需要授权与脱敏流程，列为 v1.0 目标。</li>
+    <li>会计专业人员的独立复核尚未取得：47 项完整材料和 12 项短版已备好；AI 审阅不等于专业意见。</li>
+    <li>中文真实票据的 OCR 尚未实测；macOS 没有 CI 覆盖。</li>
+  </ul>
+</section>
+<section>
+  <h2>7 开源治理</h2>
+  <h3>7.1 许可与依赖合规</h3>
+  <ul>
+    <li>自主代码采用 Apache-2.0，附 NOTICE 与引用信息（CITATION.cff）；没有复制 ERPNext、Odoo、Beancount 等第三方源码，ERPNext（GPLv3）只作为独立服务联调。</li>
+    <li>CI 的 <code>licenses</code> 作业逐一检查已安装 Python 依赖和前端锁文件条目：{{lic:summary}}。元数据含糊的包逐个读取随包 LICENSE 核对并记录依据；psycopg（LGPL-3.0，运行时动态库）和 beancount（GPL-2.0，仅可选评测）是写明理由和范围的例外。</li>
+    <li>公开资料（财政部问答、数电发票标准包、年报等）只保存来源、哈希与转换程序，不重新分发原件；公开前对全部 Git 历史做了只读审计（{{json:audit#blobs_scanned}} 个对象，阻断项 0）。</li>
+  </ul>
+  <h3>7.2 贡献机制</h3>
+  <ul>
+    <li>治理文件齐全：贡献指南、项目治理、行为准则（Contributor Covenant 2.1 中文版）、安全策略、维护者与支持说明；GitHub 社区健康度 {{gh:health}}%。</li>
+    <li>Issue 表单：缺陷、功能建议、数据来源提议，以及<strong>会计规则请求</strong>——必须填写官方来源、适用与不适用条件和独立回归案例，否则无法提交，把 AGENTS.md 的规则变更要求落到了入口。</li>
+    <li>所有改动经 PR 合入，PR 模板要求写明已运行的测试、AI 参与和未验证事项；CI 必需检查全部通过才合并；Dependabot 每周提出依赖更新。</li>
+    <li>截至 {{meta:date}}：{{gh:prs}} 个 PR、{{gh:issues}} 个 Issue，路线图拆分到 4 个里程碑。</li>
+  </ul>
+  <h3>7.3 质量门控</h3>
+  <p>每次提交在全新机器上运行 {{gh:jobs}} 项 CI 作业：Linux 后端全量测试、可选依赖（PostgreSQL 迁移、pgvector 索引、Beancount 差分，任何跳过即失败）、许可门控、前端构建、按 README 原样启动（Linux 脚本、Windows 启动器＋Windows 后端全量测试、Docker Compose），以及重新生成合成数据、保持 480/30 规则契约并在空库中跑浏览器端到端测试。偶发失败不被隐藏，作为 Issue 跟踪（#33）。</p>
+</section>
+
+<section>
+  <h2>8 长期发展</h2>
+  <h3>8.1 团队与维护方式</h3>
+  <p>项目目前由一名学生负责，在 AI 编程助手（Claude Code、Codex）辅助下开发和维护。为保证一个人也能持续维护，项目把规则写成可执行的约束：AGENTS.md 规定协作底线（金额精度、原账只读、证据真实、失败不冒充成功、不改测试答案迁就实现）；GOVERNANCE.md 规定 AI 改动与人工改动一样必须经过 PR、CI 和维护者合并，付费模型调用须事先批准预算；交接文档、逐项验证记录和一键验收脚本降低了“只有一个人懂”的风险。</p>
+  <p>正在招募的角色：会计规则评审员（会计专业教师或注册会计师，负责把规则从 experimental 升级）、教学试点合作者、前端与文档贡献者。</p>
+  <h3>8.2 路线图</h3>
+  <table class="grid">
+    <tr><th>版本</th><th>时间</th><th>目标</th></tr>
+    <tr><td>v0.2.0</td><td>2026-10</td><td>公开发布：治理文件、跨平台运行、演示材料、混合方法预注册检验</td></tr>
+    <tr><td>v0.3.0</td><td>2026-12</td><td>教学可用：会计实训包、数电发票导入加固、专业复核（短版与完整版）</td></tr>
+    <tr><td>v0.4.0</td><td>2027-03</td><td>研究深化：混合方法外推复验、检索可靠拒答、模型闭环与去反证实验</td></tr>
+    <tr><td>v1.0.0</td><td>2027-12</td><td>试点就绪：经授权的脱敏企业试点、多用户部署与灾难恢复</td></tr>
+  </table>
+  <p>每个版本对应 GitHub 里程碑和带验收标准的公开 Issue；研究类目标一律先预注册再运行，结果正负都公开。</p>
+  <h3>8.3 可持续性</h3>
+  <ul>
+    <li>本地优先：规则演示与全部测试不需要云服务或模型密钥，运行成本接近零。</li>
+    <li>模型可选：付费调用必须显式启动，有逐请求预算、费用守护和低谷时段运行规则，实际花费记录在案。</li>
+    <li>数据只追加：迁移只向前，备份恢复和旧库升级都有实测记录，降低长期维护中数据损坏的风险。</li>
+  </ul>
+</section>
+<section class="appendix">
+  <h2>附录</h2>
+  <h3>A. 链接</h3>
+  <ul>
+    <li>代码仓库：{{link:repo}}</li>
+    <li>演示视频：{{link:video}}</li>
+    <li>混合方法预注册：仓库 Issue #12 与 docs/ROOT_CAUSE_V4.md</li>
+    <li>逐项验证记录：docs/STATUS.md；文档导航：docs/README.md</li>
+  </ul>
+  <h3>B. 复现命令</h3>
+  <pre>docker compose up --build -d                      # 入口 http://127.0.0.1:8080
+bash scripts/start-local.sh                       # Linux／macOS，入口 http://127.0.0.1:5188
+powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1   # Windows
+.venv/Scripts/python.exe -m pytest -q             # 后端全量测试
+python scripts/check_licenses.py                  # 依赖许可门控</pre>
+  <h3>C. 数据来源与许可</h3>
+  <p>合成数据由仓库内的生成器产生；财政部问答、数电发票标准包、俄克拉何马州公开总账（CC-BY）、CORD v2 收据（CC BY 4.0）、BPI2019 事件日志（CC BY 4.0）和上市公司年报均只保存来源、哈希与转换程序，原件不随仓库分发。详见 docs/THIRD_PARTY.md。</p>
+</section>
+</body>
+</html>
