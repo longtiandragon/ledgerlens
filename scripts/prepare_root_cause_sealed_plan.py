@@ -1,4 +1,4 @@
-"""Freeze a sealed-test plan for the v3 root-cause comparison. Never reads truth or API keys.
+"""Freeze a sealed-test plan for the v3 or v4 root-cause comparison. Never reads truth or API keys.
 
 The runner validates the dataset manifest, its 13 frozen sources, selected cases, model and
 run parameters. This plan additionally records the other modules on the investigation import
@@ -13,7 +13,29 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from benchmarks.root_cause_v2_models import PROMPT_VERSION, RUNNER_VERSION, select, source_hashes  # noqa: E402
+from benchmarks.root_cause_v2_models import (  # noqa: E402
+    MODEL_DATA_VERSIONS, PROMPT_VERSION, RUNNER_VERSION, select, source_hashes,
+)
+
+V4_ANALYSIS = {
+    'design': 'Deterministic-first hybrid: the rules answer when a root-cause rule fired and its single fixed '
+              'evidence request settled a category; otherwise single-agent DeepSeek answers (after the spent '
+              'request with no further request, or with its own single request when no rule fired). Routing '
+              'is fixed in benchmarks/root_cause_v2_models.hybrid_route before any v4 model request.',
+    'primary_metric': 'cause category macro-F1 per method over all samples, failures scored as wrong',
+    'secondary_metrics': ['conclusion accuracy', 'decisive evidence obtained', 'output failures by route',
+                          'paid requests and tokens per case'],
+    'strongest_same_budget_baseline': 'best deterministic method on this sealed run (same one-request evidence budget)',
+    'targets': {'T1': 'hybrid macro-F1 - strongest baseline >= 0.05',
+                'T2': 'family-bootstrap 95% interval of that difference above 0',
+                'T3': 'hybrid macro-F1 >= single-agent macro-F1 (unknown if the single run is dropped)',
+                'T4': 'at most 1 structural failure among hybrid samples sent to the model',
+                'T5': 'hybrid paid requests per case <= 60% of single (unknown if the single run is dropped)',
+                'also_reported': 'macro-F1 >= 0.85 and decisive-evidence rate >= 0.90 from GOALS'},
+    'uncertainty': 'family-level bootstrap, 2000 draws, seed 20261024, paired differences',
+    'analysis_script': 'benchmarks/root_cause_v4_final.py',
+    'no_tuning': 'v4 sealed split never used before; no prompt, contract, routing, keyword or parameter change '
+                 'after any sealed result is seen. Every result is published, including a negative one.'}
 
 # Imported by investigation.py at module level, or lazily on the reference/policy/matching paths.
 PATH_SOURCES = ('backend/app/business_chain.py', 'backend/app/context_transport.py',
@@ -50,11 +72,14 @@ def main():
             problems.append('dataset manifest')
         print(json.dumps({'plan': str(args.verify), 'ok': not problems, 'problems': problems}))
         raise SystemExit(1 if problems else 0)
-    if manifest['version'] != 'root-cause-v3.0.0':
-        parser.error('Fresh v3 data required')
+    if manifest['version'] not in MODEL_DATA_VERSIONS:
+        parser.error('Fresh v3 or v4 data required')
     if not (args.output and args.max_paid_requests and args.max_cny and args.smoke_report):
         parser.error('--output, --max-paid-requests, --max-cny and --smoke-report are required')
     smoke = json.loads(args.smoke_report.read_text(encoding='utf-8'))
+    v4 = manifest['version'] == 'root-cause-v4.0.0'
+    served = sorted({request['provider_model'] for row in smoke.get('cases', [])
+                     for request in row.get('model_requests', []) if request.get('provider_model')})
     cases = select(manifest, 'sealed_test', args.per_family)
     plan = {'schema_version': 'root-cause-experiment-plan-v1', 'status': 'frozen_for_sealed_final',
             'dataset_version': manifest['version'], 'dataset_manifest_sha256': hashlib.sha256(raw).hexdigest(),
@@ -68,7 +93,7 @@ def main():
                                'status': smoke.get('status'), 'paid_requests': smoke.get('paid_requests')},
             'stop_policy': 'Peak-price pre-dispatch reservation under max_cny; external guard; retain every '
                            'failure, unknown attempt and budget stop in the denominator.',
-            'preregistered_analysis': {
+            'preregistered_analysis': V4_ANALYSIS if v4 else {
                 'primary_metric': 'cause category macro-F1 per method over all samples, failures scored as wrong',
                 'secondary_metrics': ['conclusion accuracy', 'decisive evidence obtained', 'output failures',
                                       'paid requests and tokens per sample'],
@@ -82,7 +107,9 @@ def main():
                              'change after any sealed result is seen.'},
             'limitations': ['Same-author synthetic data; not real-ledger evidence.',
                             'Small sample: one case per family unless per_family > 1.',
-                            'deepseek-flash now serves DeepSeek-V4.1-Flash; earlier v2 runs used an older model.']}
+                            (f'deepseek-flash served {", ".join(served) or "an unreported model"} in the development '
+                             'smoke; the provider may change the model behind the alias.' if v4 else
+                             'deepseek-flash now serves DeepSeek-V4.1-Flash; earlier v2 runs used an older model.')]}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open('x', encoding='utf-8') as stream:
         json.dump(plan, stream, ensure_ascii=False, indent=2)

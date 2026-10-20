@@ -8,7 +8,9 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from benchmarks.root_cause_v2_models import PROMPT_VERSION, RUNNER_VERSION, select, source_hashes  # noqa: E402
+from benchmarks.root_cause_v2_models import (  # noqa: E402
+    MODEL_DATA_VERSIONS, PROMPT_VERSION, RUNNER_VERSION, select, source_hashes,
+)
 
 
 def main():
@@ -25,8 +27,8 @@ def main():
     args = parser.parse_args()
     raw = (args.dataset / 'manifest.json').read_bytes()
     manifest = json.loads(raw)
-    if manifest['version'] != 'root-cause-v3.0.0':
-        parser.error('Fresh v3 data required')
+    if manifest['version'] not in MODEL_DATA_VERSIONS:
+        parser.error('Fresh v3 or v4 data required')
     plan = {'schema_version': 'root-cause-experiment-plan-v1', 'status': 'prepared_not_authorized_or_run',
             'dataset_version': manifest['version'], 'dataset_manifest_sha256': hashlib.sha256(raw).hexdigest(),
             'source_sha256': source_hashes(), 'prompt_version': PROMPT_VERSION, 'runner_version': RUNNER_VERSION,

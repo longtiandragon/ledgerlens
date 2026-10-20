@@ -1,0 +1,60 @@
+{
+  "schema_version": "root-cause-experiment-plan-v1",
+  "status": "prepared_not_authorized_or_run",
+  "dataset_version": "root-cause-v4.0.0",
+  "dataset_manifest_sha256": "b8b09b9b056b10a5783981b502c0ce89a01e55f23a09ff9ea737663115eb6228",
+  "source_sha256": {
+    "backend/app/investigation.py": "032fdbbd8016b037950c25bfb5b0d243aa32eefd7c6010e5f0fa644da93ec8e1",
+    "backend/app/model_contract.py": "c3b4c9c987753d72548ab1d151f74267e2b79fa0e9cf1075ab72d75d670122ba",
+    "backend/app/model_gateway.py": "e95d9b789ca4bb492c34d15859cd9eeb73118af99458f8b3b5e28b04cfb08cb8",
+    "backend/app/domain.py": "b49e39dd9e544b4bf4568aa04bf7ec54dc63a591efa123fd925331989e693a75",
+    "backend/app/evidence_planning.py": "09f5896d9987682b2d8c8839908aad46b46356edc82f1497882e3d3215c5432c",
+    "backend/app/evidence_selection.py": "7be0a02484dc00c4b7b00d07060b4b0f6ab838c535fccf014691a482070a0b77",
+    "benchmarks/root_cause_v2.py": "f4d99cd882d2c54e1f72aa5b38372f1329007c35a0c7bc628bc4b1611df7355a",
+    "benchmarks/root_cause_v2_models.py": "9f8cd3a2d439fbddced7f280b094da671864eac184549af2b08df07d1827b809",
+    "benchmarks/run_agents.py": "2e943fa685e4364c8458a2d4321c66ef6dad1e3a9fc3081538578841ef60857b",
+    "benchmarks/paid_budget.py": "894f65b7a756fe0769e2442687b0cb4b30a43b2a2a1517ddede89062a66d0095",
+    "datasets/generate.py": "e37e9746ffabfc94d7400bc72441751b2598764f75759c0e9e3a5a8cf7cd1d0a",
+    "datasets/generate_v2.py": "2c249d5fc2a99e48fc8542fbd21a14028c9e56a77beda348aac8d8fcd8ffe2f9",
+    "datasets/generate_v3.py": "4db3d6db6c56414915d1286871c1fff32d25fe3ab4a9c5ffefdcfab5430dca2f",
+    "datasets/generate_v4.py": "d15546e147bfd4b5a31cb7e3c364ede4c24b95481a1f5010ee824c234544d9ff"
+  },
+  "prompt_version": "investigation-v27",
+  "runner_version": "rc-runner-v4",
+  "model": "deepseek-flash",
+  "split": "development",
+  "per_family": 1,
+  "repeat": 1,
+  "modes": [
+    "rule_only",
+    "rule_fixed_request",
+    "keyword_request",
+    "hybrid"
+  ],
+  "selected_case_ids": [
+    "rc4-c-05a5d69d7a02",
+    "rc4-c-048178b1f473",
+    "rc4-c-0d719cebc0d5",
+    "rc4-c-00d53d1976fb",
+    "rc4-c-00bda5b64e39",
+    "rc4-c-25e4b69d2fc8",
+    "rc4-c-04f2062f102e",
+    "rc4-c-0cc2fb605132",
+    "rc4-c-076179feec99"
+  ],
+  "max_paid_requests": 40,
+  "max_cny": "1.20",
+  "estimated_offpeak_cny": [
+    "0.20",
+    "0.35"
+  ],
+  "estimate_basis": "v3 sealed S1: CNY 1.24 for 27 single-agent samples (about 0.046 per sample); 5 of 9 v4 cases route to the model. Not a promise of completion or billed cost.",
+  "stop_policy": "Peak-price pre-dispatch reservation; retain unknown attempts and all failures.",
+  "hypothesis": "The pre-registered hybrid routes 4 of 9 families to the rules and completes its 5 model samples without output rejection; accuracy on this development smoke is not evidence.",
+  "smoke_success": "No output rejection after repair in any model sample of any model mode; report accuracy separately.",
+  "limitations": [
+    "Development smoke only, not an unseen performance claim.",
+    "Conservative peak reservations may stop before all nine cases complete.",
+    "No sealed evaluation or extra paid retry is authorized by preparing this file."
+  ]
+}

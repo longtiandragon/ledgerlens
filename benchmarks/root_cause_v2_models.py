@@ -26,20 +26,27 @@ sys.path.insert(0, str(ROOT / "backend"))
 
 from app.investigation import PROMPT_VERSION, investigate  # noqa: E402
 from app.model_gateway import BudgetExceeded, DeepSeekGateway, notify  # noqa: E402
-from benchmarks.root_cause_v2 import METHODS, TRACK_VERSION, load_case, release, score  # noqa: E402
+from benchmarks.root_cause_v2 import (  # noqa: E402
+    METHODS, TRACK_VERSION, load_case, release, rule_fixed_request, score,
+)
 from benchmarks.paid_budget import PricedRequestBudget  # noqa: E402
 from benchmarks.run_agents import (  # noqa: E402
     BoundedGateway, PaidRequestBudget, _atomic_json, _model_configuration, _new_json,
 )
 
 CUTOFF = "2026-09-30T23:59:59+00:00"
-RUNNER_VERSION = "rc-runner-v3"  # Hard dispatch cap includes both rounds, retries and failed samples.
+# v4 adds the hybrid mode; the hard dispatch cap still covers both rounds, retries and failed samples.
+RUNNER_VERSION = "rc-runner-v4"
 FAILED = {"failed", "budget_exhausted"}
+HYBRID = "hybrid"
+MODEL_MODES = ("single", "multi", "active", HYBRID)
+MODEL_DATA_VERSIONS = ("root-cause-v3.0.0", "root-cause-v4.0.0")
 FROZEN_SOURCES = (
     'backend/app/investigation.py', 'backend/app/model_contract.py', 'backend/app/model_gateway.py',
     'backend/app/domain.py', 'backend/app/evidence_planning.py', 'backend/app/evidence_selection.py',
     'benchmarks/root_cause_v2.py', 'benchmarks/root_cause_v2_models.py', 'benchmarks/run_agents.py',
     'benchmarks/paid_budget.py', 'datasets/generate.py', 'datasets/generate_v2.py', 'datasets/generate_v3.py',
+    'datasets/generate_v4.py',
 )
 
 
@@ -91,6 +98,23 @@ def _final(result: dict) -> dict:
             "request": assessment.get("evidence_request")}
 
 
+def _release_response(request: dict, released: list[dict], *, by_program: bool = False) -> str:
+    asked = "程序规则按固定方式提出的补证请求" if by_program else "补证请求"
+    return (f"评测程序已处理{asked}（{request['kind']}）：取得{len(released)}条快照外记录，已并入本快照，"
+            "内容见metrics.released_records，请核对其日期、编号、金额和备注。"
+            if released else f"评测程序已处理{asked}（{request['kind']}）：没有符合的快照外记录。")
+
+
+async def _answer_after_request(records: list[dict], policy: dict, categories: dict, request: dict,
+                                released: list[dict], mode: str, gateway, *, by_program: bool = False) -> dict:
+    """A fresh investigation on the new snapshot; the single evidence request is already spent."""
+    later = [*records, *released]
+    later_policy = {**policy, "snapshot_cutoff": max([CUTOFF, *(r["observed_at"] for r in released)])}
+    task = root_cause_task(later, categories, allowed=False,
+                           response=_release_response(request, released, by_program=by_program), released=released)
+    return await investigate(later, later_policy, task, mode=mode, gateway=gateway)
+
+
 async def run_model_case(observed: dict, withheld: list[dict], categories: dict, mode: str, gateway) -> dict:
     records = observed["records"]
     policy = {**observed["policy"], "snapshot_cutoff": CUTOFF}
@@ -104,15 +128,7 @@ async def run_model_case(observed: dict, withheld: list[dict], categories: dict,
     request, released = outcome["request"], []
     if request:
         released = release(withheld, request, records)
-        response = (f"评测程序已处理补证请求（{request['kind']}）：取得{len(released)}条快照外记录，已并入本快照，"
-                    "内容见metrics.released_records，请核对其日期、编号、金额和备注。"
-                    if released else f"评测程序已处理补证请求（{request['kind']}）：没有符合的快照外记录。")
-        later = [*records, *released]
-        second_policy = {**policy, "snapshot_cutoff": max([CUTOFF, *(r["observed_at"] for r in released)])}
-        second = await investigate(later, second_policy,
-                                   root_cause_task(later, categories, allowed=False, response=response,
-                                                   released=released),
-                                   mode=mode, gateway=gateway)
+        second = await _answer_after_request(records, policy, categories, request, released, mode, gateway)
         rounds.append(second)
         offset = first.get('usage', {}).get('calls', 0)
         requests_log += [{**r, "request_index": (r.get("request_index") or 0) + offset}
@@ -122,6 +138,40 @@ async def run_model_case(observed: dict, withheld: list[dict], categories: dict,
                     "released": released, "rounds": rounds, "model_requests": requests_log}
         outcome = {**_final(second), "request": request}
     return {"prediction": outcome, "released": released, "rounds": rounds, "model_requests": requests_log}
+
+
+def hybrid_route(observed: dict, withheld: list[dict]) -> dict:
+    """Pre-registered v4 routing from observable data only, decided before any model call.
+
+    The deterministic engine answers when a root-cause rule fired and its single fixed evidence
+    request settled a category. If a rule fired but the request settled nothing, the model answers
+    with that result and no further request. Without a rule signal the model investigates with the
+    usual single request: no signal is not evidence that the business is normal.
+    """
+    outcome = rule_fixed_request(observed["records"], observed["policy"], withheld)
+    if outcome["request"] is None:
+        route = "model_no_signal"
+    elif outcome["categories"]:
+        route = "deterministic"
+    else:
+        route = "model_after_request"
+    return {"route": route, "outcome": outcome}
+
+
+async def run_hybrid_model(observed: dict, withheld: list[dict], categories: dict, route: dict, gateway) -> dict:
+    """Model part of the hybrid; the deterministic route never reaches here. Uses single mode."""
+    if route["route"] == "model_no_signal":
+        return await run_model_case(observed, withheld, categories, "single", gateway)
+    if route["route"] != "model_after_request":
+        raise ValueError(f"Route {route['route']} needs no model")
+    request, released = route["outcome"]["request"], route["outcome"]["released"]
+    policy = {**observed["policy"], "snapshot_cutoff": CUTOFF}
+    answer = await _answer_after_request(observed["records"], policy, categories, request, released, "single",
+                                         gateway, by_program=True)
+    result = {"released": released, "rounds": [answer], "model_requests": list(answer.get("model_requests", []))}
+    if answer.get("status") in FAILED:
+        return {**result, "prediction": {"error": answer.get("error") or {"code": answer["status"]}, "request": request}}
+    return {**result, "prediction": {**_final(answer), "request": request}}
 
 
 def select(manifest: dict, split: str, per_family: int) -> list[dict]:
@@ -140,7 +190,7 @@ async def run(options) -> dict:
             or type(options.repeat) is not int or not 1 <= options.repeat <= 10
             or type(options.per_family) is not int or not 1 <= options.per_family <= 100
             or not options.modes or len(set(options.modes)) != len(options.modes)
-            or not set(options.modes) <= set(METHODS) | {'single', 'multi', 'active'}):
+            or not set(options.modes) <= set(METHODS) | set(MODEL_MODES)):
         raise ValueError('Invalid benchmark limits or modes')
     manifest_bytes = (options.dataset / 'manifest.json').read_bytes()
     manifest = json.loads(manifest_bytes)
@@ -158,8 +208,12 @@ async def run(options) -> dict:
     config = _model_configuration(options.env_file)
     gateway = None
     if any(mode not in METHODS for mode in options.modes):
-        if manifest.get('version') != 'root-cause-v3.0.0':
-            raise ValueError('The v26 contract requires fresh v3 data; v2 splits are retired for model tuning')
+        if manifest.get('version') not in MODEL_DATA_VERSIONS:
+            raise ValueError('The v26 contract requires fresh v3 or v4 data; v2 splits are retired for model tuning')
+        if (HYBRID in options.modes and options.split == 'sealed_test'
+                and manifest.get('version') != 'root-cause-v4.0.0'):
+            # The hybrid was designed after the v3 sealed results; only unseen v4 data can test it.
+            raise ValueError('The hybrid can only be evaluated on the v4 sealed split')
         if not config["DEEPSEEK_API_KEY"]:
             raise ValueError("模型方法需要 DEEPSEEK_API_KEY")
         optional = {key: config[name] for key, name in (("base_url", "DEEPSEEK_BASE_URL"), ("model", "DEEPSEEK_MODEL"))
@@ -214,13 +268,19 @@ async def run(options) -> dict:
 
                 bounded = ProgressGateway(gateway, budget, sample_id, persist) if mode not in METHODS else None
                 try:
+                    route = hybrid_route(observed, withheld) if mode == HYBRID else None
+                    if route:
+                        row["route"] = route["route"]
                     if mode in METHODS:
                         outcome = METHODS[mode](observed["records"], observed["policy"], withheld)
                         row.update(prediction=outcome, released=outcome["released"])
+                    elif route and route["route"] == "deterministic":
+                        row.update(prediction=route["outcome"], released=route["outcome"]["released"])
                     elif report["paid_requests"] >= options.max_paid_requests:
                         row.update(prediction={"error": {"code": "batch_budget_exhausted"}}, released=[])
                     else:
-                        result = await run_model_case(observed, withheld, categories, mode, bounded)
+                        result = await (run_hybrid_model(observed, withheld, categories, route, bounded) if route
+                                        else run_model_case(observed, withheld, categories, mode, bounded))
                         # Codes and field paths only; never rejected model text.
                         diagnostics = [{"round": index + 1, "role": step.get("role"),
                                         "codes": [{k: d[k] for k in ("code", "path") if k in d}
@@ -261,6 +321,9 @@ async def run(options) -> dict:
         truth = json.loads(truth_bytes)
         by_method.setdefault(row["method"], []).append({**row, "truth": truth})
     report["metrics"] = {method: score(rows, categories) for method, rows in by_method.items()}
+    if HYBRID in by_method:
+        routes = [row.get("route") for row in by_method[HYBRID]]
+        report["hybrid_routes"] = {name: routes.count(name) for name in sorted(set(routes), key=str)}
     report["status"] = "completed_with_failures" if any(r["error"] for r in report["cases"]) else "completed"
     _atomic_json(options.report, report)
     return report
@@ -272,7 +335,7 @@ def main(argv=None) -> int:
     parser.add_argument("--split", choices=["development", "validation", "sealed_test"], default="development")
     parser.add_argument("--per-family", type=int, default=1)
     parser.add_argument("--modes", nargs="+", default=["rule_only", "rule_fixed_request", "keyword_request", "single"],
-                        choices=[*METHODS, "single", "multi", "active"])
+                        choices=[*METHODS, *MODEL_MODES])
     parser.add_argument("--repeat", type=int, default=1)
     parser.add_argument("--max-paid-requests", type=int, default=100)
     parser.add_argument('--max-cny', default='1.20', help='Pre-dispatch peak-price reservation cap in CNY')
