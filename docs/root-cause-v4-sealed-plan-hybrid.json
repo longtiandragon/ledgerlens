@@ -1,0 +1,91 @@
+{
+  "schema_version": "root-cause-experiment-plan-v1",
+  "status": "frozen_for_sealed_final",
+  "dataset_version": "root-cause-v4.0.0",
+  "dataset_manifest_sha256": "b8b09b9b056b10a5783981b502c0ce89a01e55f23a09ff9ea737663115eb6228",
+  "source_sha256": {
+    "backend/app/investigation.py": "032fdbbd8016b037950c25bfb5b0d243aa32eefd7c6010e5f0fa644da93ec8e1",
+    "backend/app/model_contract.py": "c3b4c9c987753d72548ab1d151f74267e2b79fa0e9cf1075ab72d75d670122ba",
+    "backend/app/model_gateway.py": "e95d9b789ca4bb492c34d15859cd9eeb73118af99458f8b3b5e28b04cfb08cb8",
+    "backend/app/domain.py": "b49e39dd9e544b4bf4568aa04bf7ec54dc63a591efa123fd925331989e693a75",
+    "backend/app/evidence_planning.py": "09f5896d9987682b2d8c8839908aad46b46356edc82f1497882e3d3215c5432c",
+    "backend/app/evidence_selection.py": "7be0a02484dc00c4b7b00d07060b4b0f6ab838c535fccf014691a482070a0b77",
+    "benchmarks/root_cause_v2.py": "f4d99cd882d2c54e1f72aa5b38372f1329007c35a0c7bc628bc4b1611df7355a",
+    "benchmarks/root_cause_v2_models.py": "9f8cd3a2d439fbddced7f280b094da671864eac184549af2b08df07d1827b809",
+    "benchmarks/run_agents.py": "2e943fa685e4364c8458a2d4321c66ef6dad1e3a9fc3081538578841ef60857b",
+    "benchmarks/paid_budget.py": "894f65b7a756fe0769e2442687b0cb4b30a43b2a2a1517ddede89062a66d0095",
+    "datasets/generate.py": "e37e9746ffabfc94d7400bc72441751b2598764f75759c0e9e3a5a8cf7cd1d0a",
+    "datasets/generate_v2.py": "2c249d5fc2a99e48fc8542fbd21a14028c9e56a77beda348aac8d8fcd8ffe2f9",
+    "datasets/generate_v3.py": "4db3d6db6c56414915d1286871c1fff32d25fe3ab4a9c5ffefdcfab5430dca2f",
+    "datasets/generate_v4.py": "d15546e147bfd4b5a31cb7e3c364ede4c24b95481a1f5010ee824c234544d9ff"
+  },
+  "path_source_sha256": {
+    "backend/app/business_chain.py": "2c21e00894a94ad6b53ba2119ce5f684aafd24ee83276b76808145c63bb62303",
+    "backend/app/context_transport.py": "c60bafff748d7be284010bcf60ad991ce501a027d5051aebf5499bb343c817a9",
+    "backend/app/policy_context_contract.py": "81537d54e1845a0d65f10fccd8575660f133bdd91a196972ce532183a02fc7f7",
+    "backend/app/reference_selection.py": "f63cdf043b19dd75edfb8bf48e249a3a9646ab211c895caad121f976d4267619",
+    "backend/app/knowledge.py": "f68a5c41fd0074f0dadaf12207808306f8a069b4b88bcfa1c844e9f0962e6825",
+    "backend/app/matching.py": "202a991fb11901abba3026ebeca37cc24326310653d7b79d72f9521cce8da270",
+    "backend/app/financial_math.py": "dfc814c22101d19bf4139647545da8f1fab6ff9f01432d7a0e9a9f4cc520d58b",
+    "backend/app/config.py": "7e733e0c8f99feb059f83033c46c71376f11e3d16505ab7e3b4f1046b3aaf313"
+  },
+  "prompt_version": "investigation-v27",
+  "runner_version": "rc-runner-v4",
+  "model": "deepseek-flash",
+  "split": "sealed_test",
+  "per_family": 1,
+  "repeat": 3,
+  "modes": [
+    "rule_only",
+    "rule_fixed_request",
+    "keyword_request",
+    "hybrid"
+  ],
+  "selected_case_ids": [
+    "rc4-c-0387d4ab5e4d",
+    "rc4-c-4bb2aece9a64",
+    "rc4-c-07357ae4f831",
+    "rc4-c-3107bcae0bc6",
+    "rc4-c-09207dd15eab",
+    "rc4-c-0949397a6352",
+    "rc4-c-0b06a9b88aa7",
+    "rc4-c-0fc0708a1f2f",
+    "rc4-c-315d5e8d7bc0"
+  ],
+  "max_paid_requests": 120,
+  "max_cny": "2.50",
+  "based_on_smoke": {
+    "report": ".local/reports/root-cause-v4-smoke.json",
+    "sha256": "d1f77eb030c5dc08ab7772e3ca033a5cc17ea9a1f9eba672b481cee00dbdc7f3",
+    "status": "completed",
+    "paid_requests": 17
+  },
+  "stop_policy": "Peak-price pre-dispatch reservation under max_cny; external guard; retain every failure, unknown attempt and budget stop in the denominator.",
+  "preregistered_analysis": {
+    "design": "Deterministic-first hybrid: the rules answer when a root-cause rule fired and its single fixed evidence request settled a category; otherwise single-agent DeepSeek answers (after the spent request with no further request, or with its own single request when no rule fired). Routing is fixed in benchmarks/root_cause_v2_models.hybrid_route before any v4 model request.",
+    "primary_metric": "cause category macro-F1 per method over all samples, failures scored as wrong",
+    "secondary_metrics": [
+      "conclusion accuracy",
+      "decisive evidence obtained",
+      "output failures by route",
+      "paid requests and tokens per case"
+    ],
+    "strongest_same_budget_baseline": "best deterministic method on this sealed run (same one-request evidence budget)",
+    "targets": {
+      "T1": "hybrid macro-F1 - strongest baseline >= 0.05",
+      "T2": "family-bootstrap 95% interval of that difference above 0",
+      "T3": "hybrid macro-F1 >= single-agent macro-F1 (unknown if the single run is dropped)",
+      "T4": "at most 1 structural failure among hybrid samples sent to the model",
+      "T5": "hybrid paid requests per case <= 60% of single (unknown if the single run is dropped)",
+      "also_reported": "macro-F1 >= 0.85 and decisive-evidence rate >= 0.90 from GOALS"
+    },
+    "uncertainty": "family-level bootstrap, 2000 draws, seed 20261024, paired differences",
+    "analysis_script": "benchmarks/root_cause_v4_final.py",
+    "no_tuning": "v4 sealed split never used before; no prompt, contract, routing, keyword or parameter change after any sealed result is seen. Every result is published, including a negative one."
+  },
+  "limitations": [
+    "Same-author synthetic data; not real-ledger evidence.",
+    "Small sample: one case per family unless per_family > 1.",
+    "deepseek-flash served deepseek-flash in the development smoke; the provider may change the model behind the alias."
+  ]
+}
