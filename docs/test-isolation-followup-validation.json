@@ -1,0 +1,119 @@
+{
+  "schema_version": "test-isolation-followup-validation-v1",
+  "checked_at_utc": "2026-10-14T09:12:20.312557+00:00",
+  "changes": [
+    "Both API reset fixtures use the single conftest-owned SQLite database",
+    "Exact engine URL validation before drop_all; reject foreign files, other backends and URI parameters",
+    "Regression verifies foreign SQLite file bytes and business rows remain unchanged"
+  ],
+  "validation": {
+    "targeted": {
+      "tests": 48,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 48,
+      "path": ".local\\reports\\test-isolation-followup-targeted.xml",
+      "sha256": "9d5e2adb0bb506d0db471776a2d654431002b14efce264fa1758bcfb4083f988"
+    },
+    "full_backend": {
+      "tests": 2377,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 25,
+      "passed": 2352,
+      "path": ".local\\reports\\test-isolation-followup-full.xml",
+      "sha256": "094e26955e503d2ee1e341ff04690cc6bf71c0e64b84f08a6830e745f438694a"
+    },
+    "full_environment_probe": "Parent env pointed DATABASE_URL/DATA_DIR at runtime with a non-secret fake key; conftest replaced them before collection.",
+    "ruff": "backend scripts datasets benchmarks: passed",
+    "browser": "Not rerun: this follow-up changes test infrastructure and documentation only."
+  },
+  "checkpoint_comparison": {
+    "checkpoints": {
+      "baseline_rows": 573,
+      "incident_rows": 584,
+      "removed": 0,
+      "changed": 0,
+      "added_by_thread": {
+        "751269d9-ce96-4b72-bf80-7d933e05f19a": 4,
+        "db1b644b-1669-4c0f-a812-02037c9a39b1": 7
+      }
+    },
+    "writes": {
+      "baseline_rows": 3606,
+      "incident_rows": 3687,
+      "removed": 0,
+      "changed": 0,
+      "added_by_thread": {
+        "751269d9-ce96-4b72-bf80-7d933e05f19a": 24,
+        "db1b644b-1669-4c0f-a812-02037c9a39b1": 57
+      }
+    }
+  },
+  "model_runs": [
+    {
+      "id": "db1b644b-1669-4c0f-a812-02037c9a39b1",
+      "recorded_usage": {
+        "calls": 8,
+        "tokens": 121677,
+        "tools": 6,
+        "reserved_tokens": 66279
+      },
+      "attempts": 8,
+      "usage_responses": 7,
+      "unsettled_attempts": 1,
+      "response_usage_totals": {
+        "prompt_tokens": 95465,
+        "completion_tokens": 26212,
+        "total_tokens": 121677,
+        "prompt_cache_hit_tokens": 28928,
+        "prompt_cache_miss_tokens": 66537
+      }
+    }
+  ],
+  "recovery_search": {
+    "ledger_candidates": 24,
+    "newer_working_backup_confirmed": false,
+    "backup_document_registrations": 266,
+    "unique_registered_source_files": 10,
+    "unregistered_source_files_preserved": 12
+  },
+  "account_balance": {
+    "checked_at_utc": "2026-10-14T09:05:16.780671+00:00",
+    "currency": "CNY",
+    "total_balance": "5.14",
+    "previous_balance": "5.79",
+    "delta": "-0.65",
+    "delta_is_incident_charge": false,
+    "actual_incident_charge": "unverified"
+  },
+  "new_model_requests_this_followup": 0,
+  "readonly_balance_requests_this_followup": 1,
+  "runtime_database_hashes": {
+    "ledgerlens.sqlite": "1dc8e29c564d6eb649e86b33910986621bc4c9d2a232738eb350cbe03fb1c6cd",
+    "checkpoints.sqlite": "4bfa720802f317e2b85607ed54c44d467d6bb6b271c4dc8c8ff9a05c52d1235d"
+  },
+  "runtime_matches_verified_backup": true,
+  "forensic_sources_unchanged": true,
+  "limitations": [
+    "Checkpoint history cannot exclude imports or edits without an investigation.",
+    "Candidate search covers workspace .local/runtime SQLite ledger filenames, not all disks or remote databases.",
+    "Account balance delta is not a per-request invoice; final unsettled request billing remains unknown.",
+    "Post-backup completeness remains unknown; no automatic merge of unrelated fixtures."
+  ],
+  "evidence": {
+    ".local\\incidents\\import-test-isolation-20261014\\inspect_followup.py": {
+      "sha256": "0c3252ad6b0fd0ea93f46128b6775fedc9fd08d356e0eaecf35a323de7203ff4"
+    },
+    ".local\\incidents\\import-test-isolation-20261014\\forensic-followup.json": {
+      "sha256": "6337d8468b17edbcd2f5deb8ec9ccd36c1d0d0198a530f569b8327e41756cbb2"
+    },
+    ".local\\incidents\\import-test-isolation-20261014\\balance-followup.json": {
+      "sha256": "ce0612f326c351a08591c34874001bc040b573e1fae851c545285065c32dff2a"
+    },
+    ".local\\reports\\test-isolation-followup-full.log": {
+      "sha256": "b9a1f786e54988d5b60e37f286832dd4cda244316e64b876246059a27c8a76b4"
+    }
+  }
+}

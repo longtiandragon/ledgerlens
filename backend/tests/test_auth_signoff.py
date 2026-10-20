@@ -1,20 +1,9 @@
-# Test environment must be set before importing application modules.
-# ruff: noqa: E402
-import os
-import tempfile
-from pathlib import Path
-
-ROOT = Path(tempfile.mkdtemp(prefix='ledgerlens-auth-tests-'))
-os.environ.setdefault('DATA_DIR', str(ROOT))
-os.environ.setdefault('DATABASE_URL', f'sqlite:///{ROOT / "auth.sqlite"}')
-os.environ.setdefault('TASK_MODE', 'local')
-os.environ['DEEPSEEK_API_KEY'] = ''
-
 from datetime import UTC, datetime, timedelta
 
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import select
+from conftest import reset_test_database
 
 from app import auth
 from app.config import settings
@@ -26,7 +15,7 @@ PASSWORD = 'correct horse battery'
 
 @pytest.fixture
 def client():
-    Base.metadata.drop_all(engine)
+    reset_test_database(Base.metadata, engine)
     with TestClient(app) as client:
         yield client
 

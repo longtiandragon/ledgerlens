@@ -1,25 +1,15 @@
-# Test environment must be set before importing application modules.
-# ruff: noqa: E402
 import json
-import os
-import tempfile
-from pathlib import Path
-
-ROOT = Path(tempfile.mkdtemp(prefix='ledgerlens-tests-'))
-os.environ['DATA_DIR'] = str(ROOT)
-os.environ['DATABASE_URL'] = f'sqlite:///{ROOT / "api.sqlite"}'
-os.environ['TASK_MODE'] = 'local'
-os.environ['DEEPSEEK_API_KEY'] = ''
 
 import pytest
 from fastapi.testclient import TestClient
+from conftest import reset_test_database
 from app.db import Base, engine
 from app.main import app
 
 
 @pytest.fixture
 def client():
-    Base.metadata.drop_all(engine)
+    reset_test_database(Base.metadata, engine)
     with TestClient(app) as client:
         yield client
 
