@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 530" width="1200" height="530" role="img" aria-labelledby="t d">
+  <title id="t">账证智核 LedgerLens 架构</title>
+  <desc id="d">资料接入、不可变来源与快照、确定性引擎、证据调查、校验模拟与复核五个阶段依次相连；下方是评测中心、交付验收和可选的模型网关，最底层是两种运行方式。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2f6f62"/>
+    </marker>
+    <style>
+      text { font-family: 'Microsoft YaHei', 'PingFang SC', 'Noto Sans CJK SC', 'Source Han Sans SC', sans-serif; fill: #23342f; }
+      .h1 { font-size: 22px; font-weight: 700; fill: #1f3a34; }
+      .sub { font-size: 14px; fill: #4c615a; }
+      .bt { font-size: 17px; font-weight: 700; fill: #1f5f54; }
+      .li { font-size: 13.5px; }
+      .bt2 { font-size: 16px; font-weight: 700; fill: #5c4b1f; }
+      .bt3 { font-size: 16px; font-weight: 700; fill: #4a3f8f; }
+      .infra { font-size: 13.5px; fill: #33414d; }
+      .tag { font-size: 12px; fill: #4a3f8f; }
+    </style>
+  </defs>
+  <rect width="1200" height="530" fill="#ffffff"/>
+  <text class="h1" x="29" y="38">账证智核 LedgerLens：确定性规则先判断，模型只给可核验的解释</text>
+  <text class="sub" x="29" y="62">原始账簿只读 · 调查绑定快照 · 模型建议不自动成为业务事实 · 调整只进隔离模拟</text>
+
+  <g>
+    <rect x="29" y="82" width="214" height="196" rx="10" fill="#f3f8f6" stroke="#2f6f62" stroke-width="1.5"/>
+    <text class="bt" x="45" y="116">① 资料接入</text>
+    <text class="li" x="45" y="150">CSV／JSON／XLSX／PDF</text>
+    <text class="li" x="45" y="176">财政部数电发票 XML</text>
+    <text class="li" x="45" y="202">扫描件 OCR＋人工逐字段核实</text>
+    <text class="li" x="45" y="228">ERPNext 只读导出</text>
+    <text class="li" x="45" y="254">BPI2019 事件、公开年报</text>
+  </g>
+  <g>
+    <rect x="261" y="82" width="214" height="196" rx="10" fill="#f3f8f6" stroke="#2f6f62" stroke-width="1.5"/>
+    <text class="bt" x="277" y="116">② 不可变来源与快照</text>
+    <text class="li" x="277" y="150">原件哈希，记录只追加</text>
+    <text class="li" x="277" y="176">快照固定账套、资料、</text>
+    <text class="li" x="277" y="202">规则版本与政策上下文</text>
+    <text class="li" x="277" y="228">迟到资料生成新快照</text>
+    <text class="li" x="277" y="254">旧复核随之失效</text>
+  </g>
+  <g>
+    <rect x="493" y="82" width="214" height="196" rx="10" fill="#f3f8f6" stroke="#2f6f62" stroke-width="1.5"/>
+    <text class="bt" x="509" y="116">③ 确定性引擎</text>
+    <text class="li" x="509" y="150">16 条月结检查规则</text>
+    <text class="li" x="509" y="176">33 条官方问答政策规则</text>
+    <text class="li" x="509" y="202">专业判断须人工确认</text>
+    <text class="li" x="509" y="228">Decimal 金额精确到分</text>
+    <text class="li" x="509" y="254">OR-Tools 候选匹配</text>
+  </g>
+  <g>
+    <rect x="725" y="82" width="214" height="196" rx="10" fill="#f3f8f6" stroke="#2f6f62" stroke-width="1.5"/>
+    <text class="bt" x="741" y="116">④ 证据调查</text>
+    <text class="li" x="741" y="150">规则／单 Agent／多 Agent</text>
+    <text class="li" x="741" y="176">主动补证、确定性优先混合</text>
+    <text class="li" x="741" y="202">只读快照工具（LangGraph）</text>
+    <text class="li" x="741" y="228">不提供 SQL、代码、Shell</text>
+    <text class="li" x="741" y="254">预算用尽、失败不冒充成功</text>
+  </g>
+  <g>
+    <rect x="957" y="82" width="214" height="196" rx="10" fill="#f3f8f6" stroke="#2f6f62" stroke-width="1.5"/>
+    <text class="bt" x="973" y="116">⑤ 校验、模拟与复核</text>
+    <text class="li" x="973" y="150">引用须属于当前快照</text>
+    <text class="li" x="973" y="176">模型建议≠业务事实</text>
+    <text class="li" x="973" y="202">调整只进隔离模拟</text>
+    <text class="li" x="973" y="228">程序复算，原账哈希不变</text>
+    <text class="li" x="973" y="254">复核、审签、底稿导出</text>
+  </g>
+  <g stroke="#2f6f62" stroke-width="2" marker-end="url(#arrow)">
+    <line x1="244" y1="180" x2="259" y2="180"/>
+    <line x1="476" y1="180" x2="491" y2="180"/>
+    <line x1="708" y1="180" x2="723" y2="180"/>
+    <line x1="940" y1="180" x2="955" y2="180"/>
+  </g>
+
+  <g>
+    <rect x="29" y="310" width="370" height="122" rx="10" fill="#faf7ee" stroke="#8a7a4a" stroke-width="1.5"/>
+    <text class="bt2" x="45" y="340">评测中心</text>
+    <text class="li" x="45" y="368">评测真值不进入运行中的 Agent</text>
+    <text class="li" x="45" y="392">预注册封存评测，对照同预算确定性基线</text>
+    <text class="li" x="45" y="416">失败、中断与负面结果全部公开</text>
+  </g>
+  <g>
+    <rect x="415" y="310" width="370" height="122" rx="10" fill="#faf7ee" stroke="#8a7a4a" stroke-width="1.5"/>
+    <text class="bt2" x="431" y="340">交付验收</text>
+    <text class="li" x="431" y="368">公开样例一条命令验收，证据哈希清单</text>
+    <text class="li" x="431" y="392">复制后的验收包可离线核验</text>
+    <text class="li" x="431" y="416">CI 在全新机器上复现安装与网页流程</text>
+  </g>
+  <g>
+    <rect x="801" y="310" width="370" height="122" rx="10" fill="#f6f4fc" stroke="#6b5fb5" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text class="bt3" x="817" y="340">模型网关（DeepSeek，可选）</text>
+    <text class="li" x="817" y="368">显式启动；密钥只在后端读取</text>
+    <text class="li" x="817" y="392">只发送当前快照中的必要证据片段</text>
+    <text class="li" x="817" y="416">付费运行有预算上限与费用守护</text>
+  </g>
+  <line x1="832" y1="279" x2="832" y2="308" stroke="#6b5fb5" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text class="tag" x="840" y="299">可选</text>
+
+  <rect x="29" y="452" width="1142" height="62" rx="10" fill="#eef1f4" stroke="#8a96a3" stroke-width="1.2"/>
+  <text class="infra" x="45" y="478">运行方式　本地：SQLite，单进程后台任务，无需 Docker 和模型密钥</text>
+  <text class="infra" x="45" y="502">部署：Docker Compose（PostgreSQL、Redis、Celery、LangGraph 检查点）　·　Vue 3 工作台＋FastAPI／Pydantic 契约</text>
+</svg>

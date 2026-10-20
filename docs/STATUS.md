@@ -797,3 +797,15 @@ Astra子代理完成租赁审阅和17项边界整改；随后额度不足中断�
 最终验证：后端2271 passed、25 skipped、1条既有JUnit兼容提示（230.07秒）；跳过项包括Windows链接权限及本机可选PG服务条件，逐项原因见摘要。Ruff、API契约一致性、前端类型检查及构建通过（Vite26.80秒）。新空库Chrome网页16 passed、0 skipped、0 flaky（46.82秒），涵盖政策中文条件、原工作台闭环、新教学标记及真实财政部样例上传/下载。测试服务只启停自身进程，未写用户原工作账库、未改Docker配置、未外部发布、未调用DeepSeek。
 
 本轮完整证据与复现见[公开资料闭环](PUBLIC_DATA_CLOSURE.md)、[AI审阅](AI_ACCOUNTING_REVIEW_20261014.md)、[验证摘要](public-data-closure-validation.json)和[新政策回归摘要](official-policy-review-validation.json)。没有声称两份示例代表真实业务正确率或证明多Agent增益；33条规则尚未完成逐条独立专业验收。
+
+## 原 README 首页说明（2026-10-20 移入，原文保留）
+
+已保存的公开验收包现在支持[标准库离线核验](docs/OFFLINE_EVIDENCE_VERIFICATION.md)：复制到新位置后可检查原件、底稿和报告关联，无需启动API或Chrome。实际复制包22份证据及9份附件核验通过，88项专项通过；这是保存证据核验，不是重新执行业务验收。
+
+2026-10-20最新：政策v9修复运输成本摊销时点与租赁混合付款两处范围错误，经Astra限定AI复核；完整后端2450通过/25跳过，公开API45项、Chrome24项全部通过，构建/契约/Ruff通过。公开验收器v2自动核对源码变动及实际下载底稿，372份源码/配置、22份证据验证一致。[本轮摘要](docs/policy-v9-validation.json)保留失败反例、跳过项和适用边界；本次未重装环境或执行新远端CI。
+
+2026-10-14起按学生项目的公开资料范围继续交付：新增[财政部公开中文凭证样例闭环](docs/PUBLIC_DATA_CLOSURE.md)，并完成[AI会计审阅发现的租赁和借款费用边界整改](docs/AI_ACCOUNTING_REVIEW_20261014.md)。企业实账与真人签字列为未来外部验证，不作为当前公开资料版本的前置条件；模型效果未达标的记录保留。
+
+2026-10-15历史v8：Astra补做[借款利息范围复核](docs/AI_ACCOUNTING_REVIEW_20261015.md)，发现并复核关闭辅助费用被误纳入利息规则的问题。最终新目录重装验收：后端2364通过/53跳过，空库网页43通过/11跳过，另有公开样例API45和网页16全部通过；[完整摘要及范围](docs/public-checkout-v3-validation.json)。这是同机隔离复现，AI审阅不替代真人专业意见；[既有测试事故与恢复限制](docs/TEST_ISOLATION_INCIDENT_20261014.md)继续保留。
+
+后续补充4项借款范围真实网页流程，最新公开入口为API45项、Chrome20项全部通过，门控专项21项通过；核对底稿下载、补证失效和原账不变。[增量证据](docs/borrowing-live-validation.json)与前述完整安装快照分别保存，本次未重跑完整后端。
