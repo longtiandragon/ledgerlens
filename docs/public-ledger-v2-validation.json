@@ -1,0 +1,241 @@
+{
+  "schema_version": "public-ledger-checks-v2",
+  "source": {
+    "publisher": "State of Oklahoma, Office of Management and Enterprise Services",
+    "catalog": "https://catalog.data.gov/dataset/general-ledger",
+    "license": "CC-BY (opendefinition.org/licenses/cc-by)",
+    "url": "https://data.ok.gov/dataset/dd1ecf41-4abc-4886-ab0f-b84d7662d8d4/resource/0c2a7e42-610e-4f1d-826f-f6b267fba68a/download/ledger_fy24_qtr4.csv"
+  },
+  "scope": "Real public-sector posted totals (USD fund accounting); not an enterprise ledger, not CAS/SCAS.",
+  "file_sha256": "141e2d5524f6aa9d25c7331bc56f623f43da9a1f00cdfee42b7c5f3ccf6fc0fe",
+  "file_bytes": 113856733,
+  "encoding": "cp1252",
+  "utf8_decode_failed_at_byte": 13788263,
+  "rows": 373357,
+  "money_rejected": 20,
+  "money_accepted": 373337,
+  "rejected_examples": [
+    {
+      "row": 6075,
+      "reason": "money() rejected",
+      "independent_parse": "-0.072"
+    },
+    {
+      "row": 52311,
+      "reason": "money() rejected",
+      "independent_parse": "554.002"
+    },
+    {
+      "row": 52312,
+      "reason": "money() rejected",
+      "independent_parse": "340.968"
+    },
+    {
+      "row": 52522,
+      "reason": "money() rejected",
+      "independent_parse": "-0.002"
+    },
+    {
+      "row": 52523,
+      "reason": "money() rejected",
+      "independent_parse": "0.004"
+    }
+  ],
+  "independent_parse_disagreements": 0,
+  "exact_duplicate_rows": 0,
+  "ledgers": {
+    "ACTUALS": 373357
+  },
+  "fiscal_periods": [
+    "2024-10",
+    "2024-11",
+    "2024-12"
+  ],
+  "actuals_groups": 617,
+  "actuals_balanced_groups": 235,
+  "actuals_unbalanced_groups": 382,
+  "largest_imbalances": [
+    {
+      "business_unit": "09200",
+      "fiscal_year": "2024",
+      "period": "10",
+      "fund": "4400",
+      "net": "-44760277.55"
+    },
+    {
+      "business_unit": "83500",
+      "fiscal_year": "2024",
+      "period": "12",
+      "fund": "1000",
+      "net": "-39018706.68"
+    },
+    {
+      "business_unit": "83500",
+      "fiscal_year": "2024",
+      "period": "11",
+      "fund": "1000",
+      "net": "38829250.16"
+    },
+    {
+      "business_unit": "09000",
+      "fiscal_year": "2024",
+      "period": "10",
+      "fund": "1000",
+      "net": "-20862465.10"
+    },
+    {
+      "business_unit": "30900",
+      "fiscal_year": "2024",
+      "period": "11",
+      "fund": "1000",
+      "net": "-13440502.32"
+    },
+    {
+      "business_unit": "30900",
+      "fiscal_year": "2024",
+      "period": "10",
+      "fund": "1000",
+      "net": "13438834.07"
+    },
+    {
+      "business_unit": "77000",
+      "fiscal_year": "2024",
+      "period": "11",
+      "fund": "9000",
+      "net": "-10985062.73"
+    },
+    {
+      "business_unit": "83000",
+      "fiscal_year": "2024",
+      "period": "10",
+      "fund": "1000",
+      "net": "9003061.87"
+    },
+    {
+      "business_unit": "10500",
+      "fiscal_year": "2024",
+      "period": "12",
+      "fund": "1000",
+      "net": "8445700.07"
+    },
+    {
+      "business_unit": "34500",
+      "fiscal_year": "2024",
+      "period": "12",
+      "fund": "1300",
+      "net": "-5899968.55"
+    }
+  ],
+  "actuals_total_net": "-80979264.06",
+  "account_classes": {
+    "1": {
+      "rows": 5194,
+      "net": "579653622.10"
+    },
+    "4": {
+      "rows": 20130,
+      "net": "-14684185664.18"
+    },
+    "5": {
+      "rows": 347237,
+      "net": "14023552778.02"
+    },
+    "6": {
+      "rows": 776,
+      "net": "0.00"
+    }
+  },
+  "net_by_period": {
+    "2024-10": "-42470261.23",
+    "2024-11": "12844504.07",
+    "2024-12": "-51353506.90"
+  },
+  "trial_balance_testable": false,
+  "balance_assessment": {
+    "status": "insufficient_evidence",
+    "reason": "No independent attestation of complete double-entry coverage for these groups; account classes and zero nets do not prove completeness or correctness."
+  },
+  "field_scopes": {
+    "ledgers_fiscal_periods_duplicates": "all source rows, including money rejections",
+    "account_classes_net_by_period_legacy_actuals": "money()-accepted subset only",
+    "legacy_balance_names": "balanced/unbalanced and largest_imbalances are deprecated aliases for zero/nonzero arithmetic nets, not accounting verdicts",
+    "periods": "source fiscal year and accounting period, not calendar dates",
+    "source_amounts": "finite Decimal, <=256 digits, exponent magnitude <=256; no rounding"
+  },
+  "source_amounts_unavailable": 0,
+  "source_actuals": {
+    "groups": 617,
+    "arithmetic_complete": true,
+    "total_net": "-77527036.840",
+    "zero_net_groups": 235,
+    "nonzero_net_groups": 382,
+    "unavailable_net_groups": 0,
+    "groups_with_money_rejections": 1,
+    "affected_groups": [
+      {
+        "BUSINESS_UNIT": "22000",
+        "LEDGER": "ACTUALS",
+        "FISCAL_YEAR": "2024",
+        "ACCOUNTING_PERIOD": "11",
+        "FUND_CODE": "1000",
+        "money_rejected": 20,
+        "source_amounts_unavailable": 0,
+        "source_net": "731596.990",
+        "accepted_subset_net": "-2720630.23"
+      }
+    ]
+  },
+  "validation": {
+    "date": "2026-10-14",
+    "catalog_rechecked": "https://catalog.data.gov/dataset/general-ledger",
+    "source_reused_without_redownload": true,
+    "crosscheck": {
+      "schema_version": "public-ledger-arithmetic-crosscheck-v1",
+      "status": "passed",
+      "checks": {
+        "schema": true,
+        "source_sha256": true,
+        "source_bytes": true,
+        "all_rows": true,
+        "rejected_rows": true,
+        "accepted_rows": true,
+        "source_groups": true,
+        "source_arithmetic_complete": true,
+        "source_net": true,
+        "accepted_net": true,
+        "zero_net_groups": true,
+        "nonzero_net_groups": true,
+        "affected_groups": true,
+        "affected_group_details": true,
+        "no_trial_balance_claim": true
+      },
+      "source_sha256": "141e2d5524f6aa9d25c7331bc56f623f43da9a1f00cdfee42b7c5f3ccf6fc0fe",
+      "report_sha256": "294cf9e806607847e6ecbcb9a7f22b3588ef111b493c0585f65a459947b11218",
+      "rows": 373357,
+      "money_rejected": 20,
+      "rejected_actuals_net_fraction": "172611361/50",
+      "limitations": "Fraction cross-check of the pinned cp1252 extract only; no accounting or anomaly truth."
+    },
+    "targeted_tests": {
+      "passed": 26,
+      "skipped": 0,
+      "seconds": 11.8,
+      "junit_sha256": "f7131d83490702be627d3dd0b492b32afc625aa6f842d3c48d0d8f1c4148b74b"
+    },
+    "ruff": "passed",
+    "source_files": {
+      "benchmarks/public_ledger_checks.py": "c0fe8318ae728fce2d0e88351b39c1c4dfcca6897ae42a6bc8158267f410d8cb",
+      "scripts/validate_public_ledger_arithmetic.py": "9f0dbaae24c81758b5e2319de3b2c310048c3d1e5cecddd3c4139ed579a6a346",
+      "backend/tests/test_public_ledger_scope.py": "f0ab56b1c1593833bd95dfa5f4a47fb163929c58826badcd17ac2ae17b54693a"
+    },
+    "model_requests": 0,
+    "new_dependencies": 0,
+    "initial_test_failure": "22 passed, 2 fixture setup errors: oversized generated pytest parameter IDs; repaired with explicit short IDs, expected amounts unchanged.",
+    "limitations": [
+      "No assertion of complete double-entry coverage or anomaly accuracy.",
+      "Nonzero group causes unverified; prior attribution to extraction coverage was too strong.",
+      "Source amounts and money()-accepted amounts are different scopes.",
+      "Targeted offline tests only in this increment; previous API, backend and browser results retain their prior version boundary."
+    ]
+  }
+}
