@@ -24,7 +24,7 @@ sys.path.insert(0, str(ROOT))
 from scripts.validate_clean_checkout import free_port, isolated_environment  # noqa: E402
 
 
-def capture(output: Path, video: bool, pause_ms: int) -> int:
+def capture(output: Path, video: bool, pause_ms: int, script: Path | None = None) -> int:
     import httpx
     output = output.resolve()
     output.mkdir(parents=True, exist_ok=False)
@@ -83,9 +83,10 @@ def capture(output: Path, video: bool, pause_ms: int) -> int:
                  '--reporter=list', '--output=' + str(output / 'artifacts')], cwd=ROOT / 'frontend',
                 env=env | {'UI_URL': ui_url, 'API_PROXY_TARGET': api_url, 'DEMO_CAPTURE': '1',
                            'DEMO_OUTPUT': str(shots), 'DEMO_VIDEO': '1' if video else '0',
-                           'DEMO_PAUSE_MS': str(pause_ms)},
+                           'DEMO_PAUSE_MS': str(pause_ms),
+                           **({'DEMO_SCRIPT': str(script.resolve())} if script else {})},
                 stdout=log, stderr=subprocess.STDOUT, timeout=900, creationflags=flags)
-        files = sorted([*shots.glob('*.png'), *(output / 'artifacts').rglob('*.webm')])
+        files = sorted([*shots.glob('*.png'), *shots.glob('timeline.json'), *(output / 'artifacts').rglob('*.webm')])
         report.update(exit_code=result.returncode,
                       files={str(f.relative_to(output)).replace('\\', '/'): hashlib.sha256(f.read_bytes()).hexdigest()
                              for f in files})
@@ -114,5 +115,6 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--video', action='store_true', help='record a captioned video instead of screenshots')
     parser.add_argument('--pause-ms', type=int, default=1800, help='pause after each caption when recording')
+    parser.add_argument('--script', type=Path, help='beats JSON with captions and hold times (video only)')
     args = parser.parse_args()
-    raise SystemExit(capture(args.output, args.video, args.pause_ms if args.video else 0))
+    raise SystemExit(capture(args.output, args.video, args.pause_ms if args.video else 0, args.script))
