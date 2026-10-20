@@ -1,0 +1,194 @@
+{
+  "schema_version": "official-policy-consistency-evaluation-v1",
+  "generated_at": "2026-10-14T07:57:31.770963+00:00",
+  "policy_rule_identity": {
+    "version": "policy-consistency-v7",
+    "source_sha256": "48c8015ed0931016a09270f4a6daba088b9ea1b05fa0e1f2a7a900529df7a999"
+  },
+  "fixture_version": "mof-policy-projections-v7",
+  "fixture_source_sha256": "405c50b870f570ee76c404143c46637fd9b207d5022597a2010fd7e8070de17a",
+  "evaluator_source_sha256": "9479b84c140c5c73f3fdab02cee56e4df8a95bdc35e7487ff2b214810ff71052",
+  "source_verification": {
+    "checked": 32,
+    "passed": 32,
+    "failed": 0,
+    "results": [
+      {
+        "id": "mof-qa-3861813",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3962188",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3762834",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3962191",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3946594",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3895086",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3895087",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3896761",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3664183",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3691695",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3664190",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3664187",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3664186",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3762833",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3634036",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3634035",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3634031",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3634029",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3991864",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3819697",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3991866",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3634037",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3994211",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3664191",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3717408",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3691864",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3691863",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3691861",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3962193",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3819699",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3819702",
+        "passed": true
+      },
+      {
+        "id": "mof-qa-3762844",
+        "passed": true
+      }
+    ],
+    "scope": "source_parser_hash_and_answer_isolation_not_accounting_accuracy"
+  },
+  "selected_official_source_count": 32,
+  "collected_source_count": 32,
+  "unimplemented_source_count": 0,
+  "tasks": 191,
+  "passed": 191,
+  "failed": 0,
+  "groups": {
+    "anchor": {
+      "tasks": 40,
+      "passed": 40
+    },
+    "contrast": {
+      "tasks": 151,
+      "passed": 151
+    }
+  },
+  "frameworks": {
+    "CAS": {
+      "tasks": 163,
+      "passed": 163
+    },
+    "SCAS": {
+      "tasks": 28,
+      "passed": 28
+    }
+  },
+  "expected_status_distribution": {
+    "normal": 52,
+    "supported": 44,
+    "insufficient": 43,
+    "unsupported": 52
+  },
+  "model_requests": 0,
+  "actual_ledger_records_read": 0,
+  "ledger_writes": 0,
+  "scope": "hand_authored_structured_archived_QA_developer_consistency_not_business_accuracy",
+  "limitations": [
+    "Selected official sources yield hand-authored projections; projection counts are not official case counts.",
+    "Conditions and reported treatments are explicitly supplied, not independently extracted from documents.",
+    "The benchmark is public development material, not the sealed synthetic test set.",
+    "Publication availability is checked; legal effective intervals and later replacements remain unreviewed.",
+    "No real enterprise, model investigation, simulation, professional review or full standards coverage is proven.",
+    "Answer-zone separation is a software contract; no OS permission boundary is asserted."
+  ],
+  "full_report_path": ".local/reports/official-policy-consistency-v8-ai-public-review.json",
+  "full_report_sha256": "3c4b335c2a7da821af38cb40fce76b77c874bdbbd3efc3c6d38c16f69654299d",
+  "input_changes": "New lease eligibility/actual-term and borrowing single-phase/no-suspension assumptions; original expected labels unchanged."
+}

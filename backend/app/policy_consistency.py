@@ -14,7 +14,7 @@ from pathlib import Path
 
 from .policy_contract import PREDICATES, PolicyCheckContext, PolicyObservation
 
-POLICY_VERSION = 'policy-consistency-v5'
+POLICY_VERSION = 'policy-consistency-v9'
 _SOURCE_SHA256 = hashlib.sha256(b'\0'.join(
     name.encode() + b'\0' + Path(__file__).with_name(name).read_text(encoding='utf-8').encode()
     for name in ('policy_contract.py', 'policy_consistency.py')
@@ -24,6 +24,19 @@ _SCOPE_NOTE = (
     '引用存在不等于证据真实或专业判断正确。发布日期仅表示该参考资料可见时间，'
     '不代表法规生效日、完整准则覆盖或现行有效性认证。'
 
+)
+
+# Archived official standard, verified against the raw file on 2026-10-14.
+# This source narrows the two lease Q&A rules; it does not establish eligibility.
+_LEASE_BOUNDARY_SOURCE = (
+    '补充依据：企业会计准则第21号第14、30—33条；'
+    'https://kjs.mof.gov.cn/zt/kjzzss/kuaijizhunzeshishi/201910/t20191028_3411190.htm；'
+    '原页SHA256 0a628a1370586395317d57af1a98af1e7757323826cd852ba54020996221c695'
+)
+_BORROWING_BOUNDARY_SOURCE = (
+    '补充依据：企业会计准则第17号第5、10、11、12条；'
+    'https://kjs.mof.gov.cn/zt/kjzzss/kuaijizhunzeshishi/200806/t20080618_46231.htm；'
+    '2026-10-14原页SHA256 1153bed0ff93208a7014ef265175286792e309bad7fa5458896552ed827f7761'
 )
 
 # Reviewed source identities are compiled metadata, not a runtime answer index.
@@ -105,10 +118,10 @@ _DEFINITIONS = (
         'source_id': 'mof-qa-3691864', 'publication_date': '2021-04-25',
         'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/zlzzsswd/202104/t20210425_3691864.htm',
         'source_sha256': '18b511890690de18d1a6913f9e4d084d233b857fef03d9f7c2ac140581a14cf5',
-        'applicable_conditions': '承租人的租赁期不超过十二个月且租赁包含购买选择权。',
+        'applicable_conditions': '承租人的租赁期不超过十二个月且租赁包含购买选择权，并已确认不符合低价值资产租赁资格。',
         'unsupported_conditions': ['不含购买选择权的租赁是否为短期租赁须先按全部事实合理确定租赁期，本规则不判断',
-                                   '租赁期超过十二个月的租赁不在本问答情形内'],
-        'known_limits': ['不确定租赁期本身（续租、终止选择权须人工评估）', '不计量使用权资产或租赁负债'],
+                                   '租赁期超过十二个月的租赁不在本问答情形内', '符合低价值资产租赁资格时，须另行复核独立简化选择'],
+        'known_limits': ['不确定租赁期本身（续租、终止选择权须人工评估）', '不计量使用权资产或租赁负债', _LEASE_BOUNDARY_SOURCE],
         'treatment_captions': {'right_of_use_asset_and_lease_liability': '确认使用权资产和租赁负债（不适用短期租赁简化处理）',
                                'short_term_lease_simplified': '按短期租赁简化处理'},
     },
@@ -120,18 +133,21 @@ _DEFINITIONS = (
         'source_sha256': '7f8e969c11ec5d7d1dc5ac1062fc3d6960501f6c8fd7a4db154213856aef4b82',
         'applicable_conditions': '承租人单笔支付租赁负债本金和利息、预付租金、租赁保证金，或简化处理租赁、未纳入租赁负债的可变付款。',
         'unsupported_conditions': ['一笔付款混合多种性质时须拆分后分别检查', '非上述租赁相关付款不适用'],
-        'known_limits': ['只检查现金流量表活动分类；不计算金额或编制完整现金流量表'],
+        'known_limits': ['只检查现金流量表活动分类；不计算金额或编制完整现金流量表',
+                         '简化租赁经营活动路径须确认同笔付款不含已确认租赁负债的本金或利息；混合付款须先拆分'],
         'treatment_captions': {'financing_cash_outflow': '筹资活动现金流出', 'operating_cash_outflow': '经营活动现金流出'},
     },
     {
         'rule_id': 'POLICY_CAS_TRANSPORT_FULFILLMENT_COST', 'framework': 'CAS',
-        'topic': 'transport_fulfillment_cost', 'title': '履约运输成本的利润表列示',
+        'topic': 'transport_fulfillment_cost', 'title': '随收入确认摊销的履约运输成本列示',
         'source_id': 'mof-qa-3762833', 'publication_date': '2021-11-02',
         'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/srzzsswd/202111/t20211102_3762833.htm',
         'source_sha256': 'f58df319bc3e06d38ecdbb923291291b8187941f40a45cf936485e9aa17b50df',
-        'applicable_conditions': '控制权转移前为履行收入合同发生的运输活动，且不构成单项履约义务。',
-        'unsupported_conditions': ['运输活动构成单项履约义务或发生在控制权转移之后，超出本问答情形。'],
-        'known_limits': ['不计算摊销金额或判断履约义务本身'],
+        'applicable_conditions': '控制权转移前为履行收入合同发生的运输活动，不构成单项履约义务；本次观察仅为按相关收入确认基础摊销进入本期损益的合同履约成本。',
+        'unsupported_conditions': ['运输活动构成单项履约义务或发生在控制权转移之后，超出本问答情形。',
+                                   '收入确认前暂存成本、跨期未拆分金额或其他不属于本期摊销的支出不适用本列示规则'],
+        'known_limits': ['不判断合同履约成本资产初始确认、收入确认条件或履约义务本身',
+                         '不计算摊销金额；未确认收入不自动推导资本化或费用化'],
         'treatment_captions': {'operating_cost': '主营业务成本或其他业务成本，利润表营业成本项目', 'selling_expense': '销售费用'},
     },
     {
@@ -362,15 +378,20 @@ _DEFINITIONS = (
     },
     {
         'rule_id': 'POLICY_CAS_CUSTOM_EQUIPMENT_BORROWING_COST', 'framework': 'CAS',
-        'topic': 'custom_equipment_borrowing_cost', 'title': '定制设备专门借款费用的资本化期间',
+        'topic': 'custom_equipment_borrowing_cost', 'title': '定制设备专门借款利息的资本化期间',
         'source_id': 'mof-qa-3991866', 'publication_date': '2026-06-18',
         'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/jkwd/202606/t20260618_3991866.htm',
         'source_sha256': 'ff59c6e493640ff9280909fe4ba83a6c80810a9ae6d205fb4c65da93004ff3b6',
-        'applicable_conditions': '符合资本化条件的定制设备：资产支出和借款费用已发生，且确有证据表明生产商已开始必要的购建或生产活动时开始资本化，至设备达到预定可使用状态为止。',
-        'unsupported_conditions': ['不是需要相当长时间购建或生产的符合资本化条件的资产'],
-        'known_limits': ['生产活动开始与预定可使用状态须人工依据证据确认', '不计算资本化金额或利率'],
-        'treatment_captions': {'capitalize_borrowing_costs': '借款费用资本化计入资产成本',
-                               'expense_borrowing_costs': '借款费用费用化计入当期损益'},
+        'applicable_conditions': '仅限直接归属于符合资本化条件定制设备的专门借款利息，须人工确认费用种类及归属；本次观察全部属于同一资本化阶段且排除应暂停情形。三项开始条件满足至设备达到预定可使用状态期间资本化，不以期末状态替代整段期间判断。',
+        'unsupported_conditions': ['不是需要相当长时间购建或生产的符合资本化条件的资产',
+                                   '专门借款辅助费用、一般借款、汇兑差额、非直接归属利息或混合费用，须按相应规定独立复核',
+                                   '存在非正常中断连续超过三个月等应暂停情形，须独立按期间复核',
+                                   '本次费用跨越开始、暂停、恢复或停止等不同阶段，须先拆分'],
+        'known_limits': ['生产活动开始与预定可使用状态须人工依据证据确认', '不计算资本化金额或利率，也不判断可资本化净利息金额',
+                         '第17号准则第10条对专门借款辅助费用有独立规定，不适用本利息开始条件路径',
+                         '必要程序导致的正常中断不等于应暂停；恢复后仅可对恢复阶段单独观察', _BORROWING_BOUNDARY_SOURCE],
+        'treatment_captions': {'capitalize_borrowing_costs': '本观察专门借款利息处于可资本化阶段（金额另行核算）',
+                               'expense_borrowing_costs': '本观察专门借款利息费用化计入当期损益'},
     },
     {
         'rule_id': 'POLICY_CAS_LAND_USE_RIGHT_BORROWING_COST', 'framework': 'CAS',
@@ -403,9 +424,9 @@ _DEFINITIONS = (
         'source_id': 'mof-qa-3717408', 'publication_date': '2021-06-10',
         'url': 'https://kjs.mof.gov.cn/zt/kjzzss/sswd/zlzzsswd/202106/t20210610_3717408.htm',
         'source_sha256': '0a21c3f1376ee54b3778cfd3effab18a674769b9f20269757c961c89c0f028c2',
-        'applicable_conditions': '合同期限不超过一年时不能直接认定短期租赁；合理确定将续租或不终止时租赁期超过一年。确定为一年的，改良支出等其他估计须在一年内摊销。',
-        'unsupported_conditions': ['合同约定期限超过十二个月'],
-        'known_limits': ['是否合理确定续租须人工依据全部事实确认；逐年续签惯例或关联方时尤须谨慎', '不计量使用权资产或租赁负债'],
+        'applicable_conditions': '合同期限不超过一年时不能直接认定短期租赁；含购买选择权或合理确定后的总租赁期超过十二个月时，不得短期简化。已确认不符合低价值资产租赁资格；其他估计须与已确定的租赁期一致。',
+        'unsupported_conditions': ['合同约定期限超过十二个月', '符合低价值资产租赁资格时，须另行复核独立简化选择'],
+        'known_limits': ['是否合理确定续租须人工依据全部事实确认；逐年续签惯例或关联方时尤须谨慎', '不计量使用权资产或租赁负债', _LEASE_BOUNDARY_SOURCE],
         'treatment_captions': {'right_of_use_asset_and_lease_liability': '确认使用权资产和租赁负债',
                                'short_term_lease_simplified': '按短期租赁简化处理'},
     },
@@ -426,7 +447,7 @@ _DEFINITIONS = (
 
 # topic -> (expected treatment, reason when a condition is confirmed "no")
 SIMPLE_RULES = {
-    'transport_fulfillment_cost': ('operating_cost', '运输活动构成单项履约义务或发生在控制权转移之后，超出本问答情形。'),
+    'transport_fulfillment_cost': ('operating_cost', '非控制权转移前的非单项履约运输活动，或本次观察并非随相关收入确认摊销进入本期损益的成本；须另行判断或拆分。'),
     'advance_receipt': ('contract_liability', '未执行新收入准则、并非转让前预收，或金额含增值税部分（增值税部分不确认为合同负债，须拆分）。'),
     'contract_asset_impairment': ('asset_impairment_loss', '并非合同资产减值事项。'),
     'lessee_improvement': ('long_term_prepaid_expense', '并非承租人租赁资产改良支出。'),
@@ -550,6 +571,8 @@ def evaluate_policy(observation: PolicyObservation, context: PolicyCheckContext)
             return finish('unsupported', '租赁期超过十二个月，不属于本问答所述情形。')
         if values.get('contains_purchase_option') == 'no':
             return finish('unsupported', '不含购买选择权；是否为短期租赁须先合理确定租赁期，本规则不作判断。')
+        if values.get('low_value_asset_lease_eligible') == 'yes':
+            return finish('unsupported', '低价值资产租赁有独立的简化选择；本规则不以不属于短期租赁推导必须确认资产和负债。')
         if not missing:
             expected = 'right_of_use_asset_and_lease_liability'
     elif observation.topic == 'lease_cash_flow':
@@ -557,8 +580,13 @@ def evaluate_policy(observation: PolicyObservation, context: PolicyCheckContext)
         variable = values.get('variable_payment_outside_lease_liability')
         financing = [values.get('lease_liability_principal_or_interest'), values.get('prepaid_rent_or_lease_deposit')]
         if simplified == 'yes':
-            # Simplified short-term/low-value lease payments, incl. their prepaid rent
-            # and deposits, are operating outflows; other facts do not change this.
+            if financing[0] == 'yes':
+                return finish('unsupported', '同笔付款含已确认租赁负债的本金或利息与简化租赁付款，性质混合或条件矛盾；应拆分或更正后分别检查。')
+            if financing[0] != 'no':
+                return finish('insufficient', '须确认同笔简化租赁付款不含已确认租赁负债的本金或利息。',
+                              {'lease_liability_principal_or_interest'})
+            # Simplified lease prepayments/deposits are operating; a separate
+            # recognized lease liability component must be explicitly excluded.
             missing.clear()
             expected = 'operating_cash_outflow'
         elif variable == 'yes' and 'yes' in financing:
@@ -660,11 +688,22 @@ def evaluate_policy(observation: PolicyObservation, context: PolicyCheckContext)
             expected = ('asset_related_grant' if values['grant_conditioned_on_constructing_long_term_assets'] == 'yes'
                         else 'income_related_grant')
     elif observation.topic == 'custom_equipment_borrowing_cost':
+        scope = values.get('specific_borrowing_interest_only')
+        if scope == 'no':
+            return finish('unsupported', '本规则仅适用于直接归属于该定制设备的专门借款利息；辅助费用、一般借款、汇兑差额或混合费用须独立复核。')
+        if scope != 'yes':
+            return finish('insufficient', '须人工确认本次观察仅含直接归属于该设备的专门借款利息，不能将辅助费用等默认为利息。',
+                          ['specific_borrowing_interest_only'])
         qualifying = values.get('qualifying_asset_long_construction')
         if qualifying == 'no':
             return finish('unsupported', '并非需要相当长时间购建或生产的符合资本化条件的资产。')
+        boundaries = ('capitalization_suspension_excluded', 'uniform_capitalization_phase_for_observation')
+        if any(values.get(name) == 'no' for name in boundaries):
+            return finish('unsupported', '本次观察存在应暂停情形或跨不同资本化阶段；须按期间拆分并独立复核，不能把期末状态推广为全部费用。')
+        if any(values.get(name, 'unknown') == 'unknown' for name in boundaries):
+            return finish('insufficient', '须人工确认本次费用覆盖的资本化阶段及中断性质、连续时间；缺少资料不能默认全年持续资本化。', missing)
         start = ('asset_expenditure_incurred', 'borrowing_cost_incurred', 'manufacturer_production_started')
-        # Ended (ready for use) or not yet started: either way the period's cost is expensed.
+        # Scope and phase gates above apply before any interest timing shortcut.
         if qualifying == 'yes' and (values.get('asset_ready_for_intended_use') == 'yes'
                                     or any(values.get(name) == 'no' for name in start)):
             missing.clear()
@@ -702,8 +741,17 @@ def evaluate_policy(observation: PolicyObservation, context: PolicyCheckContext)
         term = values.get('contract_term_not_over_12_months')
         if term == 'no':
             return finish('unsupported', '合同约定期限超过十二个月，不属于本问答所述情形。')
-        renewal = values.get('renewal_or_non_termination_reasonably_certain')
-        if term == 'yes' and renewal == 'yes':
+        if values.get('low_value_asset_lease_eligible') == 'yes':
+            return finish('unsupported', '低价值资产租赁有独立的简化选择，须另行复核资格及会计政策选择。')
+        eligibility_missing = {name for name in ('contains_purchase_option', 'low_value_asset_lease_eligible')
+                               if values.get(name, 'unknown') == 'unknown'}
+        if eligibility_missing:
+            return finish('insufficient', '尚未确认购买选择权或低价值资产租赁资格，不能认定短期简化或强制确认资产和负债。',
+                          missing)
+        # Renewal by itself need not make a short contract exceed 12 months.
+        # Use the human-confirmed total lease term, including relevant options.
+        if term == 'yes' and (values.get('lease_term_not_over_12_months') == 'no'
+                              or values['contains_purchase_option'] == 'yes'):
             missing.clear()
             expected = 'right_of_use_asset_and_lease_liability'
         elif not missing:
@@ -712,7 +760,7 @@ def evaluate_policy(observation: PolicyObservation, context: PolicyCheckContext)
             if reported == 'unknown':
                 return finish('insufficient', '条件已确认，但缺少当前账务处理的来源证据。', ['reported_treatment'])
             if values['improvements_amortized_beyond_lease_term'] == 'yes':
-                return finish('supported', '租赁期确定为一年的，改良支出等其他会计估计应在一年内摊销，与租赁期一致。',
+                return finish('supported', '相关改良支出等其他会计估计应与已合理确定的租赁期一致。',
                               expected=reported if reported in choices else None)
             if reported in choices:
                 # Short-term simplification is an election; recognising the lease is also permitted.

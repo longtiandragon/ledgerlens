@@ -110,7 +110,7 @@ test('v4及v5新增政策的条件以中文呈现，切换主题不继承人工�
   const response = await request.get('/api/v1/policy-checks/catalog')
   expect(response.ok()).toBe(true)
   const catalog = await response.json()
-  expect(catalog.policy_rule_identity.version).toBe('policy-consistency-v5')
+  expect(catalog.policy_rule_identity.version).toBe('policy-consistency-v9')
   const seen = await mountPolicy(page, request, { override: async (route, url, method) => {
     if (method === 'GET' && url.pathname === '/api/v1/policy-checks/catalog') {
       await route.fulfill({ json: catalog }); return true

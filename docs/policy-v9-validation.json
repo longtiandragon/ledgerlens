@@ -1,0 +1,817 @@
+{
+  "schema_version": "policy-v9-validation-v1",
+  "date": "2026-10-20",
+  "status": "passed",
+  "policy_rule_identity": {
+    "version": "policy-consistency-v9",
+    "source_sha256": "fcbe3b08ff1c8c71f86ede3cd7dd39148c5400c22cbd31fd9a6d59ec5dda768c"
+  },
+  "fixture_version": "mof-policy-projections-v9",
+  "full_backend": {
+    "file": ".local/reports/policy-v9-full-20261020.xml",
+    "sha256": "08ac4dd3843a1ee8e54a7c9767aad2229051669b6c132cdafa31988aae50ee63",
+    "tests": 2475,
+    "passed": 2450,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 25,
+    "junit_seconds": "202.705",
+    "skip_reasons": {
+      "Filesystem link creation unavailable: OSError": 12,
+      "Explicit MIGRATION_POSTGRES_TESTS=1 requires the dedicated local PostgreSQL service": 2,
+      "Explicit RETRIEVAL_INDEX_TESTS=1 requires the local optional pgvector service": 9,
+      "Host cannot create test symlink: OSError": 2
+    }
+  },
+  "targeted": {
+    "file": ".local/reports/policy-v9-targeted-20261020.xml",
+    "sha256": "9c7d53ee0da0ff41ff395ad4472071e30178ff414a9781d996333e9d50314df2",
+    "tests": 305,
+    "passed": 305,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "junit_seconds": "8.967",
+    "skip_reasons": {}
+  },
+  "delivery_gate_regression": {
+    "file": ".local/reports/public-delivery-integrity-final-20261020.xml",
+    "sha256": "cf70ff4975936c0a85a9ca507a319dab54fd70e9b8ee78bdf5c7224177bfa29d",
+    "tests": 56,
+    "passed": 56,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "junit_seconds": "5.104",
+    "skip_reasons": {}
+  },
+  "negative_controls": [
+    {
+      "file": ".local/reports/policy-v9-boundaries-before-20261020.xml",
+      "sha256": "fdc8e83430ac64e3e12011bede5db312c3d712cf867ecb6d3669feaf44285ff8",
+      "tests": 4,
+      "passed": 0,
+      "failures": 4,
+      "errors": 0,
+      "skipped": 0,
+      "junit_seconds": "0.351",
+      "skip_reasons": {}
+    },
+    {
+      "file": ".local/reports/public-delivery-integrity-before-20261020.xml",
+      "sha256": "ba96e51c06db3e327810c9c70b7b5fa3eb10438419ee05f5003ca45aadb4814d",
+      "tests": 14,
+      "passed": 0,
+      "failures": 14,
+      "errors": 0,
+      "skipped": 0,
+      "junit_seconds": "1.281",
+      "skip_reasons": {}
+    },
+    {
+      "file": ".local/reports/public-delivery-new-attachments-before-20261020.xml",
+      "sha256": "f7d6e06dd81ebc9b5f1c3f48f00ddc89a93457a2008bf8cfabffb4e09ef41356",
+      "tests": 8,
+      "passed": 0,
+      "failures": 8,
+      "errors": 0,
+      "skipped": 0,
+      "junit_seconds": "1.913",
+      "skip_reasons": {}
+    }
+  ],
+  "preserved_intermediate_gate_failure": {
+    "file": ".local/reports/public-delivery-integrity-after-20261020.xml",
+    "sha256": "f1c5daa54dee11a743a4ac7e95d023555bf6e0e2f8f6813ac550034513ee6bbb",
+    "tests": 35,
+    "passed": 34,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "junit_seconds": "6.713",
+    "skip_reasons": {}
+  },
+  "official_projection": {
+    "file": ".local/reports/official-policy-v9-20261020.json",
+    "sha256": "6bc4b83d2f49807eb6e88c78d78d7489b5024f6747ade9c81ce79ea2999da06c",
+    "passed": 191,
+    "tasks": 191,
+    "source_verification": {
+      "checked": 32,
+      "passed": 32,
+      "failed": 0,
+      "results": [
+        {
+          "id": "mof-qa-3861813",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3962188",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3762834",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3962191",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3946594",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3895086",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3895087",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3896761",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3664183",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3691695",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3664190",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3664187",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3664186",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3762833",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3634036",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3634035",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3634031",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3634029",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3991864",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3819697",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3991866",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3634037",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3994211",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3664191",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3717408",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3691864",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3691863",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3691861",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3962193",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3819699",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3819702",
+          "passed": true
+        },
+        {
+          "id": "mof-qa-3762844",
+          "passed": true
+        }
+      ],
+      "scope": "source_parser_hash_and_answer_isolation_not_accounting_accuracy"
+    }
+  },
+  "public_delivery": {
+    "directory": ".local/reports/public-delivery-v9-20261020",
+    "report_sha256": "04d754105de6e5e9b6ae22532264fb9a5147939a5365dd06abcf4d5b60466387",
+    "stages": [
+      {
+        "name": "collect_and_verify_sources",
+        "status": "passed",
+        "sample_count": 2
+      },
+      {
+        "name": "isolated_api_workflow",
+        "status": "passed",
+        "checks": 45
+      },
+      {
+        "name": "isolated_browser_workflow",
+        "status": "passed",
+        "stats": {
+          "startTime": "2026-10-20T07:20:58.743Z",
+          "duration": 85082.80600000001,
+          "expected": 24,
+          "skipped": 0,
+          "unexpected": 0,
+          "flaky": 0
+        }
+      },
+      {
+        "name": "verify_source_and_evidence_integrity",
+        "status": "passed",
+        "sources": 372,
+        "evidence": 22
+      }
+    ],
+    "source_integrity": {
+      "status": "verified",
+      "files": 372,
+      "added": [],
+      "removed": [],
+      "changed": []
+    },
+    "evidence_files_verified": 22,
+    "attachments": [
+      {
+        "file": "artifacts/policy-borrowing-live-真实借款政策闭环：人工确认专门借款利息/attachments/利息条件修订需要重新确认-01ada3354cd01900b93fcf303730a3351b34f183.png",
+        "name": "利息条件修订需要重新确认",
+        "content_type": "image/png",
+        "test_file": "policy-borrowing-live.spec.ts",
+        "test_title": "真实借款政策闭环：人工确认专门借款利息",
+        "project_id": ""
+      },
+      {
+        "file": "artifacts/policy-borrowing-live-真实借款政策闭环：人工确认专门借款利息/attachments/真实政策底稿-2cc23d6fb50e9020e793a62fa2ce49c935e6cc92",
+        "name": "真实政策底稿",
+        "content_type": "application/json",
+        "test_file": "policy-borrowing-live.spec.ts",
+        "test_title": "真实借款政策闭环：人工确认专门借款利息",
+        "project_id": ""
+      },
+      {
+        "file": "artifacts/policy-borrowing-live-真实借款政策闭环：范围未知/attachments/真实政策底稿-3d1a528139e558b04d0b868a697a1b0212f77686",
+        "name": "真实政策底稿",
+        "content_type": "application/json",
+        "test_file": "policy-borrowing-live.spec.ts",
+        "test_title": "真实借款政策闭环：范围未知",
+        "project_id": ""
+      },
+      {
+        "file": "artifacts/policy-borrowing-live-真实借款政策闭环：辅助费用/attachments/真实政策底稿-188a447229ea10cf66da8ccd8d16901c52b03170",
+        "name": "真实政策底稿",
+        "content_type": "application/json",
+        "test_file": "policy-borrowing-live.spec.ts",
+        "test_title": "真实借款政策闭环：辅助费用",
+        "project_id": ""
+      },
+      {
+        "file": "artifacts/policy-borrowing-live-真实借款政策闭环：选择利息但未人工确认/attachments/真实政策底稿-5b0ba5c1bce30b095638476f8a728cf7d0e16a66",
+        "name": "真实政策底稿",
+        "content_type": "application/json",
+        "test_file": "policy-borrowing-live.spec.ts",
+        "test_title": "真实借款政策闭环：选择利息但未人工确认",
+        "project_id": ""
+      },
+      {
+        "file": "artifacts/policy-revenue-cashflow-live-真实收入与现金流边界：本期履约运输成本摊销/attachments/收入与现金流边界底稿-e858c0ffbbf697b7f25cbdf665ca03084832d480",
+        "name": "收入与现金流边界底稿",
+        "content_type": "application/json",
+        "test_file": "policy-revenue-cashflow-live.spec.ts",
+        "test_title": "真实收入与现金流边界：本期履约运输成本摊销",
+        "project_id": ""
+      },
+      {
+        "file": "artifacts/policy-revenue-cashflow-live-真实收入与现金流边界：运输收入时点未知/attachments/收入与现金流边界底稿-9fb6737a9fe319684ac19c8091de5dcf7fe92e22",
+        "name": "收入与现金流边界底稿",
+        "content_type": "application/json",
+        "test_file": "policy-revenue-cashflow-live.spec.ts",
+        "test_title": "真实收入与现金流边界：运输收入时点未知",
+        "project_id": ""
+      },
+      {
+        "file": "artifacts/policy-revenue-cashflow-live-真实收入与现金流边界：运输未到收入确认时点/attachments/收入与现金流边界底稿-0d014905ae8bff11d855d5f2a4bfe7bdb4d5ff7f",
+        "name": "收入与现金流边界底稿",
+        "content_type": "application/json",
+        "test_file": "policy-revenue-cashflow-live.spec.ts",
+        "test_title": "真实收入与现金流边界：运输未到收入确认时点",
+        "project_id": ""
+      },
+      {
+        "file": "artifacts/policy-revenue-cashflow-live-真实收入与现金流边界：长期租赁本金与短租租金混付/attachments/收入与现金流边界底稿-1f9e421b1b4527fa71108ac08bbd181b6c9a2725",
+        "name": "收入与现金流边界底稿",
+        "content_type": "application/json",
+        "test_file": "policy-revenue-cashflow-live.spec.ts",
+        "test_title": "真实收入与现金流边界：长期租赁本金与短租租金混付",
+        "project_id": ""
+      }
+    ],
+    "implementation_sha256": {
+      "alembic.ini": "c248babef4ad6ed1dcbd5d33a63786225f3f5dcfb548070c384159c4082b9765",
+      "backend/app/__init__.py": "999dd4ee807152f935d0919c204e672f12dec3c08831449897c3753f97cace64",
+      "backend/app/auth.py": "af54d345d39f11d64092f49765b6a2ff11c111b60bd46ecd7f52faa934f5aca2",
+      "backend/app/auth_api.py": "d2acad05f9e6aebcdc6bfec5ac6215802ef6ea532abdc9d959458630d50efb86",
+      "backend/app/business_chain.py": "2c21e00894a94ad6b53ba2119ce5f684aafd24ee83276b76808145c63bb62303",
+      "backend/app/config.py": "7e733e0c8f99feb059f83033c46c71376f11e3d16505ab7e3b4f1046b3aaf313",
+      "backend/app/connectors.py": "a44f809a827f85e85a32241a62f86001785f1709cd059c4dce1bab1537c07627",
+      "backend/app/context_transport.py": "c60bafff748d7be284010bcf60ad991ce501a027d5051aebf5499bb343c817a9",
+      "backend/app/db.py": "578fb9ee309b80133d60e20ad363b542bc25f33accad3ba24c8fb07587d33798",
+      "backend/app/domain.py": "b49e39dd9e544b4bf4568aa04bf7ec54dc63a591efa123fd925331989e693a75",
+      "backend/app/evidence_planning.py": "09f5896d9987682b2d8c8839908aad46b46356edc82f1497882e3d3215c5432c",
+      "backend/app/evidence_requests.py": "5b893df276b99bf8a4bfbb1528da588d30b4a0439615916a896051a2f0c2c0a5",
+      "backend/app/evidence_selection.py": "7be0a02484dc00c4b7b00d07060b4b0f6ab838c535fccf014691a482070a0b77",
+      "backend/app/financial_evidence.py": "3303496ad97ed9031a16af9dae526f84a1d3a9c2d8770d8dc1c16b96bea0f555",
+      "backend/app/financial_math.py": "dfc814c22101d19bf4139647545da8f1fab6ff9f01432d7a0e9a9f4cc520d58b",
+      "backend/app/imports.py": "30e5f20e1c8df799f20a7913f6414098e9c8c922cb8d5959519d42fb748842db",
+      "backend/app/investigation.py": "032fdbbd8016b037950c25bfb5b0d243aa32eefd7c6010e5f0fa644da93ec8e1",
+      "backend/app/investigation_policy.py": "436f0fe1aaebf9bfa1684264be4a561e94f383034aeaeb6025197f612ae8bed5",
+      "backend/app/jobs.py": "80c6393fb2227ec645478f7b9da52f2d12c239630a918f6b262a0a5bb822facd",
+      "backend/app/knowledge.py": "f68a5c41fd0074f0dadaf12207808306f8a069b4b88bcfa1c844e9f0962e6825",
+      "backend/app/main.py": "0e5ded00d21ac154381db364e16d942b214ceee16103362e39d97acefdbd2ad0",
+      "backend/app/manage_users.py": "2c0081db1391b687e85fe94aa54cd05ae0c414bf9557709da83e8ec1913a4d7e",
+      "backend/app/matching.py": "202a991fb11901abba3026ebeca37cc24326310653d7b79d72f9521cce8da270",
+      "backend/app/model_contract.py": "698602de854cb3ab4ac39b750812ec9f7e3f2e7b3f64919d3052f2930b32294e",
+      "backend/app/model_gateway.py": "e95d9b789ca4bb492c34d15859cd9eeb73118af99458f8b3b5e28b04cfb08cb8",
+      "backend/app/numeric_evaluation.py": "073d8331f39938528d7e87811be3bb70be440907d6619c6e9033cb00a07a86a7",
+      "backend/app/observability.py": "96e01ad053828c3bc93b8d6bf30e5806be1989bc2392aeb09a8322d497c77494",
+      "backend/app/ocr_api.py": "22e5388c81dc9d1cebb11baf63b7942947542f233dd0c595f20eafcc9b9ba2af",
+      "backend/app/ocr_contract.py": "79bcd7c60db21755bcde59852dc96f750c396ecf4c627a661e5ffd3c7eeb1d16",
+      "backend/app/ocr_observations.py": "e2d298ea4ebe57ed1e777ea2302dbd7b805097870840d735fa4da88e4b35e57c",
+      "backend/app/ocr_pdf.py": "ebf6dc541e1ca2395ae41875be71f791b4d6b400fdb7bfe1a43761d4bc8bfe3a",
+      "backend/app/ocr_tables.py": "697c844018227ea4f6bb34b56abef5f557af038235ca9837992774e0e12dce78",
+      "backend/app/ocr_workflow.py": "67cc5f45f8515bb4adcf5fd392804464267b1a32fe14d71ba768ad11abcb1b31",
+      "backend/app/policy_api.py": "37f3a624775de9267edb2c6bb2675162f08e929e0adc82a1298c6d7dbf43af8f",
+      "backend/app/policy_consistency.py": "3a269de56750fd211c4ae46e4c6535f3a4ff91c39fe886574101c9176b51841d",
+      "backend/app/policy_context_contract.py": "f3f02132b913c982fd6b4564d77ef3a521a926f479efe2410ef4c8e2a295cf86",
+      "backend/app/policy_contract.py": "3589f4c6d1d8ed2bf1b4b70b4d45462c2c5d514f83ec0de9133c9ced2d1dff1f",
+      "backend/app/policy_responses.py": "3ea4f4c94a28cfd41894fa4f610c601189f4b06f6f446f4f84b82c8f67b9e97a",
+      "backend/app/policy_runtime.py": "c3bcb0368bbaf7c488d575338db147d6bea8d064dbbc7dedf648bc3b862b0432",
+      "backend/app/process_api.py": "f2e4e1f99a7193d2d82bd9b4a7a564daa9ae6bb1a64988f60f7d5982d3709042",
+      "backend/app/process_events.py": "8db0c0a6d21efc807b2251261c576f2f0e085e1e970509852a410485751cd342",
+      "backend/app/process_investigation.py": "ec92c740df5c254af6e3e90f8c55729269394deb3180175349b413156cecb093",
+      "backend/app/process_rules.py": "ee5e77d83912e1ec0f0c5ae4703c3d4552cd3633be3c31444f1a9e67f3ddfe34",
+      "backend/app/process_store.py": "27b8140615ec4abe4aa8dabc1aa7a230727062ec39afc94d291c6b89cb5798af",
+      "backend/app/reference_api.py": "8f3ea857f2991ba2f19052332671c54f228613a0db218bef946018842fbed086",
+      "backend/app/reference_contract.py": "4dc2cfa1f5716e049d542bc43c0bb53f7f5638a98bb69f880e3510a17eb322be",
+      "backend/app/reference_selection.py": "f63cdf043b19dd75edfb8bf48e249a3a9646ab211c895caad121f976d4267619",
+      "backend/app/reference_sources.py": "8c6e3fc4711e80d876a327dc54864f77d0ffd664424eeef220e857c8cce6466e",
+      "backend/app/reference_workflow.py": "9c644a94acac4c2a6faf9a310da00ecf99cb87cec4213b66247a077f7251822f",
+      "backend/app/retrieval_index.py": "88f2e26ff804c486393ab57045e006881f1a1b87cda9da3cd4d6a0939d9f7d19",
+      "backend/app/retrieval_results.py": "9275d8225e6312317bc71e2772d34ac16771b9e51c83d0160c163f636eb70ed6",
+      "backend/app/retrieval_vectors.py": "3894894ff0afb5753e0d99eee8c9ba8d131a6d8bc880f5fbe481e55e96c0bbd6",
+      "backend/app/root_cause_results.py": "f6df9528af06a6e6d35e78ed18159c7d3a0f292fdaaccb86af60ef5c2cc42911",
+      "backend/app/schemas.py": "99562eff84752409c2786e62420e7deb5351ec71276445ebb6a0e2d4d0e7f6b5",
+      "backend/app/statement_api.py": "5fe53ec4fd05ecce721199dcb836c41d438147acd2eaa7e9bb6e9b75c01d65b6",
+      "backend/app/statement_store.py": "c77325ac4333e9ad821f2afa147a46a22b1c24556f3ab3dbff3cffb7bfcc809b",
+      "backend/Dockerfile": "e078ad00c6cfc202b08862a8332e721d279a2be8ddfc4bc4e8660ee806ed5b34",
+      "backend/migrations/env.py": "47c866fc74179a444a55d2a3658246304d7289dabcad6bf3f52daa36d9d3fbf5",
+      "backend/migrations/versions/0001_initial.py": "3f310287409b2587d03e8db329596715e80c676975e799e9e493da3681ff3de0",
+      "backend/migrations/versions/0002_policy_checks.py": "566775a7d0f68c2ede15e61730911f94cc8dd371429be56dd9ef5da233fa0318",
+      "backend/migrations/versions/0003_investigation_policy_context.py": "2fe1e92c72608c63dfd51d4cea59b0c0aa4cfa1f3277953efc7b8acd9b1b05b1",
+      "backend/migrations/versions/0004_evidence_requests.py": "b093c01a461589104c76e7230e24c014bfb27ae6cff286ebf3eb414af664b1fc",
+      "backend/migrations/versions/0005_ocr_reviews.py": "796b87890519e43119443ac7ccb2f35e8c2285ef266c3c42a286a22c891dbbf5",
+      "backend/migrations/versions/0006_reference_choices.py": "b0c0ddf5812d5dec484ca08b77d01db5a76dea5b1e63dcf19b79a0962327943e",
+      "backend/migrations/versions/0007_multi_user_signoff.py": "b7be843c9b78cb33ff1d88f952c60e52f3c29fd4334e79f56da7b2d0a682d1a3",
+      "backend/tests/conftest.py": "75ce8e70008ddb88afd91beafe363206ecc68def566ba37f7ff0b3d0017036b6",
+      "backend/tests/policy_context_fixtures.py": "e7297d76038c7537bc38f991d6e13cabd31c619f6dd968abbdc8c95cd0df5fe8",
+      "backend/tests/test_active_graph_regressions.py": "93881480d176ada3726da26ba7b81510e58287bef9f85b57ca34970e84f814eb",
+      "backend/tests/test_agent_benchmark.py": "2c41e82791325e3bef221c9caad0368c5c70e050723c0610c208a353cb16fe0e",
+      "backend/tests/test_annual_reconciliation.py": "e026d4caaef4e7f87e0ecd987ba6469015a6d5b25d5ef5593011db0a5e065088",
+      "backend/tests/test_annual_reports.py": "a06a289f7405ae1c9d306de495788d13e9c09cd9c7e1cf2ecc47685a5d930273",
+      "backend/tests/test_annual_statement_probe.py": "70c4e648abf528ccbf2895ff2f2df91b352a44231303228bc465ff71b1fe61fa",
+      "backend/tests/test_api.py": "f5c29fd86876d828fcf0dac4b3e9bdc5cd441f149a638daa512a2d61138b806d",
+      "backend/tests/test_auth_signoff.py": "7107ed0077cc39e0cd787c05a29fa3a33eae998d56b60c34f44e954022a8d402",
+      "backend/tests/test_backup_links.py": "a06d4305ea0c248bec717b46a702cd73e1ecfc60785d3a709e203af5963846a9",
+      "backend/tests/test_backup_manifest.py": "bb06ecf89941576b6db48826f6651706b3a1d7388ee29941d020e4f9ce44f3f9",
+      "backend/tests/test_beancount_differential.py": "90c56ed2d489cfb76addbb65e286240632fc308d3287402d90d7f11f62b694b3",
+      "backend/tests/test_bpi2019.py": "2c04616447720794f1224c7642f260bc488fc985d338d871e0216d0c36b0ccfd",
+      "backend/tests/test_business_chain.py": "d3345f54573065276c2e0dbb9321b89b087fa59194ea6095d08be5657f103a62",
+      "backend/tests/test_clean_checkout_validation.py": "df2878d866ec6e4893dac68ec3fcc06db7d3cda3aac075e3934ded5d5526e799",
+      "backend/tests/test_connectors_knowledge.py": "8995dc4d61db2b6483928a85a1b8d82e2507520afc6a6a89e801fecbe226319b",
+      "backend/tests/test_container_validation.py": "156f2296006b2bacfaa80038b0a513ebe239a261f3dbdde22d55126e9b8fba5c",
+      "backend/tests/test_context_transport.py": "61d466c1800059087b2cfcdec6a3caf53a6aa043d46bb03ba36f2abf2cce3777",
+      "backend/tests/test_domain.py": "7ee651766ef2b13b0ac69b495642ca23356af5e4d71a11730ee695f0d423f27a",
+      "backend/tests/test_erpnext_returns_validation.py": "fc5e41edcf7a3e503626edfa7f83a820a94f8439a9c2b07925ac361eefafa396",
+      "backend/tests/test_erpnext_semantics_validation.py": "7f9b9ffb6b2cd37e091052be767f68973cde0dd77bf50bcf29381d0c2620ce3a",
+      "backend/tests/test_evidence_context_memory.py": "86023c07b666dab4cb923f7106494d55c42a7af793203eec7883eff94e0ca45a",
+      "backend/tests/test_evidence_planning.py": "50cc2c8eb691edd15a325aff094c9ec3958dbf2c1b8e168445dbacf352bf9aef",
+      "backend/tests/test_evidence_request_matching.py": "3b6c7d0bc9849d9ce5466d57f5b0e28ec04dd13a35c00738170b0c0b9da00bac",
+      "backend/tests/test_evidence_selection.py": "6c2d3b860839d91920a75082eda3c813dd0db4931beded53a8ce28b8ed632fe2",
+      "backend/tests/test_external_substitutes.py": "1ea9dd3479b3f5e687c12a6ed38d4fa811607667ad41c76bbe29d32055ed2fd5",
+      "backend/tests/test_financial_evidence.py": "a574997cea5e0eb4cb0be77824446fad77920af2ff546e6344b2a1ad4f5515ce",
+      "backend/tests/test_financial_math.py": "93013b58b2341b5d6e8830e06377ddad63bb0cbbabe9ae4e3fcf07252d526782",
+      "backend/tests/test_finqa.py": "4f29e5e09793bc6e0cdf6b480bf9850d92dc50b76076a2a3ec3760a77a7f7ea7",
+      "backend/tests/test_finqa_models.py": "68a3d7ec5345f8f13f1f6734d4380b8cfb2760e660e8282d77082f958506f546",
+      "backend/tests/test_gateway.py": "f1fb701780e34ca0c2751e19a199e1da833d46647cb1f1da2f2e48eb63844393",
+      "backend/tests/test_import_formats.py": "023885213c9e32084abcdbd673694ced46940afd779070baccaf0de09871930f",
+      "backend/tests/test_investigation.py": "f4f535913d71cc1328f4c0f59e3d707352429d40c8d471576f6fa7359433ba7e",
+      "backend/tests/test_investigation_policy_independent.py": "35bcae8152c789eb681d866328c80b9fd4173d8a2f91b892ef21fc859fe35e4c",
+      "backend/tests/test_investigation_policy_storage.py": "a9a5053e0c486107ca1c84e1ab0cecef0564ae89fbad23024dfb98b9606260df",
+      "backend/tests/test_investigation_smoke.py": "e28493a4ffcf109f88bd96388bf7132c2e388ab485596efc985e3424cde375d7",
+      "backend/tests/test_knowledge_provenance.py": "2df68cb02635a6c3aafdf8f23e5ed0c28d9140320da947234e500f9e59687e27",
+      "backend/tests/test_knowledge_runtime.py": "2d7e133a20e1ada159bc222d13b7fd27aedf474020db252b1728b30bdd8bc8b0",
+      "backend/tests/test_lazy_evidence.py": "711f5c863b92c2a03f0ecde27bd6f8cdd59cdd073fdd80cefb56218d0c9d4dd3",
+      "backend/tests/test_live_probe.py": "6690d73a0d2557ebb73510cb4a48147265de30106672e1bfe64a3c53294633e6",
+      "backend/tests/test_live_summary.py": "a66e30f8a38c4669daac84b3d4117ce274e1902048d478678a48dc1daa08689c",
+      "backend/tests/test_local_database_preparation.py": "88d45b5f42a6427cf92ff2f029ac1994e090d3c8fe427e1cddf242eab84c1d7d",
+      "backend/tests/test_matching.py": "4ecdb3b4ea7e8710657c6f97cb4f780e74f29abcf7ad0bee455b72cc8328d96b",
+      "backend/tests/test_mechanism_ablations.py": "e27c59cd0eab1c44b70303d2674bd05746e587a820874b3f333912563766b76e",
+      "backend/tests/test_migrations.py": "d5f880e1279e0cea8a80fe4bfef5e76eba79ac54bdc8857ca78d1adacc2e6056",
+      "backend/tests/test_migrations_postgres.py": "0f806e90dd857fa89aee7d46fb240c96d314aa79fb6df38712dc5887561c9fd5",
+      "backend/tests/test_model_contract.py": "fe7205602eedb81dfb4548752dbe4706d05479997a9f5977cd747915b823db2f",
+      "backend/tests/test_model_costs.py": "ba95a2230ce9ae3d1f5d84e7e7eed8d20e2c83fb4e972d3274a5c235c75c8545",
+      "backend/tests/test_mof_vouchers.py": "3cf184ec82fa2df42a3a35df27adcb9fabf46b4a24d4f9aa958f4a40540f147d",
+      "backend/tests/test_numeric_evaluation.py": "beb052c323ee152151d65e9ebf6054863a7d2228cc414ef5a7d4f9d9bb4f73ec",
+      "backend/tests/test_observability.py": "73ee366ae81680563b6c380822613b75630ee791b6534a5318454ecc004589c5",
+      "backend/tests/test_ocr_batch_review.py": "40f9d4a7ba499951c2a622621fb8be9091c45b3f653639be4116a9e2eed82513",
+      "backend/tests/test_ocr_observations.py": "9f3e803afca19168c881a4de29c1704e47c9d1371fbdcb58fab594d735354033",
+      "backend/tests/test_ocr_pdf.py": "b26c8d294194e489fd4fd493d5d2cc526b36992fdeb8e3fb7098a30873cebc8a",
+      "backend/tests/test_ocr_tables.py": "cfe0ac9d35a1c94b2e89c121139cd473dd6db9233710419f42894e496c271d4f",
+      "backend/tests/test_ocr_workflow.py": "7057a409371dc5878bff210d39cf84f69d8c08cd4ff0b3e791369842fcedc7ec",
+      "backend/tests/test_official_cases.py": "42077075c51f44c7911a40d772879cd19ef55154328f59d749e9fc6af3ed66a4",
+      "backend/tests/test_official_policy_benchmark.py": "ccdf34278068a6df7689c1ace1c45e94449c2129c0fb654faf19193d694e394d",
+      "backend/tests/test_packaged_evaluations.py": "0ea269aab3568655071fdcff2bb086e147ed200d7f7328cd5fe35465704a34b8",
+      "backend/tests/test_paid_budget.py": "b25ec3655f9e842f2b468071e45461db806a9d4917cc3726e91446b4db8d0af3",
+      "backend/tests/test_policy_api.py": "700471968115000ec41a268b74e4429547491fc7972050dd22e3759de8e097f5",
+      "backend/tests/test_policy_borrowing_boundaries.py": "15cd07c9ef7b1a98e4e9a6359d8cad18c9f24001098bb665d98b04d80b797549",
+      "backend/tests/test_policy_borrowing_cost_scope.py": "87f219193af65ceb2003425436e866c319d802756a71f4c180df9249438a6214",
+      "backend/tests/test_policy_consistency.py": "1298708020f112af6184161c5de85bd465994df0ac67cb7f169ac5050bfd0318",
+      "backend/tests/test_policy_context_migration.py": "4025c546ec4c211cd0319d3564373cd571e134f52a056601c6585883cbfaecb2",
+      "backend/tests/test_policy_contract.py": "18d5eeb7e3002cd8f3c39320de6b00a654e96fec15192bad5e03232bb2b61de4",
+      "backend/tests/test_policy_investigation_tools.py": "c896a7de2eb35fb84ed3d5df8920f997746f480e52ad8b4b7644d82d2f504965",
+      "backend/tests/test_policy_lease_boundaries.py": "e4540f4c1a22dd5dc4f3b04123acb49131696e940b41857ea56f876540ec1e37",
+      "backend/tests/test_policy_revenue_cashflow_boundaries.py": "a011f291c59764e37cb6a6852faa07b2c9e3bb5aec12f8634ff82db94093f4ff",
+      "backend/tests/test_policy_runtime_adversarial.py": "8681471c8bca8bbebb2fad5761ae6bbd6a8c6da80d0fd71de34b1848cb8f3928",
+      "backend/tests/test_postgres_backup.py": "a861498ad3e332a9fdb9b1fd4774d27c10b1721d413c853d1dff4f7c640b805d",
+      "backend/tests/test_process_api.py": "31f7fe88b02195776ba415bff19ed110589942c998a6a63c83314c6774e9644d",
+      "backend/tests/test_process_events.py": "b9859a4c33d488b770ec26753f313d3e4687fd67495992304325da66f007d26e",
+      "backend/tests/test_process_investigation.py": "9328c13a3a3f2a293c6971f13091b43b794bb626c2f9144f077971932a28a245",
+      "backend/tests/test_process_rules.py": "ac85ecf6b7a75b92e0370d1c7949a0151432a3966f334473319834c7cb8344e5",
+      "backend/tests/test_public_delivery.py": "e249a296b62fec1622d012a3694438467ed1139a74d58968a6f4b93d47b482de",
+      "backend/tests/test_public_example_import.py": "7858e29a9fa006426c1bbaff6da10f3f6cc4fc94898a98fa58554c2497ca80c1",
+      "backend/tests/test_public_ledger_scope.py": "f0ab56b1c1593833bd95dfa5f4a47fb163929c58826badcd17ac2ae17b54693a",
+      "backend/tests/test_reference_abstention.py": "ce9bd7b2431e7ff83fcb6a2527dfd729d54ac556c74017891654ae1a5412c679",
+      "backend/tests/test_reference_workflow.py": "2a73a790ad2f0e9492178832a9058948db18753e8f43fa176bbd82aa56c0afd1",
+      "backend/tests/test_restore.py": "297bf6a38d80b50a788c2155e548c71a24391cf73f12f883c16b7d3ffd00fcc6",
+      "backend/tests/test_retrieval_index.py": "ef98e31adb7c510cf3967d01a68708683129188ef11bc1fc3ea9be74b0c67241",
+      "backend/tests/test_retrieval_results.py": "611630e31a9bcb11c597f34325e0216e62ea183cdc610b5bfcd2e9f6b44f6aa2",
+      "backend/tests/test_retrieval_vectors.py": "557e0b76d5f09e2596b9889f62a572ee0211ba68dcadabf8634bb36ba9c6b84a",
+      "backend/tests/test_review_tasks.py": "16f8144935a608ceb597aed3e5b71f1819d2cbccc5f2d7d1de4d4f0ef5885780",
+      "backend/tests/test_root_cause_contract.py": "eed3f6754c077052edd9e739dea94fd62d9dd1b9c893ae9e2e38f44a8c7b4d2a",
+      "backend/tests/test_root_cause_results.py": "13c2779e29889b24be211d60c4bd454080959213fe8793e6f2c9b12c8b4d73c8",
+      "backend/tests/test_root_cause_track.py": "bcdcb4b5b16a2c41232bebb222cc27fe7a6f6e70c5c911eafff57f6cbc282d7f",
+      "backend/tests/test_root_cause_v2.py": "fd067f04a7bc19090c4cf7a875df6e11c972650fee9031413202b36af707fe04",
+      "backend/tests/test_root_cause_v2_models.py": "fd74031cfb0518dd1452c77f09f2e95e0cf5f9f3c7d6da5f27bedfdac320299a",
+      "backend/tests/test_root_cause_v3.py": "8cce695c705b565a96da64e59ed643091ce55d32694b26c254a33487f7748a70",
+      "backend/tests/test_root_cause_v3_final.py": "22e000bfb0673baaaccdb218263fa459206fb9da724e43d5a94fffc73e0f4821",
+      "backend/tests/test_root_cause_v3_partial.py": "6b9dd1a8d1f3fadca46fa798247eb5a8079396dc99ebe387aca6af284f7bcd10",
+      "backend/tests/test_rule_benchmark_acceptance.py": "a812e3205bf205b7f9f1d7c0281c711bdd93e780eb2d8b773b15ec94ada133a6",
+      "backend/tests/test_runtime_ownership.py": "c6cd40fc25cca1c82476814b32af63665cdf99933d0dc49b3334a2d8c8ceb52f",
+      "backend/tests/test_session_isolation.py": "ce276f299001e3f69af10b0481478a1e1db0ccced6b9ae329ac27f6473a2b8ec",
+      "backend/tests/test_snapshot_scope.py": "6adc0aaccddb7b575c9e91a3cadc2f6c8ed5b79c110228d22f6860554133ddc2",
+      "backend/tests/test_source_collection.py": "966d6d388450e009bdff7bf28003e60801c0483829abbd49e0060e096fadf1d1",
+      "backend/tests/test_statement_api.py": "c6dc1f75fa4abffe8ed1b6bbf2621e6dfb744b61daabc3618b657a7caa7578b1",
+      "backend/tests/test_statement_store.py": "a968a68761005bbaf97ceb780acc2332ef87d5cedb46affe2efd0126375d54ac",
+      "compose.yaml": "b0ff125ac51b92b78e123c4dfd16ce583a04ca21e528f53fcf8fc14b977f0288",
+      "datasets/__init__.py": "b4c30b3c8a9e381c081a79890bfa602f0005a19b2e8b2cc43fc633d0d988aa29",
+      "datasets/annual_reports.py": "86767b60d6abed79a6b23ed70916cbc340d55e5ea66788d83ddb90aac52d893f",
+      "datasets/bpi2019.py": "c87c48add085c942f178a5cdf3fa3a63367f7e6f75d0c7dc17a7eff42d75063f",
+      "datasets/bpi2019_adapter.py": "057b0142d29d653ab8aaad43c3c01cd77599527115a061583e87dd2f2866c19d",
+      "datasets/cord_receipts.py": "037218621fe726ea50f65590dee3b979badff1636c3c6502ff0fc64e6802b434",
+      "datasets/finqa.py": "7e31ed96eec6aaaf0bcb7029e93c6909983c316c036fb40611d5c874aeccfcb7",
+      "datasets/generate.py": "e37e9746ffabfc94d7400bc72441751b2598764f75759c0e9e3a5a8cf7cd1d0a",
+      "datasets/generate_ocr.py": "4719430e30f4dceec709d54886172d781f130a3668ed15b88c5aa7e8310f6f41",
+      "datasets/generate_ocr_header_boundary.py": "93d7686be4891cf6244f886c2fdf4011f5ca43150846fa3d2908249dfa982d92",
+      "datasets/generate_ocr_pdf.py": "e233acb4a26d486f1f82b763e2a8a87bc5aeb3fe99ae6963a34912ee804d481b",
+      "datasets/generate_ocr_tables.py": "fbc5a0c5543fc7c955e659ada19b7cc840f7654969e564207aeca0fc89d6a9b9",
+      "datasets/generate_v2.py": "2c249d5fc2a99e48fc8542fbd21a14028c9e56a77beda348aac8d8fcd8ffe2f9",
+      "datasets/generate_v3.py": "4db3d6db6c56414915d1286871c1fff32d25fe3ab4a9c5ffefdcfab5430dca2f",
+      "datasets/mof_vouchers.py": "02af33e181ae57e2558e71364d6230e89353835dba6dd287116acc838f34dc7f",
+      "datasets/official_cases.py": "d14b05c58996570c13bca915c4ca85f6bb5f92e0e2021447ff96e4e54ad8ce54",
+      "datasets/README.md": "454259bbf7de75195ba1d6c1c361b0aa56b19aab0d560779e5f77a02211fe2ab",
+      "docs/annual-reconciliation-summary.json": "5225b88b53cc2462dc127fc94394a4478ca0e06e44e6549e378cc24df1b14cf5",
+      "docs/annual-report-coverage.json": "cea7dd5ffcbf500a7ad9ea0c3bb70bbdf94eb04bc9b6efec4149098187307f7a",
+      "docs/annual-report-sources.json": "53752e5b6345adf1cc91645ec866bdb2702c7892be4f42a1d4044d0102f75238",
+      "docs/annual-statement-component-coverage.json": "51cc913815bd19bfdc8720ec59e9f751f629aa3b211eb8c88df80a4485114f57",
+      "docs/backup-restore-validation.json": "9ff8b70bb7c7cbe8ec5631f8d9789fed6f6c409e3b8224c44abee0292f3fccc7",
+      "docs/beancount-validation-summary.json": "ce139eb294c3e26811124c811a9412e0e23922e50816e5a3a7be92d2a0557e93",
+      "docs/borrowing-live-validation.json": "80eb768f0c0f3545cd6cb130da6440d8c56695fbeddfd5facdb6ae3fa1e61890",
+      "docs/bpi2019-adapter-validation.json": "66413bed2cee9910060ed265cfcdcf590bdfb7a39e72d814c8398c6aed4627f9",
+      "docs/bpi2019-coverage.json": "7ad521416ca4532be8de636a9fc3cad5986f279ae82127bb4ae9fce94c8802a6",
+      "docs/bpi2019-process-rules-summary.json": "5586c28ece552311125aebdfc1726709e75cff8f452da532abf86e79a718d2d4",
+      "docs/clean-checkout-refresh-validation.json": "f0eebbcf5b5d32a7643793a7ea79f9df265508292638ca050ba3e995c5cd7724",
+      "docs/clean-checkout-validation.json": "20d849297368ff3cab5618427b448f71e46cf9226e8b84f5c3e6006cb02b0022",
+      "docs/container-restoration-validation.json": "eefa7772972d448b3d7709150714c6d9d37c0d69fe1245e3bf7dac3f2170531b",
+      "docs/container-revalidation-validation.json": "a8a240c793600fc68041fad519083b419d16766f80f7fa2f5c37fe4522cf4bfb",
+      "docs/container-runner-validation.json": "bcb998565f0676b53be37393616037ba04d9ef95230ab852c35b1649002bbefe",
+      "docs/cord-ocr-validation.json": "d20dd066c5c6b35700aab11925901f4156c791db0be17589449e3a62046f453b",
+      "docs/cross-platform-readiness.json": "c0a5dc540c2446a2cbb8f54b0921b3f1245177c4f95d8b96fde1e2eae779e60b",
+      "docs/data-sources.json": "5872b83009432da2c59d782906b71afcac403de0aad75978e59d42ecfb76195f",
+      "docs/dependencies-frontend.json": "2b1dd023354c8a3d75cc2392759ff27988d182087b3e0cf2c8160a9f1cbcbf69",
+      "docs/dependencies-ocr.json": "2b044a39d8c6a299336d7e8ff957bc57dea76d4bca1740fba909f41810832bc2",
+      "docs/dependencies-python.json": "3b6c57830b534cf8d70a69151f869b8410ac536e4e17d9c921f91da98628b092",
+      "docs/dependencies-retrieval.json": "89e67f23e55dc500aabf55d294c893d0269223b55b2e51c6fb386f719bf8c675",
+      "docs/erpnext-semantics-validation.json": "0d62484596e7e0a378a80efd898a222f04aa33fbfbb4fc6efcb5d78f796aeb3e",
+      "docs/erpnext-tax-return-validation.json": "bfd50989efb884cfc80cb92eee5b09396d1ceca75ddd537ad89d4641afd57449",
+      "docs/finqa-coverage.json": "76f6d1fdd83edde46f8b2672a65dfd34f4f17b2997d6b5c13d2851f73a39452e",
+      "docs/finqa-model-pilot-v1-summary.json": "81d62def38252ad1780654dfed6db0898489965fc215ff6fe283fc5d3d3a300c",
+      "docs/finqa-model-pilot-v2-next32-summary.json": "5a1ff96743dd2288d688ac5b1593616c491792473931be5ccc6be5b6239b4b36",
+      "docs/finqa-model-pilot-v2-summary.json": "93a6ead5d65cf7af64360b588fafa93f6dfdbe2344fad73ee512b5e22bf1c820",
+      "docs/finqa-program-replay-summary.json": "aceb2fb5c9eddf32d6e247e68a816db263d89a19b8488a88f18b6e575b826ded",
+      "docs/finqa-program-replay-v2-summary.json": "07749dc498186468dae015616f4c17ca1215eba734200337326922de8bda656b",
+      "docs/finqa-program-replay-v3-summary.json": "7e40192260987664d4a563ad02fcc65318e9eb2ddb1caf0619d486fe6e3c1be3",
+      "docs/github-ci-optional-validation.json": "b5ead175997fe9303c38bd3f9f83dce799cc0e42ee2add4d77e75023132e3805",
+      "docs/github-ci-validation.json": "3c27d400aa8f15a576681ae40bb4340261f5ef325df66cf39a4a91dab672a11e",
+      "docs/linux-core-validation.json": "79f85109852613bc9d43936ec9fab278ba768dcb95075fcf04570b8b75485fe4",
+      "docs/live-model-validation-summary.json": "80d0ad666009800cae57651b42acdc67db94b0dace379b2210aac35b447f45ce",
+      "docs/local-database-upgrade-validation.json": "32347a1312b7b5bfa51734ff285925bf7f50f38f690fdf08a162a2242eb80b7b",
+      "docs/mechanism-ablation-results.json": "71791effaae94692385fe8a1f0c54f413af8c3268afa04c7db3a90565e765072",
+      "docs/observability-validation.json": "71fc367c3a5f3796724b3fff9a28b3f2ad9590373f9969d24b070feecbc121bd",
+      "docs/ocr-batch-validation.json": "9529da70d5812024fb878184d203be130836eb5fb192b5d519d819911d90d7ae",
+      "docs/ocr-header-boundary-validation.json": "632d6ef800f5f7cf46868b7b6002ecb09a4ed2266d2bd5213262b42d631df66a",
+      "docs/ocr-model-sources.json": "98830626d48543261d9fabc89ab6ec31ba1c666d78b4b02960842fba5f6b2632",
+      "docs/ocr-pdf-validation.json": "666c0d779ca593473ff4eea72877f4e007431c16e18bac2baa103e32de2bb677",
+      "docs/ocr-table-validation.json": "5832b1f4d33d7f1e8578b6cf4fcb65eb267cc3d970476690e23de9ad195b153c",
+      "docs/ocr-validation.json": "42d4ce83f344de90ebaac8d7cf065b24203a5b21fc9188524d70e5ad7b153fc2",
+      "docs/ocr-workflow-validation.json": "633bfa8fa3269683d5b552de2ad85d4fff510240202bbfc863d31a954cf34b26",
+      "docs/official-case-coverage.json": "6bfcf56bf294dd7f877b3a7d17689729fa1f64a80721c50e4d0ce909f6510ef1",
+      "docs/official-case-sources.json": "bb5407326e12eb4d265d9e1faafbef72e24c7b259b2c8aab6af348b7b0d7d817",
+      "docs/official-policy-review-validation.json": "512115a04ddfad6720d3afc9028f8ca9ed40addd787bf9d58df94be48a8635e7",
+      "docs/official-policy-validation.json": "f287e58f10f078aa45adc3fa3a82226a64cf292b3af5256d29bf9365d26a2ee6",
+      "docs/official-query-retrieval-validation.json": "9045322ec17f9979756a8789c268c502531c6425ac3bc7a5606aa195f0876514",
+      "docs/openapi.json": "4b35a3ade348ac2f2bcf4303e6a99473400d1df3dbc751eabe7d21b3743838f7",
+      "docs/packaged-evaluation-validation.json": "de66aad9e40785b327a31b993958147b0330a42a2513cfc186d5d400274575ae",
+      "docs/persistent-retrieval-validation.json": "59b210b4125c7da0c0ff178726f806cfbde850fc3d2aca85ef25a1c822ddc3e8",
+      "docs/postgres-backup-restore-validation.json": "a696613ca151197bd3870ec3f519c453b93a62836f37e3c2551becbb3a9f3da0",
+      "docs/postgres-migration-validation.json": "d94c16682061a607959d96b2dddf26f03ec71a210113eb64434d4486553bbcf5",
+      "docs/public-checkout-v3-validation.json": "569799c2b1b4dae9931d43b6d4da8e840482e8c28570b9200af7b8319815c2a3",
+      "docs/public-checkout-validation.json": "bc500b88d42162ebe6538180effebfc98ac2071a8d0613bb9681a3619091070f",
+      "docs/public-data-closure-validation.json": "191e5e5ef92413cbdd9ff34ae8be58d81a2b3fb30e5f82b63c433ea0450342f1",
+      "docs/public-delivery-validation.json": "085367ff0d5c14482aeb2d00c4a296c9757d5675b6ce8f0a11110cdd2a9c1a23",
+      "docs/public-import-validation.json": "ddf994033ebd25a19521c69c91bd03909aecfbe2f687844ec3592ccafd86f11e",
+      "docs/public-ledger-v2-validation.json": "9a5dd403e91cc5ae86af1253cdbec4bcf4642a18e4937b2d21b38acf0bb82e50",
+      "docs/public-ledger-validation.json": "a63c5fba33672f20652f976d87bea9253cbca85d3de90870d9d5ed28e9072c81",
+      "docs/reference-provenance-validation.json": "ae3523f5925c5e745997564f9d448a279d8bdc0f42bbeef78cd0be7802dfd683",
+      "docs/reference-workflow-validation.json": "bf963ef20f49c45e096a44ca1c1e3ded39d5204cfa26caad27eed2c96d1f65f0",
+      "docs/restored-run-validation.json": "d7d61ed71f2208772aedfa62c18abdc6776e41afb2faa500084b4331bbc452a8",
+      "docs/retrieval-abstention-plan-v1.json": "7a7fc2f66265997bb89fcfc20fba97119e7116bc1ef693f8917bf7306e742497",
+      "docs/retrieval-abstention-validation.json": "1ffe67bd5ee42b5af8107435915533b91a507d136c28492a9d795016911fa868",
+      "docs/retrieval-evaluation-ui-validation.json": "5860aa90e3f2c42287824734d7c5fe85a8fb386d8f82c20b710bc3f6015642e9",
+      "docs/retrieval-model-v1.json": "588ee2f1da01c50d4f19a3b9bfa847b67e22c8af2623c08843e5b10c2e7c94e3",
+      "docs/retrieval-sources-v1.json": "473012feccb6f74a3001e97c50d1453ca187e70f41696b96d235a1de7ec66741",
+      "docs/retrieval-validation.json": "8c419c40c249b3fbc1a5589003d83b2c02f09036ccfeca1eb63a3b52ffa02422",
+      "docs/root-cause-baselines.json": "b5d5a7fc1eac2342e9f7a0992875cfa2a1ff48b94d3e38c148985e63949d5c1c",
+      "docs/root-cause-results.json": "0de31ce2a7353e61270400c27d405b1327ea2c32a9c269aff159d016d6191b34",
+      "docs/root-cause-v3-sealed-plan-active.json": "7bd0be86f920048e74efda5892141dcfe9ab20c0937fbce5872e3ff537f56878",
+      "docs/root-cause-v3-sealed-plan-multi.json": "2fb8beec1a4dbeede01c8bf72b41b9e3b8b46e03c45f4def986500fec34f67a1",
+      "docs/root-cause-v3-sealed-plan-single.json": "1184179edaca2c2277341f5aa112eb70ff4847b79170e70d802ff14fe30d9d97",
+      "docs/root-cause-v3-smoke-plan-v2.json": "7bd96b1ddf6768fc4414bba85ee91351021df38ba6ed4fdc0cc33cb2d764f5cd",
+      "docs/root-cause-v3-smoke-plan-v27.json": "9513b2b74524537f0a24d014ff51c7dd0e2281adf7d2721c48688fd2f7cfc324",
+      "docs/root-cause-v3-smoke-plan.json": "db5ead82070997a0b50e0508283c03658e48d7f2e99ee592c60eb3e168eeb1b4",
+      "docs/rules-benchmark-summary.json": "fa1a2ffe03dc8ac13bc7f46373b5abf3123802dd39ec9a5e537b5532d34e5d5f",
+      "docs/test-isolation-followup-validation.json": "3a4cda2e5f973274c7b6226864a1144839365dcaeaeaff71816c9435d62bc051",
+      "docs/v26-plan-preparation-validation.json": "5bce2d0e014d39d3891813b5929797b2f730069eae61d3e3e965d4c48ddba44a",
+      "frontend/Dockerfile": "04b2c3367c9027b9dd05ebebd01ad179643e2e2d4a9c1501689c3d23fe091cc3",
+      "frontend/index.html": "7943fe1065895741bdad5c1de356fb4b13a18eeb5e49b7be9f5b74faa19698f5",
+      "frontend/nginx.conf": "f58efb5ef9c1afe2ab831999a4bbe877deb7759dc9b7d34d36c2eba0c889d226",
+      "frontend/package-lock.json": "960eaeae1a5a616c4ce0544ba2b38a35d4a2368d892cfb5b60806a99a4487558",
+      "frontend/package.json": "fa09d245b6ea51fdd86b67898e2656ab8b6ae37d2d36c93c0cbb5f05af7b75c3",
+      "frontend/playwright.config.ts": "0a8b7fc88ab756e95043de47bdf757ca6709afdf1abdab31bac0526f9c5a4a32",
+      "frontend/src/api.ts": "e1344e17b1d2ab871374d20ab5d392bcda7d632874437c05b9c5534eaa115f7d",
+      "frontend/src/App.vue": "edb67c19dceb4d676701f827b8c4b8e39ab6c9f4d7aca554e3be429f6e7bb362",
+      "frontend/src/components/BalanceChart.vue": "16b5d0dccf363ac0efb35adead514784eb4b0c51de800c8163ae86c2b9c8a404",
+      "frontend/src/components/DocumentPreview.vue": "53adc64da630404b87f42c913eca24388fe1f14211cb8f2da763b28286caf968",
+      "frontend/src/components/EvidenceGraph.vue": "a78cf908bb5c9030f50447d50e3445587d659bb1ff0241c00d403b3319f7b838",
+      "frontend/src/components/EvidenceRequests.vue": "271906d072d35af36696f27d82fb2f7af4ea7a1326556c0520c83d75e332e762",
+      "frontend/src/components/FundsPanel.vue": "caa9c7588337b09173d61ccdc340ece0ade8ed17df0004ed24dabb7710025179",
+      "frontend/src/components/Icon.vue": "b3a82eec7edba8f5b0b3421064ba2cc8cf423ce681488b1345c496a246378147",
+      "frontend/src/components/InvestigationPolicyContext.vue": "08f88582c9311b052163a1ce9157d6c5ef2ec8051a6861079f63fce38449de8b",
+      "frontend/src/components/InvestigationResult.vue": "8d3be4e465e47d95a5e65b8e8bc708eb792a746a7c0d7872fd3108c1b08f77bc",
+      "frontend/src/components/NumericEvaluation.vue": "323e97653799698ded3018626670b2bd66ff55b84cfb03f8e82e4400e4c4c430",
+      "frontend/src/components/OcrReviewPanel.vue": "cf3def263ba298332208451d5ce102db943e52d19eee62898beea4f061a83b8f",
+      "frontend/src/components/OcrSourcePreview.vue": "a2f633aa85d2f810cdaf25d57a5ed6a735a16296e2c632b58b5c7f16ca3e0097",
+      "frontend/src/components/OcrTableCandidates.vue": "ef5ec678d0245e31e4cbaa85f6d51286bfe4db9f9f46113d05d5ced8d03abb9e",
+      "frontend/src/components/PolicyChecks.vue": "b856f38badf7a1ed3a57560e313b831d98e552049394c795fb38c664ceb71991",
+      "frontend/src/components/ProcessEvidence.vue": "d1cfa5ff363e68e6a48e412179f0d5b31212fea13aa78cc06d1e705e37ae7e1b",
+      "frontend/src/components/ReferenceIndexes.vue": "ec35adaa38d6dff07357a94dbeb795fa3dccee8c49036299cd631da66bb0dd23",
+      "frontend/src/components/RetrievalEvaluation.vue": "a681143bd8ed56c6ee61ac40b8fd8ebff230ca2848805a6d9e807d69b91a0dc1",
+      "frontend/src/components/RootCauseEvaluation.vue": "216d0093fa9155bb386daef7c688877a027c51cf46565055fc76f6b99e46b716",
+      "frontend/src/components/SignIn.vue": "14e793485678f61814f668b3b6612a9fb625997d51d92e1ab92383603246dff1",
+      "frontend/src/components/SignoffPanel.vue": "0b25e2ad61dafb93deef946d334419acc5f8713f380862bf9f068f52aea775fa",
+      "frontend/src/components/StatementEvidence.vue": "3b504a3535c57998f8cf4e4e7968395897b585b701a0f64147f81e96dbc02bf4",
+      "frontend/src/components/StatementPdfPreview.vue": "dd501cf5fe489c9fbcd6ce56e49d182975bb21277bfc87b3737cd07fb59aa198",
+      "frontend/src/generated/contracts.ts": "f0a84c27d151c162edcb89206870ed25ed4665d67b90145f9e51c9712d3910c2",
+      "frontend/src/main.ts": "376d6b79d3eb52d0193d316f5b32e23251fc6d54ff0fa84094a3552e28e1286b",
+      "frontend/src/ocr.ts": "d4556d96a765e74feccf220f02a69a53b108471a00bedcc92cbb4c9f38aeb28c",
+      "frontend/src/style.css": "0e04541dbd3a384de75fd7dbfe0c32038de45156d8cfc3cbbd6906ce2d046bad",
+      "frontend/tests/evidence-requests.spec.ts": "905d7ecea160249bee9d874e71d13699151326e5edc0498c66f90de5dd1e7f91",
+      "frontend/tests/investigation-policy-context.spec.ts": "13fb60708bb7383b617ae3681d05695e1ed7241d783b057635a02477e62c9b0a",
+      "frontend/tests/investigation-result.spec.ts": "cae660cb6c4a9b0fddbbe28328bdb7770a7ca24d4d2afaea481dc30c48c6b104",
+      "frontend/tests/navigation.spec.ts": "330f1fda0ebccb2be1b288d544cf9873cf8b45138a840c6822cbcae8ed29d255",
+      "frontend/tests/numeric-evaluation.spec.ts": "126e94ad004f5516a65a7b826ea6d2e2b84a29f8f16df794aa135412b61277bc",
+      "frontend/tests/ocr-batch.spec.ts": "db1c3944dcc649fac1ff3724add185b70d7f6ba4bf5e6b8cc81bc896f2fbd7e7",
+      "frontend/tests/ocr-tables.spec.ts": "430b149717a90726800e1a1cb0ac7bc78ae5a9dd5fdbc4fdd14079ce301891b7",
+      "frontend/tests/ocr.spec.ts": "b0903aef008686adbb3c482c280998627947b84619e8d9092f3178d34908bec0",
+      "frontend/tests/policy-borrowing-live.spec.ts": "5c86229a44f9cddbe751338dd2dd0fbbde61b28291bd85f923a2046b54c1f915",
+      "frontend/tests/policy-checks.spec.ts": "45a104c2494349e942ca2c22264bb677f50886259a1c6a30b34a76a084d60ca8",
+      "frontend/tests/policy-revenue-cashflow-live.spec.ts": "943498c2ee867df01568b875aa62aa8f9cce12267c52050d8c4f002ecfd91e20",
+      "frontend/tests/process-evidence.spec.ts": "62293409b8c515636e0ef1a1fa5f1f00a991df1a16be55e3638faee97270d9df",
+      "frontend/tests/public-vouchers.spec.ts": "b894b296d2eda7c4ac98784f199abf3d0da3dc189acec6cd70522447b6d9c847",
+      "frontend/tests/reference-indexes.spec.ts": "1198ca20a4680b5a7756a41164d6e686abfd376937a15b68a4c181c94807e67d",
+      "frontend/tests/retrieval-evaluation.spec.ts": "a4a570f3587fd558f81d476303d28c60d46b77544ad3c70c5dd7cadd3b506396",
+      "frontend/tests/root-cause-evaluation.spec.ts": "c50bcee950ac6b1871356cb3c05f5631b52a79ef5d4458d97148ec027e66aac6",
+      "frontend/tests/signoff.spec.ts": "4b833d2a044b5a543d218617cbd8f708a95a5c152e7ed0122b0e042c1042a9c0",
+      "frontend/tests/statement-evidence.spec.ts": "7f00a405296f9b5bae00386f66f56d96e7f3e6c3953906e4fc0ca6eef0eb65f2",
+      "frontend/tests/workbench.spec.ts": "974141e0438e3b1634ba7ce249aa36d62ec3ebe8e28460d478eb571433f7a926",
+      "frontend/tsconfig.json": "42c944cb81bad88d299834bd3230456b130d4ee874e98fa1b7ba54fadb37b65c",
+      "frontend/vite.config.ts": "8ab8192b4792d154afead676481ce253462b9a819eb18fd5deedc61d71f69f80",
+      "pyproject.toml": "7e6d4ea0095e23554b6175f3e5768a5cabb0881b876d990871c75a0ed9fac991",
+      "scripts/backup.py": "74d790f4bb3ef1dadc10ff46782751f7ba30d6cf9d70e01ceb4dd27db33abe12",
+      "scripts/backup_manifest.py": "687e417883122f67b7b9a83ef2b81de9ef18e573a359ffba98d48b1230336b59",
+      "scripts/build_review_kit.py": "6c23573327e912b4fdc695de8861b025d3b944c1f183b25ae314c45b11372f2a",
+      "scripts/collect_sources.py": "014381563dba8a6bcb816f1a6ca492e85c3cee4c8e741cc590101f51b10d2fa0",
+      "scripts/dependency_inventory.py": "627663252bc558d2ed689360b5b0bea1156007d60a114c3fe29dfcd537a2c2f3",
+      "scripts/export_erpnext.py": "5eb9763d7712cdd7f9fb8c47024a629bafb5e3788c0681fac9b459e477dc5aa3",
+      "scripts/generate_contracts.py": "f8eaf2466d25abfd204babb739905652481a908e1713afe3b5b9089c094460dd",
+      "scripts/guard_paid_run.py": "09ac4b5b2029d6ada196033a80400bfab06d7b185f58538d729b5aa36cc43c6d",
+      "scripts/import_statement_snapshot.py": "2672cdffa055502e7e302f1fe0619011bdab7c1e47960cdfc9c56ada5161029e",
+      "scripts/index_sources.py": "61946f1a62ffb4e81fcaa67ec4e7914acb2ff8b2aad9f5a0ed84b58d934fc5ac",
+      "scripts/ocr_image.py": "f786ce9d6cb9b991db9744c3a0b83fc5a1e8ffbd2174495582c4b0d4fcaba58c",
+      "scripts/ocr_pdf.py": "bea18167764bb6ebdd58e7303ea1a3bd0962b0cb76d396fcf137e5dd23d4569e",
+      "scripts/postgres_backup.py": "4233dc880e4347ef01aa653f2430baca10c035b92a3a61b5471da98248a59b0d",
+      "scripts/prepare_local_database.py": "230b41803b28cf2e44944bbdb9d325877c49b4001a85a082e82e71daa9cd817c",
+      "scripts/prepare_ocr_models.py": "7abb87c3d7f127ade3f58e106d1d64ba62d882e8c095b28f17a125a1fddc2545",
+      "scripts/prepare_retrieval_model.py": "a5c0a63508ecb7bcba72f9100d5d3ca91be094765165b1391278741c34e3de09",
+      "scripts/prepare_root_cause_experiment.py": "c5528f958eea5c01acd57cc0b802d70872244a835d88bf3f6e0dbd2a8da52bea",
+      "scripts/prepare_root_cause_sealed_plan.py": "c1785a6334127a6772a421afe24dc5b7afc02d360ca20bc35f59846a06d880f2",
+      "scripts/restore_local.py": "e8b57f9e3c21d6557e3903dad7f208a435be2ec00053bd505c98e54059218a7a",
+      "scripts/retrieval_index.py": "ba3b38cfa081b6fbddbab3c7d03f398650cd3df0126d982ebd3755b75a359480",
+      "scripts/run_investigation_smoke.py": "adc93e69062e83313a3a46e91b4f66fb2f2d534b3748d72b2f44a751f286feee",
+      "scripts/start-local.ps1": "fc4ac78b63ab6b881fd4244235f6c60f41428167b5693383d0a0e2f06ac8f419",
+      "scripts/stop-local.ps1": "764d9e59765b94084d82fbe46ca8c4be6a67a86c9797adc48665abffb694cc5b",
+      "scripts/summarize_abstention.py": "dc48997784c5947d379b5328c5a264a00df56c88978998d7c19d827d583055a2",
+      "scripts/summarize_erpnext_returns.py": "72545b04c644341a76d4a969d4e20f04b22b53e5aeca63c2ee75e602164a541e",
+      "scripts/summarize_erpnext_semantics.py": "d2b2ac766702692bcc797d2292287ec4b037db00df2122d1a5e9f03e7d19f06b",
+      "scripts/summarize_live_validation.py": "b70f205dd4de932619b272a2be6978855357baebaa3cbf2f11ae7efb193b1467",
+      "scripts/summarize_ocr.py": "7bceb12d3a79dd2c24eb9e5dd84ce377b9fe5ad2e97d4f5c73055d31e8a30595",
+      "scripts/summarize_ocr_pdf.py": "93bcb65145e13af99228f85ebd536b4893e8df711c734122e22ed175d4ef5da9",
+      "scripts/summarize_official_policy.py": "8bd179c34af5fb7c4b17b5c6fddc7cc22584b3704e7bf47dba749320d45d4d21",
+      "scripts/summarize_process_rules.py": "43327f4bb8fa1ee5b01ac8da6bf40f04847e42fb2d24172a1a5b3ff6e2ac644d",
+      "scripts/summarize_retrieval.py": "45756176edce3219723f27f2a20a9cbb4c2f73e7957d877051f1d241cf27f6ff",
+      "scripts/summarize_root_cause.py": "a0f511018523c78ba05a58e04c178c61ce48ace564a3f3a02cb78eb6d10245ce",
+      "scripts/summarize_statement_probe.py": "1296f6f7cb1d3eb1a5752e33b9cb1fc9e61fc7146093eae33cc29f29ae0a2f55",
+      "scripts/summarize_telemetry.py": "0bb45c53d76b0a1f2dba29f99496dc2ff5a4d8aeca714ef6c9bc6974d7970aec",
+      "scripts/test_deepseek_live.py": "a79216d57d1358ccdc5e02b38ab779993272c9d374a432d47c1b152ff54480c6",
+      "scripts/validate_clean_checkout.py": "da512ad2116b2d3d5fe6fdcd42f056900626dc13862f28ac572f57176707f8f8",
+      "scripts/validate_containers.py": "5c00d2b9d8f80480a5b7313c979e1516af59cfbd9da9c0b41ec5eb9688554312",
+      "scripts/validate_erpnext.py": "803f8d563b34adc6a45002f6a9e8d3d78805f216ea2a0db9f3553c3cf47ff4ac",
+      "scripts/validate_erpnext_procurement.py": "c2702c0701be1a8e8e65e467dff9e25fa27109e45d0561c4a16445d75728e78b",
+      "scripts/validate_erpnext_returns.py": "5ef64433ef0842f2acb0bfc81099cd696ae6284f95169de69adaa89113b6a314",
+      "scripts/validate_erpnext_semantics.py": "a5c09b60c08cd073426b1d1200e98cea1fb2e623cb5e03afc8db463a798dab0f",
+      "scripts/validate_investigation_policy_runtime.py": "5e1501121c6b2393e772fa5df2cf110e6e37610b080c096c9124abd2c8546b21",
+      "scripts/validate_knowledge_runtime.py": "526eb59a8a78b252405717519a70b55f9e908deabd8304af4cd1e99aa54d1238",
+      "scripts/validate_linux_core.py": "ae68dac18866486dfaaa2bece79022f06ec05e5a0573e2fd16a58e08906dc429",
+      "scripts/validate_policy_runtime.py": "b46ee10227ded9dfae6eaa9c377af65484845f97f475b8b290c74f533df8f2dd",
+      "scripts/validate_public_delivery.py": "29ce20f4f1bf62cf98191f7bec1f610b73802080bbfb72a8021af812e76dfe26",
+      "scripts/validate_public_ledger_arithmetic.py": "9f0dbaae24c81758b5e2319de3b2c310048c3d1e5cecddd3c4139ed579a6a346",
+      "scripts/validate_public_voucher_browser.py": "ce5430d8a26339866299895c9f28d39c27d0dff832cf7593abd7872799ed7c4c",
+      "scripts/validate_public_voucher_loop.py": "54da4e234996f539a74c5dab0a18df576dc9271e36b61d852659f946ea70db4f",
+      "scripts/validate_restored_run.py": "a1da8045b9766acf094d718083570ec0e8d54245f12bbb56c003edc2881b40da",
+      "scripts/verify_process_locators.py": "3471cb929bb38666e2fc9bcfa37b64e25a798d3640acc6484857a9733038b489",
+      "uv.lock": "9a0dd074c8e1be0fb2715cac081f75802b604cb22506b9957248ebf1924b78f0"
+    }
+  },
+  "other_checks": {
+    "frontend_build": "vue-tsc -b and vite build passed (observed exit 0; Vite 20.60s)",
+    "contracts": "generated in a temporary DATA_DIR with blank provider key, then --check passed",
+    "ruff": "backend scripts datasets benchmarks passed",
+    "git_diff_check": "passed; existing CRLF notices retained"
+  },
+  "runtime_usage": [
+    {
+      "path": "api/runtime/ledgerlens.sqlite",
+      "runs": [
+        {
+          "mode": "rules",
+          "status": "complete",
+          "usage": {
+            "calls": 0,
+            "tokens": 0,
+            "tools": 0,
+            "reserved_tokens": 0
+          }
+        }
+      ]
+    },
+    {
+      "path": "browser/runtime/app.sqlite",
+      "runs": [
+        {
+          "mode": "rules",
+          "status": "complete",
+          "usage": {
+            "calls": 0,
+            "tokens": 0,
+            "tools": 0,
+            "reserved_tokens": 0
+          }
+        },
+        {
+          "mode": "rules",
+          "status": "complete",
+          "usage": {
+            "calls": 0,
+            "tokens": 0,
+            "tools": 0,
+            "reserved_tokens": 0
+          }
+        },
+        {
+          "mode": "rules",
+          "status": "complete",
+          "usage": {
+            "calls": 0,
+            "tokens": 0,
+            "tools": 0,
+            "reserved_tokens": 0
+          }
+        }
+      ]
+    }
+  ],
+  "new_provider_model_requests": 0,
+  "working_database_hashes": {
+    "ledgerlens.sqlite": "1dc8e29c564d6eb649e86b33910986621bc4c9d2a232738eb350cbe03fb1c6cd",
+    "checkpoints.sqlite": "4bfa720802f317e2b85607ed54c44d467d6bb6b271c4dc8c8ff9a05c52d1235d"
+  },
+  "owned_services": {
+    "api_port": 62074,
+    "ui_port": 62075,
+    "closed_after_run": true
+  },
+  "source_integrity_rechecked_after_full_backend": true,
+  "ai_review": {
+    "model": "gpt-6-astra",
+    "read_only": true,
+    "rules_examined": [
+      "transport_fulfillment_cost",
+      "lease_cash_flow",
+      "construction_progress_grant"
+    ],
+    "actionable_findings": 2,
+    "remediation_followup": "Original two P2 findings closed within the bounded implementation; no new clear blocker in scoped static review.",
+    "agent_ran_tests": false,
+    "human_signoff": false
+  },
+  "limits": [
+    "Same working directory with installed dependencies; no new clean-install or remote CI run.",
+    "Full backend: 25 skips and one existing JUnit record_property warning; skip reasons retained.",
+    "Transport projections add explicit current-period amortization assumptions; all 191 expected labels unchanged.",
+    "Public XML examples and explicit synthetic policy hypotheses do not establish enterprise facts or model quality.",
+    "Original model negative findings and incident post-backup completeness/unknown billing limits remain.",
+    "Engineering subagent reported completed files and tests before its final turn errored on workspace credits; parent reviewed code and independently ran full regression and real delivery.",
+    "This summary is generated after source verification and is not a member of that frozen 372-file inventory."
+  ]
+}

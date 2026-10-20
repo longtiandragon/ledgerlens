@@ -1,0 +1,218 @@
+{
+  "schema_version": "borrowing-live-validation-v1",
+  "date": "2026-10-15",
+  "status": "passed",
+  "policy_version": "policy-consistency-v8",
+  "run": ".local/reports/public-delivery-v8-live-20261015",
+  "report_sha256": "14362b4528303b981ef33f833af01db90f36852a7f106938a69283763d7c307f",
+  "stages": [
+    {
+      "name": "collect_and_verify_sources",
+      "status": "passed",
+      "sample_count": 2
+    },
+    {
+      "name": "isolated_api_workflow",
+      "status": "passed",
+      "checks": 45
+    },
+    {
+      "name": "isolated_browser_workflow",
+      "status": "passed",
+      "stats": {
+        "startTime": "2026-10-15T05:55:04.145Z",
+        "duration": 66065.27900000001,
+        "expected": 20,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    }
+  ],
+  "real_browser_cases": [
+    {
+      "title": "真实借款政策闭环：范围未知",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "attachments": [
+            {
+              "name": "真实政策底稿",
+              "contentType": "application/json",
+              "path": "F:\\Code\\Project\\Project18\\.local\\reports\\public-delivery-v8-live-20261015\\browser\\artifacts\\policy-borrowing-live-真实借款政策闭环：范围未知\\attachments\\真实政策底稿-5225eb7de85b12b2a6aab1c472a6eab4bcfcb4f8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "真实借款政策闭环：辅助费用",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "attachments": [
+            {
+              "name": "真实政策底稿",
+              "contentType": "application/json",
+              "path": "F:\\Code\\Project\\Project18\\.local\\reports\\public-delivery-v8-live-20261015\\browser\\artifacts\\policy-borrowing-live-真实借款政策闭环：辅助费用\\attachments\\真实政策底稿-e5de7d0d6a40776d5794dd0035ed23750f478c5d"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "真实借款政策闭环：选择利息但未人工确认",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "attachments": [
+            {
+              "name": "真实政策底稿",
+              "contentType": "application/json",
+              "path": "F:\\Code\\Project\\Project18\\.local\\reports\\public-delivery-v8-live-20261015\\browser\\artifacts\\policy-borrowing-live-真实借款政策闭环：选择利息但未人工确认\\attachments\\真实政策底稿-40bb26c7be8b8990c7720e716d621eb657f31f2b"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "真实借款政策闭环：人工确认专门借款利息",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "attachments": [
+            {
+              "name": "真实政策底稿",
+              "contentType": "application/json",
+              "path": "F:\\Code\\Project\\Project18\\.local\\reports\\public-delivery-v8-live-20261015\\browser\\artifacts\\policy-borrowing-live-真实借款政策闭环：人工确认专门借款利息\\attachments\\真实政策底稿-897f320a08bc262e832a44698d865f52fd1fe825"
+            },
+            {
+              "name": "利息条件修订需要重新确认",
+              "contentType": "image/png",
+              "path": "F:\\Code\\Project\\Project18\\.local\\reports\\public-delivery-v8-live-20261015\\browser\\artifacts\\policy-borrowing-live-真实借款政策闭环：人工确认专门借款利息\\attachments\\利息条件修订需要重新确认-3e61bb92c00f73611942c34bad2b1cbfc3dc6f35.png"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "downloaded_artifacts": [
+    {
+      "name": "真实政策底稿",
+      "path": ".local/reports/public-delivery-v8-live-20261015/browser/artifacts/policy-borrowing-live-真实借款政策闭环：范围未知/attachments/真实政策底稿-5225eb7de85b12b2a6aab1c472a6eab4bcfcb4f8",
+      "sha256": "43b43a8443631cd9c1ea8ebbff25250b58db882686cd4e5b2b6363c8c9b1afad"
+    },
+    {
+      "name": "真实政策底稿",
+      "path": ".local/reports/public-delivery-v8-live-20261015/browser/artifacts/policy-borrowing-live-真实借款政策闭环：辅助费用/attachments/真实政策底稿-e5de7d0d6a40776d5794dd0035ed23750f478c5d",
+      "sha256": "2fb63caf42c68047b26a716fa1f9435c6959904a891f64a9548ace4282f3c40c"
+    },
+    {
+      "name": "真实政策底稿",
+      "path": ".local/reports/public-delivery-v8-live-20261015/browser/artifacts/policy-borrowing-live-真实借款政策闭环：选择利息但未人工确认/attachments/真实政策底稿-40bb26c7be8b8990c7720e716d621eb657f31f2b",
+      "sha256": "d65f13f29936a4cdf24058b284ca3896ae2e6038d4a90d02396d9ac84b21354c"
+    },
+    {
+      "name": "真实政策底稿",
+      "path": ".local/reports/public-delivery-v8-live-20261015/browser/artifacts/policy-borrowing-live-真实借款政策闭环：人工确认专门借款利息/attachments/真实政策底稿-897f320a08bc262e832a44698d865f52fd1fe825",
+      "sha256": "aac8eac24868d52bca2f40c76170cbbe71afd0601fe0d4304b95c87b8dcf6f0a"
+    },
+    {
+      "name": "利息条件修订需要重新确认",
+      "path": ".local/reports/public-delivery-v8-live-20261015/browser/artifacts/policy-borrowing-live-真实借款政策闭环：人工确认专门借款利息/attachments/利息条件修订需要重新确认-3e61bb92c00f73611942c34bad2b1cbfc3dc6f35.png",
+      "sha256": "f132042344c5f4e38e00b9bb5255626b4aa6dadd52f02dce90dff5f32aff4074"
+    }
+  ],
+  "public_evidence_files_verified": 13,
+  "implementation_sha256": {
+    "scripts/validate_public_delivery.py": "107a763815f91b4dab9328014b305203003cedadb7eb44703ee73accc0975197",
+    "datasets/mof_vouchers.py": "02af33e181ae57e2558e71364d6230e89353835dba6dd287116acc838f34dc7f",
+    "scripts/validate_public_voucher_loop.py": "54da4e234996f539a74c5dab0a18df576dc9271e36b61d852659f946ea70db4f",
+    "scripts/validate_public_voucher_browser.py": "9693a8976d43d22303912039fb2e3baa5fc9a6ec551473e73782866b0a0c58c8",
+    "backend/app/domain.py": "b49e39dd9e544b4bf4568aa04bf7ec54dc63a591efa123fd925331989e693a75",
+    "backend/app/policy_consistency.py": "7dd048416ccf1ef71a90862811b22cb1d5e68d9558156541100ffab5031f0d87",
+    "backend/app/policy_contract.py": "9ef725c7813b47ec030bca01fc23fb41f5ae6bf387ea9f233cc7c7278c3a731a",
+    "backend/app/imports.py": "30e5f20e1c8df799f20a7913f6414098e9c8c922cb8d5959519d42fb748842db",
+    "backend/app/main.py": "0e5ded00d21ac154381db364e16d942b214ceee16103362e39d97acefdbd2ad0",
+    "frontend/src/App.vue": "edb67c19dceb4d676701f827b8c4b8e39ab6c9f4d7aca554e3be429f6e7bb362",
+    "frontend/tests/public-vouchers.spec.ts": "b894b296d2eda7c4ac98784f199abf3d0da3dc189acec6cd70522447b6d9c847",
+    "frontend/tests/policy-checks.spec.ts": "22531c6f4e1105a4bf3adbb3d6684209f860578074fbb32dcb428b7f5d98df48",
+    "frontend/tests/policy-borrowing-live.spec.ts": "5c1575e51f7025929c41ee8541dbaff749d8b81e6e303f252c694e6ab097b0ed",
+    "frontend/tests/workbench.spec.ts": "974141e0438e3b1634ba7ce249aa36d62ec3ebe8e28460d478eb571433f7a926"
+  },
+  "test_source_sha256": "5c1575e51f7025929c41ee8541dbaff749d8b81e6e303f252c694e6ab097b0ed",
+  "gate_regression": {
+    "passed": 21,
+    "junit": ".local/reports/public-browser-v8-gate-tests.xml",
+    "sha256": "7340118a6b136f8d6186e7904f5f26598b83ad0c485fb1ef33df41fdb028dcb4"
+  },
+  "runtime_usage": [
+    {
+      "path": "api/runtime/ledgerlens.sqlite",
+      "runs": [
+        {
+          "mode": "rules",
+          "status": "complete",
+          "usage": {
+            "calls": 0,
+            "tokens": 0,
+            "tools": 0,
+            "reserved_tokens": 0
+          }
+        }
+      ]
+    },
+    {
+      "path": "browser/runtime/app.sqlite",
+      "runs": [
+        {
+          "mode": "rules",
+          "status": "complete",
+          "usage": {
+            "calls": 0,
+            "tokens": 0,
+            "tools": 0,
+            "reserved_tokens": 0
+          }
+        },
+        {
+          "mode": "rules",
+          "status": "complete",
+          "usage": {
+            "calls": 0,
+            "tokens": 0,
+            "tools": 0,
+            "reserved_tokens": 0
+          }
+        },
+        {
+          "mode": "rules",
+          "status": "complete",
+          "usage": {
+            "calls": 0,
+            "tokens": 0,
+            "tools": 0,
+            "reserved_tokens": 0
+          }
+        }
+      ]
+    }
+  ],
+  "working_database_hashes": {
+    "ledgerlens.sqlite": "1dc8e29c564d6eb649e86b33910986621bc4c9d2a232738eb350cbe03fb1c6cd",
+    "checkpoints.sqlite": "4bfa720802f317e2b85607ed54c44d467d6bb6b271c4dc8c8ff9a05c52d1235d"
+  },
+  "new_provider_model_requests": 0,
+  "prior_full_reproduction": "docs/public-checkout-v3-validation.json",
+  "scope": [
+    "Real Vue + API requests; no API route fulfillment or result stubs in the four new cases.",
+    "Teaching hypotheses in synthetic-marked source documents; no independent business truth or human professional signoff.",
+    "This follow-up changes tests and validation harness only; application implementation matches prior full reproduction.",
+    "Full backend/build/new-directory install not repeated in this follow-up; prior version evidence retained.",
+    "Initial 20-test browser pass is preserved separately; final run waits for navigation animation before mobile screenshot."
+  ]
+}

@@ -511,7 +511,7 @@ def test_irrelevant_snapshot_evidence_does_not_change_conclusion():
 
 def test_identity_is_explicit_and_source_bound():
     identity = policy_rule_identity()
-    assert identity['version'] == 'policy-consistency-v5'
+    assert identity['version'] == 'policy-consistency-v9'
     assert re.fullmatch(r'[0-9a-f]{64}', identity['source_sha256'])
     assert identity == policy_rule_identity()
 

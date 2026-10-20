@@ -7,7 +7,7 @@ production policy function is called while constructing inputs or expectations.
 from copy import deepcopy
 
 
-VERSION = 'mof-policy-projections-v5'
+VERSION = 'mof-policy-projections-v9'
 # These inputs explicitly assume that a reviewer has confirmed the conditions.
 # The observations use labelled synthetic evidence, never an actual enterprise.
 BASE_CONDITIONS = {
@@ -20,12 +20,16 @@ BASE_CONDITIONS = {
                          'repaid_and_credit_continues': 'no'},
     'personal_tax_withholding_fee': {'enterprise_is_withholding_agent': 'yes',
                                     'personal_tax_fee_received': 'yes'},
-    'short_term_lease': {'lease_term_not_over_12_months': 'yes', 'contains_purchase_option': 'yes'},
+    # v6 narrows these synthetic projections explicitly; expected labels below
+    # are unchanged. Eligibility-unknown and low-value paths have separate tests.
+    'short_term_lease': {'lease_term_not_over_12_months': 'yes', 'contains_purchase_option': 'yes',
+                         'low_value_asset_lease_eligible': 'no'},
     'lease_cash_flow': {'lease_liability_principal_or_interest': 'yes', 'prepaid_rent_or_lease_deposit': 'no',
                         'simplified_short_term_or_low_value_lease': 'no',
                         'variable_payment_outside_lease_liability': 'no'},
     'transport_fulfillment_cost': {'transport_before_control_transfer': 'yes',
-                                   'transport_not_separate_performance_obligation': 'yes'},
+                                   'transport_not_separate_performance_obligation': 'yes',
+                                   'transport_cost_amortization_in_current_revenue_period': 'yes'},
     'advance_receipt': {'new_revenue_standard_applied': 'yes', 'received_before_transfer': 'yes',
                         'vat_portion_excluded': 'yes'},
     'contract_asset_impairment': {'contract_asset_impairment': 'yes'},
@@ -61,12 +65,18 @@ BASE_CONDITIONS = {
     'construction_progress_grant': {'government_grant': 'yes', 'grant_conditioned_on_constructing_long_term_assets': 'yes'},
     'custom_equipment_borrowing_cost': {'qualifying_asset_long_construction': 'yes', 'asset_expenditure_incurred': 'yes',
                                         'borrowing_cost_incurred': 'yes', 'manufacturer_production_started': 'yes',
-                                        'asset_ready_for_intended_use': 'no'},
+                                        'asset_ready_for_intended_use': 'no',
+                                        # New v7 scope assumptions, not new official facts or changed answers.
+                                        'capitalization_suspension_excluded': 'yes',
+                                        'uniform_capitalization_phase_for_observation': 'yes',
+                                        # v8 adds explicit interest-only attribution; existing labels stay unchanged.
+                                        'specific_borrowing_interest_only': 'yes'},
     'land_use_right_borrowing_cost': {'developer_builds_for_sale': 'no', 'self_constructed_own_use_building': 'yes'},
     'non_exchangeable_currency_rate': {'currency_not_exchangeable': 'yes', 'estimate_reflects_orderly_exchange': 'yes',
                                        'estimation_disclosed': 'yes'},
     'one_year_lease_term': {'contract_term_not_over_12_months': 'yes', 'renewal_or_non_termination_reasonably_certain': 'no',
-                            'improvements_amortized_beyond_lease_term': 'no'},
+                            'improvements_amortized_beyond_lease_term': 'no', 'contains_purchase_option': 'no',
+                            'low_value_asset_lease_eligible': 'no', 'lease_term_not_over_12_months': 'yes'},
     'prior_period_error_materiality': {'prior_period_error_confirmed': 'yes', 'material_to_discovery_period': 'yes',
                                        'material_to_comparative_period': 'no'},
 }
@@ -168,7 +178,8 @@ SPECS = [
      {'conditions': {'simplified_short_term_or_low_value_lease': 'unknown'}}),
     ('LCF-09', '3691861', 'CAS', 'lease_cash_flow', 'operating_cash_outflow', 'unsupported', None, 'contrast',
      {'conditions': {'lease_liability_principal_or_interest': 'no'}}),
-    # 3762833: transport before control transfer, not a separate obligation -> operating cost.
+    # 3762833: v9 explicitly assumes current-period amortization on the related
+    # revenue recognition basis. Original expected labels are unchanged.
     ('TRN-01', '3762833', 'CAS', 'transport_fulfillment_cost', 'operating_cost', 'normal', 'operating_cost', 'anchor', {}),
     ('TRN-02', '3762833', 'CAS', 'transport_fulfillment_cost', 'selling_expense', 'supported', 'operating_cost',
      'contrast', {}),
@@ -432,10 +443,10 @@ V5_SPECS = [
      'short_term_lease_simplified', 'anchor', {}),
     ('OYL-02', '3717408', 'CAS', 'one_year_lease_term', 'short_term_lease_simplified', 'supported',
      'right_of_use_asset_and_lease_liability', 'contrast',
-     {'conditions': {'renewal_or_non_termination_reasonably_certain': 'yes'}}),
+     {'conditions': {'renewal_or_non_termination_reasonably_certain': 'yes', 'lease_term_not_over_12_months': 'no'}}),
     ('OYL-03', '3717408', 'CAS', 'one_year_lease_term', 'right_of_use_asset_and_lease_liability', 'normal',
      'right_of_use_asset_and_lease_liability', 'contrast',
-     {'conditions': {'renewal_or_non_termination_reasonably_certain': 'yes'}}),
+     {'conditions': {'renewal_or_non_termination_reasonably_certain': 'yes', 'lease_term_not_over_12_months': 'no'}}),
     ('OYL-04', '3717408', 'CAS', 'one_year_lease_term', 'short_term_lease_simplified', 'supported',
      'short_term_lease_simplified', 'contrast', {'conditions': {'improvements_amortized_beyond_lease_term': 'yes'}}),
     ('OYL-05', '3717408', 'CAS', 'one_year_lease_term', 'short_term_lease_simplified', 'insufficient', None,
