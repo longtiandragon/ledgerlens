@@ -1,0 +1,54 @@
+{
+  "schema_version": "license-policy-v1",
+  "checked_by": "scripts/check_licenses.py",
+  "allowed": {
+    "MIT": "permissive",
+    "MIT-0": "permissive",
+    "MIT-CMU": "permissive (HPND variant)",
+    "BSD-2-Clause": "permissive",
+    "BSD-3-Clause": "permissive",
+    "0BSD": "permissive",
+    "ISC": "permissive",
+    "Apache-2.0": "permissive; same as this project",
+    "PSF-2.0": "permissive",
+    "CNRI-Python": "permissive",
+    "Zlib": "permissive",
+    "CC0-1.0": "public-domain dedication",
+    "Unlicense": "public-domain dedication",
+    "BlueOak-1.0.0": "permissive",
+    "MPL-2.0": "file-level copyleft; allowed for unmodified use as a dependency"
+  },
+  "aliases": {
+    "3-Clause BSD License": "BSD-3-Clause",
+    "New BSD": "BSD-3-Clause",
+    "Modified BSD License": "BSD-3-Clause",
+    "Apache 2.0": "Apache-2.0",
+    "Apache License, Version 2.0": "Apache-2.0",
+    "Apache Software License": "Apache-2.0",
+    "MIT License": "MIT",
+    "MIT license": "MIT",
+    "OSI Approved :: MIT License": "MIT",
+    "OSI Approved :: Apache Software License": "Apache-2.0",
+    "OSI Approved :: ISC License (ISCL)": "ISC",
+    "OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)": "MPL-2.0",
+    "OSI Approved :: Python Software Foundation License": "PSF-2.0"
+  },
+  "resolved": {
+    "amqp": {"expression": "BSD-3-Clause", "metadata": "BSD", "evidence": "bundled LICENSE is the 3-clause BSD text (non-endorsement clause present); checked 2026-10-20"},
+    "billiard": {"expression": "BSD-3-Clause", "metadata": "BSD", "evidence": "bundled LICENSE.txt is the 3-clause BSD text; checked 2026-10-20"},
+    "vine": {"expression": "BSD-3-Clause", "metadata": "BSD", "evidence": "bundled LICENSE is the 3-clause BSD text; checked 2026-10-20"},
+    "click-plugins": {"expression": "BSD-3-Clause", "metadata": "New BSD", "evidence": "bundled LICENSE.txt is the 3-clause BSD text; checked 2026-10-20"},
+    "colorama": {"expression": "BSD-3-Clause", "metadata": "OSI Approved :: BSD License", "evidence": "bundled LICENSE.txt is the 3-clause BSD text; checked 2026-10-20"},
+    "prompt-toolkit": {"expression": "BSD-3-Clause", "metadata": "OSI Approved :: BSD License", "evidence": "bundled LICENSE is the 3-clause BSD text; checked 2026-10-20"},
+    "pandas": {"expression": "BSD-3-Clause", "metadata": "full license text in the License field", "evidence": "License field and bundled LICENSE are the 3-clause BSD text; checked 2026-10-20"},
+    "python-dateutil": {"expression": "Apache-2.0 AND BSD-3-Clause", "metadata": "Dual License", "evidence": "bundled LICENSE: later contributions under Apache-2.0, earlier code under 3-clause BSD; checked 2026-10-20"},
+    "pypdfium2": {"expression": "Apache-2.0 OR BSD-3-Clause", "metadata": "BSD-3-Clause, Apache-2.0, dependency licenses", "evidence": "wheel ships LICENSES/Apache-2.0.txt and BSD-3-Clause.txt plus BUILD_LICENSES for the bundled PDFium build; indirect dependency of pdfplumber; this project does not redistribute wheels; checked 2026-10-20"},
+    "sqlite-vec": {"expression": "MIT OR Apache-2.0", "metadata": "MIT License, Apache License, Version 2.0", "evidence": "upstream repository asg017/sqlite-vec ships LICENSE-MIT and LICENSE-APACHE; wheel has no license file; checked 2026-10-20"}
+  },
+  "exceptions": {
+    "psycopg": {"license": "LGPL-3.0-only", "scope": "runtime", "reason": "PostgreSQL driver used unmodified as a separately installed library; project code is not derived from it. Images that ship it keep its license and allow replacing it."},
+    "psycopg-binary": {"license": "LGPL-3.0-only", "scope": "runtime", "reason": "Binary build of psycopg; same terms as psycopg."},
+    "psycopg-pool": {"license": "LGPL-3.0-only", "scope": "runtime", "reason": "Connection pool companion of psycopg; same terms as psycopg."},
+    "beancount": {"license": "GPL-2.0-only", "scope": "optional evaluation", "reason": "Installed only for the optional Beancount differential (benchmarks/requirements-beancount.txt); not imported by the application, not in the runtime lock or images."}
+  }
+}
