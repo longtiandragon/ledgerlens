@@ -51,3 +51,50 @@ def test_ambiguous_file_columns_cannot_silently_select_an_amount(content, filena
 def test_invalid_mapping_is_reported_as_input_error():
     with pytest.raises(ValueError):
         parse_file(b'source_id,amount\na,1.00', 'data.csv', ['amount'])
+
+
+VOUCHER_EXPORT = ('﻿日期,凭证号,摘要,科目编码,科目名称,借方金额,贷方金额,发票号\n'
+                  '2026/9/3,记-001,采购办公用品,6602,管理费用,1200.00,,FP1\n'
+                  '2026/9/3,记-001,采购办公用品,2202,应付账款,,1200.00,FP1\n')
+
+
+def test_common_voucher_export_imports_with_every_derived_field_marked():
+    rows, errors, _, mapping, _ = parse_file(VOUCHER_EXPORT.encode(), '九月凭证.csv')
+    assert errors == []
+    assert mapping['debit'] == '借方金额' and mapping['account'] == '科目编码' and mapping['description'] == '摘要'
+    first, second = rows
+    assert first['record'] == {
+        'source_id': '九月凭证.csv#row-2', 'kind': 'journal', 'business_date': '2026-09-03', 'period': '2026-09',
+        'currency': 'CNY', 'counterparty': '', 'reference': '', 'order_id': '', 'invoice_id': 'FP1',
+        'voucher_id': '记-001', 'account': '6602', 'debit': '1200.00', 'credit': '0.00',
+        'description': '采购办公用品', 'direction': ''}
+    assert first['locator'] == {'row': 2, 'derived': ['business_date', 'kind', 'period', 'source_id', 'credit']}
+    assert second['record']['debit'] == '0.00' and second['locator']['derived'][-1] == 'debit'
+
+
+def test_voucher_line_with_both_sides_blank_is_still_rejected_in_chinese():
+    payload = '日期,凭证号,科目编码,借方金额,贷方金额\n2026-09-03,记-001,6602,,\n'
+    rows, errors, _, _, _ = parse_file(payload.encode(), 'v.csv')
+    assert rows == []
+    assert any(e['field'] == 'kind' and '记录类型' in e['message'] for e in errors)
+
+
+def test_explicit_columns_are_never_overridden_by_derivation():
+    payload = ('来源编号,类型,业务日期,期间,凭证号,科目,借方,贷方\n'
+               'S1,journal,2026-09-03,2026-08,记-001,6602,1200.00,0.00\n')
+    rows, errors, _, _, _ = parse_file(payload.encode(), 'v.csv')
+    assert errors == [] and rows[0]['record']['period'] == '2026-08' and rows[0]['record']['source_id'] == 'S1'
+    assert 'derived' not in rows[0]['locator']
+
+
+def test_business_rows_without_an_account_are_not_guessed_as_journal_lines():
+    payload = '日期,金额,摘要\n2026-09-03,500.00,银行收款\n'
+    rows, errors, _, _, _ = parse_file(payload.encode(), 'bank.csv')
+    assert rows == [] and [e['field'] for e in errors] == ['kind']
+    assert errors[0]['message'] == '缺少必填字段“记录类型”；请在字段映射中选择对应列'
+
+
+def test_unparseable_dates_are_reported_not_guessed():
+    payload = '日期,凭证号,科目编码,借方金额,贷方金额\n九月三日,记-001,6602,1.00,\n'
+    rows, errors, _, _, _ = parse_file(payload.encode(), 'v.csv')
+    assert rows == [] and any(e['field'] == 'business_date' and '有效日期' in e['message'] for e in errors)

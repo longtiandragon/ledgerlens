@@ -2,6 +2,7 @@ import csv
 import hashlib
 import io
 import json
+import re
 import zipfile
 from pathlib import Path
 from pydantic import ValidationError
@@ -11,15 +12,79 @@ from .db import Book, Record, Snapshot, Audit, uid, now
 from .schemas import LedgerInput
 from .domain import rule_identity
 
+# Header aliases in priority order: the canonical name first, then common Chinese export headers.
+# Matching stays exact per alias; the preview shows the chosen column and the user can remap.
 ALIASES = {
-    'source_id': ['source_id', '来源编号', '记录编号'], 'kind': ['kind', '类型'],
-    'business_date': ['business_date', '业务日期'], 'period': ['period', '期间'],
-    'currency': ['currency', '币种'], 'counterparty': ['counterparty', '交易对手'],
-    'reference': ['reference', '关联编号'], 'order_id': ['order_id', '订单号'],
-    'invoice_id': ['invoice_id', '发票号'], 'voucher_id': ['voucher_id', '凭证号'],
-    'account': ['account', '科目'], 'debit': ['debit', '借方'], 'credit': ['credit', '贷方'],
-    'amount': ['amount', '金额'], 'description': ['description', '说明'], 'direction': ['direction', '方向'],
+    'source_id': ['source_id', '来源编号', '记录编号'], 'kind': ['kind', '类型', '记录类型'],
+    'business_date': ['business_date', '业务日期', '日期', '凭证日期', '记账日期', '制单日期', '交易日期'],
+    'period': ['period', '期间', '会计期间'],
+    'currency': ['currency', '币种'], 'counterparty': ['counterparty', '交易对手', '往来单位', '对方单位', '客户', '供应商'],
+    'reference': ['reference', '关联编号'], 'order_id': ['order_id', '订单号', '订单编号'],
+    'invoice_id': ['invoice_id', '发票号', '发票号码'], 'voucher_id': ['voucher_id', '凭证号', '凭证编号', '凭证字号'],
+    'account': ['account', '科目', '科目编码', '科目代码', '会计科目'],
+    'debit': ['debit', '借方', '借方金额', '借方发生额'], 'credit': ['credit', '贷方', '贷方金额', '贷方发生额'],
+    'amount': ['amount', '金额'], 'description': ['description', '说明', '摘要', '备注'],
+    'direction': ['direction', '方向', '借贷方向'],
 }
+FIELD_LABELS = {'source_id': '来源编号', 'kind': '记录类型', 'business_date': '业务日期', 'period': '会计期间',
+                'currency': '币种', 'counterparty': '交易对手', 'reference': '关联编号', 'order_id': '订单号',
+                'invoice_id': '发票号', 'voucher_id': '凭证号', 'account': '科目', 'debit': '借方金额',
+                'credit': '贷方金额', 'amount': '业务金额', 'description': '摘要', 'direction': '收付方向'}
+DATE_FORMAT = re.compile(r'^(\d{4})[/.年-](\d{1,2})[/.月-](\d{1,2})日?$')
+
+
+def _blank(value):
+    return value is None or (isinstance(value, str) and not value.strip())
+
+
+def derive_voucher_fields(mapped: dict, filename: str, row_number: int) -> list[str]:
+    """Fill fields that ordinary voucher exports leave out, and return which ones were derived.
+
+    Only structural facts are derived, never business judgments: a line with an account and a debit
+    or credit is a journal line; the period is the voucher date's month; the source number is the
+    file and row; a blank opposite side of a one-sided journal line is zero. A line with both sides
+    blank, an unparseable date or any other missing amount still fails validation.
+    """
+    derived = []
+    date = mapped.get('business_date')
+    if isinstance(date, str) and (match := DATE_FORMAT.match(date.strip())):
+        normalized = f'{match[1]}-{int(match[2]):02d}-{int(match[3]):02d}'
+        if normalized != date:
+            mapped['business_date'] = normalized
+            derived.append('business_date')
+    sides = [not _blank(mapped.get(side)) for side in ('debit', 'credit')]
+    if _blank(mapped.get('kind')) and not _blank(mapped.get('account')) and any(sides):
+        mapped['kind'] = 'journal'
+        derived.append('kind')
+    date = mapped.get('business_date')
+    if _blank(mapped.get('period')) and isinstance(date, str) and re.match(r'^\d{4}-\d{2}-\d{2}$', date):
+        mapped['period'] = mapped['business_date'][:7]
+        derived.append('period')
+    if _blank(mapped.get('source_id')):
+        mapped['source_id'] = f'{Path(filename).name[:160]}#row-{row_number}'
+        derived.append('source_id')
+    if mapped.get('kind') == 'journal' and sides.count(True) == 1:
+        blank = 'credit' if sides[0] else 'debit'
+        mapped[blank] = '0'
+        derived.append(blank)
+    return derived
+
+
+def _message(err: dict) -> tuple[str, str]:
+    field = '.'.join(map(str, err['loc']))
+    label = FIELD_LABELS.get(field, field)
+    kind, text = err.get('type', ''), err.get('msg', '')
+    if kind == 'missing':
+        text = f'缺少必填字段“{label}”；请在字段映射中选择对应列'
+    elif kind.startswith('date'):
+        text = f'“{label}”不是有效日期，应为 YYYY-MM-DD 或 YYYY/M/D'
+    elif kind == 'literal_error':
+        text = f'“{label}”取值无效：{text.split("Input should be ")[-1]}'
+    elif kind == 'string_pattern_mismatch':
+        text = f'“{label}”格式不正确' + ('，应为 YYYY-MM' if field == 'period' else '')
+    elif text.startswith('Value error, '):
+        text = text[len('Value error, '):]
+    return field or 'record', text
 
 
 def digest(data):
@@ -123,12 +188,16 @@ def parse_file(data: bytes, filename: str, mapping: dict | None = None):
     for index, row in enumerate(raw):
         locator = locations[index] if locations else {'row': index + (2 if suffix == '.csv' else 1)}
         mapped = {key: row[column] for key, column in inferred.items() if column in row and row[column] is not None}
+        derived = derive_voucher_fields(mapped, filename, locator['row'])
+        if derived:
+            locator = {**locator, 'derived': derived}
         try:
             record = LedgerInput.model_validate(mapped).model_dump(mode='json', exclude_none=True)
             rows.append({'record': record, 'locator': locator})
         except ValidationError as exc:
             for err in exc.errors():
-                errors.append({'row': locator['row'], 'field': '.'.join(map(str, err['loc'])), 'message': err['msg']})
+                field, message = _message(err)
+                errors.append({'row': locator['row'], 'field': field, 'message': message})
     if not raw:
         errors.append({'row': 0, 'field': 'file', 'message': '未找到可导入记录'})
     return rows, errors, columns, inferred, extracted
