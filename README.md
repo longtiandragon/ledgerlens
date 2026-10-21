@@ -55,6 +55,8 @@
 |模型效果|v2、v3、v4 三次封存测试中，单 Agent 都没有超过同预算确定性基线（v3：宏 F1 0.508 对 0.563；v4：0.544 对 1.000），见 [ROOT_CAUSE_V3](docs/ROOT_CAUSE_V3.md)、[ROOT_CAUSE_V4](docs/ROOT_CAUSE_V4.md)|
 |混合方法|“确定性优先、模型兜底”在 v4 新数据上做了预注册封存检验（2026-10-22），**未获支持**：宏 F1 0.913，高于单 Agent（0.544），请求量为单 Agent 的 46%，但低于本次最强确定性基线关键词补证（1.000）。事后看，这个满分来自案例抽取，关键词补证在完整封存集上为 0.848。见 [#12](https://github.com/longtiandragon/ledgerlens/issues/12) 与 [ROOT_CAUSE_V4](docs/ROOT_CAUSE_V4.md)|
 
+可用性：AI 模拟的首次使用试用（不是真人试用）从全新克隆走通了演示流程和自制凭证导入，发现并修复了 5 个问题，见 [AI_FIRST_USE_TRIAL](docs/AI_FIRST_USE_TRIAL.md)。
+
 边界：数据为合成数据与公开资料；尚未在企业真实账套上试点；AI 审阅不等于会计师意见。逐项记录见 [交付状态](docs/STATUS.md)，全部文档见 [文档导航](docs/README.md)。
 
 ## 接手开发
@@ -165,7 +167,7 @@ Compose 配置使用 PostgreSQL、Redis、Celery、持久化 LangGraph 检查点
 
 ## 文档
 
-全部 52 份文档按读者分组列在 [文档导航](docs/README.md)。常用入口：
+全部 53 份文档按读者分组列在 [文档导航](docs/README.md)。常用入口：
 
 - [PRD 与验收范围](docs/PRD.md)
 - [技术设计与接口](docs/TECHNICAL_DESIGN.md)
