@@ -2,7 +2,8 @@
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { api, post, type Evidence } from '../api'
 
-const props = defineProps<{ caseId: string; evidence: Evidence[] }>()
+// runsKey changes when an investigation of this case starts or finishes, so needs it raised appear without a reload.
+const props = defineProps<{ caseId: string; evidence: Evidence[]; runsKey?: string }>()
 interface Candidate { record_id:string;evidence_id:string|null;kind:string;source_id:string|null;business_date:string|null;amount:string|null }
 interface Request { id:string;kind:string;reference:string|null;description:string;status:'open'|'fulfilled'|'withdrawn';created_at:string;candidates:Candidate[];candidate_snapshot_id:string|null;events:{action:string;created_at:string;record_ids:string[];comment:string}[] }
 const requests = ref<Request[]>([])
@@ -41,6 +42,7 @@ async function fulfil(request: Request) {
   } catch (cause) { error.value = message(cause) } finally { busy.value = false }
 }
 watch(() => props.caseId, () => { requests.value = []; error.value = ''; void load() }, { immediate: true })
+watch(() => props.runsKey, (now, before) => { if (before !== undefined && now !== before) void load() })
 onBeforeUnmount(() => { generation++ })
 function time(value: string) { return value.replace('T', ' ').replace(/(?:\.\d+)?(?:Z|\+00:00)$/, ' UTC') }
 </script>
