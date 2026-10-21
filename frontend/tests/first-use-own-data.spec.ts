@@ -25,6 +25,7 @@ test('首次使用：导入普通凭证导出，推导字段逐项标明，确�
  await expect(summary).toContainText('贷方金额（2 行）')
  await expect(summary).toContainText('借方金额（2 行）')
  await expect(page.locator('td.derived').first()).toContainText('推导')
+ await expect(page.locator('td.derived').filter({hasText:'会计分录'}).first()).toBeVisible()
  await page.getByRole('button',{name:'确认导入并建立快照'}).click()
  await expect(page.getByText('成功导入 4 条记录，跳过 0 条重复来源。')).toBeVisible()
  const records=await (await request.get(`/api/v1/books/${book.id}/records`)).json()
