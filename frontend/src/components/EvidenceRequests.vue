@@ -42,6 +42,7 @@ async function fulfil(request: Request) {
 }
 watch(() => props.caseId, () => { requests.value = []; error.value = ''; void load() }, { immediate: true })
 onBeforeUnmount(() => { generation++ })
+function time(value: string) { return value.replace('T', ' ').replace(/(?:\.\d+)?(?:Z|\+00:00)$/, ' UTC') }
 </script>
 
 <template>
@@ -58,7 +59,7 @@ onBeforeUnmount(() => { generation++ })
         <button class="button primary" :disabled="busy" @click="fulfil(item)">确认这些记录即所需资料</button>
       </div>
       <p v-else-if="item.status === 'open'" class="caption">尚未在较新快照中发现符合的记录。</p>
-      <p v-for="event in item.events" :key="event.created_at" class="caption">{{ statusLabels[event.action] }} · {{ event.created_at }}<template v-if="event.comment"> · {{ event.comment }}</template></p>
+      <p v-for="event in item.events" :key="event.created_at" class="caption">{{ statusLabels[event.action] }} · {{ time(event.created_at) }}<template v-if="event.comment"> · {{ event.comment }}</template></p>
     </article>
     <div v-if="raised.length" class="er-raised"><p>调查中提出的待补资料（规则或模型建议，需人工选择种类后登记）：</p><ul><li v-for="need in raised" :key="need"><span>{{ need }}</span><button type="button" class="text-button" @click="description = need">采用</button></li></ul></div>
     <form class="er-form" @submit.prevent="create">

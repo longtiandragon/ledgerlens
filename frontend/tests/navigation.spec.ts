@@ -33,3 +33,19 @@ test('手机关闭侧栏不进入Tab顺序，打开导航及桌面恢复后仍�
  await expect(sidebar.getByRole('button',{name:'评测中心',exact:true})).toBeVisible()
  expect(writes).toEqual([]);expect(errors).toEqual([])
 })
+
+test('切换页面回到顶部：在长页面底部切换后，新页面从标题开始显示',async({page,request})=>{
+ const created=await request.post('/api/v1/books',{data:{name:`滚动 ${Date.now()}`,framework:'CAS',period:'2026-09',currency:'CNY',accounts:['1002','1122','1405','2202','6001','6602'],locked_periods:[]}})
+ const book=await created.json();expect((await request.post(`/api/v1/books/${book.id}/demo`)).ok()).toBeTruthy()
+ await page.setViewportSize({width:1440,height:900})
+ await page.goto('/');await page.evaluate(id=>localStorage.setItem('ledgerlens.book',id),book.id);await page.reload()
+ // Both pages are taller than the viewport, so a kept scroll position would stay visible after switching.
+ await page.locator('nav').getByRole('button',{name:/评测中心/}).click()
+ await page.evaluate(()=>window.scrollTo(0,document.body.scrollHeight))
+ await expect.poll(()=>page.evaluate(()=>window.scrollY)).toBeGreaterThan(200)
+ await page.locator('nav').getByRole('button',{name:/账套与政策/}).click()
+ await expect(page.getByRole('heading',{name:'规则覆盖矩阵'})).toBeVisible()
+ expect(await page.evaluate(()=>document.documentElement.scrollHeight)).toBeGreaterThan(1200)
+ await expect.poll(()=>page.evaluate(()=>window.scrollY)).toBe(0)
+ await expect(page.getByRole('heading',{level:1})).toBeInViewport()
+})
