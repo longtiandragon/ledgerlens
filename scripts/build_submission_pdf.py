@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE = ROOT / 'docs/submission/intro.template.html'
 META = ROOT / 'docs/submission/meta.json'
 SOURCES = {'policy': 'docs/policy-v9-validation.json', 'audit': 'docs/publication-audit.json',
-           'rootcause': 'docs/root-cause-results.json', 'v4': 'docs/root-cause-v4-results.json'}
+           'rootcause': 'docs/root-cause-results.json', 'v4': 'docs/root-cause-v4-sealed-analysis.json'}
 ASSETS = {'architecture': 'docs/images/architecture.svg', **{
     f'shot{n:02d}': f'docs/images/{name}.png' for n, name in enumerate(
         ['01-workbench', '02-investigation', '03-evidence', '04-source-record', '05-simulation', '06-review',

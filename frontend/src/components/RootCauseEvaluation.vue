@@ -9,9 +9,17 @@ interface Results { status:string;conclusion?:string;limitations?:string[];notic
 const results=ref<Results>()
 const loading=ref(false)
 const error=ref('')
-const methodNames:Record<string,string>={rule_only:'仅规则',rule_fixed_request:'规则＋固定补证',keyword_request:'关键词补证',single:'单Agent（模型）',active:'主动调查（模型）',multi:'固定多Agent（模型）'}
+const methodNames:Record<string,string>={rule_only:'仅规则',rule_fixed_request:'规则＋固定补证',keyword_request:'关键词补证',single:'单Agent（模型）',hybrid:'确定性优先混合（模型兜底）',active:'主动调查（模型）',multi:'固定多Agent（模型）'}
 const splitNames:Record<string,string>={development:'开发集',validation:'验证集',sealed_test:'封存测试集'}
-const final=computed(()=>results.value?.runs.find(run=>run.role==='final'&&run.summary_status==='verified'))
+const final=computed(()=>{
+  // The newest verified final run, merged with the completed final batches of the same generation (v4: hybrid + single).
+  const runs=results.value?.runs.filter(run=>run.role==='final'&&run.summary_status==='verified')||[]
+  const first=runs[0]
+  if(!first)return undefined
+  const generation=first.id.split('-')[0]
+  const batches=runs.filter(run=>run.id.split('-')[0]===generation&&run.status!=='interrupted')
+  return {...first,methods:Object.assign({},...batches.map(run=>run.methods||{}).reverse())}
+})
 const rate=(value:number|null|undefined)=>value==null?'—':`${(value*100).toFixed(1)}%`
 const score=(value:number|null|undefined)=>value==null?'—':value.toFixed(3)
 async function refresh(){

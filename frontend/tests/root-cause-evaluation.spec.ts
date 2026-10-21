@@ -8,12 +8,15 @@ test('评测中心展示原因调查真实摘要：负面结论、失败计数�
  await page.getByRole('button',{name:'评测中心',exact:true}).click()
  const panel=page.getByRole('region',{name:'原因调查评测'})
  await expect(panel).toContainText('未获支持')
- // The first verified final run is the complete v3 sealed run (single agent ×3 with baselines);
- // the interrupted active and multi runs and the earlier v2 sealed run stay listed in the run table.
+ // Since the v4 sealed run (2026-10-22) the final card merges its two completed batches: hybrid with
+ // the baselines, and the single agent (one structural failure each). The v3 runs, the interrupted
+ // active and multi runs and the earlier v2 sealed run stay listed in the run table.
  const final=panel.getByLabel('封存测试集最终对比')
+ await expect(final).toContainText('确定性优先混合（模型兜底）')
  await expect(final).toContainText('单Agent（模型）')
- await expect(final).toContainText('0/27')
+ await expect(final).toContainText('1/27')
  await expect(final).toContainText('关键词补证')
+ await expect(panel).toContainText('root-cause-v4-sealed-hybrid.json')
  await expect(panel).toContainText('作废：')
  await expect(panel).toContainText('中断：')
  await expect(panel).toContainText('root-cause-v3-sealed-single.json')
