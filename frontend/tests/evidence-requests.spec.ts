@@ -31,3 +31,17 @@ test('补证事项：登记后经新快照出现候选，必须人工确认，�
  expect(state.status).toBe('fulfilled')
  expect(state.events[0].comment).toBe('已核对迟到收货单')
 })
+
+test('补证事项：在页面上启动调查，完成后无需刷新即显示调查提出的待补资料',async({page,request})=>{
+ const book=await (await request.post('/api/v1/books',{data:{name:'补证刷新 · 合成演示',framework:'CAS',period:'2026-09'}})).json()
+ const demo=await (await request.post(`/api/v1/books/${book.id}/demo`)).json()
+ const cases=(await (await request.post('/api/v1/check-runs',{data:{book_id:book.id,snapshot_id:demo.snapshot_id}})).json()).cases
+ const gap=cases.find((item:{rule_id:string})=>item.rule_id==='RECEIPT_GAP')
+ await page.goto(`/?book=${book.id}&case=${gap.id}`)
+ const panel=page.getByLabel('补证事项')
+ await expect(panel).toContainText('建议的资料种类为收货单')
+ await expect(panel).not.toContainText('调查中提出的待补资料')
+ await page.getByRole('button',{name:'启动调查'}).click()
+ await expect(page.getByText('已完成').first()).toBeVisible({timeout:30000})
+ await expect(panel).toContainText('调查中提出的待补资料')
+})
