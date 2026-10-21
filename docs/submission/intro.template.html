@@ -59,7 +59,7 @@
     <tr><th>官方问答政策规则</th><td>33 条有限规则覆盖 32 份财政部实施问答；{{json:policy#official_projection.passed}} 个手写投影全部通过</td></tr>
     <tr><th>公开资料端到端验收</th><td>财政部数电发票样例：API {{json:policy#public_delivery.stages.1.checks}} 项、Chrome {{json:policy#public_delivery.stages.2.stats.expected}} 项全部通过</td></tr>
     <tr><th>运行方式</th><td>Windows、Linux/macOS 脚本与 Docker Compose，三种方式每次提交都在 CI 全新机器上实跑</td></tr>
-    <tr><th>模型效果</th><td>两次封存测试中单 Agent 均未超过同预算确定性基线，结果原样公开；混合方法见第 5 章</td></tr>
+    <tr><th>模型效果</th><td>v2、v3、v4 三次封存测试中，单 Agent 均未超过同预算确定性基线；“确定性优先”混合方法的预注册检验也未获支持（见第 5 章），结果原样公开</td></tr>
   </table>
 </section>
 
@@ -139,13 +139,21 @@
     <tr><td>① 快照绑定的证据调查</td><td>每次调查固定账套、资料、规则版本与政策上下文；引用必须属于当前快照且已被读取；迟到资料生成新快照，旧复核失效</td><td>4 个独立时间挑战：保留快照时判断正确 4/4，混入后来资料时只有 2/4；端到端测试覆盖旧复核失效</td></tr>
     <tr><td>② 模型提议与业务事实分离</td><td>模型只能提出待复核的解释和调整草稿；草稿进入隔离模拟，由程序逐分复算</td><td>6 份草稿（5 份有错）：程序复算拦住 4/5，直接采信建议则 5/5 全部放过；“合法科目间业务用途错误”仍会通过，作为已知缺口公开</td></tr>
     <tr><td>③ 官方问答驱动的可审计规则包</td><td>32 份财政部实施问答编成 33 条有限规则，记录原文哈希、适用与不适用条件；专业判断一律人工确认</td><td>{{json:policy#official_projection.passed}} 个手写投影全部通过；AI 审阅发现的范围问题逐条整改，旧版失败反例留档</td></tr>
-    <tr><td>④ 预注册封存评测</td><td>评测真值不进入运行中的 Agent；封存数据只用一次；与同预算确定性基线对比；付费运行有费用守护</td><td>v2、v3 两次封存测试中单 Agent 均未超过基线（v3：0.508 对 0.563），结果原样公开；v4 混合方法见 5.2</td></tr>
+    <tr><td>④ 预注册封存评测</td><td>评测真值不进入运行中的 Agent；封存数据只用一次；与同预算确定性基线对比；付费运行有费用守护</td><td>v2、v3、v4 三次封存测试中单 Agent 均未超过基线（v3：0.508 对 0.563）；v4 混合方法高于单 Agent 但未超过最强基线，结果原样公开（见 5.2）</td></tr>
     <tr><td>⑤ 可离线核验的交付证据</td><td>一条命令完成公开样例采集、隔离 API 与浏览器验收和哈希清单；复制后的验收包可只用标准库核验</td><td>验收前后核对 {{json:policy#public_delivery.stages.3.sources}} 份源码与配置、{{json:policy#public_delivery.stages.3.evidence}} 份证据；篡改副本被拒绝</td></tr>
   </table>
   <h3>5.1 为什么让确定性规则先判断</h3>
-  <p>v3 封存测试的逐类结果显示，模型擅长依赖文字线索的原因（作废重开、价格折让），确定性方法擅长需要解读补证资料的原因（错挂发票号、货物在途）。两者互补，但直接让模型做最终判断，整体效果反而低于确定性方法。因此产品的架构选择是：确定性规则能下结论时直接下结论，模型只在规则没有信号或补证没有结论时给出待复核的解释。</p>
+  <p>v3 封存测试的逐类结果显示，模型擅长依赖文字线索的原因（作废重开、价格折让），确定性方法擅长需要解读补证资料的原因（错挂发票号、货物在途）。两者互补，但直接让模型做最终判断，整体效果反而低于确定性方法。因此产品中，确定性检查与程序复算始终先于模型；模型只给出待人工复核的解释，不能直接成为结论。能否进一步用“规则能下结论就不调用模型”的混合方式提升效果，我们单独做了预注册检验，见 5.2。</p>
   <h3>5.2 混合方法的预注册检验（v4）</h3>
-  <div class="note">基于 v3 的观察，我们提出“确定性优先、模型兜底”的混合方法：规则触发且固定补证得出确定类别时直接采用确定性结论；否则交给单 Agent。该方法在任何 v4 模型请求之前已公开预注册（GitHub Issue #12、docs/ROOT_CAUSE_V4.md），在新生成的 v4 数据上检验五个目标（T1：宏 F1 比最强同预算基线高 0.05 以上；T2：增益的自助区间下界大于 0；T3：不低于单 Agent；T4：结构失败不超过 1；T5：每案请求不超过单 Agent 的 60%）。开发冒烟已通过（交给模型的 5 个样本结构失败 0，实际花费 ¥0.13），两份封存计划已冻结。封存运行结果无论正负都将原样公布于此。</div>
+  <div class="note">基于 v3 的观察，我们提出“确定性优先、模型兜底”的混合方法：规则触发且固定补证得出确定类别时直接采用确定性结论；否则交给单 Agent。该方法在任何 v4 模型请求之前已公开预注册（GitHub Issue #12、docs/ROOT_CAUSE_V4.md），在新生成的 v4 数据上检验五个目标（T1：宏 F1 比最强同预算基线高 0.05 以上；T2：增益的自助区间下界大于 0；T3：不低于单 Agent；T4：结构失败不超过 1；T5：每案请求不超过单 Agent 的 60%）。封存运行于 2026-10-22 按冻结计划完成，9 个场景族 × 3 次，未中断。</div>
+  <table class="grid">
+    <tr><th>方法</th><th>原因宏 F1</th><th>结论准确率</th><th>结构失败</th><th>每样本付费请求</th></tr>
+    <tr><td>规则＋固定补证</td><td>{{json:v4#metrics.rule_fixed_request.category_macro_f1}}</td><td>{{json:v4#metrics.rule_fixed_request.conclusion_accuracy}}</td><td>{{json:v4#metrics.rule_fixed_request.failures}}/{{json:v4#metrics.rule_fixed_request.samples}}</td><td>0</td></tr>
+    <tr><td>关键词补证（本次最强基线）</td><td>{{json:v4#metrics.keyword_request.category_macro_f1}}</td><td>{{json:v4#metrics.keyword_request.conclusion_accuracy}}</td><td>{{json:v4#metrics.keyword_request.failures}}/{{json:v4#metrics.keyword_request.samples}}</td><td>0</td></tr>
+    <tr><td>确定性优先混合</td><td>{{json:v4#metrics.hybrid.category_macro_f1}}</td><td>{{json:v4#metrics.hybrid.conclusion_accuracy}}</td><td>{{json:v4#metrics.hybrid.failures}}/{{json:v4#metrics.hybrid.samples}}</td><td>{{json:v4#usage.hybrid.paid_requests_per_sample}}</td></tr>
+    <tr><td>单 Agent</td><td>{{json:v4#metrics.single.category_macro_f1}}</td><td>{{json:v4#metrics.single.conclusion_accuracy}}</td><td>{{json:v4#metrics.single.failures}}/{{json:v4#metrics.single.samples}}</td><td>{{json:v4#usage.single.paid_requests_per_sample}}</td></tr>
+  </table>
+  <p><strong>结论：预注册假设未获支持。</strong>混合方法与最强基线的宏 F1 差值，自助区间为 {{json:v4#bootstrap.macro_f1_difference.hybrid-keyword_request.lower}} 至 {{json:v4#bootstrap.macro_f1_difference.hybrid-keyword_request.upper}}，T1、T2 未达成。它明显好于单 Agent（差值区间 {{json:v4#bootstrap.macro_f1_difference.hybrid-single.lower}} 至 {{json:v4#bootstrap.macro_f1_difference.hybrid-single.upper}}），付费请求不到单 Agent 的一半，T3–T5 达成。事后核对发现，入选的 3 个文字线索案例恰好都含关键词；关键词基线在完整 90 例封存集上为 0.848。这只是事后描述，不改变结论。按预注册，混合方法不进入产品。两批实际花费约 ¥1.20。</p>
   <h3>5.3 与同类方案的比较</h3>
   <table class="grid compare">
     <tr><th></th><th>通用大模型对话</th><th>商业智能财务（用友 BIP、金蝶、BlackLine 等）</th><th>开源 ERP／记账（ERPNext、Odoo、Beancount）</th><th>账证智核</th></tr>

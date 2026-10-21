@@ -23,6 +23,17 @@ PRICES = ROOT / "benchmarks/deepseek-prices-2026-10-08.json"
 INTERRUPTION = "中断：主机内存不足且会话空闲时被Claude Code终止，守护进程同被终止，未重启"
 # id, label, report, split, role in the study, validity note. Newest first: the
 # evaluation centre shows the first verified final run as the current result.
+V4_RUNS = [
+    ("v4-sealed-hybrid", "v4混合方法最终对比 · 封存测试集（hybrid与基线）", "root-cause-v4-sealed-hybrid.json", "sealed_test",
+     "final", "有效；冻结计划，9例×3次；预注册假设未获支持：hybrid 0.913低于关键词补证1.000（T1、T2未达成），"
+     "高于单Agent（T3达成），见docs/root-cause-v4-sealed-analysis.json"),
+    ("v4-sealed-single", "v4单Agent · 封存测试集", "root-cause-v4-sealed-single.json", "sealed_test", "final",
+     "有效；冻结计划，9例×3次；与hybrid批合并按预注册方法分析"),
+    ("v4-baselines-sealed-full-posthoc", "v4确定性基线 · 完整封存集（事后描述）", "root-cause-v4-sealed-baselines-full-posthoc.json",
+     "sealed_test", "baseline", "事后描述，非预注册：90例上关键词补证0.848，说明入选9例上的满分来自案例抽取"),
+    ("v4-smoke-development", "v4混合方法冒烟 · 开发集", "root-cause-v4-smoke.json", "development", "smoke",
+     "有效；通过冒烟标准，未据此调整路由或提示词"),
+]
 V3_RUNS = [
     ("v3-sealed-single", "v3最终对比 · 封存测试集（单Agent与基线）", "root-cause-v3-sealed-single.json", "sealed_test",
      "final", "有效；冻结配置，9个未用封存案例×3次重复；按预注册方法分析，见root-cause-v3-sealed-partial-analysis.json"),
@@ -65,13 +76,14 @@ RUNS = [
      "有效；冻结配置；重复2次（规划要求3次）"),
 ]
 CONCLUSION = (
-    "核心主张“模型＋主动补证优于同预算确定性方法”在两代独立封存测试上均未获支持。v3封存集（新数据、v27窄契约，"
-    "9例×3次）：单Agent原因F1 0.508、结论70.4%、结构失败0/27，仍低于同预算最强确定性基线（规则＋固定补证与关键词补证"
-    "均为0.563／77.8%），差值−0.054（场景族自助区间−0.547至+0.400）；F1≥0.85、增益≥0.05、补证≥90%三项预注册目标"
-    "均未达成。v2封存集单Agent为0.438／38.9%、6/18输出失败。窄契约消除了结构失败，剩余差距来自推理。主动调查与固定"
-    "多Agent的封存运行被中断（8/18、6/9样本）：已完成样本中主动调查0.524／50.0%（2次结构失败），固定多Agent "
-    "0.800／100%，但样本少、仅1次重复、每样本请求20.7次（单Agent 4.7次），未完成预注册对比，不能作为支持证据。")
-LIMITATIONS = ["合成数据，为检验补证与文字理解能力而设计，不能外推为真实账套效果；数据与真值由同一作者编写。",
+    "v4预注册检验（新数据，确定性优先、模型兜底，9例×3次）：hybrid原因F1 0.913、结论74.1%，交给模型的15个样本中"
+    "结构失败1次；高于单Agent（0.544，差值+0.369，场景族自助区间+0.075至+0.613）与规则＋固定补证（0.563），每样本"
+    "付费请求2.0次，为单Agent（4.33次）的46%。但本次同预算最强基线是关键词补证（1.000），hybrid差值−0.088（区间"
+    "−0.175至0），T1、T2未达成，核心假设未获支持，不做产品化。事后描述：入选的3个文字线索案例恰好都含关键词，"
+    "关键词补证在完整90例封存集上为0.848。此前v3封存集单Agent 0.508低于基线0.563，v2为0.438；"
+    "“模型优于同预算确定性方法”在三代封存测试中均未获支持。")
+LIMITATIONS = ["v4封存集每族只入选1例，关键词基线的满分来自案例抽取；hybrid未在完整封存集上运行。",
+               "合成数据，为检验补证与文字理解能力而设计，不能外推为真实账套效果；数据与真值由同一作者编写。",
                "封存集仅9个场景族；单Agent差值的自助区间跨越零，样本量不足以排除小幅差异。",
                "主动调查与固定多Agent的封存运行未完成，其数字只是已完成样本的描述，不是预注册结果。",
                "费用为按官方低谷价的列表价估算，不是账单；中断运行按守护进程同一公式事后计算。"]
@@ -101,7 +113,7 @@ def _cost(path: Path, report: dict, prices: dict) -> str | None:
 def main() -> None:
     prices = load_prices(PRICES)
     runs = []
-    for identity, label, filename, split, role, validity in [*V3_RUNS, *RUNS]:
+    for identity, label, filename, split, role, validity in [*V4_RUNS, *V3_RUNS, *RUNS]:
         path = REPORTS / filename
         if not path.exists():
             runs.append({"id": identity, "label": label, "status": "missing_local_report", "report": filename})
@@ -123,8 +135,8 @@ def main() -> None:
                      "offpeak_cost_cny_estimate": cost, "status": report.get("status", "completed"),
                      "methods": _metrics(report)})
     summary = {"schema_version": "root-cause-results-v1", "created_at": datetime.now(UTC).isoformat(),
-               "track_version": "root-cause-track-v3", "dataset_version": "root-cause-v3.0.0",
-               "earlier_dataset_versions": ["root-cause-v2.0.0"], "runs": runs,
+               "track_version": "root-cause-track-v4", "dataset_version": "root-cause-v4.0.0",
+               "earlier_dataset_versions": ["root-cause-v3.0.0", "root-cause-v2.0.0"], "runs": runs,
                "conclusion": CONCLUSION, "limitations": LIMITATIONS}
     OUTPUT.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"runs": len(runs), "output": str(OUTPUT)}, ensure_ascii=False))
