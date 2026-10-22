@@ -1,0 +1,144 @@
+{
+  "labels": [
+    {
+      "id": "D01",
+      "decision": "manual_review",
+      "statuses": [
+        "literal_match"
+      ],
+      "match_parent_ids": [
+        [
+          "dev-records"
+        ]
+      ]
+    },
+    {
+      "id": "D02",
+      "decision": "manual_review",
+      "statuses": [
+        "literal_match"
+      ],
+      "match_parent_ids": [
+        [
+          "dev-records"
+        ]
+      ]
+    },
+    {
+      "id": "D03",
+      "decision": "manual_review",
+      "statuses": [
+        "literal_match"
+      ],
+      "match_parent_ids": [
+        [
+          "dev-review"
+        ]
+      ]
+    },
+    {
+      "id": "D04",
+      "decision": "manual_review",
+      "statuses": [
+        "literal_match",
+        "literal_match"
+      ],
+      "match_parent_ids": [
+        [
+          "dev-records"
+        ],
+        [
+          "dev-review"
+        ]
+      ]
+    },
+    {
+      "id": "D05",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "not_found_in_candidates"
+      ],
+      "match_parent_ids": [
+        []
+      ]
+    },
+    {
+      "id": "D06",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "not_found_in_candidates"
+      ],
+      "match_parent_ids": [
+        []
+      ]
+    },
+    {
+      "id": "D07",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "unsupported_request"
+      ],
+      "match_parent_ids": [
+        []
+      ]
+    },
+    {
+      "id": "D08",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "unsupported_request"
+      ],
+      "match_parent_ids": [
+        []
+      ]
+    },
+    {
+      "id": "D09",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "unsupported_request"
+      ],
+      "match_parent_ids": [
+        []
+      ]
+    },
+    {
+      "id": "D10",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "literal_match",
+        "unsupported_request"
+      ],
+      "match_parent_ids": [
+        [
+          "dev-records"
+        ],
+        []
+      ]
+    },
+    {
+      "id": "D11",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "literal_match",
+        "not_found_in_candidates"
+      ],
+      "match_parent_ids": [
+        [
+          "dev-review"
+        ],
+        []
+      ]
+    },
+    {
+      "id": "D12",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "not_found_in_candidates"
+      ],
+      "match_parent_ids": [
+        []
+      ]
+    }
+  ]
+}

@@ -1,19 +1,22 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { api } from '../api'
-import type { ReferenceChoiceInput, ReferenceSearchInput } from '../generated/contracts'
+import type { ReferenceChoiceInput, ReferenceSearchInput, ReferenceSupportInput } from '../generated/contracts'
 
 const props = defineProps<{ bookId: string; snapshotId: string | null }>()
 const emit = defineEmits<{ changed: [] }>()
 type Parent = { source_id: string; text: string; source_binding: { metadata: { title: string; url: string }; page: number | null; offset: number; end: number } }
 type Hit = { parent_chunk_id: string; score: number; text: string; parent_reference: Parent }
-type Search = { id: string; query: string; status: string; stale: boolean; result_digest: string | null; error: string | null; result?: { hits?: Hit[] } }
+type Search = { id: string; query: string; status: string; stale: boolean; result_digest: string | null; error: string | null; result?: { hits?: Hit[] }; answer_boundary?: { answer_status: string; notice: string } }
+type Support = { decision: string; notice: string; requirements: { kind: string; text: string; status: string; missing_evidence: string[]; matches: { parent_id: string; start: number; end: number; text: string }[] }[] }
 type Choice = { id: string; version: number; stale: boolean; snapshot_id: string; payload: { mode: string; query?: string; references?: Parent[] } }
 type History = { book_revision: number; choices: Choice[] }
 type Capabilities = { available: boolean; error?: string; indexes: { index_id: string; title: string }[] }
 const caps = ref<Capabilities>(), history = ref<History>(), searches = ref<Search[]>([]), run = ref<Search>()
 const indexId = ref(''), query = ref(''), selected = ref<string[]>([]), confirmed = ref(false)
 const busy = ref(false), loading = ref(true), error = ref(''), notice = ref('')
+const requirementKind = ref<ReferenceSupportInput['requirements'][number]['kind']>('unspecified'), requirementText = ref(''), support = ref<Support>()
+let supportEpoch = 0
 let epoch = 0, runEpoch = 0, controller: AbortController | undefined, poll: ReturnType<typeof setTimeout> | undefined
 const current = computed(() => history.value?.choices[0])
 const explicit = computed(() => current.value?.payload.mode === 'persistent_bge' && !current.value.stale)
@@ -23,7 +26,7 @@ const canChoose = computed(() => run.value?.status === 'complete' && !run.value.
 const labels: Record<string, string> = { queued: '等待本地检索', running: '正在本地检索', complete: '待人工选择', failed: '检索失败' }
 const message = (e: unknown) => e instanceof Error ? e.message : String(e)
 function safeUrl(value: string) { try { const url = new URL(value); return ['http:', 'https:'].includes(url.protocol) ? url.href : undefined } catch { return undefined } }
-function resetSelection() { selected.value = []; confirmed.value = false }
+function resetSelection() { selected.value = []; confirmed.value = false; support.value = undefined; supportEpoch++ }
 function stop() { epoch++; runEpoch++; controller?.abort(); clearTimeout(poll) }
 async function request<T>(path: string, body?: unknown): Promise<T> {
   return api<T>(`/reference-indexes${path}`, { signal: controller?.signal, ...(body ? { method: 'POST', body: JSON.stringify(body) } : {}) })
@@ -73,6 +76,20 @@ async function search() {
   } catch (e) { if (version === epoch) error.value = message(e) }
   finally { if (version === epoch) busy.value = false }
 }
+async function checkSupport() {
+  const active = run.value
+  if (!active?.result_digest) return
+  const version = epoch, selection = runEpoch, check = ++supportEpoch
+  support.value = undefined; busy.value = true; error.value = ''
+  try {
+    const body: ReferenceSupportInput = { book_id: props.bookId, search_id: active.id,
+      expected_result_digest: active.result_digest,
+      requirements: [{ kind: requirementKind.value, text: requirementText.value.trim() || active.query }] }
+    const value = await request<Support>('/support-checks', body)
+    if (version === epoch && selection === runEpoch && check === supportEpoch) support.value = value
+  } catch (e) { if (version === epoch && selection === runEpoch && check === supportEpoch) error.value = message(e) }
+  finally { if (version === epoch) busy.value = false }
+}
 async function choose(mode: 'keyword' | 'persistent_bge') {
   if (!history.value) return
   const version = epoch; busy.value = true; error.value = ''; notice.value = ''
@@ -90,13 +107,9 @@ async function choose(mode: 'keyword' | 'persistent_bge') {
   } catch (e) { if (version === epoch) { error.value = message(e); await loadHistory().catch(() => undefined) } }
   finally { if (version === epoch) busy.value = false }
 }
-watch(() => props.bookId, initialize, { immediate: true })
-watch(() => props.snapshotId, async () => {
-  if (loading.value || busy.value) return
-  const version = epoch; clearTimeout(poll); runEpoch++; resetSelection()
-  try { await loadHistory(); if (version === epoch && run.value) await readRun(run.value.id, version) }
-  catch (e) { if (version === epoch) error.value = message(e) }
-})
+// A new snapshot invalidates in-flight responses even while this panel is busy.
+watch([() => props.bookId, () => props.snapshotId], initialize, { immediate: true })
+watch([requirementKind, requirementText], () => { support.value = undefined; supportEpoch++ })
 onBeforeUnmount(stop)
 </script>
 
@@ -126,7 +139,21 @@ onBeforeUnmount(stop)
         <p v-if="run.stale" class="notice warning">检索后账套已有变化；请重新查询后选择。</p>
         <p v-if="run.error" class="notice error" role="alert">{{ run.error }}</p>
         <p v-if="pending" role="status">正在核验索引并检索，请稍候。离开页面不会取消后台任务。</p>
+        <p v-if="run.answer_boundary" class="notice warning">未生成答案。{{ run.answer_boundary.notice }}</p>
         <p v-if="run.status === 'complete' && !parents.length">没有符合当前账套范围的候选条文。</p>
+        <form v-if="run.status === 'complete' && !run.stale" class="query-form support-form" @submit.prevent="checkSupport">
+          <label>本次需要核对什么<select v-model="requirementKind" :disabled="busy"><option value="unspecified">尚未明确需求</option><option value="policy_excerpt">查阅原文片语</option><option value="business_fact">核验企业交易事实</option><option value="applicability">判断条文适用性</option></select></label>
+          <label>{{ requirementKind === 'policy_excerpt' ? '要在候选原文中逐字查找的片语（至少 4 字）' : '需要核验的事实或条件（至少 4 字）' }}<textarea v-model="requirementText" rows="2" maxlength="200" :disabled="busy" :placeholder="run.query"/></label>
+          <button class="button" :disabled="busy || (requirementText.trim() || run.query).length < 4 || (requirementText.trim() || run.query).length > 200">检查证据需求</button>
+          <small>选择需求类型不会授权自动回答；逐字命中也不代表语义支持。</small>
+        </form>
+        <div v-if="support" class="notice" role="status">
+          <strong>{{ support.decision === 'manual_review' ? '已找到原文片语，仍需人工复核' : '证据不足，暂不能形成答案' }}</strong>
+          <div v-for="(item, index) in support.requirements" :key="index">
+            <p v-for="missing in item.missing_evidence" :key="missing">需要：{{ missing }}</p>
+            <p v-for="match in item.matches" :key="match.parent_id">逐字命中「{{ match.text }}」：父条文 {{ match.parent_id }}，字符 {{ match.start }}–{{ match.end }}。请阅读下面完整父条文。</p>
+          </div>
+        </div>
         <div class="reference-grid">
           <article v-for="hit in parents" :key="hit.parent_chunk_id" class="reference-card">
             <label class="candidate"><input v-model="selected" type="checkbox" :value="hit.parent_chunk_id" :disabled="busy || run.stale" @change="confirmed = false"/><strong>{{ hit.parent_reference.source_binding.metadata.title }}</strong></label>

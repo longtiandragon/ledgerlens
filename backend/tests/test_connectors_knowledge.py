@@ -17,7 +17,7 @@ async def test_erpnext_only_reads_explicit_company_and_mapping():
         assert '/api/resource/GL%20Entry' in str(request.url)
         assert json.loads(request.url.params['filters'])[0] == ['company', '=', 'Demo']
         return httpx.Response(200, content=b'{"data":[{"name":"g1","posting_date":"2026-09-30",'
-            b'"voucher_no":"v1","company":"Demo","account":"Cash","debit":5.20,"credit":0}]}')
+            b'"voucher_no":"v1","company":"Demo","account":"Cash","debit":5.20,"credit":0,"is_cancelled":0}]}')
     async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
         result = await fetch_erpnext_gl('https://erp.example', 'test', 'test', 'Demo', '2026-09-01',
                                        '2026-09-30', {'Cash': '1002'}, client)

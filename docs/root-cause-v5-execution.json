@@ -1,0 +1,205 @@
+{
+  "schema_version": "root-cause-v5-execution-v1",
+  "recorded_at": "2026-10-22T17:01:11.694950+00:00",
+  "status": "development_smoke_failed_budget_sealed_not_started",
+  "authorization": {
+    "total_cap_cny": "8.00",
+    "smoke_cap_cny": "2.00",
+    "selective_cap_cny": "3.50",
+    "comparator_cap_cny": "2.50"
+  },
+  "smoke": {
+    "status": "completed_with_failures",
+    "rows": 144,
+    "cases_per_method": 36,
+    "paid_requests": 95,
+    "model_cases_completed": 20,
+    "deterministic_candidate_cases": 8,
+    "errors": {
+      "budget_exhausted": 8
+    },
+    "budget_rejected_cases": 8,
+    "duration_seconds": 650.797,
+    "metrics_are_development_descriptions_only": true,
+    "metrics": {
+      "rule_only": {
+        "samples": 36,
+        "failures": 0,
+        "category_macro_f1": 0.1458,
+        "per_category_f1": {
+          "normal_business": 0.5,
+          "duplicate_posting": 0.6667,
+          "reference_mismatch": 0.0,
+          "late_document": 0.0,
+          "goods_in_transit": 0.0,
+          "order_change": 0.0,
+          "invoice_voided": 0.0,
+          "price_adjustment": 0.0
+        },
+        "false_positive_categories": {
+          "normal_business": 8,
+          "duplicate_posting": 4
+        },
+        "conclusion_accuracy": 0.7778,
+        "decisive_evidence_obtained": "0/24",
+        "requests_made": 0,
+        "family_bootstrap_conclusion": {
+          "families": 9,
+          "lower": 0.4444,
+          "upper": 1.0
+        }
+      },
+      "rule_fixed_request": {
+        "samples": 36,
+        "failures": 0,
+        "category_macro_f1": 0.5625,
+        "per_category_f1": {
+          "normal_business": 0.5,
+          "duplicate_posting": 1.0,
+          "reference_mismatch": 1.0,
+          "late_document": 1.0,
+          "goods_in_transit": 1.0,
+          "order_change": 0.0,
+          "invoice_voided": 0.0,
+          "price_adjustment": 0.0
+        },
+        "false_positive_categories": {
+          "normal_business": 8
+        },
+        "conclusion_accuracy": 0.7778,
+        "decisive_evidence_obtained": "12/24",
+        "requests_made": 24,
+        "family_bootstrap_conclusion": {
+          "families": 9,
+          "lower": 0.4444,
+          "upper": 1.0
+        }
+      },
+      "keyword_request": {
+        "samples": 36,
+        "failures": 0,
+        "category_macro_f1": 0.8333,
+        "per_category_f1": {
+          "normal_business": 0.6667,
+          "duplicate_posting": 1.0,
+          "reference_mismatch": 1.0,
+          "late_document": 1.0,
+          "goods_in_transit": 1.0,
+          "order_change": 0.6667,
+          "invoice_voided": 0.6667,
+          "price_adjustment": 0.6667
+        },
+        "false_positive_categories": {
+          "normal_business": 4
+        },
+        "conclusion_accuracy": 0.8889,
+        "decisive_evidence_obtained": "18/24",
+        "requests_made": 28,
+        "family_bootstrap_conclusion": {
+          "families": 9,
+          "lower": 0.7222,
+          "upper": 1.0
+        }
+      },
+      "hybrid_selective": {
+        "samples": 36,
+        "failures": 8,
+        "category_macro_f1": 0.5357,
+        "per_category_f1": {
+          "normal_business": 0.2857,
+          "duplicate_posting": 1.0,
+          "reference_mismatch": 1.0,
+          "late_document": 0.0,
+          "goods_in_transit": 0.0,
+          "order_change": 1.0,
+          "invoice_voided": 1.0,
+          "price_adjustment": 0.0
+        },
+        "false_positive_categories": {
+          "normal_business": 2
+        },
+        "conclusion_accuracy": 0.5,
+        "decisive_evidence_obtained": "11/24",
+        "requests_made": 21,
+        "family_bootstrap_conclusion": {
+          "families": 9,
+          "lower": 0.25,
+          "upper": 0.75
+        }
+      }
+    },
+    "evidence": {
+      "path": ".local/reports/root-cause-v5-smoke.json",
+      "sha256": "5c57b655b941fec1445e4483086196bee11d1ccb6f13a94dc56c10a5c14f2c2c"
+    }
+  },
+  "cost": {
+    "rates_cny_per_million": {
+      "cache_hit": ".02",
+      "cache_miss": "1",
+      "output": "4"
+    },
+    "price_source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+    "verified_on": "2026-10-23",
+    "tokens": {
+      "prompt_tokens": 633619,
+      "completion_tokens": 79010,
+      "prompt_cache_hit_tokens": 167168,
+      "prompt_cache_miss_tokens": 466451
+    },
+    "receipts": 95,
+    "unknown_usage": 0,
+    "offpeak_list_price_estimate_cny": "0.78583436",
+    "settled_peak_no_cache_upper_cny": "1.899318",
+    "balance_difference_cny": "0.79",
+    "provider_topped_up_balance_unchanged": true,
+    "not_an_itemized_provider_bill": true,
+    "account_totals_retained_only_in_local_evidence": true
+  },
+  "provider_models": [
+    "deepseek-flash"
+  ],
+  "provider_fingerprints": [
+    "e72d3c7f663d3e1383b00b3884cb4501"
+  ],
+  "sealed": {
+    "executed": false,
+    "truth_files_read_by_this_audit": 0,
+    "gate_rejections": {
+      "selective": "Development smoke failed; no sealed dispatch permitted",
+      "comparator": "Development smoke failed; no sealed dispatch permitted"
+    }
+  },
+  "ai_gain_proven": false,
+  "preregistered_sealed_hypothesis": "not_evaluated",
+  "plans": {
+    "smoke": {
+      "path": "docs/root-cause-v5-plans/smoke.json",
+      "sha256": "d47c9d1d2968f836698f2bd0976c3916e5b575f1d8df1e3ab352ee3f11d26628"
+    },
+    "selective": {
+      "path": "docs/root-cause-v5-plans/selective.json",
+      "sha256": "f21dec7dd882c925b869484e191edfe2a39f05d52b5f7d5bd9f32c451f7c728d"
+    },
+    "comparator": {
+      "path": "docs/root-cause-v5-plans/comparator.json",
+      "sha256": "c9dd35917c74618e86e914b9b75d9390b2022f68ce0f1647423f76ff54c03309"
+    }
+  },
+  "balance_evidence": [
+    {
+      "path": ".local/reports/root-cause-v5-preflight-20261023.json",
+      "sha256": "11f2f8b0526b9c40749b2aa975540e1847b63c4ee0c2006856e82e519a3ff9fd"
+    },
+    {
+      "path": ".local/reports/root-cause-v5-postflight-20261023.json",
+      "sha256": "3b77f9965046008f7a7de08eb3b03db5adb97fa6fce34e6c433e757c611e5f7e"
+    }
+  ],
+  "limitations": [
+    "Development smoke ran out of its fixed budget; sealed comparison was not executed.",
+    "All eight stopped cases remain in the metric denominators; no selective retry.",
+    "Same-author synthetic data does not establish independent business effectiveness.",
+    "Balance difference is an account observation, not an itemized bill."
+  ]
+}

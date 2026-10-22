@@ -1,0 +1,234 @@
+{
+  "labels": [
+    {
+      "id": "H01",
+      "decision": "manual_review",
+      "statuses": [
+        "literal_match"
+      ],
+      "match_parent_ids": [
+        [
+          "holdout-stock"
+        ]
+      ]
+    },
+    {
+      "id": "H02",
+      "decision": "manual_review",
+      "statuses": [
+        "literal_match"
+      ],
+      "match_parent_ids": [
+        [
+          "holdout-stock"
+        ]
+      ]
+    },
+    {
+      "id": "H03",
+      "decision": "manual_review",
+      "statuses": [
+        "literal_match"
+      ],
+      "match_parent_ids": [
+        [
+          "holdout-contract"
+        ]
+      ]
+    },
+    {
+      "id": "H04",
+      "decision": "manual_review",
+      "statuses": [
+        "literal_match"
+      ],
+      "match_parent_ids": [
+        [
+          "holdout-contract"
+        ]
+      ]
+    },
+    {
+      "id": "H05",
+      "decision": "manual_review",
+      "statuses": [
+        "literal_match",
+        "literal_match"
+      ],
+      "match_parent_ids": [
+        [
+          "holdout-stock"
+        ],
+        [
+          "holdout-contract"
+        ]
+      ]
+    },
+    {
+      "id": "H06",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "unsupported_request"
+      ],
+      "match_parent_ids": [
+        []
+      ]
+    },
+    {
+      "id": "H07",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "unsupported_request"
+      ],
+      "match_parent_ids": [
+        []
+      ]
+    },
+    {
+      "id": "H08",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "unsupported_request"
+      ],
+      "match_parent_ids": [
+        []
+      ]
+    },
+    {
+      "id": "H09",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "unsupported_request"
+      ],
+      "match_parent_ids": [
+        []
+      ]
+    },
+    {
+      "id": "H10",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "unsupported_request"
+      ],
+      "match_parent_ids": [
+        []
+      ]
+    },
+    {
+      "id": "H11",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "unsupported_request"
+      ],
+      "match_parent_ids": [
+        []
+      ]
+    },
+    {
+      "id": "H12",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "not_found_in_candidates"
+      ],
+      "match_parent_ids": [
+        []
+      ]
+    },
+    {
+      "id": "H13",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "not_found_in_candidates"
+      ],
+      "match_parent_ids": [
+        []
+      ]
+    },
+    {
+      "id": "H14",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "literal_match",
+        "unsupported_request"
+      ],
+      "match_parent_ids": [
+        [
+          "holdout-stock"
+        ],
+        []
+      ]
+    },
+    {
+      "id": "H15",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "literal_match",
+        "not_found_in_candidates"
+      ],
+      "match_parent_ids": [
+        [
+          "holdout-contract"
+        ],
+        []
+      ]
+    },
+    {
+      "id": "H16",
+      "decision": "manual_review",
+      "statuses": [
+        "literal_match"
+      ],
+      "match_parent_ids": [
+        [
+          "holdout-instruction"
+        ]
+      ]
+    },
+    {
+      "id": "H17",
+      "decision": "manual_review",
+      "statuses": [
+        "literal_match"
+      ],
+      "match_parent_ids": [
+        [
+          "holdout-contract"
+        ]
+      ]
+    },
+    {
+      "id": "H18",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "not_found_in_candidates"
+      ],
+      "match_parent_ids": [
+        []
+      ]
+    },
+    {
+      "id": "H19",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "not_found_in_candidates"
+      ],
+      "match_parent_ids": [
+        []
+      ]
+    },
+    {
+      "id": "H20",
+      "decision": "insufficient_evidence",
+      "statuses": [
+        "literal_match",
+        "unsupported_request"
+      ],
+      "match_parent_ids": [
+        [
+          "holdout-contract"
+        ],
+        []
+      ]
+    }
+  ]
+}

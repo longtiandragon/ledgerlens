@@ -1,0 +1,171 @@
+{
+  "queries": [
+    {
+      "id": "D01",
+      "question": "查找来源追溯要求",
+      "candidate_ids": [
+        "dev-records"
+      ],
+      "requirements": [
+        {
+          "kind": "policy_excerpt",
+          "text": "原始记录必须能够追溯到采集来源"
+        }
+      ]
+    },
+    {
+      "id": "D02",
+      "question": "查找附件保存要求",
+      "candidate_ids": [
+        "dev-records"
+      ],
+      "requirements": [
+        {
+          "kind": "policy_excerpt",
+          "text": "附件应保留采集日期与完整页码"
+        }
+      ]
+    },
+    {
+      "id": "D03",
+      "question": "查找复核版本要求",
+      "candidate_ids": [
+        "dev-review"
+      ],
+      "requirements": [
+        {
+          "kind": "policy_excerpt",
+          "text": "人工复核应记录所采用的条文版本"
+        }
+      ]
+    },
+    {
+      "id": "D04",
+      "question": "两个要求都能查到吗",
+      "candidate_ids": [
+        "dev-records",
+        "dev-review"
+      ],
+      "requirements": [
+        {
+          "kind": "policy_excerpt",
+          "text": "未提供原件的业务需要补充材料"
+        },
+        {
+          "kind": "policy_excerpt",
+          "text": "对未知事项应明确标注尚未核实"
+        }
+      ]
+    },
+    {
+      "id": "D05",
+      "question": "物流合同保管几年",
+      "candidate_ids": [
+        "dev-records"
+      ],
+      "requirements": [
+        {
+          "kind": "policy_excerpt",
+          "text": "物流合同需要保留五年"
+        }
+      ]
+    },
+    {
+      "id": "D06",
+      "question": "没有候选时找来源要求",
+      "candidate_ids": [],
+      "requirements": [
+        {
+          "kind": "policy_excerpt",
+          "text": "原始记录必须能够追溯到采集来源"
+        }
+      ]
+    },
+    {
+      "id": "D07",
+      "question": "我司附件已经保留完整吗",
+      "candidate_ids": [
+        "dev-records"
+      ],
+      "requirements": [
+        {
+          "kind": "business_fact",
+          "text": "附件应保留采集日期与完整页码"
+        }
+      ]
+    },
+    {
+      "id": "D08",
+      "question": "这个版本能适用我司吗",
+      "candidate_ids": [
+        "dev-review"
+      ],
+      "requirements": [
+        {
+          "kind": "applicability",
+          "text": "人工复核应记录所采用的条文版本"
+        }
+      ]
+    },
+    {
+      "id": "D09",
+      "question": "看看这个业务有什么问题",
+      "candidate_ids": [
+        "dev-records"
+      ],
+      "requirements": [
+        {
+          "kind": "unspecified",
+          "text": "检查某笔采购业务"
+        }
+      ]
+    },
+    {
+      "id": "D10",
+      "question": "找一个句子并确认交易已真实发生",
+      "candidate_ids": [
+        "dev-records"
+      ],
+      "requirements": [
+        {
+          "kind": "policy_excerpt",
+          "text": "未提供原件的业务需要补充材料"
+        },
+        {
+          "kind": "business_fact",
+          "text": "实际发货已完成"
+        }
+      ]
+    },
+    {
+      "id": "D11",
+      "question": "两个原文要求少了一个",
+      "candidate_ids": [
+        "dev-review"
+      ],
+      "requirements": [
+        {
+          "kind": "policy_excerpt",
+          "text": "对未知事项应明确标注尚未核实"
+        },
+        {
+          "kind": "policy_excerpt",
+          "text": "该复核已经完成审批"
+        }
+      ]
+    },
+    {
+      "id": "D12",
+      "question": "查不到不应判断全球没有规定",
+      "candidate_ids": [
+        "dev-review"
+      ],
+      "requirements": [
+        {
+          "kind": "policy_excerpt",
+          "text": "原始记录必须能够追溯到采集来源"
+        }
+      ]
+    }
+  ]
+}

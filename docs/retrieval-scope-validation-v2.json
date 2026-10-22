@@ -1,0 +1,66 @@
+{
+  "schema_version": "retrieval-scope-delivery-v2",
+  "status": "passed_with_scope_limits",
+  "semantic_abstention_proven": false,
+  "model_requests": 0,
+  "protocol": {
+    "path": "docs/retrieval-scope-plan-v2.json",
+    "sha256": "37fbfd35234d8feed7ae6d13bd9dde792c559c97c30b994b7b8741483c6fbcaa"
+  },
+  "contract_checks": {
+    "dev": {
+      "cases": 12,
+      "passed": 12
+    },
+    "heldout": {
+      "cases": 20,
+      "passed": 20
+    }
+  },
+  "backend_test_evidence": {
+    "path": ".local/retrieval-scope-v2-20261022/integration-tests.xml",
+    "sha256": "e99de90098774355cb7f0cd29eb1756e7b6fa32debf1176df02a97d91dd8ff2c"
+  },
+  "backend_tests_passed": 46,
+  "browser_report": {
+    "path": ".local/reference-ocr-release-20261023/report.json",
+    "sha256": "6682f47144f4c4a2febfbf237f5e76172bc48ba4c86327addc1b5fbc6f2e2289"
+  },
+  "browser_reference_tests": 4,
+  "browser_responses": "synthetic intercepted responses; real API covered by isolated backend tests",
+  "raw_summary": {
+    "path": ".local/retrieval-scope-v2-20261022/summary.json",
+    "sha256": "5ab636990f885203399354362591a67bac01a6add34f54674f066d7e0c56a68c"
+  },
+  "historical_v1_false_accepts": "2/12 retained",
+  "limitations": [
+    "All data and expected results are hand-authored by the implementer. The heldout split is a protocol partition, not an independent unseen evaluation. No natural-language answerability, ranking, accountant review or real private evidence validation is claimed.",
+    "No BGE/pgvector rerun or human professional validation."
+  ],
+  "snapshot_ui_regression": {
+    "validated_on": "2026-10-23",
+    "failure_reproduced": true,
+    "before": {
+      "path": ".local/reference-snapshot-race-20261023-before/report.json",
+      "sha256": "e69ba8c32b0883cc559b2a0655905a2043c4d93146277d1bbdd2026e2cb44f46"
+    },
+    "after": {
+      "path": ".local/reference-snapshot-race-20261023-after/report.json",
+      "sha256": "b2be2ae7490ee8aed5c10b6c6da816b26fdfffcfe0214482083de30ff8bca161"
+    },
+    "passed": 4,
+    "skipped": 0,
+    "flaky": 0,
+    "scope": "Synthetic reference responses with a real isolated API snapshot change; no BGE or OCR rerun.",
+    "owned_services_stopped": true,
+    "frontend_build": {
+      "path": ".local/reports/reference-snapshot-build-20261023.log",
+      "sha256": "bd6ba59d50d134c8661fc2cef684003d5d9b871f5af39f05e315dfaaeffd5f81"
+    }
+  },
+  "prior_browser_report": {
+    "path": ".local/reference-ocr-browser-20261022-v1/report.json",
+    "sha256": "4cd34e257895b35625a2888e3de1891327dff9a42503bba05b9169c66a7317ff"
+  },
+  "browser_validated_on": "2026-10-23"
+}

@@ -138,6 +138,28 @@ def main() -> None:
                "track_version": "root-cause-track-v4", "dataset_version": "root-cause-v4.0.0",
                "earlier_dataset_versions": ["root-cause-v3.0.0", "root-cause-v2.0.0"], "runs": runs,
                "conclusion": CONCLUSION, "limitations": LIMITATIONS}
+    # A failed development attempt must remain visible without replacing the
+    # newest completed sealed comparison shown by the evaluation centre.
+    v5_path = ROOT / 'docs/root-cause-v5-execution.json'
+    if v5_path.exists():
+        v5 = json.loads(v5_path.read_text(encoding='utf-8'))
+        raw = (REPORTS / 'root-cause-v5-smoke.json').read_bytes()
+        if (v5.get('status') != 'development_smoke_failed_budget_sealed_not_started'
+                or hashlib.sha256(raw).hexdigest() != v5['smoke']['evidence']['sha256']):
+            raise ValueError('Unexpected or mismatched v5 development evidence')
+        smoke = json.loads(raw)
+        runs.insert(0, {'id': 'v5-smoke-development', 'label': 'v5选择性补证冒烟 · 预算终止',
+                       'split': 'development', 'role': 'smoke',
+                       'validity': '未通过冒烟：36案中8案费用预算不足、未发请求；全部计入分母。封存两批未执行，开发成绩不用于增益结论。',
+                       'report': 'root-cause-v5-smoke.json', 'report_sha256': v5['smoke']['evidence']['sha256'],
+                       'repeat': smoke['repeat'], 'paid_requests': smoke['paid_requests'],
+                       'prompt_version': smoke['prompt_version'], 'runner_version': smoke['runner_version'],
+                       'offpeak_cost_cny_estimate': v5['cost']['offpeak_list_price_estimate_cny'],
+                       'status': smoke['status'], 'methods': _metrics(smoke)})
+        summary['conclusion'] = ('v5开发冒烟因固定费用预算不足未通过：95次请求、8案未执行，封存比较未启动。'
+                                 '没有新的AI增益证据；以下保留v4最近一次封存对比。' + CONCLUSION)
+        summary['limitations'] = ['v5仅为未通过的开发冒烟；不可把预算终止成绩当成完整模型能力检验。', *LIMITATIONS]
+        summary['latest_attempt_dataset_version'] = 'root-cause-v5.0.0'
     OUTPUT.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"runs": len(runs), "output": str(OUTPUT)}, ensure_ascii=False))
 

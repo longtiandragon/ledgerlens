@@ -1,6 +1,8 @@
 # 文档导航
 
-本目录共 53 份文档，按读者分组如下。逐项验证记录以 [交付状态](STATUS.md) 为准；带日期的数字只代表当时那一版的结果。
+本目录按读者分组如下。逐项验证记录以 [交付状态](STATUS.md) 为准；带日期的数字只代表当时那一版的结果。
+
+2026-10-22 本轮：[公开资料缺口整改总览](PUBLIC_GAP_CLOSURE_20261022.md)、[v5原因调查预注册](ROOT_CAUSE_V5.md)、[参考证据需求检查](RETRIEVAL_SCOPE_V2.md)、[中文公开票样与换行表格](OCR_CHINESE_PUBLIC_VALIDATION.md)、[ERP扩展契约](ERP_EXTENDED_VALIDATION.md)、[恢复与有限负载](RECOVERY_LOAD_VALIDATION.md)、[Windows→Linux恢复验收](CROSS_HOST_RESTORE.md)。
 
 ## 第一次了解项目
 
