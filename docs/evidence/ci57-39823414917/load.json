@@ -1,0 +1,109 @@
+{
+  "schema_version": "recovery-load-v1",
+  "status": "passed",
+  "created_at": "2026-10-22T17:41:14.200530+00:00",
+  "model_requests": 0,
+  "independent_machine": false,
+  "database": "SQLite",
+  "task_mode": "local",
+  "http_policy": {
+    "client_keepalive_expiry_seconds": 2,
+    "server_keepalive_seconds": 5,
+    "transport_retries": 0,
+    "request_timeout_seconds": 25
+  },
+  "latency_clock": "time.perf_counter",
+  "source_sha256": {
+    "scripts/validate_recovery_load.py": "00573a014451c0e976389b181e1dfafd42b501180ed3287b17935483c5c90b0e",
+    "scripts/backup.py": "74d790f4bb3ef1dadc10ff46782751f7ba30d6cf9d70e01ceb4dd27db33abe12",
+    "scripts/restore_local.py": "e8b57f9e3c21d6557e3903dad7f208a435be2ec00053bd505c98e54059218a7a",
+    "backend/app/main.py": "139bedcc5054f35baff40c6c7ed096e381971fe061f6c6ad966dd12c203d0f58",
+    "backend/app/jobs.py": "80c6393fb2227ec645478f7b9da52f2d12c239630a918f6b262a0a5bb822facd"
+  },
+  "limits": [
+    "Same machine, one API process, two source rows; not a capacity or enterprise soak test.",
+    "No PostgreSQL/Celery/OCR/model requests or independent-machine validation.",
+    "Backup occurs only after the writer process stops; no online backup or power-loss claim."
+  ],
+  "load": {
+    "duration_requested_seconds": 120,
+    "read_check_clients": 2,
+    "periodic_investigators": 1,
+    "pacing_seconds_per_read_client": 0.25,
+    "investigation_ids": [
+      "18bf2434-9a82-4a7b-bd30-6d3f179e9c2b",
+      "cd069d1d-07ba-4f11-a82e-d717fcffe729",
+      "5f08a09e-65ca-4a83-9c06-9e2cad019179",
+      "e9f0e788-626c-4ee1-b79c-f16ac94bb454",
+      "b77c1cc3-7986-4a5e-a1dc-46ba15d435b3",
+      "feea47e7-9429-4b1e-8ca5-d0d92d352b30",
+      "36a41f85-12a7-48f2-b36e-58682ce69799",
+      "93990703-066f-4c10-a971-58bf0ffba0a4",
+      "d750e40a-e509-4f14-8091-9653655d295b",
+      "a6b7a2e8-77b4-4c73-98d5-9a7fd9e291c0",
+      "bb12bd08-b590-4a78-bc7a-8ef09f1a0c3d",
+      "6fff791c-1aef-40d7-9bb0-5253e7447de5",
+      "2a8068a9-81b6-4686-99cc-acc467ef2ea4",
+      "6e99b91b-e8b4-420b-9c2d-e6eaf4c29174",
+      "d40e39ed-ac53-4af2-a314-04289a5e7714",
+      "9866a68e-227e-42d4-aa9e-ab514d0590a3",
+      "e1be4561-9d1c-450d-9fc9-4cf9fe95e664",
+      "e6a940df-4225-4088-87fe-25eff44c8173",
+      "e79152d9-c3cb-408a-8db8-0787835ddf53",
+      "ffe17993-fd9a-4477-adbb-7854e4631b19",
+      "118d37a9-1765-4a34-90f9-5f48ea4b9342",
+      "64901a1b-7794-4c27-9a09-5bd77ab1db70",
+      "14b8207e-9054-41cf-a66d-96fea5533416",
+      "a08441dc-0985-475e-ae85-fe41855b7428"
+    ],
+    "results": {
+      "records": {
+        "requests": 235,
+        "p50_ms": 4.38,
+        "p95_ms": 5.04,
+        "p99_ms": 8.8,
+        "max_ms": 10.76
+      },
+      "snapshot": {
+        "requests": 236,
+        "p50_ms": 3.8,
+        "p95_ms": 4.44,
+        "p99_ms": 8.58,
+        "max_ms": 72.79
+      },
+      "check": {
+        "requests": 234,
+        "p50_ms": 5.15,
+        "p95_ms": 5.95,
+        "p99_ms": 8.54,
+        "max_ms": 234.94
+      },
+      "investigation_end_to_end": {
+        "requests": 24,
+        "p50_ms": 112.74,
+        "p95_ms": 116.23,
+        "p99_ms": 341.08,
+        "max_ms": 432.35
+      },
+      "overview": {
+        "requests": 234,
+        "p50_ms": 5.42,
+        "p95_ms": 6.1,
+        "p99_ms": 12.77,
+        "max_ms": 82.14
+      }
+    },
+    "failed_requests": 0
+  },
+  "checks": {
+    "original_ledger_unchanged": true,
+    "restored_business_rows_equal": true,
+    "restored_checkpoint_rows_equal": true,
+    "restored_http_views_equal": true,
+    "restored_complete_runs_equal": true,
+    "restored_download_hashes_equal": true,
+    "backup_unchanged": true,
+    "external_network_and_models_blocked": true
+  },
+  "elapsed_seconds": 123.06
+}

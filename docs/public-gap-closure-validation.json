@@ -41,11 +41,15 @@
     },
     "erp": {
       "path": "docs/erpnext-extended-validation.json",
-      "sha256": "833197c3a6473e676b02c2c98c6abef539a734c1154a46554466972b99546c88"
+      "sha256": "eaa7da3fd03e4cfc851fee63ede96ee852aeb074034ecaf4d0132b04dee41765"
     },
     "recovery_load": {
       "path": "docs/recovery-load-validation-v2.json",
       "sha256": "8289e3d99210d435c9d5e250aad16068c7d1aa39eb6e77fd97a21710afcbd830"
+    },
+    "cross_host_restore": {
+      "path": "docs/cross-host-restore-validation.json",
+      "sha256": "054b1e1aa6503adbd875e27e0a5e0aaad145678d294fefea994ea8a5876b7a45"
     }
   },
   "v5": {
@@ -118,13 +122,13 @@
     }
   },
   "limitations": [
-    "Backend skips retained; no claim every optional environment passed.",
+    "Default backend and browser skips are retained; optional CI covers Beancount, PostgreSQL and pgvector, not absent local originals.",
     "Retrieval contract checks do not establish semantic answerability.",
     "Blank official invoice and synthetic table are not enterprise invoice accuracy.",
     "Extended ERP cases are offline HTTP contracts, not ERP engine runs.",
-    "Same-host small SQLite load is not independent-host restore or enterprise capacity.",
-    "No authorized enterprise ledger or human accountant opinion was obtained.",
-    "Local validation only; this branch has not been pushed or checked by remote CI."
+    "Windows-to-Linux stopped SQLite restoration passed for two synthetic rows; no enterprise capacity, online recovery or real model-task recovery claim.",
+    "No authorized enterprise ledger or human accountant opinion was obtained; neither blocks the public-data student first edition.",
+    "Remote CI evidence is for source commit 2d42f97e973122a1ec6d736eefbcb337eb2431e2; the pull request remains draft and unmerged."
   ],
   "snapshot_ui_regression": {
     "validated_on": "2026-10-23",
@@ -159,7 +163,7 @@
     "validated_on": "2026-10-22"
   },
   "cross_host_restore": {
-    "status": "implemented_awaiting_remote_execution",
+    "status": "passed_with_scope_limits",
     "local_prepare": {
       "path": ".local/cross-host-source-20261023-v1/report.json",
       "sha256": "938ca5635bb4f941b87c5f02403b6ce51690e18a4098dac5960705ac34da6120"
@@ -168,6 +172,68 @@
       "path": ".local/cross-host-same-host-rejected-20261023/report.json",
       "sha256": "152150012154242ed9da31c0f28342ada692550b2069719f752527f91ad6de75"
     },
-    "remote_pass_claimed": false
+    "remote_pass_claimed": true,
+    "remote_evidence": {
+      "path": "docs/cross-host-restore-validation.json",
+      "sha256": "054b1e1aa6503adbd875e27e0a5e0aaad145678d294fefea994ea8a5876b7a45"
+    }
+  },
+  "remote_ci": {
+    "run_id": 39823414917,
+    "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917",
+    "head_sha": "2d42f97e973122a1ec6d736eefbcb337eb2431e2",
+    "tested_merge_sha": "30313e29e8251dfe705cd5ac96dc375d674a224c",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "backend",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119980295244"
+      },
+      {
+        "name": "reproduce",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119980295558"
+      },
+      {
+        "name": "licenses",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119980295750"
+      },
+      {
+        "name": "quickstart-unix",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119980295777"
+      },
+      {
+        "name": "frontend",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119980295801"
+      },
+      {
+        "name": "quickstart-windows",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119980295846"
+      },
+      {
+        "name": "docker",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119980295920"
+      },
+      {
+        "name": "optional",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119980295981"
+      },
+      {
+        "name": "cross-host-restore",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119985193341"
+      }
+    ],
+    "evidence": {
+      "path": "docs/cross-host-restore-validation.json",
+      "sha256": "054b1e1aa6503adbd875e27e0a5e0aaad145678d294fefea994ea8a5876b7a45"
+    }
   }
 }
