@@ -3,7 +3,7 @@
   "info": {
     "title": "账证智核 LedgerLens",
     "description": "本地会计复核研究与辅助平台；原账只读，调整仅限模拟。",
-    "version": "0.1.0"
+    "version": "0.2.0"
   },
   "paths": {
     "/api/v1/process-datasets/rule-catalog": {

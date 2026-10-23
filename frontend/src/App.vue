@@ -113,7 +113,7 @@ onBeforeUnmount(()=>{window.removeEventListener('ledgerlens:unauthorized',sessio
    <a class="brand" href="#" @click.prevent="go('dashboard')"><span class="brand-mark"><i></i><i></i><i></i></span><span><strong>账证智核</strong><small>LEDGERLENS</small></span></a>
    <div class="workspace-label">复核工作空间 <span>LOCAL</span></div>
    <nav aria-label="主导航"><button v-for="(p,index) in pages" :key="p.id" :aria-label="p.label" :class="['nav-item',{active:page===p.id}]" @click="go(p.id)"><Icon :name="p.icon" :size="18"/><span>{{ p.label }}</span><span v-if="p.id==='cases'&&openCount" class="nav-count">{{ openCount }}</span><span v-else class="nav-index">{{ String(index+1).padStart(2,'0') }}</span></button></nav>
-   <div class="sidebar-footer"><div class="local-status"><span :class="['status-dot',{offline:!health}]"/>{{ health?'本地服务已连接':'等待本地服务' }}</div><div class="sidebar-note"><Icon name="shield" :size="15"/><span>原账只读 · 调整先模拟</span></div><div class="version">研究与辅助平台 <span>v0.1</span></div></div>
+   <div class="sidebar-footer"><div class="local-status"><span :class="['status-dot',{offline:!health}]"/>{{ health?'本地服务已连接':'等待本地服务' }}</div><div class="sidebar-note"><Icon name="shield" :size="15"/><span>原账只读 · 调整先模拟</span></div><div class="version">研究与辅助平台 <span>v0.2</span></div></div>
   </aside>
   <div v-if="mobileNav" class="nav-backdrop" @click="mobileNav=false"/>
   <main>

@@ -153,7 +153,7 @@
     <tr><td>确定性优先混合</td><td>{{json:v4#metrics.hybrid.category_macro_f1}}</td><td>{{json:v4#metrics.hybrid.conclusion_accuracy}}</td><td>{{json:v4#metrics.hybrid.failures}}/{{json:v4#metrics.hybrid.samples}}</td><td>{{json:v4#usage.hybrid.paid_requests_per_sample}}</td></tr>
     <tr><td>单 Agent</td><td>{{json:v4#metrics.single.category_macro_f1}}</td><td>{{json:v4#metrics.single.conclusion_accuracy}}</td><td>{{json:v4#metrics.single.failures}}/{{json:v4#metrics.single.samples}}</td><td>{{json:v4#usage.single.paid_requests_per_sample}}</td></tr>
   </table>
-  <p><strong>结论：预注册假设未获支持。</strong>混合方法与最强基线的宏 F1 差值，自助区间为 {{json:v4#bootstrap.macro_f1_difference.hybrid-keyword_request.lower}} 至 {{json:v4#bootstrap.macro_f1_difference.hybrid-keyword_request.upper}}，T1、T2 未达成。它明显好于单 Agent（差值区间 {{json:v4#bootstrap.macro_f1_difference.hybrid-single.lower}} 至 {{json:v4#bootstrap.macro_f1_difference.hybrid-single.upper}}），付费请求不到单 Agent 的一半，T3–T5 达成。事后核对发现，入选的 3 个文字线索案例恰好都含关键词；关键词基线在完整 90 例封存集上为 0.848。这只是事后描述，不改变结论。按预注册，混合方法不进入产品。两批实际花费约 ¥1.20。</p>
+  <p><strong>结论：预注册假设未获支持。</strong>混合方法与最强基线的宏 F1 差值，自助区间为 {{json:v4#bootstrap.macro_f1_difference.hybrid-keyword_request.lower}} 至 {{json:v4#bootstrap.macro_f1_difference.hybrid-keyword_request.upper}}，T1、T2 未达成。它明显好于单 Agent（差值区间 {{json:v4#bootstrap.macro_f1_difference.hybrid-single.lower}} 至 {{json:v4#bootstrap.macro_f1_difference.hybrid-single.upper}}），付费请求不到单 Agent 的一半，T3–T5 达成。事后核对发现，入选的 3 个文字线索案例恰好都含关键词；关键词基线在完整 90 例封存集上为 0.848。这只是事后描述，不改变结论。按预注册，混合方法不进入产品。两批实际花费约 ¥1.32。</p>
   <h3>5.3 与同类方案的比较</h3>
   <table class="grid compare">
     <tr><th></th><th>通用大模型对话</th><th>商业智能财务（用友 BIP、金蝶、BlackLine 等）</th><th>开源 ERP／记账（ERPNext、Odoo、Beancount）</th><th>账证智核</th></tr>
