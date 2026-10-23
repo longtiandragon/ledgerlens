@@ -25,6 +25,28 @@ def test_same_amount_different_payments_preserve_ambiguity():
     assert len(result["candidates"]) == 2
 
 
+def test_union_of_disjoint_pairs_is_composite_not_a_second_explanation():
+    # Two payments against two bookings of different amounts pair one way only;
+    # the 100 against 100 candidate merely merges the two pairs.
+    result = match_transactions([tx("p60", "60.00"), tx("p40", "40.00")],
+                                [tx("j60", "60.00", kind="journal", account="1002", debit="60.00", credit="0.00"),
+                                 tx("j40", "40.00", kind="journal", account="1002", debit="40.00", credit="0.00")],
+                                flow="receivable")
+    assert result["status"] == "candidates"
+    assert sorted((c["left_ids"], c["composite"]) for c in result["candidates"]) == [
+        (["p40"], False), (["p40", "p60"], True), (["p60"], False)]
+    assert result["unmatched"] == {"left": [], "right": []}
+
+
+def test_equal_amounts_remain_ambiguous_even_with_composite_candidates():
+    result = match_transactions([tx("p1", "50.00"), tx("p2", "50.00")],
+                                [tx("j1", "50.00", kind="journal", account="1002", debit="50.00", credit="0.00"),
+                                 tx("j2", "50.00", kind="journal", account="1002", debit="50.00", credit="0.00")],
+                                flow="receivable")
+    assert result["status"] == "ambiguous"
+    assert sum(not c["composite"] for c in result["candidates"]) == 4
+
+
 def test_refund_does_not_match_purchase_payment():
     result = match_transactions([tx("invoice", "10.00")], [tx("refund", "10.00", kind="bank")])
     assert result["candidates"] == []

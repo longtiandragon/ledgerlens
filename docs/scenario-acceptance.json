@@ -1,0 +1,1445 @@
+{
+  "runner_version": "scenario-packs-v1",
+  "cell_count": 12,
+  "passed": 12,
+  "failed": [],
+  "matrix": {
+    "funds": {
+      "normal": true,
+      "definite_anomaly": true,
+      "insufficient": true,
+      "conflicting": true
+    },
+    "purchase": {
+      "normal": true,
+      "definite_anomaly": true,
+      "insufficient": true,
+      "conflicting": true
+    },
+    "period": {
+      "normal": true,
+      "definite_anomaly": true,
+      "insufficient": true,
+      "conflicting": true
+    }
+  },
+  "cells": [
+    {
+      "id": "funds-normal",
+      "pack": "funds",
+      "condition": "normal",
+      "title": "两笔付款合并入账，另有一笔退款：发生额与候选关联一致",
+      "passed": true,
+      "steps": [
+        {
+          "step": "check",
+          "args": {
+            "book": "main",
+            "expect": [
+              [
+                "BANK_CANDIDATES_ALIGNED",
+                "normal"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "cases": [
+              [
+                "BANK_CANDIDATES_ALIGNED",
+                "normal"
+              ]
+            ],
+            "snapshot_id": "0a004334-7128-4266-84e9-42eeade0f56d"
+          }
+        },
+        {
+          "step": "investigate",
+          "args": {
+            "rule": "BANK_CANDIDATES_ALIGNED",
+            "expect_fact": "normal"
+          },
+          "passed": true,
+          "observed": {
+            "run_status": "complete",
+            "fact_status": "normal"
+          }
+        },
+        {
+          "step": "draft",
+          "args": {
+            "rule": "BANK_CANDIDATES_ALIGNED",
+            "expect_status": "not_applicable",
+            "expect_lines": 0
+          },
+          "passed": true,
+          "observed": {
+            "status": "not_applicable",
+            "summary": "复核候选关联，不自动核销",
+            "lines": 0
+          }
+        },
+        {
+          "step": "review",
+          "args": {
+            "rule": "BANK_CANDIDATES_ALIGNED",
+            "decision": "accepted",
+            "expect_open": []
+          },
+          "passed": true,
+          "observed": {
+            "decision": "accepted",
+            "open_items": [],
+            "simulation": false
+          }
+        },
+        {
+          "step": "export",
+          "args": {
+            "rule": "BANK_CANDIDATES_ALIGNED"
+          },
+          "passed": true,
+          "observed": {
+            "evidence": 7,
+            "reviews": 1
+          }
+        }
+      ],
+      "boundary": null
+    },
+    {
+      "id": "funds-anomaly",
+      "pack": "funds",
+      "condition": "definite_anomaly",
+      "title": "银行手续费未入账：差异定位到未匹配流水，补齐对方科目后一致",
+      "passed": true,
+      "steps": [
+        {
+          "step": "check",
+          "args": {
+            "book": "main",
+            "expect": [
+              [
+                "BANK_LEDGER_DIFFERENCE",
+                "supported"
+              ],
+              [
+                "BANK_UNMATCHED",
+                "insufficient"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "cases": [
+              [
+                "BANK_LEDGER_DIFFERENCE",
+                "supported"
+              ],
+              [
+                "BANK_UNMATCHED",
+                "insufficient"
+              ]
+            ],
+            "snapshot_id": "9bfaad5e-523c-49d9-b62f-eda3bc017ec3"
+          }
+        },
+        {
+          "step": "investigate",
+          "args": {
+            "rule": "BANK_LEDGER_DIFFERENCE",
+            "expect_fact": "supported"
+          },
+          "passed": true,
+          "observed": {
+            "run_status": "complete",
+            "fact_status": "supported"
+          }
+        },
+        {
+          "step": "draft",
+          "args": {
+            "rule": "BANK_LEDGER_DIFFERENCE",
+            "expect_status": "needs_input",
+            "expect_lines": 2,
+            "expect_required": [
+              [],
+              [
+                "account"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "status": "needs_input",
+            "summary": "按 1 条未匹配银行流水补录分录（对方科目待确认）",
+            "lines": 2
+          }
+        },
+        {
+          "step": "simulate",
+          "args": {
+            "rule": "BANK_LEDGER_DIFFERENCE",
+            "fill": {
+              "1": {
+                "account": "6603"
+              }
+            },
+            "expect_target": "resolved",
+            "expect_resolved": [
+              "BANK_LEDGER_DIFFERENCE",
+              "BANK_UNMATCHED"
+            ],
+            "expect_normal": [
+              "BANK_CANDIDATES_ALIGNED"
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "target": "resolved",
+            "resolved": [
+              "BANK_LEDGER_DIFFERENCE",
+              "BANK_UNMATCHED"
+            ],
+            "basis_source": "treatment_draft",
+            "completed_inputs": 1,
+            "edited": false
+          }
+        },
+        {
+          "step": "review",
+          "args": {
+            "rule": "BANK_LEDGER_DIFFERENCE",
+            "decision": "accepted",
+            "simulation": "last",
+            "expect_open": []
+          },
+          "passed": true,
+          "observed": {
+            "decision": "accepted",
+            "open_items": [],
+            "simulation": true
+          }
+        },
+        {
+          "step": "export",
+          "args": {
+            "rule": "BANK_LEDGER_DIFFERENCE",
+            "expect_completed_inputs": 1
+          },
+          "passed": true,
+          "observed": {
+            "evidence": 4,
+            "reviews": 1
+          }
+        }
+      ],
+      "boundary": null
+    },
+    {
+      "id": "funds-insufficient",
+      "pack": "funds",
+      "condition": "insufficient",
+      "title": "只有银行流水、缺少本期银行存款分录：补证后重新检查并接续复核",
+      "passed": true,
+      "steps": [
+        {
+          "step": "check",
+          "args": {
+            "book": "main",
+            "expect": [
+              [
+                "BANK_RECONCILIATION_INPUT",
+                "insufficient"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "cases": [
+              [
+                "BANK_RECONCILIATION_INPUT",
+                "insufficient"
+              ]
+            ],
+            "snapshot_id": "779f1fb4-4f24-414b-a10c-e6e5dfdd9496"
+          }
+        },
+        {
+          "step": "draft",
+          "args": {
+            "rule": "BANK_RECONCILIATION_INPUT",
+            "expect_status": "needs_evidence",
+            "expect_lines": 0
+          },
+          "passed": true,
+          "observed": {
+            "status": "needs_evidence",
+            "summary": "先补充资料",
+            "lines": 0
+          }
+        },
+        {
+          "step": "request",
+          "args": {
+            "rule": "BANK_RECONCILIATION_INPUT",
+            "name": "cash",
+            "kind": "journal",
+            "description": "本期银行存款分录"
+          },
+          "passed": true,
+          "observed": {
+            "request": "journal",
+            "status": "open"
+          }
+        },
+        {
+          "step": "review",
+          "args": {
+            "rule": "BANK_RECONCILIATION_INPUT",
+            "decision": "reserved",
+            "expect_open": [
+              "evidence_request",
+              "treatment_pending"
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "decision": "reserved",
+            "open_items": [
+              "evidence_request",
+              "treatment_pending"
+            ],
+            "simulation": false
+          }
+        },
+        {
+          "step": "supplement",
+          "args": {
+            "book": "main",
+            "rows": 4
+          },
+          "passed": true,
+          "observed": {
+            "imported": 4
+          }
+        },
+        {
+          "step": "lineage",
+          "args": {
+            "rule": "BANK_RECONCILIATION_INPUT",
+            "expect_state": "not_rechecked"
+          },
+          "passed": true,
+          "observed": {
+            "state": "not_rechecked"
+          }
+        },
+        {
+          "step": "check",
+          "args": {
+            "book": "main",
+            "expect": [
+              [
+                "BANK_CANDIDATES_ALIGNED",
+                "normal"
+              ],
+              [
+                "PRIOR_FINDING_CLEARED",
+                "normal"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "cases": [
+              [
+                "BANK_CANDIDATES_ALIGNED",
+                "normal"
+              ],
+              [
+                "PRIOR_FINDING_CLEARED",
+                "normal"
+              ]
+            ],
+            "snapshot_id": "19e37db8-b156-41b5-81e2-bcc4e4eb5e34"
+          }
+        },
+        {
+          "step": "lineage",
+          "args": {
+            "rule": "BANK_RECONCILIATION_INPUT",
+            "snapshot": "first",
+            "expect_state": "not_reproduced"
+          },
+          "passed": true,
+          "observed": {
+            "state": "not_reproduced"
+          }
+        },
+        {
+          "step": "fulfil",
+          "args": {
+            "name": "cash",
+            "expect_candidates": 4
+          },
+          "passed": true,
+          "observed": {
+            "fulfilled": 4
+          }
+        },
+        {
+          "step": "review",
+          "args": {
+            "rule": "PRIOR_FINDING_CLEARED",
+            "decision": "accepted",
+            "expect_open": []
+          },
+          "passed": true,
+          "observed": {
+            "decision": "accepted",
+            "open_items": [],
+            "simulation": false
+          }
+        },
+        {
+          "step": "export",
+          "args": {
+            "rule": "PRIOR_FINDING_CLEARED"
+          },
+          "passed": true,
+          "observed": {
+            "evidence": 6,
+            "reviews": 1
+          }
+        }
+      ],
+      "boundary": null
+    },
+    {
+      "id": "funds-conflict",
+      "pack": "funds",
+      "condition": "conflicting",
+      "title": "两笔等额付款对应两笔等额分录：多种配对均成立，不自动核销",
+      "passed": true,
+      "steps": [
+        {
+          "step": "check",
+          "args": {
+            "book": "main",
+            "expect": [
+              [
+                "BANK_MATCH_AMBIGUOUS",
+                "insufficient"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "cases": [
+              [
+                "BANK_MATCH_AMBIGUOUS",
+                "insufficient"
+              ]
+            ],
+            "snapshot_id": "b1cada31-6491-4038-8948-7e839918b69e"
+          }
+        },
+        {
+          "step": "investigate",
+          "args": {
+            "rule": "BANK_MATCH_AMBIGUOUS",
+            "expect_fact": "insufficient"
+          },
+          "passed": true,
+          "observed": {
+            "run_status": "complete",
+            "fact_status": "insufficient"
+          }
+        },
+        {
+          "step": "draft",
+          "args": {
+            "rule": "BANK_MATCH_AMBIGUOUS",
+            "expect_status": "needs_evidence",
+            "expect_lines": 0
+          },
+          "passed": true,
+          "observed": {
+            "status": "needs_evidence",
+            "summary": "先补充资料",
+            "lines": 0
+          }
+        },
+        {
+          "step": "review",
+          "args": {
+            "rule": "BANK_MATCH_AMBIGUOUS",
+            "decision": "reserved",
+            "expect_open": [
+              "treatment_pending"
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "decision": "reserved",
+            "open_items": [
+              "treatment_pending"
+            ],
+            "simulation": false
+          }
+        },
+        {
+          "step": "export",
+          "args": {
+            "rule": "BANK_MATCH_AMBIGUOUS"
+          },
+          "passed": true,
+          "observed": {
+            "evidence": 6,
+            "reviews": 1
+          }
+        }
+      ],
+      "boundary": null
+    },
+    {
+      "id": "purchase-normal",
+      "pack": "purchase",
+      "condition": "normal",
+      "title": "分批收货、分拆发票、分次付款：不判为重复确认",
+      "passed": true,
+      "steps": [
+        {
+          "step": "check",
+          "args": {
+            "book": "main",
+            "expect": [
+              [
+                "BANK_CANDIDATES_ALIGNED",
+                "normal"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "cases": [
+              [
+                "BANK_CANDIDATES_ALIGNED",
+                "normal"
+              ]
+            ],
+            "snapshot_id": "3a9cb98d-38c7-4692-883a-b7a1f4c9c93e"
+          }
+        },
+        {
+          "step": "absent",
+          "args": {
+            "rules": [
+              "DUPLICATE_INVOICE",
+              "INVOICE_OVERBOOKED",
+              "INVOICE_EVIDENCE",
+              "RECEIPT_GAP",
+              "RECEIPT_EXCESS"
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "absent": [
+              "DUPLICATE_INVOICE",
+              "INVOICE_OVERBOOKED",
+              "INVOICE_EVIDENCE",
+              "RECEIPT_GAP",
+              "RECEIPT_EXCESS"
+            ]
+          }
+        }
+      ],
+      "boundary": null
+    },
+    {
+      "id": "purchase-anomaly",
+      "pack": "purchase",
+      "condition": "definite_anomaly",
+      "title": "同一发票两张凭证全额确认：冲回后入账的一张，原账不变",
+      "passed": true,
+      "steps": [
+        {
+          "step": "check",
+          "args": {
+            "book": "main",
+            "expect": [
+              [
+                "DUPLICATE_INVOICE",
+                "supported"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "cases": [
+              [
+                "DUPLICATE_INVOICE",
+                "supported"
+              ]
+            ],
+            "snapshot_id": "a2c198c9-5292-41e5-b7b5-b79534e28086"
+          }
+        },
+        {
+          "step": "investigate",
+          "args": {
+            "rule": "DUPLICATE_INVOICE",
+            "expect_fact": "supported"
+          },
+          "passed": true,
+          "observed": {
+            "run_status": "complete",
+            "fact_status": "supported"
+          }
+        },
+        {
+          "step": "draft",
+          "args": {
+            "rule": "DUPLICATE_INVOICE",
+            "expect_status": "proposed",
+            "expect_lines": 2,
+            "expect_text": "冲回重复确认凭证 JV-P2-B"
+          },
+          "passed": true,
+          "observed": {
+            "status": "proposed",
+            "summary": "冲回重复确认凭证 JV-P2-B",
+            "lines": 2
+          }
+        },
+        {
+          "step": "simulate",
+          "args": {
+            "rule": "DUPLICATE_INVOICE",
+            "expect_target": "resolved",
+            "expect_resolved": [
+              "DUPLICATE_INVOICE"
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "target": "resolved",
+            "resolved": [
+              "DUPLICATE_INVOICE"
+            ],
+            "basis_source": "treatment_draft",
+            "completed_inputs": 0,
+            "edited": false
+          }
+        },
+        {
+          "step": "review",
+          "args": {
+            "rule": "DUPLICATE_INVOICE",
+            "decision": "accepted",
+            "simulation": "last",
+            "expect_open": []
+          },
+          "passed": true,
+          "observed": {
+            "decision": "accepted",
+            "open_items": [],
+            "simulation": true
+          }
+        },
+        {
+          "step": "export",
+          "args": {
+            "rule": "DUPLICATE_INVOICE",
+            "expect_basis": "treatment_draft"
+          },
+          "passed": true,
+          "observed": {
+            "evidence": 5,
+            "reviews": 1
+          }
+        }
+      ],
+      "boundary": null
+    },
+    {
+      "id": "purchase-insufficient",
+      "pack": "purchase",
+      "condition": "insufficient",
+      "title": "收货单未到：登记补证，迟到收货单导入后缺口不再出现并接续复核",
+      "passed": true,
+      "steps": [
+        {
+          "step": "check",
+          "args": {
+            "book": "main",
+            "expect": [
+              [
+                "RECEIPT_GAP",
+                "insufficient"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "cases": [
+              [
+                "RECEIPT_GAP",
+                "insufficient"
+              ]
+            ],
+            "snapshot_id": "6543ba95-5330-42e7-8573-9dfcce1e2a66"
+          }
+        },
+        {
+          "step": "investigate",
+          "args": {
+            "rule": "RECEIPT_GAP",
+            "expect_fact": "insufficient"
+          },
+          "passed": true,
+          "observed": {
+            "run_status": "complete",
+            "fact_status": "insufficient"
+          }
+        },
+        {
+          "step": "draft",
+          "args": {
+            "rule": "RECEIPT_GAP",
+            "expect_status": "needs_evidence",
+            "expect_lines": 0
+          },
+          "passed": true,
+          "observed": {
+            "status": "needs_evidence",
+            "summary": "先补充资料",
+            "lines": 0
+          }
+        },
+        {
+          "step": "request",
+          "args": {
+            "rule": "RECEIPT_GAP",
+            "name": "receipt",
+            "kind": "receipt",
+            "reference": "PO-P3",
+            "description": "订单剩余收货单"
+          },
+          "passed": true,
+          "observed": {
+            "request": "receipt",
+            "status": "open"
+          }
+        },
+        {
+          "step": "review",
+          "args": {
+            "rule": "RECEIPT_GAP",
+            "decision": "reserved",
+            "expect_open": [
+              "evidence_request",
+              "treatment_pending"
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "decision": "reserved",
+            "open_items": [
+              "evidence_request",
+              "treatment_pending"
+            ],
+            "simulation": false
+          }
+        },
+        {
+          "step": "supplement",
+          "args": {
+            "book": "main",
+            "rows": 1
+          },
+          "passed": true,
+          "observed": {
+            "imported": 1
+          }
+        },
+        {
+          "step": "check",
+          "args": {
+            "book": "main",
+            "expect": [
+              [
+                "PRIOR_FINDING_CLEARED",
+                "normal"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "cases": [
+              [
+                "PRIOR_FINDING_CLEARED",
+                "normal"
+              ]
+            ],
+            "snapshot_id": "0f12bc85-d3ea-4378-9f46-dc5320c3c586"
+          }
+        },
+        {
+          "step": "lineage",
+          "args": {
+            "rule": "RECEIPT_GAP",
+            "snapshot": "first",
+            "expect_state": "not_reproduced"
+          },
+          "passed": true,
+          "observed": {
+            "state": "not_reproduced"
+          }
+        },
+        {
+          "step": "fulfil",
+          "args": {
+            "name": "receipt",
+            "expect_candidates": 1
+          },
+          "passed": true,
+          "observed": {
+            "fulfilled": 1
+          }
+        },
+        {
+          "step": "review",
+          "args": {
+            "rule": "PRIOR_FINDING_CLEARED",
+            "decision": "accepted",
+            "expect_open": []
+          },
+          "passed": true,
+          "observed": {
+            "decision": "accepted",
+            "open_items": [],
+            "simulation": false
+          }
+        },
+        {
+          "step": "export",
+          "args": {
+            "rule": "PRIOR_FINDING_CLEARED"
+          },
+          "passed": true,
+          "observed": {
+            "evidence": 6,
+            "reviews": 1
+          }
+        }
+      ],
+      "boundary": null
+    },
+    {
+      "id": "purchase-conflict",
+      "pack": "purchase",
+      "condition": "conflicting",
+      "title": "同一发票号两份来源金额不同：不判重复，登记补证并保留意见",
+      "passed": true,
+      "steps": [
+        {
+          "step": "check",
+          "args": {
+            "book": "main",
+            "expect": [
+              [
+                "INVOICE_CONFLICT",
+                "insufficient"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "cases": [
+              [
+                "INVOICE_CONFLICT",
+                "insufficient"
+              ]
+            ],
+            "snapshot_id": "fe0c356e-3db1-4450-8be7-1b0dcaa1c0d2"
+          }
+        },
+        {
+          "step": "absent",
+          "args": {
+            "rules": [
+              "DUPLICATE_INVOICE",
+              "INVOICE_OVERBOOKED"
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "absent": [
+              "DUPLICATE_INVOICE",
+              "INVOICE_OVERBOOKED"
+            ]
+          }
+        },
+        {
+          "step": "investigate",
+          "args": {
+            "rule": "INVOICE_CONFLICT",
+            "expect_fact": "insufficient"
+          },
+          "passed": true,
+          "observed": {
+            "run_status": "complete",
+            "fact_status": "insufficient"
+          }
+        },
+        {
+          "step": "draft",
+          "args": {
+            "rule": "INVOICE_CONFLICT",
+            "expect_status": "needs_evidence",
+            "expect_lines": 0
+          },
+          "passed": true,
+          "observed": {
+            "status": "needs_evidence",
+            "summary": "先补充资料",
+            "lines": 0
+          }
+        },
+        {
+          "step": "request",
+          "args": {
+            "rule": "INVOICE_CONFLICT",
+            "name": "invoice",
+            "kind": "invoice",
+            "reference": "INV-P4",
+            "description": "原始发票核验"
+          },
+          "passed": true,
+          "observed": {
+            "request": "invoice",
+            "status": "open"
+          }
+        },
+        {
+          "step": "review",
+          "args": {
+            "rule": "INVOICE_CONFLICT",
+            "decision": "reserved",
+            "expect_open": [
+              "evidence_request",
+              "treatment_pending"
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "decision": "reserved",
+            "open_items": [
+              "evidence_request",
+              "treatment_pending"
+            ],
+            "simulation": false
+          }
+        },
+        {
+          "step": "export",
+          "args": {
+            "rule": "INVOICE_CONFLICT"
+          },
+          "passed": true,
+          "observed": {
+            "evidence": 6,
+            "reviews": 1
+          }
+        }
+      ],
+      "boundary": "冲突的两份来源都保留在只读原账中；当前版本没有作废来源记录的机制，冲突只能以补证记录和保留意见处理。"
+    },
+    {
+      "id": "period-normal",
+      "pack": "period",
+      "condition": "normal",
+      "title": "期初加本期发生等于试算期末：不产生期间或余额发现",
+      "passed": true,
+      "steps": [
+        {
+          "step": "check",
+          "args": {
+            "book": "main",
+            "expect": []
+          },
+          "passed": true,
+          "observed": {
+            "cases": [],
+            "snapshot_id": "6ad52c4b-76ab-4cc7-b643-1ab719c2d9b2"
+          }
+        }
+      ],
+      "boundary": null
+    },
+    {
+      "id": "period-anomaly",
+      "pack": "period",
+      "condition": "definite_anomaly",
+      "title": "凭证漏记一行：凭证不平且试算不衔接，补录遗漏行后两项都消除",
+      "passed": true,
+      "steps": [
+        {
+          "step": "check",
+          "args": {
+            "book": "main",
+            "expect": [
+              [
+                "TRIAL_BALANCE",
+                "supported"
+              ],
+              [
+                "VOUCHER_BALANCE",
+                "supported"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "cases": [
+              [
+                "TRIAL_BALANCE",
+                "supported"
+              ],
+              [
+                "VOUCHER_BALANCE",
+                "supported"
+              ]
+            ],
+            "snapshot_id": "dbd1eeac-c948-4808-bfc1-57268e523d12"
+          }
+        },
+        {
+          "step": "investigate",
+          "args": {
+            "rule": "VOUCHER_BALANCE",
+            "expect_fact": "supported"
+          },
+          "passed": true,
+          "observed": {
+            "run_status": "complete",
+            "fact_status": "supported"
+          }
+        },
+        {
+          "step": "draft",
+          "args": {
+            "rule": "TRIAL_BALANCE",
+            "expect_status": "needs_evidence",
+            "expect_lines": 0
+          },
+          "passed": true,
+          "observed": {
+            "status": "needs_evidence",
+            "summary": "先补充资料",
+            "lines": 0
+          }
+        },
+        {
+          "step": "draft",
+          "args": {
+            "rule": "VOUCHER_BALANCE",
+            "expect_status": "needs_input",
+            "expect_lines": 1,
+            "expect_required": [
+              [
+                "account"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "status": "needs_input",
+            "summary": "补录凭证 JV-D2 遗漏的贷方 40.00",
+            "lines": 1
+          }
+        },
+        {
+          "step": "simulate",
+          "args": {
+            "rule": "VOUCHER_BALANCE",
+            "fill": {
+              "0": {
+                "account": "2202"
+              }
+            },
+            "expect_target": "resolved",
+            "expect_resolved": [
+              "TRIAL_BALANCE",
+              "VOUCHER_BALANCE"
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "target": "resolved",
+            "resolved": [
+              "TRIAL_BALANCE",
+              "VOUCHER_BALANCE"
+            ],
+            "basis_source": "treatment_draft",
+            "completed_inputs": 1,
+            "edited": false
+          }
+        },
+        {
+          "step": "review",
+          "args": {
+            "rule": "VOUCHER_BALANCE",
+            "decision": "accepted",
+            "simulation": "last",
+            "expect_open": []
+          },
+          "passed": true,
+          "observed": {
+            "decision": "accepted",
+            "open_items": [],
+            "simulation": true
+          }
+        },
+        {
+          "step": "export",
+          "args": {
+            "rule": "VOUCHER_BALANCE",
+            "expect_completed_inputs": 1
+          },
+          "passed": true,
+          "observed": {
+            "evidence": 2,
+            "reviews": 1
+          }
+        }
+      ],
+      "boundary": null
+    },
+    {
+      "id": "period-insufficient",
+      "pack": "period",
+      "condition": "insufficient",
+      "title": "试算表没有期初余额：不按零处理，补充期初后接续复核",
+      "passed": true,
+      "steps": [
+        {
+          "step": "check",
+          "args": {
+            "book": "main",
+            "expect": [
+              [
+                "OPENING_REQUIRED",
+                "insufficient"
+              ],
+              [
+                "OPENING_REQUIRED",
+                "insufficient"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "cases": [
+              [
+                "OPENING_REQUIRED",
+                "insufficient"
+              ],
+              [
+                "OPENING_REQUIRED",
+                "insufficient"
+              ]
+            ],
+            "snapshot_id": "d4d7080f-c2b6-40b2-a937-44c40d26aac5"
+          }
+        },
+        {
+          "step": "draft",
+          "args": {
+            "rule": "OPENING_REQUIRED",
+            "expect_status": "needs_evidence",
+            "expect_lines": 0
+          },
+          "passed": true,
+          "observed": {
+            "status": "needs_evidence",
+            "summary": "先补充资料",
+            "lines": 0
+          }
+        },
+        {
+          "step": "request",
+          "args": {
+            "rule": "OPENING_REQUIRED",
+            "name": "opening",
+            "kind": "opening",
+            "description": "各科目期初余额"
+          },
+          "passed": true,
+          "observed": {
+            "request": "opening",
+            "status": "open"
+          }
+        },
+        {
+          "step": "supplement",
+          "args": {
+            "book": "main",
+            "rows": 2
+          },
+          "passed": true,
+          "observed": {
+            "imported": 2
+          }
+        },
+        {
+          "step": "check",
+          "args": {
+            "book": "main",
+            "expect": [
+              [
+                "PRIOR_FINDING_CLEARED",
+                "normal"
+              ],
+              [
+                "PRIOR_FINDING_CLEARED",
+                "normal"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "cases": [
+              [
+                "PRIOR_FINDING_CLEARED",
+                "normal"
+              ],
+              [
+                "PRIOR_FINDING_CLEARED",
+                "normal"
+              ]
+            ],
+            "snapshot_id": "5918ab18-4353-4479-ad04-eeeff7850dc7"
+          }
+        },
+        {
+          "step": "absent",
+          "args": {
+            "rules": [
+              "TRIAL_BALANCE",
+              "OPENING_REQUIRED"
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "absent": [
+              "TRIAL_BALANCE",
+              "OPENING_REQUIRED"
+            ]
+          }
+        },
+        {
+          "step": "fulfil",
+          "args": {
+            "name": "opening",
+            "expect_candidates": 2
+          },
+          "passed": true,
+          "observed": {
+            "fulfilled": 2
+          }
+        },
+        {
+          "step": "review",
+          "args": {
+            "rule": "PRIOR_FINDING_CLEARED",
+            "decision": "accepted",
+            "expect_open": []
+          },
+          "passed": true,
+          "observed": {
+            "decision": "accepted",
+            "open_items": [],
+            "simulation": false
+          }
+        }
+      ],
+      "boundary": null
+    },
+    {
+      "id": "period-conflict",
+      "pack": "period",
+      "condition": "conflicting",
+      "title": "业务日期与记账期间矛盾：同年迟到单据不调账，跨年差错按制度给出不同路径",
+      "passed": true,
+      "steps": [
+        {
+          "step": "check",
+          "args": {
+            "book": "cas",
+            "expect": [
+              [
+                "PERIOD_CUTOFF",
+                "insufficient"
+              ],
+              [
+                "PERIOD_CUTOFF",
+                "insufficient"
+              ],
+              [
+                "PERIOD_CUTOFF",
+                "insufficient"
+              ],
+              [
+                "PERIOD_CUTOFF",
+                "insufficient"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "cases": [
+              [
+                "PERIOD_CUTOFF",
+                "insufficient"
+              ],
+              [
+                "PERIOD_CUTOFF",
+                "insufficient"
+              ],
+              [
+                "PERIOD_CUTOFF",
+                "insufficient"
+              ],
+              [
+                "PERIOD_CUTOFF",
+                "insufficient"
+              ]
+            ],
+            "snapshot_id": "ed9a5a04-3227-409a-b58c-f6e6a2e818d1"
+          }
+        },
+        {
+          "step": "draft",
+          "args": {
+            "rule": "PERIOD_CUTOFF",
+            "where": {
+              "business_month": "2026-08"
+            },
+            "expect_status": "not_applicable",
+            "expect_text": "同一会计年度"
+          },
+          "passed": true,
+          "observed": {
+            "status": "not_applicable",
+            "summary": "同年度迟到单据：说明原因，不调整分录",
+            "lines": 0
+          }
+        },
+        {
+          "step": "draft",
+          "args": {
+            "rule": "PERIOD_CUTOFF",
+            "where": {
+              "business_month": "2025-12"
+            },
+            "expect_status": "needs_evidence",
+            "expect_text": "POLICY_CAS_PRIOR_PERIOD_ERROR_MATERIALITY"
+          },
+          "passed": true,
+          "observed": {
+            "status": "needs_evidence",
+            "summary": "先认定前期差错及重要性",
+            "lines": 0
+          }
+        },
+        {
+          "step": "review",
+          "args": {
+            "rule": "PERIOD_CUTOFF",
+            "where": {
+              "business_month": "2025-12"
+            },
+            "decision": "reserved",
+            "expect_open": [
+              "treatment_pending"
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "decision": "reserved",
+            "open_items": [
+              "treatment_pending"
+            ],
+            "simulation": false
+          }
+        },
+        {
+          "step": "check",
+          "args": {
+            "book": "scas",
+            "expect": [
+              [
+                "PERIOD_CUTOFF",
+                "insufficient"
+              ],
+              [
+                "PERIOD_CUTOFF",
+                "insufficient"
+              ]
+            ]
+          },
+          "passed": true,
+          "observed": {
+            "cases": [
+              [
+                "PERIOD_CUTOFF",
+                "insufficient"
+              ],
+              [
+                "PERIOD_CUTOFF",
+                "insufficient"
+              ]
+            ],
+            "snapshot_id": "f5a2b464-c783-4422-a31c-73659d33a6ae"
+          }
+        },
+        {
+          "step": "draft",
+          "args": {
+            "rule": "PERIOD_CUTOFF",
+            "where": {
+              "business_month": "2025-12"
+            },
+            "expect_status": "not_applicable",
+            "expect_text": "未来适用法"
+          },
+          "passed": true,
+          "observed": {
+            "status": "not_applicable",
+            "summary": "按未来适用法在发现当期处理，不追溯调整",
+            "lines": 0
+          }
+        }
+      ],
+      "boundary": null
+    }
+  ],
+  "scope": "手写合成账套逐格验收产品流程；不代表真实企业数据、行业覆盖率或模型效果。",
+  "generated_at": "2026-10-23T18:28:00.242552+00:00",
+  "commit": "f668cffb2f5aa2a48f122145a662c9645f6553f8",
+  "working_tree_clean": true,
+  "python": "3.12.7",
+  "execution_rules": {
+    "version": "0.2.0",
+    "source_sha256": "9e083ddf128183c07243eccde999c0224f664f048c2c97599cbdbc83f771f7b7"
+  },
+  "treatment": {
+    "version": "treatment-drafts-v1",
+    "source_sha256": "b9e91b9e7481597ad04addcdb8636d21c3ccbeec9eb0f262e54f8433b6158a6c"
+  },
+  "environment": "fresh temporary SQLite database, no model key, external network refused",
+  "model_calls": 0
+}

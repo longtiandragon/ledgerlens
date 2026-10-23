@@ -1,5 +1,7 @@
 # 交接文档
 
+> 最新接续（2026-10-24）：用户确认完成标准是原 PRD 的产品流程闭环，而不是只整理提交材料；本周只由 Claude 开发，研究实验暂停，邮件改为 10-30 发出。已在 `feature/treatment-drafts` 补齐：处理草稿、模拟前后发现对比、案件接续与接续核对案件、复核冻结未决事项、底稿完整导出、资金核对进入月结案件（规则 0.2.0）、迁移 0008，以及三个场景包×四种情况 12/12 验收（[说明](SCENARIO_ACCEPTANCE.md)）。Codex 留下的本地分支 `codex/ai-retrieval-gain`（FinDER 检索负面结果，未推送）未合并，处理前先问用户。其后：重录演示视频（界面已变）、介绍 PDF 定稿、发布 v0.2.0、终检。
+
 > 最新接续（2026-10-23，远端验收后）：[PR #57](https://github.com/longtiandragon/ledgerlens/pull/57) 已推送，提交 `2d42f97` 的[CI 9/9通过](https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917)，四份跨主机／中断／有限负载报告已保存在[证据摘要](cross-host-restore-validation.json)。Linux与Windows后端各2649通过／39跳过，可选任务68/68；本地最新参考/OCR为8/8。学生公开资料首版的本轮工程整改可交付，PR仍为草稿、未合并。后续研究另开新计划：AI增益未证明，v5失败冒烟不得自动重跑或挪用封存预算；企业账套和真人会计签字属于未来验证。下面“未推送”等描述只代表当时状态，不得据此重做任务。
 
 > 最新接续（2026-10-23）：用户已确认v5本轮总上限¥8，开发冒烟实际95次请求，8案因固定¥2费用预留不足未派发；封存门控拒绝，两个封存报告均不存在，不自动重跑或挪用预算。详见[执行记录](root-cause-v5-execution.json)与[总览](PUBLIC_GAP_CLOSURE_20261022.md)。参考界面另修复快照更新时的迟到响应竞态，修复前1项失败保留，修复后4/4通过。此次仅更新前端及报告，未重跑完整后端；本地分支未推送。
@@ -122,7 +124,7 @@
 |调查提示/工具版本|`investigation-v27` / `snapshot-tools-v11`；root_cause窄契约（v27只改JSON解析与修复提示）；v3封存集单Agent 0.508、0/27结构失败，未超过基线，见ROOT_CAUSE_V3|
 |政策规则包|`policy-consistency-v9`，33 条（CAS 31 / SCAS 2）覆盖全部32份归档问答，191 个手写投影在明确范围假设下全部通过；专业判断须人工确认|
 |流程规则包|`bpi2019-process-rules-v1`，9 条；流程模型解释 `process-investigation-v1`|
-|数据库迁移|冻结至 `0007`（多用户审签：用户、会话、审批表与可空归属列，只追加；只允许向前迁移）；CI optional作业在真实PostgreSQL上迁移至head通过，0006及以前的本机记录见postgres-migration-validation.json|
+|数据库迁移|冻结至 `0008`（0007 多用户审签；0008 案件接续表、模拟来源与复核冻结字段；均只追加，只允许向前迁移）；CI optional作业在真实PostgreSQL上迁移至head通过，0006及以前的本机记录见postgres-migration-validation.json|
 |本地旧库升级|启动器执行结构核验、自动备份和向前迁移；无版本旧库仅接管完整匹配的冻结结构。30项专项及隔离启动器实跑通过，原工作库仅做副本演练，见LOCAL_DATABASE_UPGRADE|
 |本地备份恢复|v2逐文件哈希与检查点清单，复制前后核验；32项专项通过，实际副本3257行业务数据和4179行检查点保持，199快照/26OCR/117参考上下文重验通过，见BACKUP_RESTORE。另建合成库两个规则调查进程中断点恢复、预算保持及重复派发通过，见RESTORED_RUN；非空白机器完整灾难恢复。Compose PostgreSQL用`scripts/postgres_backup.py`停写备份／新STORAGE_ROOT恢复，恢复栈API视图一致、容器验收20/20，见BACKUP_RESTORE末节|
 |测试|远端CI（10-20起每个PR与main）共8项作业：Linux后端全量、可选依赖、许可门控、前端构建、quickstart-unix、quickstart-windows（含Windows后端全量，最近一次2527通过/39跳过）、docker、reproduce（浏览器端到端，偶发超时见#33）。最新本机（2026-10-20）：后端2450通过/25跳过，公开API45项、Chrome24项全部通过，验收门控56项、191政策投影通过，见policy-v9-validation.json。最近一次同机新目录重装是10-15的v8：后端2364通过/53跳过，空库网页43通过/11跳过，见public-checkout-v3-validation.json。最近远端CI：提交c9ac746的GitHub CI（全新ubuntu-24.04）后端2208通过/38可选跳过，480/30规则契约与空库网页42通过/10可选跳过（含原因调查评测面板），多用户签署浏览器流程1通过，optional作业68项0跳过；本机后端全量2221通过/25可选或本机条件跳过（191.6秒）。以下为历史记录：提交ce7caf2干净源码基础环境2131通过、52项可选/本机条件跳过；网页42通过、9项可选场景跳过，见CLEAN_CHECKOUT。此前启用实际PG/本机模型资料的后端全量2017通过、2项Windows文件链接权限跳过（144.31秒）；浏览器48通过、0跳过（4.4分钟），两种环境范围不同，不互相替代。GitHub CI（全新ubuntu-24.04）后端2170通过/38可选跳过、480/30规则契约及空库网页42通过/9可选跳过；optional作业以pgvector服务和固定Beancount执行默认作业跳过的31项（所在3个文件共68项全部执行、0跳过），见github-ci-validation.json及github-ci-optional-validation.json|
@@ -247,7 +249,7 @@ docker compose -f infra/erpnext/compose.yaml up -d
 |位置|内容|
 |---|---|
 |`backend/app/main.py`|FastAPI 入口与账套、导入、快照、案件、模拟、复核、导出接口|
-|`backend/app/domain.py`|确定性规则（16 条）与规则目录（含每条所需资料种类）|
+|`backend/app/domain.py`|确定性规则（目录 23 条，含 10 条资金核对；规则 0.2.0）、月结案件集合 `month_end_findings` 与模拟前后发现对比|
 |`backend/app/investigation.py`|LangGraph 调查图：规则/单 Agent/固定多 Agent/主动调查，提案契约与校验，`root_cause` 任务|
 |`backend/app/model_gateway.py` / `model_contract.py`|DeepSeek 网关（预算、重试、用量）与系统协议文本|
 |`backend/app/evidence_selection.py` / `evidence_planning.py`|主动调查的查询计划编译与选择|
@@ -256,6 +258,8 @@ docker compose -f infra/erpnext/compose.yaml up -d
 |`backend/app/reference_*.py` / `frontend/src/components/ReferenceIndexes.vue`|本地实验索引API、人工父条文选择、追加版本和快照冻结；默认关键词不变，见REFERENCE_WORKFLOW|
 |`backend/app/ocr_workflow.py` / `ocr_api.py`|本地识别任务、原件校验、追加式人工字段复核与导入失效检查（迁移0005）；网页见OCR_WORKFLOW|
 |`backend/app/evidence_requests.py`|补证事项与人工确认（迁移 0004）|
+|`backend/app/treatment.py` / `case_flow.py`|确定性处理草稿；案件接续、接续核对案件与复核冻结的未决事项（迁移 0008）|
+|`datasets/scenario_packs.py` / `benchmarks/scenario_packs.py`|首版场景包验收矩阵与执行器；`scripts/validate_scenario_packs.py` 写报告|
 |`backend/app/auth.py` / `auth_api.py` / `manage_users.py`|可选多用户审签：账户、会话、职责分离与命令行建户（迁移 0007）|
 |`backend/app/process_*.py`|BPI2019 流程证据、流程规则、流程模型解释|
 |`backend/app/statement_*.py`|年报观察快照与只读接口|

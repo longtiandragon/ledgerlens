@@ -16,8 +16,11 @@ from .db import (Base, engine, Session, session, serialize, Book, Document, Impo
 from .schemas import (BookInput, SnapshotInput, CheckInput, InvestigateInput, SimulationInput, ReviewInput,
                       LedgerInput, ApprovalInput)
 from .imports import parse_file, confirm_import, make_snapshot, snapshot_records, policy_for, digest, declares_public_example
-from .domain import check_records, balances, simulate, rule_catalog, ensure_rule_compatibility, rule_identity_key
+from .domain import (balances, simulate, rule_catalog, ensure_rule_compatibility, rule_identity_key,
+                     month_end_findings, scenario_of)
 from .business_chain import business_chain
+from . import case_flow, treatment
+from .evidence_requests import requests_for_case
 from .process_api import router as process_router
 from .numeric_evaluation import router as numeric_evaluation_router
 from .root_cause_results import router as root_cause_results_router
@@ -48,7 +51,8 @@ def get(s, cls, identity):
 
 def case_data(item):
     return {**item.finding, 'id': item.id, 'book_id': item.book_id, 'snapshot_id': item.snapshot_id,
-            'created_at': item.created_at, 'check_run_id': item.check_run_id}
+            'created_at': item.created_at, 'check_run_id': item.check_run_id,
+            'scenario': item.finding.get('scenario') or scenario_of(item.finding.get('rule_id', ''))}
 
 
 def require_case_rules(s, item):
@@ -343,21 +347,49 @@ def check(body: CheckInput, s=Depends(session)):
         # otherwise wait behind an async investigator blocked on this same lock.
         s.commit()
         return result
-    findings = check_records(snapshot_records(s, snap), snap.policy)
+    findings = month_end_findings(snapshot_records(s, snap), snap.policy)
     run = CheckRun(book_id=body.book_id, snapshot_id=snap.id, rule_version=rule_identity_key())
     s.add(run)
     s.flush()
     cases = [Case(book_id=body.book_id, snapshot_id=snap.id, check_run_id=run.id, finding=f) for f in findings]
     s.add_all(cases)
-    s.add(Audit(book_id=body.book_id, action='checks.completed', details={'snapshot_id': snap.id, 'count': len(cases)}))
+    s.flush()
+    links, followups = case_flow.continue_cases(s, run, snap, cases, scenario_of)
+    s.add(Audit(book_id=body.book_id, action='checks.completed',
+                details={'snapshot_id': snap.id, 'count': len(cases), 'linked_to_prior': len(links),
+                         'not_reproduced_followups': len(followups)}))
     s.commit()
-    return {**serialize(run), 'cases': [case_data(c) for c in cases]}
+    return {**serialize(run), 'cases': [case_data(c) for c in [*cases, *followups]]}
 
 
 @app.get('/api/v1/cases')
 def cases(book_id: str, s=Depends(session)):
     get(s, Book, book_id)
     return [case_data(c) for c in s.scalars(select(Case).where(Case.book_id == book_id).order_by(Case.created_at.desc()))]
+
+
+def case_draft(s, item, snap):
+    """The deterministic treatment draft of a rules-compatible case."""
+    run = case_flow.latest_finished_run(s, item.id)
+    return treatment.build_draft(item.id, snap.id, item.finding, snapshot_records(s, snap), snap.policy,
+                                 serialize(run) if run else None)
+
+
+def latest_simulation(s, item):
+    return s.scalars(select(Simulation).where(Simulation.case_id == item.id, Simulation.snapshot_id == item.snapshot_id)
+                     .order_by(Simulation.created_at.desc())).first()
+
+
+def case_open_items(s, item, snap, simulation_row, compatible: bool):
+    draft = None
+    if compatible:
+        try:
+            draft = case_draft(s, item, snap)
+        except HTTPException:
+            draft = None  # missing snapshot records are reported by the case's own evidence views
+    run = case_flow.latest_finished_run(s, item.id)
+    return draft, case_flow.open_items(s, item, simulation=simulation_row, draft=draft,
+                                       latest_run=serialize(run) if run else None)
 
 
 @app.get('/api/v1/cases/{identity}')
@@ -370,11 +402,22 @@ def read_case(identity: str, s=Depends(session)):
     except HTTPException as exc:
         compatibility_error = exc.detail
     runs = [serialize(r) for r in s.scalars(select(Run).where(Run.case_id == identity).order_by(Run.created_at.desc()))]
-    return {**case_data(item), 'stale': snap.revision != book.revision or compatibility_error is not None,
+    stale = snap.revision != book.revision or compatibility_error is not None
+    draft, items = case_open_items(s, item, snap, latest_simulation(s, item), compatibility_error is None)
+    return {**case_data(item), 'stale': stale,
             'rules_compatible': compatibility_error is None, 'rule_compatibility_error': compatibility_error,
             'runs': runs, 'investigations': runs,
-            'reviews': [serialize(r) for r in s.scalars(select(Review).where(Review.case_id == identity))],
+            'reviews': [serialize(r) for r in s.scalars(select(Review).where(Review.case_id == identity)
+                                                       .order_by(Review.created_at))],
+            'lineage': case_flow.lineage(s, item, stale), 'open_items': items,
+            'treatment': {k: draft[k] for k in ('status', 'summary', 'digest')} if draft else None,
             **signoff(s, identity)}
+
+
+@app.get('/api/v1/cases/{identity}/treatment-draft')
+def treatment_draft(identity: str, s=Depends(session)):
+    item = get(s, Case, identity)
+    return case_draft(s, item, require_case_rules(s, item))
 
 
 def signoff(s, identity: str) -> dict:
@@ -394,6 +437,8 @@ def start_investigation(identity: str, body: InvestigateInput, background: Backg
     user = auth.acting_user(request, s, 'preparer')
     item = get(s, Case, identity)
     snap = require_case_rules(s, item)
+    if item.finding.get('rule_id') == case_flow.CLEARED_RULE:
+        raise HTTPException(409, '接续核对案件来自前后两次检查的比较，不另行调查；请查看前一案件的调查与补证记录后复核')
     if body.mode != 'rules':
         from .reference_selection import verify_snapshot_references
         try:
@@ -584,10 +629,21 @@ def simulation(body: SimulationInput, s=Depends(session)):
         except ValidationError as exc:
             raise HTTPException(422, json.loads(exc.json())) from exc
         adjustments.append(value)
-    result = simulate(snapshot_records(s, snap), adjustments, snap.policy)
-    sim = Simulation(case_id=item.id, snapshot_id=snap.id, adjustments=adjustments, result=result)
+    basis = {'source': 'manual'}
+    if body.basis is not None:
+        # Never trust a client-side copy: recompute the draft and compare.
+        draft = case_draft(s, item, snap)
+        if draft['digest'] != body.basis.draft_digest:
+            raise HTTPException(409, '处理草稿已变化（调查结果、资料或程序版本已更新），请重新生成草稿后再模拟')
+        basis = {'source': 'treatment_draft', 'draft_digest': draft['digest'], 'draft_version': draft['version'],
+                 'draft_source_sha256': draft['source_sha256'], 'draft_status': draft['status'],
+                 'summary': draft['summary'], 'rule_id': draft['rule_id'], 'investigation': draft['investigation'],
+                 **treatment.compare_lines(draft, adjustments)}
+    result = simulate(snapshot_records(s, snap), adjustments, snap.policy, target=item.finding)
+    sim = Simulation(case_id=item.id, snapshot_id=snap.id, adjustments=adjustments, result=result, basis=basis)
     s.add(sim)
-    s.add(Audit(book_id=item.book_id, action='simulation.created', details={'case_id': item.id, 'snapshot_id': snap.id}))
+    s.add(Audit(book_id=item.book_id, action='simulation.created',
+                details={'case_id': item.id, 'snapshot_id': snap.id, 'source': basis['source']}))
     s.commit()
     return {**serialize(sim), **result}
 
@@ -595,7 +651,8 @@ def simulation(body: SimulationInput, s=Depends(session)):
 @app.get('/api/v1/simulations')
 def simulations(case_id: str, s=Depends(session)):
     get(s, Case, case_id)
-    return [{**serialize(x), **x.result} for x in s.scalars(select(Simulation).where(Simulation.case_id == case_id))]
+    return [{**serialize(x), **x.result} for x in s.scalars(select(Simulation).where(Simulation.case_id == case_id)
+                                                           .order_by(Simulation.created_at, Simulation.id))]
 
 
 @app.post('/api/v1/reviews')
@@ -609,11 +666,19 @@ def review(body: ReviewInput, request: Request, s=Depends(session)):
     book, snap = get(s, Book, item.book_id), get(s, Snapshot, item.snapshot_id)
     if item.snapshot_id != body.expected_snapshot_id or snap.revision != book.revision:
         raise HTTPException(409, '数据或政策已更新，请在最新快照重新检查和复核')
+    chosen = None
+    if body.simulation_id is not None:
+        chosen = s.get(Simulation, body.simulation_id)
+        if chosen is None or chosen.case_id != item.id or chosen.snapshot_id != snap.id:
+            raise HTTPException(409, '只能选择本案件当前快照上的模拟方案')
+    # Freeze what was unresolved when the decision was made; later events never rewrite it.
+    _, items = case_open_items(s, item, snap, chosen, True)
     row = Review(case_id=item.id, snapshot_id=snap.id, decision=body.decision, comment=body.comment,
-                 user_id=user.id if user else None)
+                 user_id=user.id if user else None, simulation_id=body.simulation_id, open_items=items)
     s.add(row)
     s.add(Audit(book_id=book.id, action='review.recorded', details={
-        'case_id': item.id, 'decision': body.decision, 'user_id': user.id if user else None}))
+        'case_id': item.id, 'decision': body.decision, 'user_id': user.id if user else None,
+        'simulation_id': body.simulation_id, 'open_items': len(items)}))
     s.commit()
     return serialize(row)
 
@@ -664,6 +729,13 @@ def export_case(identity: str, format: str = 'markdown', s=Depends(session)):
     report['investigation_policy_contexts'] = {
         run['id']: run_policy_context(run['id'], s) for run in report.get('runs', [])}
     report['simulations'] = simulations(identity, s)
+    report['evidence_requests'] = requests_for_case(s, identity)
+    report['treatment_draft'] = None
+    if report['rules_compatible']:
+        try:
+            report['treatment_draft'] = case_draft(s, item, get(s, Snapshot, item.snapshot_id))
+        except HTTPException:
+            pass
     report['disclaimer'] = '会计复核辅助底稿；原始账簿未修改。规则仅覆盖声明场景，模型建议不是正式会计结论。'
     if format == 'json':
         content, media, extension = json.dumps(report, ensure_ascii=False, indent=2), 'application/json', 'json'
@@ -673,11 +745,53 @@ def export_case(identity: str, format: str = 'markdown', s=Depends(session)):
                  f"当前是否过期：{report['stale']}", '', '## 发现', '', report['explanation'], '', '## 来源证据', '']
         for e in report['evidence']:
             lines.append(f"- {e['id']}：{e['document_name']} {json.dumps(e['locator'], ensure_ascii=False)}；来源编号 {e['source_id']}")
+        lineage = report['lineage']
+        lines += ['', '## 接续关系', '']
+        for prior in lineage['prior']:
+            lines.append(f"- 接续自案件 {prior['case_id']}（快照 {prior['snapshot_id']}，{prior['match']}）：调查 {prior['runs']} 次，"
+                         f"模拟 {prior['simulations']} 个，复核 {prior['reviews']} 条，补证 {prior['evidence_requests']} 项")
+        for later in lineage['successors']:
+            lines.append(f"- 已在后续快照 {later['snapshot_id']} 接续为案件 {later['case_id']}")
+        if lineage['state'] == 'not_reproduced':
+            lines.append(f"- 后续检查（快照 {lineage['next_check']['snapshot_id']}）未再出现该发现；不自动视为已解决")
+        if not (lineage['prior'] or lineage['successors'] or lineage['state'] == 'not_reproduced'):
+            lines.append('- 无')
+        lines += ['', '## 补证事项', '']
+        for request in report['evidence_requests']:
+            lines.append(f"- {request['kind']}：{request['description']}（{request['status']}）")
+            for event in request['events']:
+                lines.append(f"  - {event['created_at']} {event['action']}：记录 {', '.join(event['record_ids']) or '无'} {event['comment']}")
+        if not report['evidence_requests']:
+            lines.append('- 无')
+        lines += ['', '## 处理草稿与模拟', '']
+        draft = report['treatment_draft']
+        if draft:
+            lines.append(f"- 当前草稿（{draft['version']}）：{draft['summary']}；状态 {draft['status']}。{draft['reason']}")
+            lines.append(f"- 制度路径：{draft['framework_note']}")
+        for sim in report['simulations']:
+            basis = sim.get('basis') or {}
+            target = (sim.get('target') or {}).get('status', '未记录')
+            comparison = sim.get('comparison') or {}
+            origin = (f"来自处理草稿“{basis.get('summary')}”，{'有人工修改' if basis.get('edited') else '未修改草稿分录'}，"
+                      f"补齐 {len(basis.get('completed_inputs', []))} 项必填" if basis.get('source') == 'treatment_draft'
+                      else '人工编制' if basis.get('source') == 'manual' else '来源未记录（0.2.0 之前）')
+            lines.append(f"- 模拟 {sim['id']}（{sim['created_at']}）：{origin}；本案发现 {target}；"
+                         f"消除 {len(comparison.get('resolved', []))} 项，仍存在 {len(comparison.get('persisting', []))} 项，"
+                         f"新引入 {len(comparison.get('introduced', []))} 项；{'借贷平衡' if sim['balanced'] else '借贷不平衡'}")
+        if not draft and not report['simulations']:
+            lines.append('- 无')
+        lines += ['', '## 未决事项（当前）', '']
+        lines += [f"- {entry['text']}" for entry in report['open_items']] or ['- 无']
         actors = report.get('actors', {})
         lines += ['', '## 复核与审批', '']
         for r in report.get('reviews', []):
             who = actors.get(r.get('user_id'), {}).get('display_name', '单用户本地记录')
-            lines.append(f"- 复核 {r['created_at']}：{r['decision']}（{who}）快照 {r['snapshot_id']} {r['comment']}")
+            frozen = r.get('open_items')
+            lines.append(f"- 复核 {r['created_at']}：{r['decision']}（{who}）快照 {r['snapshot_id']} {r['comment']}"
+                         f"；所选模拟 {r.get('simulation_id') or '无'}；"
+                         + (f"复核时未决事项 {len(frozen)} 项" if frozen is not None else '复核时未决事项未记录（0.2.0 之前）'))
+            for entry in frozen or []:
+                lines.append(f"  - {entry['text']}")
         for a in report.get('approvals', []):
             who = actors.get(a['user_id'], {}).get('display_name', a['user_id'])
             lines.append(f"- 审批 {a['created_at']}：{a['decision']}（{who}）复核 {a['review_id']} {a['comment']}")

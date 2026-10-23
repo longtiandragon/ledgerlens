@@ -83,9 +83,16 @@ class InvestigateInput(StrictModel):
     mode: Literal['rules', 'single', 'multi', 'active'] = 'rules'
 
 
+class SimulationBasis(StrictModel):
+    """The draft a person started from; the server recomputes and compares it."""
+    source: Literal['treatment_draft']
+    draft_digest: str = Field(pattern=r'^[0-9a-f]{64}$')
+
+
 class SimulationInput(StrictModel):
     case_id: str
     adjustments: list[dict] = Field(min_length=1, max_length=1000)
+    basis: SimulationBasis | None = None
 
 
 class ReviewInput(StrictModel):
@@ -93,6 +100,7 @@ class ReviewInput(StrictModel):
     expected_snapshot_id: str
     decision: Literal['accepted', 'returned', 'reserved']
     comment: str = Field(default='', max_length=4000)
+    simulation_id: str | None = Field(default=None, min_length=1, max_length=64)
 
 
 class ApprovalInput(StrictModel):

@@ -16,8 +16,15 @@ jobs:
       - run: uv run pytest -q -rs
       - run: uv run ruff check backend scripts datasets benchmarks
       - run: uv run python scripts/generate_contracts.py --check
-      - name: Reproduce the frozen v5 plan without model calls
+      # Rule 0.2.0 changed source files the v5 plans fingerprint. Per ROOT_CAUSE_V5 the plans
+      # no longer authorize new runs; they stay reproducible at the commit that froze them.
+      - name: Reproduce the frozen v5 plans at their freezing commit without model calls
         run: |
+          frozen=2d42f97e973122a1ec6d736eefbcb337eb2431e2
+          git fetch --no-tags --depth=1 origin "$frozen"
+          git worktree add --detach "$RUNNER_TEMP/v5-frozen" "$frozen"
+          cd "$RUNNER_TEMP/v5-frozen"
+          uv sync --frozen --python 3.12
           uv run python -m datasets.generate_v5 --output .local/datasets-v5
           for plan in smoke selective comparator; do
             uv run python scripts/run_root_cause_v5.py --dataset .local/datasets-v5 --plan "docs/root-cause-v5-plans/$plan.json"

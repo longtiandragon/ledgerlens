@@ -170,12 +170,23 @@ class Run(Entity):
     created_by: Mapped[str | None]  # user id in multi-user mode; None in single-user mode
 
 
+class CaseLink(Entity):
+    """Append-only: a case on a later snapshot continues a case of the prior check."""
+    __tablename__ = 'case_links'
+    __table_args__ = (UniqueConstraint('case_id', 'prior_case_id'),)
+    book_id: Mapped[str] = mapped_column(index=True)
+    case_id: Mapped[str] = mapped_column(index=True)
+    prior_case_id: Mapped[str] = mapped_column(index=True)
+    basis: Mapped[dict] = mapped_column(JSON)
+
+
 class Simulation(Entity):
     __tablename__ = 'simulations'
     case_id: Mapped[str] = mapped_column(index=True)
     snapshot_id: Mapped[str]
     adjustments: Mapped[list] = mapped_column(JSON)
     result: Mapped[dict] = mapped_column(JSON)
+    basis: Mapped[dict | None] = mapped_column(JSON)  # draft or manual origin; None for rows before 0008
 
 
 class Review(Entity):
@@ -185,6 +196,8 @@ class Review(Entity):
     decision: Mapped[str]
     comment: Mapped[str]
     user_id: Mapped[str | None]  # reviewer in multi-user mode; None in single-user mode
+    simulation_id: Mapped[str | None]  # the treatment the reviewer looked at, if any
+    open_items: Mapped[list | None] = mapped_column(JSON)  # frozen at review time; None before 0008
 
 
 class Approval(Entity):

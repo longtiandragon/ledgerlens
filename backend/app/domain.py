@@ -17,7 +17,9 @@ CENT = Decimal("0.01")
 ZERO = Decimal("0.00")
 CAS_SOURCE = "https://kjs.mof.gov.cn/zt/kjzzss/kuaijizhunzeshishi/200806/t20080618_46220.htm"
 SCAS_SOURCE = "https://www.mof.gov.cn/bd/mhwzzxly/hjs/202401/t20240121_3926735.htm"
-RULE_VERSION = "0.1.0"
+# 0.2.0: month-end cases include the funds reconciliation once bank movements
+# are in the snapshot, and simulations compare findings before and after.
+RULE_VERSION = "0.2.0"
 # Capture once at module import, together with the running implementation. LF
 # normalization keeps the same source checkout stable across Windows and Linux.
 _RULE_SOURCE_SHA256 = hashlib.sha256(b'\0'.join(
@@ -212,8 +214,51 @@ def check_records(records: list[dict], policy: dict) -> list[dict]:
     return sorted(findings, key=lambda x: (x["rule_id"], tuple(x["record_ids"])))
 
 
-def simulate(records: list[dict], adjustments: list[dict], policy: dict) -> dict:
-    """Apply additional entries to a copy. Never rewrite closed periods or source rows."""
+# The three first-edition scenario packs. A rule belongs to exactly one pack.
+SCENARIO_RULES = {
+    "funds": ("BANK_RECONCILIATION_INPUT", "BANK_ACCOUNT_SCOPE", "BANK_ACCOUNT_EVIDENCE", "BANK_LEDGER_DIFFERENCE",
+              "BANK_DIRECTION_CONFLICT", "BANK_UNMATCHED", "LEDGER_UNMATCHED", "BANK_MATCH_AMBIGUOUS",
+              "BANK_MATCH_BOUNDED", "BANK_CANDIDATES_ALIGNED"),
+    "purchase": ("DUPLICATE_INVOICE", "INVOICE_OVERBOOKED", "INVOICE_EVIDENCE", "INVOICE_CONFLICT",
+                 "RECEIPT_GAP", "RECEIPT_EXCESS"),
+    "period": ("VOUCHER_BALANCE", "JOURNAL_SIGN", "ACCOUNT_VALIDITY", "PERIOD_VALIDITY", "PERIOD_CUTOFF",
+               "OPENING_REQUIRED", "TRIAL_BALANCE"),
+}
+_SCENARIO_BY_RULE = {rule: scenario for scenario, rules in SCENARIO_RULES.items() for rule in rules}
+
+
+def scenario_of(rule_id: str) -> str | None:
+    return _SCENARIO_BY_RULE.get(rule_id)
+
+
+def month_end_findings(records: list[dict], policy: dict) -> list[dict]:
+    """Findings that become month-end cases: ledger, purchase and period checks,
+    then the funds reconciliation once the snapshot holds bank movements.
+
+    A book without bank statements shows that gap in its capability list rather
+    than as a case. Statements without cash entries remain an explicit
+    insufficient finding from bank_reconciliation itself.
+    """
+    findings = check_records(records, policy)
+    period = policy.get("period")
+    if any(r.get("kind") == "bank" and (not period or r.get("period") == period) for r in records):
+        findings += bank_reconciliation(records, policy)
+    return findings
+
+
+def finding_key(finding: dict) -> tuple[str, tuple[str, ...]]:
+    """Identity of a finding across a simulated copy: its rule and the source
+    records it cites. Draft rows ("simulation-*") are never source records."""
+    return finding["rule_id"], tuple(sorted(str(i) for i in finding.get("record_ids", [])
+                                            if not str(i).startswith("simulation-")))
+
+
+def simulate(records: list[dict], adjustments: list[dict], policy: dict, target: dict | None = None) -> dict:
+    """Apply additional entries to a copy. Never rewrite closed periods or source rows.
+
+    The comparison classifies every finding as resolved, persisting or
+    introduced by the draft; `target` reports what happened to one case.
+    """
     if not adjustments:
         raise ValueError("At least one adjustment is required")
     added = deepcopy(adjustments)
@@ -238,18 +283,48 @@ def simulate(records: list[dict], adjustments: list[dict], policy: dict) -> dict
             raise ValueError("Debit and credit must be nonnegative")
         if row.get("period") in policy.get("locked_periods", []):
             violations.append(f"期间 {row['period']} 已锁定；该草稿不得正式入账")
-    adjustment_findings = check_records(added, policy)
+    adjustment_findings = [f for f in check_records(added, policy) if f["rule_id"] != "VOUCHER_BALANCE"]
     violations.extend(f["explanation"] for f in adjustment_findings if f["status"] == "supported")
+    # A draft may complete an existing voucher (an omitted line), so balance is
+    # judged per touched voucher together with that voucher's source lines.
+    unbalanced = False
+    for voucher_id, currency in sorted({(str(r["voucher_id"]), str(r["currency"])) for r in added}):
+        lines = [r for r in [*records, *added] if r.get("kind") == "journal"
+                 and str(r.get("voucher_id") or r.get("source_id") or r.get("id")) == voucher_id
+                 and str(r.get("currency", "CNY")) == currency]
+        difference = sum((_net(r) for r in lines), ZERO)
+        if difference != ZERO:
+            unbalanced = True
+            violations.append(f"调整后凭证 {voucher_id} 的借减贷差额为 {formatted(difference)} {currency}。")
     before = balances(records)
     after = balances([*records, *added])
     delta = {a: formatted(money(after.get(a, "0.00")) - money(before.get(a, "0.00"))) for a in sorted(set(before) | set(after))}
     note = ("小企业准则：前期差错按未来适用法处理；本结果仅为待复核草稿。"
             if policy.get("framework") == "SCAS" else
             "企业会计准则：前期差错需判断重要性、追溯重述条件及例外；模拟不自动决定会计处理。")
-    return {"before": before, "after": after, "delta": delta,
-            "balanced": not any(f["rule_id"] == "VOUCHER_BALANCE" for f in adjustment_findings),
-            "violations": sorted(set(violations)), "policy_note": note,
-            "new_findings": check_records([*records, *added], policy), "adjustments": added}
+    before_findings = month_end_findings(records, policy)
+    after_findings = month_end_findings([*records, *added], policy)
+    # Normal observations are not problems: compare only the rest, and list
+    # the normal ones that hold after the draft separately.
+    issues_before = [f for f in before_findings if f["status"] != "normal"]
+    issues_after = [f for f in after_findings if f["status"] != "normal"]
+    before_keys = {finding_key(f) for f in issues_before}
+    after_keys = {finding_key(f) for f in issues_after}
+    comparison = {"resolved": [f for f in issues_before if finding_key(f) not in after_keys],
+                  "persisting": [f for f in issues_after if finding_key(f) in before_keys],
+                  "introduced": [f for f in issues_after if finding_key(f) not in before_keys],
+                  "normal": [f for f in after_findings if f["status"] == "normal"]}
+    before_keys |= {finding_key(f) for f in before_findings}
+    after_keys |= {finding_key(f) for f in after_findings}
+    result = {"before": before, "after": after, "delta": delta, "balanced": not unbalanced,
+              "violations": sorted(set(violations)), "policy_note": note,
+              "new_findings": after_findings, "comparison": comparison, "adjustments": added}
+    if target is not None:
+        key = finding_key(target)
+        result["target"] = {"rule_id": target["rule_id"], "record_ids": list(key[1]),
+                            "status": ("not_reproduced" if key not in before_keys
+                                       else "persisting" if key in after_keys else "resolved")}
+    return result
 
 
 def bank_reconciliation(records: list[dict], policy: dict) -> list[dict]:
@@ -354,12 +429,19 @@ def rule_catalog() -> list[dict]:
         ("BANK_LEDGER_DIFFERENCE", "银行与账面发生额差异", "bank,journal", "独立资金核对任务；差异可能为正常未达账项"),
         ("BANK_UNMATCHED", "未匹配银行流水", "bank,journal", "方向、币种、主体、订单和日期分组；不能视为错账结论"),
         ("LEDGER_UNMATCHED", "未匹配银行存款分录", "bank,journal", "不能自动生成手续费或汇差使其平衡"),
+        ("BANK_RECONCILIATION_INPUT", "资金核对资料完整性", "bank,journal", "仅在快照含银行流水时执行；缺失的一侧不按零处理"),
+        ("BANK_ACCOUNT_SCOPE", "银行账户映射", "bank,journal", "多个银行存款科目时未标记账户的流水不跨账户汇总"),
+        ("BANK_ACCOUNT_EVIDENCE", "单个银行账户两侧资料", "bank,journal", "某账户缺一侧资料时不计算差异"),
+        ("BANK_DIRECTION_CONFLICT", "流水方向与金额约定", "bank,journal", "方向与金额符号冲突时不进行匹配"),
+        ("BANK_MATCH_AMBIGUOUS", "资金匹配多解", "bank,journal", "多个候选组合时不自动核销"),
+        ("BANK_MATCH_BOUNDED", "资金匹配搜索上限", "bank,journal", "达到计算上限时不宣称已找到全部组合"),
+        ("BANK_CANDIDATES_ALIGNED", "资金发生额及候选一致", "bank,journal", "一致仅指金额候选，仍需复核确认，不自动核销"),
     ]
     result = []
     for framework, source in [("CAS", CAS_SOURCE), ("SCAS", SCAS_SOURCE)]:
         for rule, title, required, limit in definitions:
             result.append({"rule_id": rule, "title": title, "framework": framework, "version": RULE_VERSION,
-                           "source_sha256": _RULE_SOURCE_SHA256,
+                           "scenario": scenario_of(rule), "source_sha256": _RULE_SOURCE_SHA256,
                            "effective_from": None, "effective_to": None, "required_kinds": required.split(","),
                            "validation_status": "experimental", "status": "experimental",
                            "source_url": source, "source_note": "该链接仅用于差错处理制度背景；技术完整性检查不是对应条款的完整实现。",

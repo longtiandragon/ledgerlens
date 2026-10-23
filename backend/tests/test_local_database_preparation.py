@@ -27,22 +27,22 @@ def dump(path):
         return list(connection.iterdump())
 
 
-@pytest.mark.parametrize('revision', ['0001', '0002', '0003', '0004', '0005', '0006', '0007'])
+@pytest.mark.parametrize('revision', ['0001', '0002', '0003', '0004', '0005', '0006', '0007', '0008'])
 @pytest.mark.parametrize('versioned', [True, False])
 def test_frozen_revisions_preserve_history_and_backup_exact_original(tmp_path, revision, versioned):
     path = tmp_path / 'history.sqlite'
     seeded(path, revision, versioned)
     original = dump(path)
     result = preparation.prepare(path)
-    assert result['revision'] == '0007'
+    assert result['revision'] == '0008'
     assert result['adopted'] is (not versioned)
-    if revision == '0007' and versioned:
+    if revision == '0008' and versioned:
         assert result['status'] == 'current' and result['backup'] is None
     else:
         from pathlib import Path
         assert dump(Path(result['backup'])) == original
     with closing(sqlite3.connect(path)) as connection:
-        assert connection.execute('SELECT version_num FROM alembic_version').fetchall() == [('0007',)]
+        assert connection.execute('SELECT version_num FROM alembic_version').fetchall() == [('0008',)]
         assert connection.execute('SELECT * FROM evaluations').fetchall() == [
             ('{"amount":"0.10","notice":"历史保留"}', 'history', '2026-09-01')]
     after = dump(path)
@@ -56,13 +56,13 @@ def test_create_all_legacy_database_can_be_adopted(tmp_path):
     Base.metadata.create_all(engine)
     engine.dispose()
     result = preparation.prepare(path)
-    assert result['adopted'] is True and result['from_revision'] == '0007'
+    assert result['adopted'] is True and result['from_revision'] == '0008'
 
 
 def test_empty_database_uses_frozen_migrations(tmp_path):
     path = tmp_path / 'new' / 'empty.sqlite'
     result = preparation.prepare(path)
-    assert result == {'status': 'upgraded', 'from_revision': None, 'revision': '0007',
+    assert result == {'status': 'upgraded', 'from_revision': None, 'revision': '0008',
                       'adopted': False, 'backup': None, 'backup_sha256': None}
 
 

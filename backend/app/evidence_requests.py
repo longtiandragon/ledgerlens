@@ -86,6 +86,13 @@ def _state(s, request: EvidenceRequest) -> dict:
     return result
 
 
+def requests_for_case(s, case_id: str) -> list[dict]:
+    """Current state of every request of one case, oldest first."""
+    rows = s.scalars(select(EvidenceRequest).where(EvidenceRequest.case_id == case_id)
+                     .order_by(EvidenceRequest.created_at)).all()
+    return [_state(s, r) for r in rows]
+
+
 def _case(s, case_id: str) -> Case:
     item = s.get(Case, case_id)
     if item is None:

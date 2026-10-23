@@ -27,7 +27,7 @@ def test_empty_upgrade_has_exact_tables_columns_constraints_and_indexes(tmp_path
         config = configuration()
         config.attributes['connection'] = connection
         command.upgrade(config, 'head')
-        assert connection.scalar(text('SELECT version_num FROM alembic_version')) == '0007'
+        assert connection.scalar(text('SELECT version_num FROM alembic_version')) == '0008'
         context = MigrationContext.configure(connection, opts={'compare_type': True})
         assert compare_metadata(context, Base.metadata) == []
         assert set(inspect(connection).get_table_names()) == set(Base.metadata.tables) | {'alembic_version'}
@@ -67,7 +67,7 @@ def test_destructive_downgrade_is_refused_and_existing_data_survives(tmp_path):
         command.upgrade(config, 'head')
         with pytest.raises(RuntimeError, match='destroy evidence'):
             command.downgrade(config, 'base')
-        assert connection.scalar(text('SELECT version_num FROM alembic_version')) == '0007'
+        assert connection.scalar(text('SELECT version_num FROM alembic_version')) == '0008'
         assert 'documents' in inspect(connection).get_table_names()
     engine.dispose()
 

@@ -51,7 +51,10 @@ def test_inventory_counts_kinds_and_lists_missing_kinds_per_rule():
     assert missing['OPENING_REQUIRED'] == ['opening', 'trial_balance']
     assert missing['TRIAL_BALANCE'] == ['opening', 'trial_balance']
     assert missing['BANK_UNMATCHED'] == ['bank']
-    assert len(missing) == 16
+    # Rule 0.2.0: the funds reconciliation results became month-end cases and
+    # are documented in the catalog (16 ledger/purchase/period/funds + 7 funds).
+    assert missing['BANK_MATCH_AMBIGUOUS'] == ['bank'] and missing['BANK_CANDIDATES_ALIGNED'] == ['bank']
+    assert len(missing) == 23
     assert 'FIXTURE-INV-77' not in json.dumps(scope) and '123.45' not in json.dumps(scope)  # counts only
 
 
