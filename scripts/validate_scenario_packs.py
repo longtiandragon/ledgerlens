@@ -70,7 +70,7 @@ def main():
                    'environment': 'fresh temporary SQLite database, no model key, external network refused',
                    'model_calls': 0})
     output.parent.mkdir(parents=True, exist_ok=True)
-    with output.open('x', encoding='utf-8') as handle:
+    with output.open('x', encoding='utf-8', newline='\n') as handle:
         handle.write(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
     print(f"{report['passed']}/{report['cell_count']} cells passed; report: {output}")
     for pack, row in report['matrix'].items():
