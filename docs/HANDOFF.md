@@ -1,6 +1,6 @@
 # 交接文档
 
-> 最新接续（2026-10-24，发布后）：v0.2.0 由 release/v0.2.0 准备，发布提交验证见[发布验证摘要](release-v0.2.0-validation.json)。成片在本机 `.local/demo/video-v4/`（含 SRT 字幕，`report.json` 记哈希），介绍 PDF 由 `scripts/build_submission_pdf.py` 生成；拿到视频链接后：改 `docs/submission/meta.json` 的 `link.video`，重建 PDF，并用 `gh release upload v0.2.0 --clobber` 替换 Release 附件。邮件草稿 `docs/submission/email.md`。依赖升级 PR #47–#50 未处理（opencv 4.10→4.14 需单独验证 OCR）。
+> 最新接续（2026-10-24，发布后）：v0.2.0 由 release/v0.2.0 准备，发布提交验证见[发布验证摘要](release-v0.2.0-validation.json)。成片在本机 `.local/demo/video-v5/`（含 SRT 字幕，`report.json` 记哈希），介绍 PDF 由 `scripts/build_submission_pdf.py` 生成；拿到视频链接后：改 `docs/submission/meta.json` 的 `link.video`，重建 PDF，并用 `gh release upload v0.2.0 --clobber` 替换 Release 附件。邮件草稿 `docs/submission/email.md`。依赖升级 PR #47–#50 未处理（opencv 4.10→4.14 需单独验证 OCR）。
 
 > 最新接续（2026-10-24）：用户确认完成标准是原 PRD 的产品流程闭环，而不是只整理提交材料；本周只由 Claude 开发，研究实验暂停，邮件改为 10-30 发出。已在 `feature/treatment-drafts` 补齐：处理草稿、模拟前后发现对比、案件接续与接续核对案件、复核冻结未决事项、底稿完整导出、资金核对进入月结案件（规则 0.2.0）、迁移 0008，以及三个场景包×四种情况 12/12 验收（[说明](SCENARIO_ACCEPTANCE.md)）。Codex 留下的本地分支 `codex/ai-retrieval-gain`（FinDER 检索负面结果，未推送）未合并，处理前先问用户。其后：重录演示视频（界面已变）、介绍 PDF 定稿、发布 v0.2.0、终检。
 
