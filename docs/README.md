@@ -2,6 +2,8 @@
 
 本目录按读者分组如下。逐项验证记录以 [交付状态](STATUS.md) 为准；带日期的数字只代表当时那一版的结果。
 
+2026-10-24 本轮：[首版场景包验收](SCENARIO_ACCEPTANCE.md)（三个场景包×四种情况的产品流程验收、处理草稿、案件接续与复核冻结的未决事项）。
+
 2026-10-22 本轮：[公开资料缺口整改总览](PUBLIC_GAP_CLOSURE_20261022.md)、[v5原因调查预注册](ROOT_CAUSE_V5.md)、[参考证据需求检查](RETRIEVAL_SCOPE_V2.md)、[中文公开票样与换行表格](OCR_CHINESE_PUBLIC_VALIDATION.md)、[ERP扩展契约](ERP_EXTENDED_VALIDATION.md)、[恢复与有限负载](RECOVERY_LOAD_VALIDATION.md)、[Windows→Linux恢复验收](CROSS_HOST_RESTORE.md)。
 
 ## 第一次了解项目
@@ -14,6 +16,7 @@
 |[目标文档](GOALS.md)|三项技术主张、验收门槛与当前证据（含未达成项）|
 |[实施路线图](ROADMAP.md)|分阶段交付与进入下一阶段的条件|
 |[交付状态与验证记录](STATUS.md)|每次改动的实测结果、跳过项与付费运行记录|
+|[首版场景包验收](SCENARIO_ACCEPTANCE.md)|资金往来、采购费用、期间账表各四种情况的端到端产品流程验收与边界|
 |[AI 模拟首次使用试用](AI_FIRST_USE_TRIAL.md)|从全新克隆按 README 走通演示与自制凭证导入；发现的问题、修复和复测（不是真人试用）|
 |[交接文档](HANDOFF.md)|给接手开发者或编程 Agent：现状、命令、陷阱与待办|
 
