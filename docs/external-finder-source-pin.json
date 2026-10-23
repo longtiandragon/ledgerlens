@@ -1,0 +1,17 @@
+{
+  "revision": "c4c1b6454aef7f0bb1c37235c7f52ce644642da0",
+  "license": "CC-BY-NC-4.0",
+  "files": {
+    "README.md": {
+      "sha256": "3d4d0cd77f496363196a81f322e63e738184e3b3ce2b1d1fafdb2faa7b217592",
+      "bytes": 1786
+    },
+    "train-00000-of-00001.parquet": {
+      "sha256": "213395beb38a075dcc7b23f8e213ccbd2768df0f5c615479c33e10ce8cc267f1",
+      "bytes": 13097307
+    }
+  },
+  "repository": "https://huggingface.co/datasets/Linq-AI-Research/FinDER",
+  "authors": "Choi et al., FinDER (2025)",
+  "usage": "Noncommercial student research; raw data not redistributed"
+}

@@ -1,0 +1,10 @@
+{
+  "status": "verified",
+  "queries": 5703,
+  "parents": 5832,
+  "failures": 0,
+  "report_sha256": "59665a284402d059c7db525661dec60ded5b27f3babf0aedba65170768c4c9b8",
+  "scope": "Byte consistency and independent descriptive metric recount; not execution attestation",
+  "bootstrap": "Independently recomputed all 2000 clustered paired draws and adjusted intervals",
+  "clusters": 5417
+}
