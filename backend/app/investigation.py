@@ -20,7 +20,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_valida
 
 from .business_chain import business_chain
 from .context_transport import FORMAT as CONTEXT_FORMAT, serialize_context
-from .domain import check_records, rule_catalog, rule_identity, ensure_rule_compatibility
+from .domain import check_records, month_end_findings, rule_catalog, rule_identity, ensure_rule_compatibility
 from .evidence_planning import EvidencePlan, PlanningRejected, PlanningToolBinding, plan_evidence_query, query_cache_key
 from .evidence_selection import SUPPORTED_QUERY_TOOLS
 from .model_gateway import BudgetExceeded, DeepSeekGateway, GatewayError, RunBudget, notify, strict_json
@@ -1115,7 +1115,10 @@ async def investigate(
             return {"base_status": base, "claims": claims,
                     "missing_evidence": sorted({m for c in flagged for m in c.get("missing_evidence", [])}),
                     "hypotheses": _initial_hypotheses(finding), "steps": list(steps), "usage": budget.usage()}
-        match = (None if review_task else next((c for c in candidates if c["rule_id"] == finding.get("rule_id")
+        # Product cases come from the month-end set (which adds the funds
+        # reconciliation); evaluation tasks above keep the ledger checks only.
+        match = (None if review_task else next((c for c in month_end_findings(context.records, context.policy)
+                      if c["rule_id"] == finding.get("rule_id")
                       and set(c["record_ids"]) == set(finding.get("record_ids", []))), None))
         context.verified_finding = match
         if match:
@@ -1141,7 +1144,7 @@ async def investigate(
         nonlocal steps
         steps = list(state.get("steps", []))
         if not context.verified_finding and finding.get('task_type') != 'review':
-            context.verified_finding = next((c for c in check_records(context.records, context.policy)
+            context.verified_finding = next((c for c in month_end_findings(context.records, context.policy)
                 if c["rule_id"] == finding.get("rule_id") and set(c["record_ids"]) == set(finding.get("record_ids", []))), None)
         # Restore durable usage and never reduce counters persisted mid-node.
         for key, value in state.get("usage", {}).items():

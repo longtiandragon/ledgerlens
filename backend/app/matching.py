@@ -157,8 +157,19 @@ def match_transactions(left: list[dict], right: list[dict], max_group: int = 6,
                                        "remaining_right": f"{max(rv-lv, 0) // 100}.{max(rv-lv, 0) % 100:02d}",
                                        "requires_review": True, "allocation_status": "partial_candidate"})
     candidates.sort(key=lambda c: (tuple(c["left_ids"]), tuple(c["right_ids"])))
+    # A candidate that is exactly the union of two disjoint candidates (60+40
+    # against 60+40, next to 60/60 and 40/40) is a coarser view of the same
+    # pairing, not another explanation. Ambiguity is judged without them.
+    keyed = {(frozenset(c["left_ids"]), frozenset(c["right_ids"])) for c in candidates}
+    for candidate in candidates:
+        left_ids, right_ids = frozenset(candidate["left_ids"]), frozenset(candidate["right_ids"])
+        candidate["composite"] = any(part_left < left_ids and part_right < right_ids
+                                     and (left_ids - part_left, right_ids - part_right) in keyed
+                                     for part_left, part_right in keyed)
     membership: dict[str, int] = defaultdict(int)
     for candidate in candidates:
+        if candidate["composite"]:
+            continue
         for identifier in [*candidate["left_ids"], *candidate["right_ids"]]:
             membership[identifier] += 1
     ambiguous = any(n > 1 for n in membership.values())
