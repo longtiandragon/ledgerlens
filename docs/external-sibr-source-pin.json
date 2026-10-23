@@ -1,0 +1,34 @@
+{
+  "dataset": "SIBR",
+  "publisher": "Alibaba DAMO",
+  "source": "https://www.modelscope.cn/datasets/damo/SIBR",
+  "paper": "https://openaccess.thecvf.com/content/CVPR2023/html/Yang_Modeling_Entities_As_Semantic_Points_for_Visual_Information_Extraction_in_CVPR_2023_paper.html",
+  "license": "Apache License 2.0",
+  "files": {
+    "images.zip": {
+      "Revision": "669cfced0a5f8b68babc29e1efe9f1a9b24d5035",
+      "Size": 586193397,
+      "Sha256": "b820c5d136b741af918e85d7f43794aa8c266d3f5357a4ff3f66bda5449473a0"
+    },
+    "label.zip": {
+      "Revision": "669cfced0a5f8b68babc29e1efe9f1a9b24d5035",
+      "Size": 3974067,
+      "Sha256": "bbd1c860b55abbf42ff6bb4f926fb50bca43be32039fe40469eacbaa6068065b"
+    },
+    "README.md": {
+      "Revision": "f669ce4c82efa23e4f4b262e52daf2c7402bbe4b",
+      "Size": 1968,
+      "Sha256": "fab76c19df7ce019f7c3c9bede1f7c174aca4acb1e6b5c8f5c6c92c32e4af56d"
+    },
+    "test.txt": {
+      "Revision": "669cfced0a5f8b68babc29e1efe9f1a9b24d5035",
+      "Size": 7999,
+      "Sha256": "a32bcff189e787194b0245452803877f2ed38d0d5c501ff8bc183f45af977007"
+    },
+    "train.txt": {
+      "Revision": "669cfced0a5f8b68babc29e1efe9f1a9b24d5035",
+      "Size": 11999,
+      "Sha256": "391a1c66ce3ae3f48f41ab60aa399041646c7e676c832d1af757632a097d7f6d"
+    }
+  }
+}

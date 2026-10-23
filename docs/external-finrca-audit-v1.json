@@ -1,0 +1,147 @@
+{
+  "schema_version": "external-finrca-baseline-audit-v1",
+  "evaluated_at": "2026-10-23T07:40:26.352167+00:00",
+  "upstream_revision": "76c93ec32536e29826e2ab9e68b58e0351410bc7",
+  "scope": "external_rules_baseline_reproduction_not_project_ai_gain",
+  "external_model_requests": 0,
+  "test_cases": 439,
+  "metrics": {
+    "cases": 439,
+    "correct": 373,
+    "abstentions": 50,
+    "accuracy": "0.8496583143507972665148063781",
+    "macro_f1": "0.9517731696856624471980339456",
+    "maximum_possible_f1_gain": "0.0482268303143375528019660544",
+    "per_class": {
+      "F01_DUPLICATE_INVOICE": {
+        "tp": 21,
+        "fp": 0,
+        "fn": 0,
+        "support": 21,
+        "f1": "1"
+      },
+      "F02_PO_INVOICE_AMOUNT_MISMATCH": {
+        "tp": 20,
+        "fp": 0,
+        "fn": 0,
+        "support": 20,
+        "f1": "1"
+      },
+      "F03_QUANTITY_MISMATCH": {
+        "tp": 18,
+        "fp": 0,
+        "fn": 0,
+        "support": 18,
+        "f1": "1"
+      },
+      "F04_INCORRECT_VENDOR_ASSOCIATION": {
+        "tp": 17,
+        "fp": 0,
+        "fn": 0,
+        "support": 17,
+        "f1": "1"
+      },
+      "F05_PAYMENT_WITHOUT_VALID_INVOICE": {
+        "tp": 22,
+        "fp": 0,
+        "fn": 0,
+        "support": 22,
+        "f1": "1"
+      },
+      "F06_INVOICE_PAID_TWICE": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 2,
+        "support": 12,
+        "f1": "0.9090909090909090909090909091"
+      },
+      "F07_PARTIAL_PAYMENT_RESIDUAL_BALANCE": {
+        "tp": 18,
+        "fp": 6,
+        "fn": 0,
+        "support": 18,
+        "f1": "0.8571428571428571428571428571"
+      },
+      "F08_APPROVAL_WORKFLOW_FAILURE": {
+        "tp": 22,
+        "fp": 2,
+        "fn": 0,
+        "support": 22,
+        "f1": "0.9565217391304347826086956522"
+      },
+      "F09_GL_POSTING_MISMATCH": {
+        "tp": 17,
+        "fp": 0,
+        "fn": 0,
+        "support": 17,
+        "f1": "1"
+      },
+      "F10_WRONG_ACCOUNTING_PERIOD": {
+        "tp": 20,
+        "fp": 1,
+        "fn": 0,
+        "support": 20,
+        "f1": "0.9756097560975609756097560976"
+      },
+      "F11_VENDOR_MASTER_CHANGE_CONFLICT": {
+        "tp": 23,
+        "fp": 5,
+        "fn": 0,
+        "support": 23,
+        "f1": "0.9019607843137254901960784314"
+      },
+      "F12_ERP_PAYMENT_MISSING_FROM_BANK": {
+        "tp": 19,
+        "fp": 0,
+        "fn": 2,
+        "support": 21,
+        "f1": "0.95"
+      },
+      "F13_BANK_TRANSACTION_MISSING_FROM_ERP": {
+        "tp": 28,
+        "fp": 0,
+        "fn": 0,
+        "support": 28,
+        "f1": "1"
+      },
+      "F14_BANK_ERP_AMOUNT_MISMATCH": {
+        "tp": 16,
+        "fp": 0,
+        "fn": 0,
+        "support": 16,
+        "f1": "1"
+      },
+      "F15_INCORRECT_PAYMENT_BANK_MATCH": {
+        "tp": 20,
+        "fp": 2,
+        "fn": 0,
+        "support": 20,
+        "f1": "0.9523809523809523809523809524"
+      },
+      "NO_FAILURE": {
+        "tp": 82,
+        "fp": 0,
+        "fn": 62,
+        "support": 144,
+        "f1": "0.7256637168141592920353982301"
+      }
+    }
+  },
+  "reproduced_published_macro_f1": true,
+  "gain_005_mathematically_possible": false,
+  "prediction_sha256": "d9865673e9815af7d5a7c21aa537fbc67138b00cd72a414172f980e9ff27f236",
+  "truth_sha256": "285dc740959cedccbf9db5141085a9cbdd92ff138759c35d22dd08b840c85eb5",
+  "source_manifest_sha256": "a8636c995645ee8acf7b070d329afd19c24e8cd75b7fc2013117496ad6780acc",
+  "forbidden_inference_reads": [],
+  "code_sha256": {
+    "scripts/audit_finrca_baseline.py": "5e08e16ea3bcd11242fba6f0b9728b925d4e35e9d1620370a256f514a81db1d9",
+    "benchmarks/external_metrics.py": "99b5e638021fc48b07a321a96c1a34a0d2b37e3a4abb522cd5a7ad578923559e"
+  },
+  "limitations": [
+    "Independent-author synthetic data, not real enterprise evidence.",
+    "Published public test; model pretraining contamination cannot be excluded.",
+    "15 failure classes plus normal differ from project v4 taxonomy.",
+    "No paid model comparison executed. No new project AI claim established.",
+    "Macro F1 ceiling is specific to this split and this comparator."
+  ]
+}
