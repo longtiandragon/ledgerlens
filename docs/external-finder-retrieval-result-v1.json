@@ -1,0 +1,101 @@
+{
+  "status": "completed",
+  "started_at": "2026-10-23T16:36:05.995517+00:00",
+  "scope": "pooled_reference_english_retrieval_only",
+  "external_model_calls": 0,
+  "manifest": {
+    "source_sha256": "213395beb38a075dcc7b23f8e213ccbd2768df0f5c615479c33e10ce8cc267f1",
+    "queries": 5703,
+    "parents": 5832,
+    "files": {
+      "queries.json": "1670a18305d3ffa65c46723f4461e3b2feb06498af0ee1a21a4fa9ac0239697b",
+      "labels.json": "a2975c5135ffcb5c737b7e08df92e2de2d262d5c4a46cc3bed9ca41a377cea3c",
+      "corpus.json": "f5ad520d55091e617ee18b8aea4bc9cb339d8db76a8762f78e2cce2bb31034eb"
+    }
+  },
+  "code_sha256": {
+    "benchmarks/finder_retrieval.py": "3fd078ffec29b9b386db0f1bff85105417dff898a6d7e6513e8ebab7c274aed1",
+    "scripts/prepare_finder_retrieval.py": "0e69ff50c3ec13e630d1822eb449c683dbf567fd9f779f967f9ccd1228b0c17d",
+    "docs/FINDER_RETRIEVAL_PROTOCOL.md": "f2da4bc1ffe82d8332197ba4a1c10bc73da59137c4bb8e28da5b93c98590eaee",
+    "backend/app/retrieval_vectors.py": "3894894ff0afb5753e0d99eee8c9ba8d131a6d8bc880f5fbe481e55e96c0bbd6",
+    "docs/retrieval-model-v1.json": "588ee2f1da01c50d4f19a3b9bfa847b67e22c8af2623c08843e5b10c2e7c94e3"
+  },
+  "forbidden_access_attempts": [],
+  "engine": {
+    "model": "BAAI/bge-small-zh-v1.5",
+    "revision": "7999e1d3359715c523056ef9478215996d62a620",
+    "manifest_sha256": "588ee2f1da01c50d4f19a3b9bfa847b67e22c8af2623c08843e5b10c2e7c94e3",
+    "packages": {
+      "sentence-transformers": "6.1.0",
+      "torch": "2.14.1",
+      "transformers": "5.19.0",
+      "tokenizers": "0.23.3"
+    },
+    "dimensions": 512,
+    "window_tokens": 480,
+    "stride_tokens": 400,
+    "query_prefix": "\u4e3a\u8fd9\u4e2a\u53e5\u5b50\u751f\u6210\u8868\u793a\u4ee5\u7528\u4e8e\u68c0\u7d22\u76f8\u5173\u6587\u7ae0\uff1a",
+    "device": "cpu",
+    "normalized": true
+  },
+  "segments": 15714,
+  "embedded_segments": 15714,
+  "predicted_queries": 5703,
+  "predictions_sha256": "0d0b632b887a3a5e55611ccfa87f096ecb0b06ef318c8c81e59203f8f1ece86a",
+  "prediction_seconds": 138.04765059996862,
+  "summary": {
+    "keyword": {
+      "recall_at_6": 0.13782219884271435,
+      "hit_at_1": 0.0682097141855164,
+      "hit_at_6": 0.14290724180256006,
+      "mrr_at_6": 0.09305628616517607
+    },
+    "bm25": {
+      "recall_at_6": 0.28470395698170553,
+      "hit_at_1": 0.15728563913729615,
+      "hit_at_6": 0.29405576012624934,
+      "mrr_at_6": 0.2051171897831554
+    },
+    "tfidf": {
+      "recall_at_6": 0.24142264305336367,
+      "hit_at_1": 0.09503769945642644,
+      "hit_at_6": 0.24899175872347887,
+      "mrr_at_6": 0.1467911625460288
+    },
+    "bge": {
+      "recall_at_6": 0.09074171488690164,
+      "hit_at_1": 0.040680343678765565,
+      "hit_at_6": 0.09486235314746624,
+      "mrr_at_6": 0.05875270325559642
+    },
+    "rrf": {
+      "recall_at_6": 0.20554971067859018,
+      "hit_at_1": 0.09310889005786428,
+      "hit_at_6": 0.21251972645975803,
+      "mrr_at_6": 0.13361388742766975
+    }
+  },
+  "strongest_deterministic": "bm25",
+  "comparison": {
+    "bge": {
+      "delta": -0.1939622420948039,
+      "adjusted_interval": [
+        -0.20804155022225942,
+        -0.18015242074840562
+      ],
+      "supported": false
+    },
+    "rrf": {
+      "delta": -0.07915424630311535,
+      "adjusted_interval": [
+        -0.0915672776699536,
+        -0.06765079271220206
+      ],
+      "supported": false
+    }
+  },
+  "failures": 0,
+  "clusters": 5417,
+  "largest_cluster": 47,
+  "finished_at": "2026-10-23T16:56:58.021327+00:00"
+}
