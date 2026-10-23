@@ -31,6 +31,13 @@ from .reference_api import router as reference_router
 from .auth_api import router as auth_router
 from . import auth
 
+# Initialize native libraries before startup/request threads are created. On
+# Windows, loading them concurrently with thread creation can stall the server.
+try:
+    from ortools.sat.python import cp_model  # noqa: F401
+except ImportError:
+    pass  # matching retains its bounded pure-Python fallback.
+
 
 def get(s, cls, identity):
     obj = s.get(cls, identity)
