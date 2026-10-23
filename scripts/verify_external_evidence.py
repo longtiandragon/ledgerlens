@@ -59,9 +59,18 @@ def finrca(root):
     return {'status': 'verified', 'cases': 439, 'macro_f1': result['macro_f1']}
 
 
-def sibr(root):
-    report = read(root / 'sibr-ocr-full-v1/report.json')
+def sibr(root, run_name='sibr-ocr-full-v1'):
+    report = read(root / run_name / 'report.json')
     check_codes(report)
+    if 'continuation' in report:
+        previous = root / 'sibr-ocr-full-v1/report.json'
+        check_hash(previous, report['continuation']['prior_report_sha256'])
+        check_hash(ROOT / 'scripts/continue_sibr_ocr.py', report['continuation']['script_sha256'])
+        check_hash(ROOT / 'docs/SIBR_OCR_CONTINUATION.md', report['continuation']['protocol_sha256'])
+        old = read(previous)['cases']
+        prefix = [{k: v for k, v in row.items() if k != 'score'} for row in report['cases'][:len(old)]]
+        if prefix != old or len(old) != report['continuation']['preserved_cases']:
+            raise ValueError('Original prefix changed during continuation')
     if report['status'] not in {'completed', 'completed_with_failures'}:
         return {'status': 'pending', 'predictions': len(report['cases']), 'expected': 400}
     # Annotation reads are deliberately unreachable until the full run has ended.
@@ -79,7 +88,7 @@ def sibr(root):
         check_hash(dataset / item['truth'], item['truth_sha256'])
         prediction = None
         if 'prediction' in row:
-            path = root / 'sibr-ocr-full-v1/predictions' / row['prediction']
+            path = root / run_name / 'predictions' / row['prediction']
             check_hash(path, row['prediction_sha256'])
             prediction = read(path)
         actual = score_document(prediction, read(dataset / item['truth']))
@@ -119,9 +128,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=ROOT / '.local/external-research')
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--sibr-run', choices=['sibr-ocr-full-v1', 'sibr-ocr-continuation-v1'],
+                        default='sibr-ocr-full-v1')
     args = parser.parse_args()
     result = {}
-    for name, verify in [('finrca', finrca), ('sibr', sibr), ('finlongeval', refusal)]:
+    for name, verify in [('finrca', finrca), ('sibr', lambda root: sibr(root, args.sibr_run)),
+                         ('finlongeval', refusal)]:
         try:
             result[name] = verify(args.root)
         except Exception as exc:

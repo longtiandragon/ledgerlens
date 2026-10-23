@@ -38,6 +38,8 @@
 
 测量对象是严格文字段恢复率及位置匹配，不是官方 SIBR 实体关系 F1，也不是复杂表格、金额归属、发票合规或原因调查 AI 增益。不能用 OCR 的成功替代这些缺口。
 
+22 时接续检查发现原进程不存在，报告停在 102/400、未评分。原始目录完整保留。按单独的[中断接续说明](SIBR_OCR_CONTINUATION.md)核验源码、数据、模型及输出哈希后，新目录 `sibr-ocr-continuation-v1` 只执行剩余 298 张；已完成预测不重跑。最终若完成，将披露为两进程接续结果，不称原运行连续完成。
+
 ## 已完成：FinBalance 取得、去重与输入隔离
 
 [FinBalance](https://github.com/Devansh1105/finbalance) 的公开多单据数据与项目文档调查方向有关。固定版本、数据 CC-BY-4.0 与代码 Apache-2.0 许可见 [来源清单](external-finbalance-source-pin.json)。它是外部合成场景，不能称为真实票据实测。
