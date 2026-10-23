@@ -3129,6 +3129,43 @@
         }
       }
     },
+    "/api/v1/cases/{identity}/treatment-draft": {
+      "get": {
+        "summary": "Treatment Draft",
+        "operationId": "treatment_draft_api_v1_cases__identity__treatment_draft_get",
+        "parameters": [
+          {
+            "name": "identity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Identity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/cases/{identity}/investigate": {
       "post": {
         "summary": "Start Investigation",
@@ -6220,6 +6257,19 @@
             "maxLength": 4000,
             "title": "Comment",
             "default": ""
+          },
+          "simulation_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 64,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Simulation Id"
           }
         },
         "additionalProperties": false,
@@ -6230,6 +6280,28 @@
           "decision"
         ],
         "title": "ReviewInput"
+      },
+      "SimulationBasis": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "const": "treatment_draft",
+            "title": "Source"
+          },
+          "draft_digest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Draft Digest"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source",
+          "draft_digest"
+        ],
+        "title": "SimulationBasis",
+        "description": "The draft a person started from; the server recomputes and compares it."
       },
       "SimulationInput": {
         "properties": {
@@ -6246,6 +6318,16 @@
             "maxItems": 1000,
             "minItems": 1,
             "title": "Adjustments"
+          },
+          "basis": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SimulationBasis"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,

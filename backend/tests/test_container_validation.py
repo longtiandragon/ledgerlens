@@ -64,7 +64,7 @@ def test_migration_head_uses_current_source_exactly(current, expected):
 
 
 def test_repo_migration_head_is_not_historical_0003():
-    assert runner.source_heads() == ('0007',)
+    assert runner.source_heads() == ('0008',)
 
 
 @pytest.mark.parametrize('fault', ['key', 'mode', 'services', 'duplicate_service', 'unhealthy', 'migration', 'schema', 'pgvector'])
@@ -83,7 +83,7 @@ def test_failed_preflight_never_creates_book_or_stops_worker(monkeypatch, fault)
                                          'Health': 'unhealthy' if fault == 'unhealthy' and name == 'api' else ''})
                              for name in names)
         if args == ('exec', '-T', 'api', 'alembic', 'current'):
-            return '0003 (head)' if fault == 'migration' else '0007 (head)'
+            return '0003 (head)' if fault == 'migration' else '0008 (head)'
         if args[:4] == ('exec', '-T', 'postgres', 'psql'):
             return '0' if fault == 'pgvector' else '1'
         raise AssertionError('Unexpected Docker mutation: ' + repr(args))
@@ -108,7 +108,7 @@ def test_failed_preflight_never_creates_book_or_stops_worker(monkeypatch, fault)
 
 
 def test_valid_source_head_allows_preflight_to_reach_synthetic_book(monkeypatch):
-    """A fully mocked stack demonstrates the current head 0007 is accepted, not just old heads rejected."""
+    """A fully mocked stack demonstrates the current head 0008 is accepted, not just old heads rejected."""
     seen = []
 
     def compose(*args, **kwargs):
@@ -116,7 +116,7 @@ def test_valid_source_head_allows_preflight_to_reach_synthetic_book(monkeypatch)
             return '\n'.join(json.dumps({'Service': name, 'State': 'running'})
                              for name in ('postgres', 'redis', 'api', 'worker', 'scheduler', 'web'))
         if args == ('exec', '-T', 'api', 'alembic', 'current'):
-            return '0007 (head)\n'
+            return '0008 (head)\n'
         if args[:4] == ('exec', '-T', 'postgres', 'psql'):
             return '1'
         raise AssertionError('Unexpected Docker operation')
@@ -137,7 +137,7 @@ def test_valid_source_head_allows_preflight_to_reach_synthetic_book(monkeypatch)
         'returncode': 0, 'stdout': 'No new upgrade operations', 'stderr': ''})())
     report = runner.verify('http://offline.invalid', 'http://offline.invalid')
     assert seen == [('GET', '/api/v1/health'), ('POST', '/api/v1/books')]
-    assert report['expected_migration_heads'] == ['0007']
+    assert report['expected_migration_heads'] == ['0008']
     assert len(report['checks']) == 5 and all(report['checks'].values())
     assert report['passed'] is False and report['error']['type'] == 'HTTPStatusError'
 
@@ -158,7 +158,7 @@ def test_interrupted_fault_injection_restores_only_owned_services(monkeypatch, f
             return '\n'.join(json.dumps({'Service': name, 'State': 'running'})
                              for name in ('postgres', 'redis', 'api', 'worker', 'scheduler', 'web'))
         if args == ('exec', '-T', 'api', 'alembic', 'current'):
-            return '0007 (head)'
+            return '0008 (head)'
         if args[:4] == ('exec', '-T', 'postgres', 'psql'):
             return '1'
         if args[0] == 'stop':

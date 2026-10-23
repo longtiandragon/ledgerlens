@@ -65,7 +65,7 @@ def test_live_postgres_forward_migrations_preserve_evidence_and_constraints(star
                     for table, rows in before.items():
                         assert connection.execute(text(f'SELECT * FROM {table}')).all() == rows
                 assert transaction.is_active  # Alembic must not commit our enclosing transaction.
-                assert connection.scalar(text('SELECT version_num FROM alembic_version')) == '0007'
+                assert connection.scalar(text('SELECT version_num FROM alembic_version')) == '0008'
                 assert set(inspect(connection).get_table_names(schema=schema)) == set(Base.metadata.tables) | {'alembic_version'}
                 assert compare_metadata(MigrationContext.configure(connection, opts={'compare_type': True}), Base.metadata) == []
                 connection.execute(ReferenceSearch.__table__.insert().values(
