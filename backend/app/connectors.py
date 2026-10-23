@@ -71,7 +71,7 @@ async def fetch_erpnext_gl(base_url, api_key, api_secret, company, date_from, da
         while True:
             response = await client.get(base_url.rstrip('/') + '/api/resource/GL Entry', headers=headers, params={
                 'fields': json.dumps(['name', 'posting_date', 'voucher_no', 'account', 'debit', 'credit',
-                                      'party', 'against_voucher', 'company']),
+                                      'party', 'against_voucher', 'company', 'is_cancelled']),
                 'filters': json.dumps([['company', '=', company], ['posting_date', '>=', date_from],
                                        ['posting_date', '<=', date_to], ['is_cancelled', '=', 0]]),
                 'order_by': 'name asc', 'limit_start': offset, 'limit_page_length': 200})
@@ -91,6 +91,11 @@ async def fetch_erpnext_gl(base_url, api_key, api_secret, company, date_from, da
                     raise ValueError('ERPNext GL Entry must explicitly include debit and credit, including zero')
                 if not first_date <= date.fromisoformat(item['posting_date']) <= last_date:
                     raise ValueError('ERPNext returned a posting date outside the requested range')
+                # Filtering is a request, not evidence that the server honored it.
+                # Immutable-ledger originals and their cancellation reversals must
+                # never silently become active GL entries in this export scope.
+                if type(item.get('is_cancelled')) is not int or item['is_cancelled'] != 0:
+                    raise ValueError('ERPNext GL Entry must explicitly be active (is_cancelled integer 0)')
                 rows.append({'source_id': item['name'], 'kind': 'journal', 'business_date': item['posting_date'],
                              'period': item['posting_date'][:7], 'voucher_id': item['voucher_no'],
                              'account': account_mapping[item['account']], 'debit': decimal_text(item['debit']),

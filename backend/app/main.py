@@ -31,6 +31,13 @@ from .reference_api import router as reference_router
 from .auth_api import router as auth_router
 from . import auth
 
+# Initialize native libraries before startup/request threads are created. On
+# Windows, loading them concurrently with thread creation can stall the server.
+try:
+    from ortools.sat.python import cp_model  # noqa: F401
+except ImportError:
+    pass  # matching retains its bounded pure-Python fallback.
+
 
 def get(s, cls, identity):
     obj = s.get(cls, identity)
@@ -331,7 +338,11 @@ def check(body: CheckInput, s=Depends(session)):
         raise HTTPException(409, str(exc)) from exc
     old = s.scalar(select(CheckRun).where(CheckRun.snapshot_id == snap.id, CheckRun.rule_version == rule_identity_key()))
     if old:
-        return {**serialize(old), 'cases': [case_data(c) for c in s.scalars(select(Case).where(Case.check_run_id == old.id))]}
+        result = {**serialize(old), 'cases': [case_data(c) for c in s.scalars(select(Case).where(Case.check_run_id == old.id))]}
+        # Release the book write lock before returning. Dependency teardown can
+        # otherwise wait behind an async investigator blocked on this same lock.
+        s.commit()
+        return result
     findings = check_records(snapshot_records(s, snap), snap.policy)
     run = CheckRun(book_id=body.book_id, snapshot_id=snap.id, rule_version=rule_identity_key())
     s.add(run)
@@ -398,7 +409,9 @@ def start_investigation(identity: str, body: InvestigateInput, background: Backg
     lock_book(s, item.book_id)
     existing = s.scalar(select(Run).where(Run.active_slot == identity))
     if existing:
-        return serialize(existing)
+        result = serialize(existing)
+        s.commit()
+        return result
     run = Run(case_id=item.id, mode=body.mode, active_slot=identity, created_by=user.id if user else None)
     s.add(run)
     try:

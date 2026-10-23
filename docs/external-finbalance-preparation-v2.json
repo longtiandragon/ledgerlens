@@ -1,0 +1,19 @@
+{
+  "records": 710,
+  "source_sha256": "54b303c79ac6bc34ece6c2be9a77c31f86d6633dbf0e8967c8d16b47677c32bf",
+  "observations_sha256": "f4b5a2bdd914ad6bdf4b9c0973dd29cd619f1d450355eaca67a9d97b2725d485",
+  "status": "prepared_not_evaluated",
+  "limitations": [
+    "Public synthetic data; model pretraining overlap unknown.",
+    "Titles and OCR text may carry semantic clues; no claim of zero leakage.",
+    "Coverage is reused in main: these are not independent development/test splits.",
+    "No model run or accuracy claim."
+  ],
+  "overlap": {
+    "coverage_unique": 143,
+    "main_unique": 710,
+    "shared_observations": 143,
+    "main_only": 567
+  },
+  "overlap_audit_projection_sha256": "5bef999c3054be95e3278926b6afc523900fdcdca22069adb73761a58d7365b9"
+}

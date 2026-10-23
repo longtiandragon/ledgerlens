@@ -20,6 +20,7 @@ const reasons: Record<string, string> = {
   crossing_or_outside_column: '文字跨列或位于列外', multiple_observations_in_cell: '一个单元格含多段文字，归属不明确',
   invalid_date: '日期格式或值无法确认', invalid_amount: '金额含歧义字符或格式不明确',
   missing_valid_field: '缺少可解析的必填字段', invalid_text_length: '字段文字为空或长度超限', too_many_observations: '本页文字数量超限',
+  wrapped_description_requires_manual_review: '摘要包含相邻续行，请逐段核实是否属于同一记录',
 }
 function reason(code: string) { const [name, field] = code.split(':'); return (reasons[name!] || '未支持的结构') + (field ? `（${({ amount: '金额', business_date: '日期', description: '摘要' } as Record<string, string>)[field] || field}）` : '') }
 function clear() { generation++; controller?.abort(); result.value = undefined; selected.value = []; recordKind.value = ''; busy.value = false; error.value = ''; note.value = '' }
@@ -28,7 +29,7 @@ async function extract() {
   try {
     const response = await api<OcrTables>(`/ocr/runs/${props.runId}/table-candidates?book_id=${props.bookId}&page=${props.page}`, { signal: controller.signal })
     if (current !== generation) return
-    if (response.schema_version !== 'ocr-table-candidates-v2' || response.run_id !== props.runId || response.result_digest !== props.resultDigest || response.page !== props.page) throw new Error('表格候选与当前原文不一致，请刷新识别任务。')
+    if (response.schema_version !== 'ocr-table-candidates-v3' || response.run_id !== props.runId || response.result_digest !== props.resultDigest || response.page !== props.page) throw new Error('表格候选与当前原文不一致，请刷新识别任务。')
     result.value = response
   } catch (e) { if (current === generation) error.value = e instanceof Error ? e.message : String(e) }
   finally { if (current === generation) busy.value = false }
@@ -45,7 +46,7 @@ onBeforeUnmount(clear)
 <template>
   <section class="table-candidates" aria-label="表格候选提取">
     <div class="candidate-heading"><strong>表格候选 · 第 {{ page }} 页</strong><button class="button" type="button" :disabled="disabled || busy" @click="extract">{{ busy ? '正在分析文字坐标…' : '识别本页表格候选' }}</button></div>
-    <p>仅支持明确的日期、金额等表头和单行单元格。候选仍需对照原件核实，不自动判断业务类型或生成记录。</p>
+    <p>支持明确的日期、金额等表头，以及位置紧邻的摘要续行；每页需有完整表头。候选仍需对照原件逐段核实，不自动判断业务类型或生成记录。</p>
     <p v-if="error" class="notice error" role="alert">{{ error }}</p><p v-if="note" role="status">{{ note }}</p>
     <template v-if="result">
       <p v-if="result.status==='no_table'">本页未找到支持的表格结构，请继续手工逐条核实。</p>
@@ -53,7 +54,7 @@ onBeforeUnmount(clear)
       <p v-for="issue in result.issues" :key="issue" class="issue">{{ reason(issue) }}</p>
       <div v-for="table in result.tables" :key="table.table_id" class="table-scroll">
         <table><thead><tr><th>选择</th><th v-for="header in table.headers" :key="header.field"><button type="button" @click="emit('locate',header.observation_id)">{{ header.text }}</button></th></tr></thead><tbody>
-          <template v-for="(row,index) in table.rows" :key="row.candidate_id"><tr><td><input v-model="selected" :aria-label="`选择候选记录 ${index+1}`" type="checkbox" :value="row.candidate_id" :disabled="disabled || !row.copyable"/></td><td v-for="header in table.headers" :key="header.field"><button v-if="row.cells[header.field]?.observation_ids.length" type="button" @click="emit('locate',row.cells[header.field]!.observation_ids[0]!)">{{ row.cells[header.field]?.text }}</button><span v-else>缺失</span></td></tr><tr v-if="row.issues.length"><td :colspan="table.headers.length+1" class="issue">{{ row.issues.map(reason).join('；') }}{{ row.copyable ? '。可加入草稿后人工补齐。' : '。不自动划分为记录，请手工核实。' }}</td></tr></template>
+          <template v-for="(row,index) in table.rows" :key="row.candidate_id"><tr><td><input v-model="selected" :aria-label="`选择候选记录 ${index+1}`" type="checkbox" :value="row.candidate_id" :disabled="disabled || !row.copyable"/></td><td v-for="header in table.headers" :key="header.field"><template v-if="row.cells[header.field]?.observation_ids.length"><button type="button" @click="emit('locate',row.cells[header.field]!.observation_ids[0]!)">{{ row.cells[header.field]?.text }}</button><button v-for="(id,position) in row.cells[header.field]!.observation_ids.slice(1)" :key="id" type="button" @click="emit('locate',id)">查看续行 {{ position+2 }}</button></template><span v-else>缺失</span></td></tr><tr v-if="row.issues.length"><td :colspan="table.headers.length+1" class="issue">{{ row.issues.map(reason).join('；') }}{{ row.copyable ? '。可加入草稿后人工核实或补齐。' : '。不自动划分为记录，请手工核实。' }}</td></tr></template>
         </tbody></table>
       </div>
       <div v-if="rows.length" class="candidate-actions"><label>候选记录类型<select v-model="recordKind" :disabled="disabled"><option value="">请人工选择业务类型</option><option v-for="(label,key) in kinds" :key="key" :value="key">{{ label }}</option></select></label><button class="button" type="button" :disabled="disabled || !recordKind || !selectedRows.length" @click="append">将所选 {{ selectedRows.length }} 条加入人工草稿</button></div>

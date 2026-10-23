@@ -1,0 +1,93 @@
+{
+  "status": "completed_with_failures",
+  "scope": "external_threshold_transfer_not_answer_accuracy",
+  "started_at": "2026-10-23T10:27:00.722286+00:00",
+  "thresholds": {
+    "keyword": 0.2857142857142857,
+    "bge": 0.5847992897033691
+  },
+  "external_model_requests": 0,
+  "ledger_writes": 0,
+  "inputs_sha256": {
+    "queries.json": "2e10277225bc4240e2e2dcd4f71c0c5226c09ae751348f826c772ec3a08f3c95",
+    "source-pin.json": "cce62f44ddaefd788a117156907d60a21edc0758bf05421e3f4d407adb7a9ba6"
+  },
+  "code_sha256": {
+    "benchmarks/finlongeval_refusal.py": "bbe4d4384c95371f902a61dbcf342232c614c2c46047a52702c895bcdd6b2c74",
+    "backend/app/knowledge.py": "f68a5c41fd0074f0dadaf12207808306f8a069b4b88bcfa1c844e9f0962e6825",
+    "backend/app/retrieval_vectors.py": "3894894ff0afb5753e0d99eee8c9ba8d131a6d8bc880f5fbe481e55e96c0bbd6",
+    "docs/FINLONGEVAL_REFUSAL_PROTOCOL.md": "88686c6087164094308423b4ebadfb2c28b3ff8328f2a8d8b4d3c2b6a1078f52"
+  },
+  "forbidden_access_attempts": [],
+  "engine": {
+    "model": "BAAI/bge-small-zh-v1.5",
+    "revision": "7999e1d3359715c523056ef9478215996d62a620",
+    "manifest_sha256": "588ee2f1da01c50d4f19a3b9bfa847b67e22c8af2623c08843e5b10c2e7c94e3",
+    "packages": {
+      "sentence-transformers": "6.1.0",
+      "torch": "2.14.1",
+      "transformers": "5.19.0",
+      "tokenizers": "0.23.3"
+    },
+    "dimensions": 512,
+    "window_tokens": 480,
+    "stride_tokens": 400,
+    "query_prefix": "为这个句子生成表示以用于检索相关文章：",
+    "device": "cpu",
+    "normalized": true
+  },
+  "pdfplumber_version": "0.11.10",
+  "finished_at": "2026-10-23T10:34:52.851785+00:00",
+  "summary": {
+    "keyword": {
+      "other_total": 70,
+      "other_accepted": 48,
+      "other_unthresholded_has_candidate": 59,
+      "other_rejected": 11,
+      "trap_total": 10,
+      "trap_accepted": 9,
+      "trap_unthresholded_has_candidate": 10,
+      "other_failed": 11,
+      "trap_rejected": 1
+    },
+    "bge": {
+      "other_total": 70,
+      "other_accepted": 43,
+      "other_unthresholded_has_candidate": 59,
+      "other_rejected": 16,
+      "trap_total": 10,
+      "trap_accepted": 9,
+      "trap_unthresholded_has_candidate": 10,
+      "other_failed": 11,
+      "trap_rejected": 1
+    }
+  },
+  "question_types": {
+    "表格提取": 10,
+    "数据计算": 2,
+    "文本摘要": 10,
+    "生成提纲": 2,
+    "陷阱问题": 10,
+    "阅读理解": 10,
+    "逻辑推理": 10,
+    "信息提取": 10,
+    "事件分析": 10,
+    "对话人分辨": 2,
+    "关键词": 2,
+    "关键数据提取": 2
+  },
+  "truth_sha256": "2091a9866c07568ef55826561e32d299f0ee5f2450d213102801e7d4984ba7e8",
+  "predictions_sha256": "db1fa202f50bc485bac5dcac8c9d7c62195f87749343541ad870380463cbba3c",
+  "limitations": [
+    "Only publisher public samples, not full dataset.",
+    "Known document retrieval, not discovery or production scope gating.",
+    "Trap/other is a proxy; acceptance is not correct evidence or an answer.",
+    "Public pretraining contamination unknown; no threshold retuning.",
+    "PDF text only; not OCR, visual tables or pgvector runtime.",
+    "Publisher trap labels are not independently adjudicated mandatory-refusal labels; accepted traps are not a measured hallucination rate."
+  ],
+  "documents_count": 27,
+  "pages": 1516,
+  "segments": 3429,
+  "report_sha256": "dc42609004190e86f29f807679d0fee22e10db3a68379d5dce34f914501ae9ba"
+}

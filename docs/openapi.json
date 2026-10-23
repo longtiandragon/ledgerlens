@@ -2236,6 +2236,45 @@
         }
       }
     },
+    "/api/v1/reference-indexes/support-checks": {
+      "post": {
+        "tags": [
+          "实验参考索引"
+        ],
+        "summary": "Support",
+        "operationId": "support_api_v1_reference_indexes_support_checks_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReferenceSupportInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/reference-indexes/choices": {
       "get": {
         "tags": [
@@ -6025,6 +6064,33 @@
         ],
         "title": "ReferenceChoiceInput"
       },
+      "ReferenceRequirement": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "policy_excerpt",
+              "business_fact",
+              "applicability",
+              "unspecified"
+            ],
+            "title": "Kind"
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 4,
+            "title": "Text"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "kind",
+          "text"
+        ],
+        "title": "ReferenceRequirement"
+      },
       "ReferenceSearchInput": {
         "properties": {
           "book_id": {
@@ -6051,6 +6117,41 @@
           "query"
         ],
         "title": "ReferenceSearchInput"
+      },
+      "ReferenceSupportInput": {
+        "properties": {
+          "book_id": {
+            "type": "string",
+            "title": "Book Id"
+          },
+          "search_id": {
+            "type": "string",
+            "title": "Search Id"
+          },
+          "expected_result_digest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Expected Result Digest"
+          },
+          "requirements": {
+            "items": {
+              "$ref": "#/components/schemas/ReferenceRequirement"
+            },
+            "type": "array",
+            "maxItems": 6,
+            "minItems": 1,
+            "title": "Requirements"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "book_id",
+          "search_id",
+          "expected_result_digest",
+          "requirements"
+        ],
+        "title": "ReferenceSupportInput"
       },
       "RequestInput": {
         "properties": {

@@ -1,0 +1,46 @@
+{
+  "finrca": {
+    "status": "verified",
+    "cases": 439,
+    "macro_f1": "0.9517731696856624471980339456"
+  },
+  "sibr": {
+    "status": "verified",
+    "documents": 400,
+    "total": 29135,
+    "localized_exact": 11155,
+    "text_exact": 12005
+  },
+  "finlongeval": {
+    "status": "verified",
+    "cases": 80,
+    "summary": {
+      "keyword": {
+        "other_total": 70,
+        "other_accepted": 48,
+        "other_unthresholded_has_candidate": 59,
+        "other_rejected": 11,
+        "trap_total": 10,
+        "trap_accepted": 9,
+        "trap_unthresholded_has_candidate": 10,
+        "other_failed": 11,
+        "trap_rejected": 1
+      },
+      "bge": {
+        "other_total": 70,
+        "other_accepted": 43,
+        "other_unthresholded_has_candidate": 59,
+        "other_rejected": 16,
+        "trap_total": 10,
+        "trap_accepted": 9,
+        "trap_unthresholded_has_candidate": 10,
+        "other_failed": 11,
+        "trap_rejected": 1
+      }
+    }
+  },
+  "status": "verified",
+  "verified_on": "2026-10-24",
+  "meaning": "Retained artifact consistency, not proof of historical execution, professional correctness, or capability thresholds.",
+  "verifier_sha256": "68111105ed0649e0772f5a094b651a60e33bbc36f23a167a6af2e060c13af374"
+}

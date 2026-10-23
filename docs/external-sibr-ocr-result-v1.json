@@ -1,0 +1,340 @@
+{
+  "schema_version": "sibr-ocr-full-test-v1",
+  "status": "completed_with_failures",
+  "started_at": "2026-10-23T10:12:00.602613+00:00",
+  "dataset_manifest_sha256": "6d7dae5ff1440cccb8e417574d6f8263fca805a13a0581d86f2a8e100d292424",
+  "protocol_sha256": "3d4dcf747eab4062acbc666ba209629951650e3aaf145aa1a3c6555465d28348",
+  "code_sha256": {
+    "benchmarks/sibr_ocr.py": "dd385de75d8b74eaa6a58b085222ab20c97ae50e77d915231e90124720fbda30",
+    "backend/app/ocr_observations.py": "e2d298ea4ebe57ed1e777ea2302dbd7b805097870840d735fa4da88e4b35e57c",
+    "docs/ocr-model-sources.json": "98830626d48543261d9fabc89ab6ec31ba1c666d78b4b02960842fba5f6b2632"
+  },
+  "external_model_requests": 0,
+  "ledger_writes": 0,
+  "forbidden_access_attempts": [],
+  "engine": {
+    "paddleocr": "3.7.0",
+    "paddlepaddle": "3.3.1",
+    "paddlex": "3.7.2",
+    "models_sha256": "3308911c08f709a8a4334a85f139ba4d4345a6f8af7dbb9f0c0758543d523879",
+    "model_files": {
+      "PP-OCRv5_mobile_det_infer/inference.json": "05feef1acb00aa4cd7362b15f7f501fc4f99d7b1fa73c1c871e0c7b1504b0f5c",
+      "PP-OCRv5_mobile_det_infer/inference.pdiparams": "afa1820cb16c1fd0dad589d0f8b389139061c1ef6d68019685fd07be997dda5b",
+      "PP-OCRv5_mobile_det_infer/inference.yml": "98069072e1b6b37d727fd9d9f11725faa46d6ea0de012f2ed26caea011c37699",
+      "PP-OCRv5_mobile_rec_infer/inference.json": "24587345250c7332d0fc6f9a44e794d078cdaeb64c302fef906f325619de2569",
+      "PP-OCRv5_mobile_rec_infer/inference.pdiparams": "2460da90875937c94db97eba74ae3d9e5d4c4c57c42f1f41531c09a26bcc771a",
+      "PP-OCRv5_mobile_rec_infer/inference.yml": "5dfeb2777f6d0db8177d8128a8acfcf6e6276dc4ac73ea3bf0dc06d6a5e85d8e"
+    },
+    "device": "cpu",
+    "document_transforms": false
+  },
+  "continuation": {
+    "prior_report_sha256": "337eaeee3914df428ca6994d97963ee1df7cd08bc327ea782abea00810be388c",
+    "preserved_cases": 175,
+    "prior_directory": "sibr-ocr-continuation-v1",
+    "script_path": "scripts/continue_sibr_ocr_v2.py",
+    "started_at": "2026-10-23T14:30:33.598147+00:00",
+    "reason": "Original process absent after interruption; exact prefix retained, no completed-case retry.",
+    "script_sha256": "33d4d2f53f38ff101b710c6d44b1ea58f7ef24ee55684849d36bed5d7c9bee8d",
+    "protocol_path": "docs/SIBR_OCR_CONTINUATION_V2.md",
+    "protocol_sha256": "d4155b313367cb4ef69e73ba4e9e7299416ead07bc44018097c60f11b8ad1aec"
+  },
+  "finished_at": "2026-10-23T15:40:22.905400+00:00",
+  "summary": {
+    "documents": 400,
+    "failed": 6,
+    "total": 29135,
+    "localized_exact": 11155,
+    "text_exact": 12005,
+    "by_label": {
+      "answer": {
+        "total": 13810,
+        "localized_exact": 6147,
+        "text_exact": 6696
+      },
+      "header": {
+        "total": 570,
+        "localized_exact": 264,
+        "text_exact": 271
+      },
+      "other": {
+        "total": 2769,
+        "localized_exact": 1204,
+        "text_exact": 1241
+      },
+      "question": {
+        "total": 11986,
+        "localized_exact": 3540,
+        "text_exact": 3797
+      }
+    },
+    "by_source_prefix": {
+      "eng": {
+        "total": 9601,
+        "localized_exact": 3765,
+        "text_exact": 4178,
+        "documents": 120,
+        "failed": 5
+      },
+      "med": {
+        "total": 16866,
+        "localized_exact": 5826,
+        "text_exact": 6237,
+        "documents": 240,
+        "failed": 1
+      },
+      "hot": {
+        "total": 2668,
+        "localized_exact": 1564,
+        "text_exact": 1590,
+        "documents": 40,
+        "failed": 0
+      }
+    }
+  },
+  "limitations": [
+    "Interrupted three-process run; exact prefixes of 102 and 175 retained, no completed-case retry.",
+    "Strict segment recovery, not semantic VIE, table accuracy or AI gain.",
+    "Pretraining contamination unknown; no enterprise accounting validation."
+  ],
+  "report_sha256": "158a0120c570aa0686401f43a5317d7087031dd2e5e9a0274d19a8862738d111",
+  "segment_recovery_rates": {
+    "localized_exact": "0.3828728333619358160288313026",
+    "text_exact": "0.4120473657113437446370344946"
+  },
+  "failed_cases": [
+    {
+      "id": "eng-0297",
+      "image_sha256": "136cc18ed653256ab6b516329e6395586ddc6c5b3f76ca435b09dbfaf13c1907",
+      "status": "failed",
+      "error": {
+        "type": "ValueError",
+        "message": "OCR image exceeds pixel limit"
+      },
+      "seconds": 0.007,
+      "score": {
+        "total": 107,
+        "localized_exact": 0,
+        "text_exact": 0,
+        "labels": {
+          "answer": {
+            "total": 53,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "header": {
+            "total": 2,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "other": {
+            "total": 1,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "question": {
+            "total": 51,
+            "localized_exact": 0,
+            "text_exact": 0
+          }
+        },
+        "contains_han": false
+      }
+    },
+    {
+      "id": "eng-0070",
+      "image_sha256": "bb14b6bf6980adad93cffa4f96ec9a883de44cae9af66be7a1a3459a30e8d1ec",
+      "status": "failed",
+      "error": {
+        "type": "ValueError",
+        "message": "OCR image exceeds pixel limit"
+      },
+      "seconds": 0.019,
+      "score": {
+        "total": 136,
+        "localized_exact": 0,
+        "text_exact": 0,
+        "labels": {
+          "answer": {
+            "total": 82,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "header": {
+            "total": 1,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "other": {
+            "total": 4,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "question": {
+            "total": 49,
+            "localized_exact": 0,
+            "text_exact": 0
+          }
+        },
+        "contains_han": false
+      }
+    },
+    {
+      "id": "eng-0273",
+      "image_sha256": "6fb8dae47ad38d7125fde2767b83b9590c1ab358afd1cd0f75a6e4b276789f92",
+      "status": "failed",
+      "error": {
+        "type": "ValueError",
+        "message": "OCR image exceeds pixel limit"
+      },
+      "seconds": 0.013,
+      "score": {
+        "total": 67,
+        "localized_exact": 0,
+        "text_exact": 0,
+        "labels": {
+          "answer": {
+            "total": 28,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "header": {
+            "total": 1,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "other": {
+            "total": 10,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "question": {
+            "total": 28,
+            "localized_exact": 0,
+            "text_exact": 0
+          }
+        },
+        "contains_han": true
+      }
+    },
+    {
+      "id": "eng-0158",
+      "image_sha256": "667d1ef6cc4dc111a34bfcb05dcfd52e9499d77658ae5f7490a9df4bab84cb75",
+      "status": "failed",
+      "error": {
+        "type": "ValueError",
+        "message": "OCR image exceeds pixel limit"
+      },
+      "seconds": 0.014,
+      "score": {
+        "total": 82,
+        "localized_exact": 0,
+        "text_exact": 0,
+        "labels": {
+          "answer": {
+            "total": 41,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "header": {
+            "total": 1,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "other": {
+            "total": 11,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "question": {
+            "total": 29,
+            "localized_exact": 0,
+            "text_exact": 0
+          }
+        },
+        "contains_han": true
+      }
+    },
+    {
+      "id": "eng-0095",
+      "image_sha256": "1fb6f2610c48630407ade028938cc5c0ebc7ab18695a774f19deb830971d4ef2",
+      "status": "failed",
+      "error": {
+        "type": "ValueError",
+        "message": "OCR image exceeds pixel limit"
+      },
+      "seconds": 0.012,
+      "score": {
+        "total": 73,
+        "localized_exact": 0,
+        "text_exact": 0,
+        "labels": {
+          "answer": {
+            "total": 23,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "header": {
+            "total": 1,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "other": {
+            "total": 11,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "question": {
+            "total": 38,
+            "localized_exact": 0,
+            "text_exact": 0
+          }
+        },
+        "contains_han": false
+      }
+    },
+    {
+      "id": "med-0856",
+      "image_sha256": "464ddfb4572b9233373159129553ebbbebc46f25ca37c782dea4159815a17bca",
+      "status": "failed",
+      "error": {
+        "type": "ValueError",
+        "message": "OCR image exceeds pixel limit"
+      },
+      "seconds": 0.017,
+      "score": {
+        "total": 65,
+        "localized_exact": 0,
+        "text_exact": 0,
+        "labels": {
+          "answer": {
+            "total": 18,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "header": {
+            "total": 1,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "other": {
+            "total": 17,
+            "localized_exact": 0,
+            "text_exact": 0
+          },
+          "question": {
+            "total": 29,
+            "localized_exact": 0,
+            "text_exact": 0
+          }
+        },
+        "contains_han": true
+      }
+    }
+  ],
+  "failed_reasons": {
+    "OCR image exceeds pixel limit": 6
+  },
+  "interpretation": "Strict whole-segment recovery, not character accuracy, official VIE F1, money extraction accuracy or AI gain.",
+  "report_erratum": "Raw runner limitations inherited the phrase two-process; actual chain contains three processes, with retained prefixes of 102 and 175 cases. Raw report remains unchanged."
+}

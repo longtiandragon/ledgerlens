@@ -10,7 +10,7 @@ from statistics import median
 
 from .ocr_observations import canonical, sha
 
-VERSION = 'ocr-table-candidates-v2'
+VERSION = 'ocr-table-candidates-v3'
 HEADERS = {
     '日期': 'business_date', '业务日期': 'business_date',
     '金额': 'amount', '业务金额': 'amount',
@@ -69,6 +69,51 @@ def field_value(field, raw):
     return text, None
 
 
+def append_wrapped_description(table, group, lines_by_id, digest):
+    """Join only a close, aligned continuation after a complete anchored row.
+
+    Dates, identifiers, counterparties and amounts are never inherited or joined.
+    This is a draft convenience, not proof of cell ownership; preserve every real
+    observation and explicitly require the reviewer to check the wrapped text.
+    """
+    if len(group) != 1 or not table['rows']:
+        return False
+    previous, line = table['rows'][-1], group[0]
+    if (not previous['copyable'] or not {'business_date', 'amount', 'description'} <= previous['record'].keys()
+            or any(issue != 'wrapped_description_requires_manual_review' for issue in previous['issues'])):
+        return False
+    header = next((h for h in table['headers'] if h['field'] == 'description'), None)
+    cell = previous['cells'].get('description', {})
+    ids = cell.get('observation_ids', [])
+    if not header or not 1 <= len(ids) < 3:
+        return False
+    prior = lines_by_id[ids[-1]]
+    left, top, right, bottom = box(line)
+    prior_left, prior_top, _, prior_bottom = box(prior)
+    height = min(bottom - top, prior_bottom - prior_top)
+    # A slightly tilted detection polygon can overlap the preceding line's
+    # axis-aligned box. Permit at most 15% of one text height, while requiring
+    # a distinct baseline; larger overlap remains ambiguous and is not joined.
+    if (not header['left'] <= left < right <= header['right']
+            or not -height * .15 <= top - prior_bottom <= height * .65
+            or top - prior_top < height * .75
+            or abs(left - prior_left) > height * .5
+            or line['text'].strip().startswith(FOOTERS)):
+        return False
+    value, problem = field_value('description', cell['text'] + '\n' + line['text'])
+    if problem:
+        return False
+    ids.append(line['observation_id'])
+    cell['text'] = value
+    previous['record']['description'] = value
+    previous['field_evidence']['description'] = list(ids)
+    previous['observation_ids'].append(line['observation_id'])
+    previous['issues'] = ['wrapped_description_requires_manual_review']
+    previous['candidate_id'] = sha(canonical({'version': VERSION, 'result': digest,
+        'table': table['table_id'], 'observations': previous['observation_ids']}))
+    return True
+
+
 def candidates(result, page_number):
     pages = result.get('pages') or [{**result, 'page': 1}]
     page = next((p for p in pages if p['page'] == page_number), None)
@@ -85,6 +130,7 @@ def candidates(result, page_number):
     if not lines:
         return {**output, 'status': 'no_table', 'issues': ['no_text']}
     groups = group_lines(lines)
+    lines_by_id = {line['observation_id']: line for line in lines}
     width = page['image']['width']
     table, count = None, 0
     for group in groups:
@@ -128,6 +174,8 @@ def candidates(result, page_number):
         if group[0]['text'].strip().startswith(FOOTERS):
             output['unassigned'].append({'observation_ids': ids, 'reason': 'footer_requires_manual_review'})
             table = None
+            continue
+        if append_wrapped_description(table, group, lines_by_id, digest):
             continue
         if count >= MAX_ROWS:
             output['unassigned'].append({'observation_ids': ids, 'reason': 'row_budget_exhausted'})

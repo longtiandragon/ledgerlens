@@ -9,6 +9,18 @@ class ReferenceSearchInput(StrictModel):
     query: str = Field(min_length=1, max_length=1000)
 
 
+class ReferenceRequirement(StrictModel):
+    kind: Literal['policy_excerpt', 'business_fact', 'applicability', 'unspecified']
+    text: str = Field(min_length=4, max_length=200)
+
+
+class ReferenceSupportInput(StrictModel):
+    book_id: str
+    search_id: str
+    expected_result_digest: str = Field(pattern=r'^[a-f0-9]{64}$')
+    requirements: list[ReferenceRequirement] = Field(min_length=1, max_length=6)
+
+
 class ReferenceChoiceInput(StrictModel):
     book_id: str
     mode: Literal['keyword', 'persistent_bge']

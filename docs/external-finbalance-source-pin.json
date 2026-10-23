@@ -1,0 +1,33 @@
+{
+  "repository": "https://github.com/Devansh1105/finbalance",
+  "revision": "a1062b7b392eaf53311308c2f63cf748b68bb8cf",
+  "data_license": "CC-BY-4.0",
+  "code_license": "Apache-2.0",
+  "files": {
+    "main-records.jsonl": {
+      "upstream_path": "data/main/records.jsonl",
+      "sha256": "54b303c79ac6bc34ece6c2be9a77c31f86d6633dbf0e8967c8d16b47677c32bf",
+      "bytes": 21786181
+    },
+    "main-manifest.json": {
+      "upstream_path": "data/main/manifest.json",
+      "sha256": "0a66606d4adc5093ccfaa25a23c109668d273419d3f0dc017abf3a02bf6b72dd",
+      "bytes": 17330
+    },
+    "DATA_LICENSE.md": {
+      "upstream_path": "DATA_LICENSE.md",
+      "sha256": "c3103b5aac603bebc267ac4433b4840ec2b4eb342ba93fe16a530a9fc8f86c1b",
+      "bytes": 2167
+    },
+    "README.md": {
+      "upstream_path": "README.md",
+      "sha256": "490551e0f8cd9bc851c30c21055b75997417dc7cb42237119cf6b97dd40b1080",
+      "bytes": 12649
+    },
+    "coverage-records.jsonl": {
+      "upstream_path": "data/coverage/records.jsonl",
+      "sha256": "c1568a30ac43401047e3b1c19f672359ed2dadfd977aa0d1bc36dd6b2cd41580",
+      "bytes": 4262261
+    }
+  }
+}

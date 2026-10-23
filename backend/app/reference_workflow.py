@@ -15,6 +15,7 @@ from .db import Session, Book, ReferenceSearch, ReferenceChoice, Audit, uid, ser
 from .knowledge import verify_frozen_references
 from .reference_sources import _json, canonical, digest
 from .reference_selection import ROOT, latest_choice, registry_for
+from .reference_scope import assess_support, candidate_boundary
 from .retrieval_index import SEGMENT_KEYS, validate_manifest, validate_segments
 from .retrieval_vectors import eligible
 
@@ -189,7 +190,23 @@ def detail(s, run):
         verified(run)
     book = get(s, Book, run.book_id)
     return {**{k: v for k, v in serialize(run).items() if k != 'worker_token'},
+            'answer_boundary': candidate_boundary(run.status, bool(run.result.get('hits'))),
             'stale': (book.version, book.revision) != (run.book_version, run.book_revision)}
+
+
+def support(s, body):
+    run = get(s, ReferenceSearch, body.search_id)
+    if run.book_id != body.book_id:
+        raise HTTPException(404, '当前账套中没有该参考检索')
+    book = get(s, Book, body.book_id)
+    if ((book.version, book.revision, book.framework, book.period)
+            != (run.book_version, run.book_revision, run.framework, run.period)
+            or body.expected_result_digest != run.result_digest):
+        raise HTTPException(409, '检索后账套或结果已改变，请重新查询再核对证据需求')
+    verified(run)
+    parents = {hit['parent_chunk_id']: hit['parent_reference'] for hit in run.result['hits']}
+    return {**assess_support(body.requirements, list(parents.values())), 'search_id': run.id,
+            'result_digest': run.result_digest, 'book_id': book.id, 'book_revision': book.revision}
 
 
 def choose(s, body):

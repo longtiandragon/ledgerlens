@@ -1,0 +1,239 @@
+{
+  "schema_version": "public-gap-closure-v1",
+  "validated_on": "2026-10-23",
+  "status": "bounded_engineering_validation_passed_research_unproven",
+  "backend": {
+    "passed": 2630,
+    "skipped": 25,
+    "failures": 0,
+    "errors": 0,
+    "evidence": {
+      "path": ".local/reports/public-gap-closure-full-20261022.xml",
+      "sha256": "f2d55c147b5e926ff9dfd97f1c7555d5827da29de01cfdc1d9b44c2bf5f2bc11"
+    },
+    "validated_on": "2026-10-22"
+  },
+  "frontend_build": {
+    "path": ".local/reports/public-release-build-20261023.log",
+    "sha256": "b663568ffb707f4996fa9eefa0c8cdb25f5a30550c68bd95f3a6828d93a370dd"
+  },
+  "browser": {
+    "passed": 8,
+    "skipped": 0,
+    "flaky": 0,
+    "failed": 0,
+    "validated_on": "2026-10-23",
+    "reference_synthetic_responses": 4,
+    "real_local_ocr": 4,
+    "evidence": {
+      "path": ".local/reference-ocr-release-20261023/report.json",
+      "sha256": "6682f47144f4c4a2febfbf237f5e76172bc48ba4c86327addc1b5fbc6f2e2289"
+    }
+  },
+  "domains": {
+    "retrieval": {
+      "path": "docs/retrieval-scope-validation-v2.json",
+      "sha256": "acd2561c1bc8dd91c29968e6c321dc82db24768c5187dcf54fc521912864779c"
+    },
+    "ocr": {
+      "path": "docs/ocr-chinese-public-validation.json",
+      "sha256": "924b10ec51b33d1e0b37cdde209e15af499e868d9a31705a393ddabe9a2dd29e"
+    },
+    "erp": {
+      "path": "docs/erpnext-extended-validation.json",
+      "sha256": "eaa7da3fd03e4cfc851fee63ede96ee852aeb074034ecaf4d0132b04dee41765"
+    },
+    "recovery_load": {
+      "path": "docs/recovery-load-validation-v2.json",
+      "sha256": "8289e3d99210d435c9d5e250aad16068c7d1aa39eb6e77fd97a21710afcbd830"
+    },
+    "cross_host_restore": {
+      "path": "docs/cross-host-restore-validation.json",
+      "sha256": "054b1e1aa6503adbd875e27e0a5e0aaad145678d294fefea994ea8a5876b7a45"
+    }
+  },
+  "v5": {
+    "status": "development_smoke_failed_budget_sealed_not_started",
+    "new_paid_requests": 95,
+    "new_ai_gain_proven": false,
+    "final_targeted_tests": {
+      "path": ".local/reports/public-gap-final-targeted-20261022.xml",
+      "sha256": "23ac9dc94f536b7455296ebb9ad435f3a349b1dfb03999a92a2148ea48d2f247"
+    },
+    "final_targeted_passed": 35,
+    "dataset_cases": 108,
+    "sealed_cases_per_method": 36,
+    "sealed_repeats": 2,
+    "budget_authorized": true,
+    "proposed_total_cap_cny": "8.00",
+    "plans": {
+      "smoke": {
+        "path": "docs/root-cause-v5-plans/smoke.json",
+        "sha256": "d47c9d1d2968f836698f2bd0976c3916e5b575f1d8df1e3ab352ee3f11d26628"
+      },
+      "selective": {
+        "path": "docs/root-cause-v5-plans/selective.json",
+        "sha256": "f21dec7dd882c925b869484e191edfe2a39f05d52b5f7d5bd9f32c451f7c728d"
+      },
+      "comparator": {
+        "path": "docs/root-cause-v5-plans/comparator.json",
+        "sha256": "c9dd35917c74618e86e914b9b75d9390b2022f68ce0f1647423f76ff54c03309"
+      }
+    },
+    "authorized_total_cap_cny": "8.00",
+    "sealed_runs_executed": false,
+    "sealed_hypothesis_evaluated": false,
+    "execution": {
+      "path": "docs/root-cause-v5-execution.json",
+      "sha256": "486cd81c4781af54a9fa36bdc33f8172c2bd0b95b9f5ce0efea3a4501bf7fa56"
+    },
+    "cost": {
+      "rates_cny_per_million": {
+        "cache_hit": ".02",
+        "cache_miss": "1",
+        "output": "4"
+      },
+      "price_source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "verified_on": "2026-10-23",
+      "tokens": {
+        "prompt_tokens": 633619,
+        "completion_tokens": 79010,
+        "prompt_cache_hit_tokens": 167168,
+        "prompt_cache_miss_tokens": 466451
+      },
+      "receipts": 95,
+      "unknown_usage": 0,
+      "offpeak_list_price_estimate_cny": "0.78583436",
+      "settled_peak_no_cache_upper_cny": "1.899318",
+      "balance_difference_cny": "0.79",
+      "provider_topped_up_balance_unchanged": true,
+      "not_an_itemized_provider_bill": true,
+      "account_totals_retained_only_in_local_evidence": true
+    },
+    "summary_api_validation": {
+      "passed": 3,
+      "evidence": {
+        "path": ".local/reports/root-cause-results-v5-20261023.xml",
+        "sha256": "1320eb25edcee6d151609d25e7723e695b0613b8d975adf74595d1ac27e1e00c"
+      },
+      "public_entries_validated": 18,
+      "latest_attempt_role": "smoke",
+      "latest_sealed_result": "v4-sealed-hybrid"
+    }
+  },
+  "limitations": [
+    "Default backend and browser skips are retained; optional CI covers Beancount, PostgreSQL and pgvector, not absent local originals.",
+    "Retrieval contract checks do not establish semantic answerability.",
+    "Blank official invoice and synthetic table are not enterprise invoice accuracy.",
+    "Extended ERP cases are offline HTTP contracts, not ERP engine runs.",
+    "Windows-to-Linux stopped SQLite restoration passed for two synthetic rows; no enterprise capacity, online recovery or real model-task recovery claim.",
+    "No authorized enterprise ledger or human accountant opinion was obtained; neither blocks the public-data student first edition.",
+    "Remote CI evidence is for source commit 2d42f97e973122a1ec6d736eefbcb337eb2431e2; the pull request remains draft and unmerged."
+  ],
+  "snapshot_ui_regression": {
+    "validated_on": "2026-10-23",
+    "failure_reproduced": true,
+    "before": {
+      "path": ".local/reference-snapshot-race-20261023-before/report.json",
+      "sha256": "e69ba8c32b0883cc559b2a0655905a2043c4d93146277d1bbdd2026e2cb44f46"
+    },
+    "after": {
+      "path": ".local/reference-snapshot-race-20261023-after/report.json",
+      "sha256": "b2be2ae7490ee8aed5c10b6c6da816b26fdfffcfe0214482083de30ff8bca161"
+    },
+    "passed": 4,
+    "skipped": 0,
+    "flaky": 0,
+    "scope": "Synthetic reference responses with a real isolated API snapshot change; no BGE or OCR rerun.",
+    "owned_services_stopped": true,
+    "frontend_build": {
+      "path": ".local/reports/reference-snapshot-build-20261023.log",
+      "sha256": "bd6ba59d50d134c8661fc2cef684003d5d9b871f5af39f05e315dfaaeffd5f81"
+    }
+  },
+  "prior_browser": {
+    "passed": 7,
+    "skipped": 0,
+    "flaky": 0,
+    "failed": 0,
+    "evidence": {
+      "path": ".local/reference-ocr-browser-20261022-v1/report.json",
+      "sha256": "4cd34e257895b35625a2888e3de1891327dff9a42503bba05b9169c66a7317ff"
+    },
+    "validated_on": "2026-10-22"
+  },
+  "cross_host_restore": {
+    "status": "passed_with_scope_limits",
+    "local_prepare": {
+      "path": ".local/cross-host-source-20261023-v1/report.json",
+      "sha256": "938ca5635bb4f941b87c5f02403b6ce51690e18a4098dac5960705ac34da6120"
+    },
+    "same_host_rejection": {
+      "path": ".local/cross-host-same-host-rejected-20261023/report.json",
+      "sha256": "152150012154242ed9da31c0f28342ada692550b2069719f752527f91ad6de75"
+    },
+    "remote_pass_claimed": true,
+    "remote_evidence": {
+      "path": "docs/cross-host-restore-validation.json",
+      "sha256": "054b1e1aa6503adbd875e27e0a5e0aaad145678d294fefea994ea8a5876b7a45"
+    }
+  },
+  "remote_ci": {
+    "run_id": 39823414917,
+    "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917",
+    "head_sha": "2d42f97e973122a1ec6d736eefbcb337eb2431e2",
+    "tested_merge_sha": "30313e29e8251dfe705cd5ac96dc375d674a224c",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "backend",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119980295244"
+      },
+      {
+        "name": "reproduce",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119980295558"
+      },
+      {
+        "name": "licenses",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119980295750"
+      },
+      {
+        "name": "quickstart-unix",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119980295777"
+      },
+      {
+        "name": "frontend",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119980295801"
+      },
+      {
+        "name": "quickstart-windows",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119980295846"
+      },
+      {
+        "name": "docker",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119980295920"
+      },
+      {
+        "name": "optional",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119980295981"
+      },
+      {
+        "name": "cross-host-restore",
+        "conclusion": "success",
+        "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917/job/119985193341"
+      }
+    ],
+    "evidence": {
+      "path": "docs/cross-host-restore-validation.json",
+      "sha256": "054b1e1aa6503adbd875e27e0a5e0aaad145678d294fefea994ea8a5876b7a45"
+    }
+  }
+}

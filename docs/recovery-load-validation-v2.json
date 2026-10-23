@@ -1,0 +1,132 @@
+{
+  "schema_version": "recovery-load-delivery-v2",
+  "status": "passed_with_scope_limits",
+  "independent_machine": false,
+  "online_backup": false,
+  "model_requests": 0,
+  "load": {
+    "duration_requested_seconds": 120,
+    "read_check_clients": 2,
+    "periodic_investigators": 1,
+    "pacing_seconds_per_read_client": 0.25,
+    "investigation_ids": [
+      "62dc9fc6-c133-44f5-8c49-9009d11d94af",
+      "f79dfb34-6393-45f9-adeb-b087dd12cb8e",
+      "bd76ab0e-1a40-4f57-bbd9-0d8c236cac63",
+      "8f3f8406-9fdb-450c-a68e-6343e65e3227",
+      "52124b19-01ae-446c-8dd1-43ac8fbc7201",
+      "de6697a1-0681-4d12-b896-70bc92e7eee8",
+      "ee799957-fe9e-402b-b86f-5f096b4dea0d",
+      "7e4cc540-29f4-4369-979a-8aa38e8f2c43",
+      "9cad6476-624e-4d0c-adf5-7a3bce3c6d6e",
+      "0b458f72-761d-49a5-8d8d-fd3814e03ddf",
+      "100a3351-8daf-4b66-9d4b-77dfd0109f79",
+      "14cb99d4-1f01-4769-83a7-5b425b289b00",
+      "80f7ce38-cf44-4188-a85f-e38c669a35fb",
+      "6042b244-aefb-470e-a3d9-ac5cdb1e474d",
+      "1e1e58c9-6d4b-4f5f-9cb1-71a596d03815",
+      "c06dda54-8b65-4915-88f8-1d5adf2861e4",
+      "e7c371d6-32f4-4363-9a30-ea30d93e58e3",
+      "3729ee94-6be5-4d19-9fca-a8227165fa93",
+      "81d7cb6e-f834-4d6d-b80e-6442b378b4c6",
+      "733ad14d-7890-4dcf-989e-88cdfa886eba",
+      "1f9cfcde-0d1b-4e61-ab43-1e669346a301",
+      "9f402641-4796-4ae3-9f4b-34b6efce42ac",
+      "3fa8094c-21b5-4aec-beb4-9fa79f9abc44"
+    ],
+    "results": {
+      "records": {
+        "requests": 225,
+        "p50_ms": 4.57,
+        "p95_ms": 7.05,
+        "p99_ms": 9.47,
+        "max_ms": 23.48
+      },
+      "snapshot": {
+        "requests": 226,
+        "p50_ms": 3.93,
+        "p95_ms": 6.74,
+        "p99_ms": 10.19,
+        "max_ms": 1348.43
+      },
+      "check": {
+        "requests": 226,
+        "p50_ms": 5.54,
+        "p95_ms": 10.16,
+        "p99_ms": 12.2,
+        "max_ms": 1349.53
+      },
+      "investigation_end_to_end": {
+        "requests": 23,
+        "p50_ms": 131.18,
+        "p95_ms": 235.6,
+        "p99_ms": 250.98,
+        "max_ms": 1727.53
+      },
+      "overview": {
+        "requests": 225,
+        "p50_ms": 5.31,
+        "p95_ms": 8.99,
+        "p99_ms": 11.42,
+        "max_ms": 11.98
+      }
+    },
+    "failed_requests": 0
+  },
+  "checks": {
+    "original_ledger_unchanged": true,
+    "restored_business_rows_equal": true,
+    "restored_checkpoint_rows_equal": true,
+    "restored_http_views_equal": true,
+    "restored_complete_runs_equal": true,
+    "restored_download_hashes_equal": true,
+    "backup_unchanged": true,
+    "external_network_and_models_blocked": true
+  },
+  "http_policy": {
+    "client_keepalive_expiry_seconds": 2,
+    "server_keepalive_seconds": 5,
+    "transport_retries": 0,
+    "request_timeout_seconds": 25
+  },
+  "latency_clock": "time.perf_counter",
+  "report": {
+    "path": "runtime/recovery-load-v5-precise-clock/report.json",
+    "sha256": "d6859bf16f6e4e387feeceb38293d2d27b32266f4c5e0f270be6696be89868fa"
+  },
+  "crash_recovery": {
+    "report": {
+      "path": "runtime/recovery-crash-current-20261022/report.json",
+      "sha256": "9833b9edc9cac0d9acfcda2d57882a9d0dbd399f3eff966407156893d14cda9c"
+    },
+    "points": [
+      "detect",
+      "finalize"
+    ],
+    "scope": "Fresh synthetic SQLite, rules mode; real process exit after committed checkpoint; no remote service",
+    "main_source_is_pre_lock_fix": false
+  },
+  "retained_failures": [
+    {
+      "path": "runtime/recovery-load-v1/crash-before-fix/report.json",
+      "sha256": "069372d7d71fd8fa6eec9de2d35a65517977615a152d0787d73096c0f388e462"
+    },
+    {
+      "path": "runtime/recovery-load-v1/http-load-120s/report.json",
+      "sha256": "1e4afa18c9ab583f15588626c46b2da776a07780a18bc78424d7aab0297636fd"
+    },
+    {
+      "path": "runtime/recovery-load-v2-lock-fix/report.json",
+      "sha256": "4d496903d577640d95ee0ed042676ccfb37313ea4773665fbdaee9b1b88bd74d"
+    },
+    {
+      "path": "runtime/recovery-load-v3-instrumented/report.json",
+      "sha256": "06191e9a11613b65e54675657c751dd3ed1793cc54d9bd2314ffa059e3cb5409"
+    }
+  ],
+  "limitations": [
+    "Same machine, one API process, two source rows; not a capacity or enterprise soak test.",
+    "No PostgreSQL/Celery/OCR/model requests or independent-machine validation.",
+    "Backup occurs only after the writer process stops; no online backup or power-loss claim."
+  ]
+}

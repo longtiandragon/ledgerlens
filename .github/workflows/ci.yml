@@ -16,6 +16,12 @@ jobs:
       - run: uv run pytest -q -rs
       - run: uv run ruff check backend scripts datasets benchmarks
       - run: uv run python scripts/generate_contracts.py --check
+      - name: Reproduce the frozen v5 plan without model calls
+        run: |
+          uv run python -m datasets.generate_v5 --output .local/datasets-v5
+          for plan in smoke selective comparator; do
+            uv run python scripts/run_root_cause_v5.py --dataset .local/datasets-v5 --plan "docs/root-cause-v5-plans/$plan.json"
+          done
   # Opt-in checks that the default job skips: live PostgreSQL migrations and the
   # persistent pgvector index (same credentials as the local retrieval service),
   # plus the pinned Beancount evaluator. Any skip here fails the job.
@@ -110,6 +116,66 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit 1 }
       - shell: pwsh
         run: .venv\Scripts\python.exe -m pytest -q -rs
+      - name: Prepare a stopped synthetic Windows backup for a different runner
+        shell: pwsh
+        run: .venv\Scripts\python.exe scripts\validate_cross_host_restore.py prepare --output "$env:RUNNER_TEMP\cross-host-source"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: cross-host-synthetic-backup
+          path: ${{ runner.temp }}/cross-host-source/bundle
+          if-no-files-found: error
+          retention-days: 30
+      - if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cross-host-source-evidence
+          path: |
+            ${{ runner.temp }}/cross-host-source/report.json
+            ${{ runner.temp }}/cross-host-source/*-guard.json
+            ${{ runner.temp }}/cross-host-source/*-server.log
+          if-no-files-found: ignore
+          retention-days: 30
+  # This job receives the actual Windows backup. A new Linux runner must
+  # restore it, retain the recorded business/checkpoint rows and serve its files.
+  cross-host-restore:
+    needs: quickstart-windows
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      DEEPSEEK_API_KEY: ''
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v7
+        with: {version: '0.11.28'}
+      - run: uv sync --frozen --python 3.12
+      - uses: actions/download-artifact@v8
+        with:
+          name: cross-host-synthetic-backup
+          path: ${{ runner.temp }}/cross-host-bundle
+          digest-mismatch: error
+      - name: Restore and check Windows data on Linux
+        run: >-
+          uv run python scripts/validate_cross_host_restore.py verify
+          --bundle "$RUNNER_TEMP/cross-host-bundle" --output "$RUNNER_TEMP/cross-host-target"
+      - name: Real process interruption and recovery
+        run: uv run python scripts/validate_restored_run.py --output "$RUNNER_TEMP/recovery-crash"
+      - name: Bounded concurrent HTTP checks and stopped restore
+        run: >-
+          uv run python scripts/validate_recovery_load.py
+          --output "$RUNNER_TEMP/recovery-load" --seconds 120 --clients 2
+      - if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cross-host-recovery-evidence
+          path: |
+            ${{ runner.temp }}/cross-host-target/report.json
+            ${{ runner.temp }}/cross-host-target/*-guard.json
+            ${{ runner.temp }}/cross-host-target/*-server.log
+            ${{ runner.temp }}/recovery-crash/report.json
+            ${{ runner.temp }}/recovery-load/report.json
+          if-no-files-found: warn
+          retention-days: 30
   # The Compose stack a reviewer would start: build, wait for health, check the web
   # entry and its API proxy, then remove the containers and volumes.
   docker:

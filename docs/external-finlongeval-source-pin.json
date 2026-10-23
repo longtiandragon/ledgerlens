@@ -1,0 +1,140 @@
+{
+  "repository": "https://github.com/valuesimplex/FinLongEval",
+  "revision": "b2cb7b11d850a17381f82ac7f8950970e7b9b955",
+  "repository_license": "Apache-2.0",
+  "redistribution": "Do not redistribute third-party source PDFs; local evaluation only.",
+  "files": {
+    "LICENSE": {
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    },
+    "README.md": {
+      "sha256": "3103e63842c072090fe0bf5b47305d91a0d697fdb13e1eaad4e12e20e3a098db",
+      "bytes": 27794
+    },
+    "data/sample_data.jsonl": {
+      "sha256": "2091a9866c07568ef55826561e32d299f0ee5f2450d213102801e7d4984ba7e8",
+      "bytes": 124554
+    },
+    "data/sample_document/2023年政府工作报告.pdf": {
+      "sha256": "7bdc5bf520c64934532dd4b33466306ec992e7115e297785441c918bd7ea66d0",
+      "bytes": 346728
+    },
+    "data/sample_document/【中信建投政策研究】2023年宏观形势、政策展望与投资机遇.pdf": {
+      "sha256": "461f16ee0aa4accc7f6cd815b97647eabca7ea6975cb3685a6f951001a12aa17",
+      "bytes": 2496582
+    },
+    "data/sample_document/上海合晶硅材料股份有限公司上市保荐书.pdf": {
+      "sha256": "aef638c3c0b4871b3b926cd7dcebb5430b4e0ca2c15cc83d47bcd54ea5e73808",
+      "bytes": 807409
+    },
+    "data/sample_document/上证早知道20230922.pdf": {
+      "sha256": "36ae6e48ae944a48f59b5603b496eec4d6b9f9eede889ddbe4e293dbe2bdffce",
+      "bytes": 1445542
+    },
+    "data/sample_document/中信建投2022年年报.PDF": {
+      "sha256": "4c6f6554af780574fee98b6dcf5eb6e0ff20cbbf0e8a9e8477e1167110fa96f9",
+      "bytes": 5939255
+    },
+    "data/sample_document/中信建投2023年一季度货币政策执行报告解读：合理把握信贷投放节奏，引导稳定社会预期.pdf": {
+      "sha256": "dcd8f007812e68347b310e64029111c5f5f3176c6bd8fe50a916acd8fcb0690e",
+      "bytes": 583393
+    },
+    "data/sample_document/中共中央国务院关于促进民营经济发展壮大的意见_最新政策_中国政府网.pdf": {
+      "sha256": "7deca6ab5d86dea51d87a5577e624dbd038edaf9af63d05d95798d2353763c9d",
+      "bytes": 740931
+    },
+    "data/sample_document/中共中央国务院关于支持福建探索海峡两岸融合发展新路 建设两岸融合发展示范区的意见_中央有关文件_中国政府网.pdf": {
+      "sha256": "ca02b071a5158055bbbe646446bc294f770cba5e019df6ba7ded5c3cc4c20e8f",
+      "bytes": 595998
+    },
+    "data/sample_document/中国货币政策执行报告2023年第二季度.pdf": {
+      "sha256": "2429b7cc003fcea3aacf1b107529e0c37c10cde4c6b08cfa92354df09e9198fa",
+      "bytes": 1300252
+    },
+    "data/sample_document/中电港招股说明书.pdf": {
+      "sha256": "ebfe21d6775b29d9663a93c5dc1f62f6a8a9b66dc36f4200586fc14f6527d6ef",
+      "bytes": 12765463
+    },
+    "data/sample_document/任泽平：我们正站在新一轮复苏的起点上.pdf": {
+      "sha256": "c5a90113ffaef3168511dc380c6987fbdccdbc55a2f0c560462ea718e75a44f4",
+      "bytes": 1139688
+    },
+    "data/sample_document/共享储能异军突起，商业模式逐渐形成.pdf": {
+      "sha256": "de7b9b86671e8583201c7d553596ba1b6f7e5519bf7190b3c4d2c6c6e6b3fb2a",
+      "bytes": 876159
+    },
+    "data/sample_document/同花顺(300033)乘AI东风，金融信息服务扬帆起航.pdf": {
+      "sha256": "3b37fbdec51f10a4013d7b8a006ad04996b4e84c49b4863e6e55c9b3197e508b",
+      "bytes": 4353723
+    },
+    "data/sample_document/国新健康：关于向激励对象首次授予限制性股票的公告.pdf": {
+      "sha256": "906f18a75a8602f890c70bda1fa7676dea268135e1d3e2184362fafe95b0e29e",
+      "bytes": 339390
+    },
+    "data/sample_document/宁德时代2022年年报.PDF": {
+      "sha256": "ac4fa5c3b96956462054986773b0c6129189ba6dcdc257c737f1b398ca7e2a10",
+      "bytes": 5531730
+    },
+    "data/sample_document/宁波容百新能源科技股份有限公司2021年年度业绩预告.PDF": {
+      "sha256": "1592f10dda6f830c208606786e102e0ff0b58265dd281ffccd4e6d347f7dc344",
+      "bytes": 352692
+    },
+    "data/sample_document/宁波容百新能源科技股份有限公司2021年度业绩快报公告.PDF": {
+      "sha256": "47d46d81ee00c47856ce64ed7ffda02e6db3a3061f8bceecdab24aca263ee8a6",
+      "bytes": 218566
+    },
+    "data/sample_document/宽松货币政策的作用与副作用.pdf": {
+      "sha256": "e227d3d49223d8f75a7b61ea9aa10a071b4d9f7744d7dcfabbd27ecb37651ca2",
+      "bytes": 992590
+    },
+    "data/sample_document/延长交易时间、T+0、印花税等，哪个措施最容易落地.pdf": {
+      "sha256": "2f5e5838876a79beb29c687e4afd54c85c4e074fc4a9281e0c84457f1faf4fa4",
+      "bytes": 136624
+    },
+    "data/sample_document/徐高：房地产的真正_大招_在供给侧，可以分三步走.pdf": {
+      "sha256": "558335265e8be250349449703b095104fef33e04c21cef12702e9c0df450d868",
+      "bytes": 988970
+    },
+    "data/sample_document/我国外汇储备的合意规模： 驱动因素、测算逻辑及演化方向.pdf": {
+      "sha256": "f3517d96991935519e6ddb6e15b91e1b257a3a0a0f849d0d99bb711aba681a60",
+      "bytes": 1564398
+    },
+    "data/sample_document/招商局集团有限公司2023年面向专业投资者公开发行科技创新可续期公司债券（第三期）募集说明.PDF": {
+      "sha256": "a318dcb40dda9c8a4b1f66aa345a7580336f0a5b197824a608e8d0f111351673",
+      "bytes": 7219259
+    },
+    "data/sample_document/数字技术如何改变金融机构.pdf": {
+      "sha256": "c2320d13abee378ddd5e46e0c054f5451cd856aa49679739ee03fe77ac6aee5e",
+      "bytes": 1766987
+    },
+    "data/sample_document/格隆汇财经早餐20230921.pdf": {
+      "sha256": "de5c7c028affb0d7056d3f528f6f384b13df99e6f60f51f5821f44dc8a304c57",
+      "bytes": 7019914
+    },
+    "data/sample_document/海上风电走向深远海的趋势已十分清晰.pdf": {
+      "sha256": "07fda1e113ae9c88eddfe613ff8a3aff39e93937843495607920712ac8e0786d",
+      "bytes": 2078637
+    },
+    "data/sample_document/独立自主的AI系统级计算平台是国产AI芯片构建生态壁垒的关键.pdf": {
+      "sha256": "87f4ff43110dde4577e43e3138d25d3613317bf039de0cb1fc5a875a06a741c8",
+      "bytes": 2902624
+    },
+    "data/sample_document/电车王者逐鹿全球，垂直整合构筑核心竞争力.pdf": {
+      "sha256": "559c2ee5fa61165035c6cb0b9de88646feb8c746b4176eb1a1549f1bcdde4eb4",
+      "bytes": 3535994
+    },
+    "data/sample_document/维持稳健，关注汇率，无强刺激——二季度货币政策例会解读与货币政策展望.pdf": {
+      "sha256": "4603e307191d72fe5a61a2a20e14cbcfad5a4b05b5e9d9238f4bb0a920af4b78",
+      "bytes": 387810
+    },
+    "data/sample_document/财联社早报20230922.pdf": {
+      "sha256": "d577bb5e32a24bbaf77ef461ab5774b750a2390f7f3a3ade051ee62e1e249da6",
+      "bytes": 1499489
+    },
+    "data/sample_document/锂电池产业链量化选股.pdf": {
+      "sha256": "39a758cdf2bf1e1d065e992d7d31c917e8b8abec984e220729d3ac785d1c52c1",
+      "bytes": 2143258
+    }
+  }
+}

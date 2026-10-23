@@ -1,0 +1,54 @@
+{
+  "schema_version": "ocr-chinese-public-delivery-v1",
+  "status": "passed_with_retained_recognition_miss",
+  "official_blank_template": {
+    "source_url": "https://tianjin.chinatax.gov.cn/uploadFiles/file/20201221/20201221113818_870.pdf",
+    "source_sha256": "122543cc1bad3376dbc9e80e5f2ac1ef4566fdd8e731e6c3e6deb35e3f097212",
+    "data_nature": "official_blank_template_not_real_enterprise_invoice",
+    "labels_matched": 14,
+    "labels_total": 15,
+    "table_candidates": 0
+  },
+  "checks": {
+    "official_blank_has_zero_records": true,
+    "wrapped_rows_exact": true,
+    "wrapped_multiple_real_references": true,
+    "wrapped_explicit_review": true,
+    "wrapped_observations_unique_and_complete": true
+  },
+  "evaluation": {
+    "path": ".local/ocr-chinese-public-v1/evaluation-v3-final.json",
+    "sha256": "01d09b163671eaf0ecd1ba6a3910fb1c28e1a122ba765f175b5866362f36babe"
+  },
+  "browser_report": {
+    "path": ".local/reference-ocr-release-20261023/report.json",
+    "sha256": "6682f47144f4c4a2febfbf237f5e76172bc48ba4c86327addc1b5fbc6f2e2289"
+  },
+  "browser_ocr_tests": 4,
+  "browser_ocr_mode": "real local PP-OCRv5 CPU",
+  "past_failures": [
+    {
+      "path": ".local/ocr-chinese-public-v1/evaluation-v1.json",
+      "sha256": "3ca28da13d5d3aea9e2c6e2fe3f2c97afd0400b0ef5ee2127b60bac12bb4f4a7"
+    },
+    {
+      "path": ".local/ocr-chinese-public-v1/browser-v1/report.json",
+      "sha256": "957f0645f80dc99f3efe43aed5687a632595c0be912f81235dd014ecc6f05ab1"
+    }
+  ],
+  "model_requests": 0,
+  "general_real_chinese_invoice_accuracy_proven": false,
+  "limitations": [
+    "Official blank invoice tests visible Chinese labels, not amount extraction or authenticity.",
+    "One synthetic wrapped table does not establish general complex-table accuracy.",
+    "No handwritten, merged-cell, split-amount or headerless cross-page support.",
+    "Every candidate remains unconfirmed and requires explicit human verification.",
+    "Source PDFs remain local; no open-content redistribution license is inferred."
+  ],
+  "prior_browser_report": {
+    "path": ".local/reference-ocr-browser-20261022-v1/report.json",
+    "sha256": "4cd34e257895b35625a2888e3de1891327dff9a42503bba05b9169c66a7317ff"
+  },
+  "primary_reference_change_preserves_supplemental_sources": true,
+  "browser_validated_on": "2026-10-23"
+}

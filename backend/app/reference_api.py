@@ -2,7 +2,7 @@ from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from sqlalchemy import select
 
 from .db import session, Book, ReferenceSearch
-from .reference_contract import ReferenceSearchInput, ReferenceChoiceInput
+from .reference_contract import ReferenceSearchInput, ReferenceChoiceInput, ReferenceSupportInput
 from . import reference_workflow as workflow
 
 router = APIRouter(prefix='/api/v1/reference-indexes', tags=['实验参考索引'])
@@ -35,6 +35,11 @@ def detail(identity: str, book_id: str, s=Depends(session)):
     if run.book_id != book_id:
         raise HTTPException(404, '当前账套中没有该参考检索')
     return workflow.detail(s, run)
+
+
+@router.post('/support-checks')
+def support(body: ReferenceSupportInput, s=Depends(session)):
+    return workflow.support(s, body)
 
 
 @router.get('/choices')

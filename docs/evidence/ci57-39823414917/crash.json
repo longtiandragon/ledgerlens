@@ -1,0 +1,65 @@
+{
+  "schema_version": "restored-run-validation-v1",
+  "status": "passed",
+  "scenarios": [
+    {
+      "point": "detect",
+      "status": "passed",
+      "crash_exit": 79,
+      "checkpoint_id": "1f1ce3fc-256d-62d7-8001-33d0192f181f",
+      "reused_completed_checkpoint": false,
+      "synthetic_usage_preserved": {
+        "calls": 3,
+        "tokens": 123,
+        "tools": 2,
+        "reserved_tokens": 37
+      },
+      "difference": "10.00",
+      "original_business_rows_unchanged": true,
+      "restored_non_run_rows_unchanged": true,
+      "duplicate_deliveries_unchanged": true,
+      "second_restart_unchanged": true,
+      "backup_unchanged": true,
+      "evidence_sha256": {
+        "detect/crash.json": "02e14b80b0a90fc3ea646675ab58b2121a0d2c16d134a4aa27733780c1095ce4",
+        "detect/recover.json": "fde562f6e5b9dae9ac599a1fbb0488475bd0846ee2495745186f052fd7f091b5",
+        "detect/seed.json": "de8d39449edc898d8af16442627a2edc70b6078c2595d86ae55e7be2a2989e27"
+      }
+    },
+    {
+      "point": "finalize",
+      "status": "passed",
+      "crash_exit": 79,
+      "checkpoint_id": "1f1ce3fc-5aa7-6d69-8002-fa43af8ed1e2",
+      "reused_completed_checkpoint": true,
+      "synthetic_usage_preserved": {
+        "calls": 3,
+        "tokens": 123,
+        "tools": 2,
+        "reserved_tokens": 37
+      },
+      "difference": "10.00",
+      "original_business_rows_unchanged": true,
+      "restored_non_run_rows_unchanged": true,
+      "duplicate_deliveries_unchanged": true,
+      "second_restart_unchanged": true,
+      "backup_unchanged": true,
+      "evidence_sha256": {
+        "finalize/crash.json": "60c45fbd47f51707c2881c56cb937c3732e2058bc55e614cf1458f00287129f2",
+        "finalize/recover.json": "6fcbe4b9aa0f66fae6f17fb5f26314899ed26f575d2449727455d5c463f70416",
+        "finalize/seed.json": "4ffd78c0c5ac5aaf6a0a9dbf6782a3db5b6f9ad6787b442686278e7f8a763832"
+      }
+    }
+  ],
+  "scope": "Fresh synthetic SQLite, rules mode; real process exit after committed checkpoint; no remote service",
+  "model_requests": 0,
+  "source_sha256": {
+    "scripts/validate_restored_run.py": "5b7ca4d87c8fc99501dd3e1a25794c0b913164d7a6a55ada60582bf661c7dd70",
+    "scripts/backup.py": "74d790f4bb3ef1dadc10ff46782751f7ba30d6cf9d70e01ceb4dd27db33abe12",
+    "scripts/restore_local.py": "e8b57f9e3c21d6557e3903dad7f208a435be2ec00053bd505c98e54059218a7a",
+    "backend/app/jobs.py": "80c6393fb2227ec645478f7b9da52f2d12c239630a918f6b262a0a5bb822facd",
+    "backend/app/investigation.py": "032fdbbd8016b037950c25bfb5b0d243aa32eefd7c6010e5f0fa644da93ec8e1",
+    "backend/app/main.py": "139bedcc5054f35baff40c6c7ed096e381971fe061f6c6ad966dd12c203d0f58"
+  },
+  "seconds": 10.06
+}

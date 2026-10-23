@@ -1,0 +1,25 @@
+{
+  "schema_version": "reference-scope-plan-v2",
+  "date": "2026-10-22",
+  "scope": "Synthetic contract checks, not semantic answerability evaluation",
+  "independent_data": false,
+  "frozen_before_first_prediction": true,
+  "threshold_fitting": false,
+  "gate": "Every explicit expected boundary and citation match must hold; no natural-language answering is authorized",
+  "corpus": "benchmarks/reference-scope-corpus-v2.json",
+  "splits": {
+    "dev": {"queries": "benchmarks/reference-scope-dev-queries-v2.json", "truth": "benchmarks/reference-scope-dev-truth-v2.json"},
+    "heldout": {"queries": "benchmarks/reference-scope-heldout-queries-v2.json", "truth": "benchmarks/reference-scope-heldout-truth-v2.json"}
+  },
+  "sha256": {
+    "benchmarks/reference_scope_v2.py": "5aad2a59f951d4dc7b497e37e43f3c14c130a6673e9f3afcc37f19eee1c34ee1",
+    "backend/app/reference_scope.py": "3b37362b11157cd506e8a74f2f20e025289816b1929dab8c09e533a750879312",
+    "backend/app/reference_contract.py": "b67b411b4f459c1574483ade88231d3b686bc605d7e03b0fe53f890350312ef5",
+    "backend/app/reference_sources.py": "8c6e3fc4711e80d876a327dc54864f77d0ffd664424eeef220e857c8cce6466e",
+    "benchmarks/reference-scope-corpus-v2.json": "d7c8f7b0a3694b2d5b93f6e44ff0bb258053c1ab7016edd46eeb315964e4757b",
+    "benchmarks/reference-scope-dev-queries-v2.json": "20f25d02e135c8fea28163e551229236ca43886a393caf124fe0761ac437ccc7",
+    "benchmarks/reference-scope-dev-truth-v2.json": "d4ca24790ebbb39e513551521324c5a014eedfa38cc4e7913f0302a0c8154709",
+    "benchmarks/reference-scope-heldout-queries-v2.json": "4a9ec3be49026b9a07fafc811e2bfab4bd5b5d90e446d6fb2bbec0e9d5ca0e32",
+    "benchmarks/reference-scope-heldout-truth-v2.json": "b7abe7f04148707e287c301c8b06d4e78bc99b63f4b595184168757876e96ef9"
+  }
+}

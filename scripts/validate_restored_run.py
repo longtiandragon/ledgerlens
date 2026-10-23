@@ -84,7 +84,7 @@ async def worker(phase, point, artifact):
     from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
     artifact = Path(artifact)
     if phase == 'seed':
-        from fastapi import BackgroundTasks
+        from fastapi import BackgroundTasks, Request
         from fastapi.testclient import TestClient
         from app.schemas import InvestigateInput
         # A hand-written 100.00 - 90.00 voucher; expected difference is 10.00.
@@ -105,7 +105,8 @@ async def worker(phase, point, artifact):
             case = next(c for c in check['cases'] if c['rule_id'] == 'VOUCHER_BALANCE')
         with Session() as s:
             # Use the real endpoint transaction; leave its background delivery queued.
-            queued = start_investigation(case['id'], InvestigateInput(mode='rules'), BackgroundTasks(), s)
+            queued = start_investigation(case['id'], InvestigateInput(mode='rules'), BackgroundTasks(),
+                                         Request({'type': 'http', 'headers': []}), s)
             run = s.get(Run, queued['id'])
             run.usage = dict(SYNTHETIC_USAGE)
             s.commit()

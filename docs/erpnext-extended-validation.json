@@ -1,0 +1,570 @@
+{
+  "schema_version": "erpnext-extended-contract-v1",
+  "created_at": "2026-10-22T07:57:39.951737+00:00",
+  "status": "passed",
+  "mode": "offline_mock_contract",
+  "erp_live_executed": false,
+  "model_requests": 0,
+  "company": "LedgerLens Extended Contract Synthetic",
+  "scenarios": [
+    {
+      "id": "compound_charges_and_partial_return",
+      "derivation": "100 net + 10 charge + 5.50 compound charge - 2 withheld = 113.50; 40 percent return reverses 40 + 4 + 2.20 - 0.80 = 45.40.",
+      "checks": {
+        "handwritten_account_totals": true,
+        "handwritten_grand_totals": true,
+        "every_voucher_balanced": true,
+        "source_identifiers_preserved": true,
+        "explicit_company_currency_strings": true,
+        "normal_preview_preserves_rows": true,
+        "no_inferred_business_evidence": true
+      },
+      "export": {
+        "records": [
+          {
+            "source_id": "compound_charges_and_partial_return-0",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "purchase",
+            "account": "1405",
+            "debit": "100.00",
+            "credit": "0.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "compound_charges_and_partial_return-1",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "purchase",
+            "account": "6602-A",
+            "debit": "10.00",
+            "credit": "0.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "compound_charges_and_partial_return-2",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "purchase",
+            "account": "6602-B",
+            "debit": "5.50",
+            "credit": "0.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "compound_charges_and_partial_return-3",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "purchase",
+            "account": "2241",
+            "debit": "0.00",
+            "credit": "2.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "compound_charges_and_partial_return-4",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "purchase",
+            "account": "2202",
+            "debit": "0.00",
+            "credit": "113.50",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "compound_charges_and_partial_return-5",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "return",
+            "account": "1405",
+            "debit": "0.00",
+            "credit": "40.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "compound_charges_and_partial_return-6",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "return",
+            "account": "6602-A",
+            "debit": "0.00",
+            "credit": "4.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "compound_charges_and_partial_return-7",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "return",
+            "account": "6602-B",
+            "debit": "0.00",
+            "credit": "2.20",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "compound_charges_and_partial_return-8",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "return",
+            "account": "2241",
+            "debit": "0.80",
+            "credit": "0.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "compound_charges_and_partial_return-9",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "return",
+            "account": "2202",
+            "debit": "45.40",
+            "credit": "0.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          }
+        ],
+        "source": "ERPNext GL Entry",
+        "scope": "general_ledger_only",
+        "company": "LedgerLens Extended Contract Synthetic",
+        "currency": "CNY",
+        "date_from": "2026-09-01",
+        "date_to": "2026-09-30",
+        "notice": "Company currency was read as CNY. Stock/order/invoice evidence is not inferred from GL. Paginated reads are not an atomic ERP snapshot; export while source posting is paused."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": "/api/resource/Company/LedgerLens Extended Contract Synthetic"
+        },
+        {
+          "method": "GET",
+          "path": "/api/resource/GL Entry"
+        }
+      ]
+    },
+    {
+      "id": "foreign_currency_receivable_realized_loss",
+      "derivation": "USD 100 invoice at 7.20 = CNY 720; receipt at 7.10 = CNY 710; realized loss CNY 10.",
+      "checks": {
+        "handwritten_account_totals": true,
+        "handwritten_grand_totals": true,
+        "every_voucher_balanced": true,
+        "source_identifiers_preserved": true,
+        "explicit_company_currency_strings": true,
+        "normal_preview_preserves_rows": true,
+        "no_inferred_business_evidence": true
+      },
+      "export": {
+        "records": [
+          {
+            "source_id": "foreign_currency_receivable_realized_loss-0",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "invoice",
+            "account": "1122",
+            "debit": "720.00",
+            "credit": "0.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "foreign_currency_receivable_realized_loss-1",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "invoice",
+            "account": "6001",
+            "debit": "0.00",
+            "credit": "720.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "foreign_currency_receivable_realized_loss-2",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "payment",
+            "account": "1002",
+            "debit": "710.00",
+            "credit": "0.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "foreign_currency_receivable_realized_loss-3",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "payment",
+            "account": "6603",
+            "debit": "10.00",
+            "credit": "0.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "foreign_currency_receivable_realized_loss-4",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "payment",
+            "account": "1122",
+            "debit": "0.00",
+            "credit": "720.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          }
+        ],
+        "source": "ERPNext GL Entry",
+        "scope": "general_ledger_only",
+        "company": "LedgerLens Extended Contract Synthetic",
+        "currency": "CNY",
+        "date_from": "2026-09-01",
+        "date_to": "2026-09-30",
+        "notice": "Company currency was read as CNY. Stock/order/invoice evidence is not inferred from GL. Paginated reads are not an atomic ERP snapshot; export while source posting is paused."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": "/api/resource/Company/LedgerLens Extended Contract Synthetic"
+        },
+        {
+          "method": "GET",
+          "path": "/api/resource/GL Entry"
+        }
+      ]
+    },
+    {
+      "id": "foreign_currency_payable_realized_gain",
+      "derivation": "USD 100 payable at 7.20 = CNY 720; payment at 7.10 = CNY 710; realized gain CNY 10.",
+      "checks": {
+        "handwritten_account_totals": true,
+        "handwritten_grand_totals": true,
+        "every_voucher_balanced": true,
+        "source_identifiers_preserved": true,
+        "explicit_company_currency_strings": true,
+        "normal_preview_preserves_rows": true,
+        "no_inferred_business_evidence": true
+      },
+      "export": {
+        "records": [
+          {
+            "source_id": "foreign_currency_payable_realized_gain-0",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "invoice",
+            "account": "1405",
+            "debit": "720.00",
+            "credit": "0.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "foreign_currency_payable_realized_gain-1",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "invoice",
+            "account": "2202",
+            "debit": "0.00",
+            "credit": "720.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "foreign_currency_payable_realized_gain-2",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "payment",
+            "account": "2202",
+            "debit": "720.00",
+            "credit": "0.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "foreign_currency_payable_realized_gain-3",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "payment",
+            "account": "1002",
+            "debit": "0.00",
+            "credit": "710.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "foreign_currency_payable_realized_gain-4",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "payment",
+            "account": "6603",
+            "debit": "0.00",
+            "credit": "10.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          }
+        ],
+        "source": "ERPNext GL Entry",
+        "scope": "general_ledger_only",
+        "company": "LedgerLens Extended Contract Synthetic",
+        "currency": "CNY",
+        "date_from": "2026-09-01",
+        "date_to": "2026-09-30",
+        "notice": "Company currency was read as CNY. Stock/order/invoice evidence is not inferred from GL. Paginated reads are not an atomic ERP snapshot; export while source posting is paused."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": "/api/resource/Company/LedgerLens Extended Contract Synthetic"
+        },
+        {
+          "method": "GET",
+          "path": "/api/resource/GL Entry"
+        }
+      ]
+    },
+    {
+      "id": "unrealized_revaluation_separate_voucher",
+      "derivation": "USD 100 open receivable at 7.00 = CNY 700; closing 7.20 adds CNY 20; no receipt invented.",
+      "checks": {
+        "handwritten_account_totals": true,
+        "handwritten_grand_totals": true,
+        "every_voucher_balanced": true,
+        "source_identifiers_preserved": true,
+        "explicit_company_currency_strings": true,
+        "normal_preview_preserves_rows": true,
+        "no_inferred_business_evidence": true
+      },
+      "export": {
+        "records": [
+          {
+            "source_id": "unrealized_revaluation_separate_voucher-0",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "invoice",
+            "account": "1122",
+            "debit": "700.00",
+            "credit": "0.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "unrealized_revaluation_separate_voucher-1",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "invoice",
+            "account": "6001",
+            "debit": "0.00",
+            "credit": "700.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "unrealized_revaluation_separate_voucher-2",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "revaluation",
+            "account": "1122",
+            "debit": "20.00",
+            "credit": "0.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "unrealized_revaluation_separate_voucher-3",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "revaluation",
+            "account": "6603",
+            "debit": "0.00",
+            "credit": "20.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          }
+        ],
+        "source": "ERPNext GL Entry",
+        "scope": "general_ledger_only",
+        "company": "LedgerLens Extended Contract Synthetic",
+        "currency": "CNY",
+        "date_from": "2026-09-01",
+        "date_to": "2026-09-30",
+        "notice": "Company currency was read as CNY. Stock/order/invoice evidence is not inferred from GL. Paginated reads are not an atomic ERP snapshot; export while source posting is paused."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": "/api/resource/Company/LedgerLens Extended Contract Synthetic"
+        },
+        {
+          "method": "GET",
+          "path": "/api/resource/GL Entry"
+        }
+      ]
+    },
+    {
+      "id": "cancelled_original_and_reversal_excluded",
+      "derivation": "Cancelled original and its reversal are retained by ERP but both excluded from active GL.",
+      "checks": {
+        "handwritten_account_totals": true,
+        "handwritten_grand_totals": true,
+        "every_voucher_balanced": true,
+        "source_identifiers_preserved": true,
+        "explicit_company_currency_strings": true,
+        "normal_preview_preserves_rows": true,
+        "no_inferred_business_evidence": true
+      },
+      "export": {
+        "records": [
+          {
+            "source_id": "cancelled_original_and_reversal_excluded-4",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "active",
+            "account": "1405",
+            "debit": "25.00",
+            "credit": "0.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          },
+          {
+            "source_id": "cancelled_original_and_reversal_excluded-5",
+            "kind": "journal",
+            "business_date": "2026-09-30",
+            "period": "2026-09",
+            "voucher_id": "active",
+            "account": "2202",
+            "debit": "0.00",
+            "credit": "25.00",
+            "counterparty": "",
+            "reference": "",
+            "currency": "CNY"
+          }
+        ],
+        "source": "ERPNext GL Entry",
+        "scope": "general_ledger_only",
+        "company": "LedgerLens Extended Contract Synthetic",
+        "currency": "CNY",
+        "date_from": "2026-09-01",
+        "date_to": "2026-09-30",
+        "notice": "Company currency was read as CNY. Stock/order/invoice evidence is not inferred from GL. Paginated reads are not an atomic ERP snapshot; export while source posting is paused."
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": "/api/resource/Company/LedgerLens Extended Contract Synthetic"
+        },
+        {
+          "method": "GET",
+          "path": "/api/resource/GL Entry"
+        }
+      ]
+    }
+  ],
+  "negative_cases": [
+    {
+      "case": "1",
+      "rejected": true,
+      "error": "ERPNext GL Entry must explicitly be active (is_cancelled integer 0)"
+    },
+    {
+      "case": "-1",
+      "rejected": true,
+      "error": "ERPNext GL Entry must explicitly be active (is_cancelled integer 0)"
+    },
+    {
+      "case": "None",
+      "rejected": true,
+      "error": "ERPNext GL Entry must explicitly be active (is_cancelled integer 0)"
+    },
+    {
+      "case": "'0'",
+      "rejected": true,
+      "error": "ERPNext GL Entry must explicitly be active (is_cancelled integer 0)"
+    },
+    {
+      "case": "False",
+      "rejected": true,
+      "error": "ERPNext GL Entry must explicitly be active (is_cancelled integer 0)"
+    },
+    {
+      "case": "'missing'",
+      "rejected": true,
+      "error": "ERPNext GL Entry must explicitly be active (is_cancelled integer 0)"
+    },
+    {
+      "case": "USD_base",
+      "rejected": true,
+      "error": "ERPNext company default_currency must explicitly be CNY; no conversion is inferred"
+    }
+  ],
+  "sources": [
+    "https://docs.frappe.io/erpnext/immutable-ledger-in-erpnext",
+    "https://docs.frappe.io/erpnext/manage-foreign-exchange-difference",
+    "https://docs.frappe.io/erpnext/exchange-rate-revaluation"
+  ],
+  "limits": [
+    "Does not run ERPNext document calculations or posting engine.",
+    "Synthetic rates are not tax policy; GL rows do not establish invoice or stock evidence.",
+    "USD-base companies remain explicitly unsupported; no currency conversion is inferred."
+  ],
+  "source_sha256": {
+    "scripts/validate_erpnext_extended.py": "aa7d6e93800389a8cbbd8be4c607be3c167d92139200e82456e4be36ac2184e2",
+    "backend/app/connectors.py": "95459c1f124c796b5159ba1f587145b83504188cabe045f2ab504186f94edfbe"
+  }
+}
