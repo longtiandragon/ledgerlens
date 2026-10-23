@@ -53,9 +53,10 @@
 <section>
   <h2>1 项目概述</h2>
   <p>月结复核中，发现异常只是第一步：复核人员还要取得证据、判断原因，并证明拟议的调整不会改坏原始账簿。现有的 AI 财务工具多数直接给出结论，但结论依据了哪些资料、资料是否在当时可见、能否被第三方复核，往往说不清。</p>
-  <p>账证智核把每一次调查固定在<strong>账套、数据快照和规则版本</strong>上：确定性规则先做检查；调查只能读取当前快照中的证据；模型的建议不会自动成为业务事实；调整只进入隔离模拟并由程序逐分复算；迟到的资料会生成新快照并使旧复核失效。项目在本地即可运行，不需要模型密钥就能完成完整的规则演示。</p>
+  <p>账证智核把每一次调查固定在<strong>账套、数据快照和规则版本</strong>上：确定性规则先做检查；调查只能读取当前快照中的证据；模型的建议不会自动成为业务事实；处理草稿由案件发现确定性生成，只进入隔离模拟并由程序逐分复算；迟到的资料生成新快照，旧复核失效，同一发现接续到新案件继续复核。项目在本地即可运行，不需要模型密钥就能完成完整的规则演示。</p>
   <table class="kpi">
-    <tr><th>后端自动化测试</th><td>{{json:policy#full_backend.passed}} 通过 / {{json:policy#full_backend.skipped}} 跳过（{{meta:test_date}}，本机）</td></tr>
+    <tr><th>后端自动化测试</th><td>{{json:release#backend.passed}} 通过 / {{json:release#backend.skipped}} 跳过（{{meta:test_date}}，v{{json:release#version}} 发布提交，本机）</td></tr>
+    <tr><th>首版场景包验收</th><td>资金往来、采购费用、期间账表 × 正常、确定异常、资料不足、冲突或多解：{{json:scenario#passed}}/{{json:scenario#cell_count}} 通过（手写合成账套，从导入走到复核与底稿）</td></tr>
     <tr><th>官方问答政策规则</th><td>33 条有限规则覆盖 32 份财政部实施问答；{{json:policy#official_projection.passed}} 个手写投影全部通过</td></tr>
     <tr><th>公开资料端到端验收</th><td>财政部数电发票样例：API {{json:policy#public_delivery.stages.1.checks}} 项、Chrome {{json:policy#public_delivery.stages.2.stats.expected}} 项全部通过</td></tr>
     <tr><th>运行方式</th><td>Windows、Linux/macOS 脚本与 Docker Compose，三种方式每次提交都在 CI 全新机器上实跑</td></tr>
@@ -76,13 +77,14 @@
   <p>财政部《会计软件基本功能和服务规范》（财会〔2024〕12号，2025年1月1日起施行）对会计软件提出了与本项目设计直接对应的要求：</p>
   <table class="grid">
     <tr><th>条款</th><th>要求（摘要，以原文为准）</th><th>本项目对应设计</th></tr>
-    <tr><td>第二十一条</td><td>提供不可逆的记账功能，不得删除、插入或修改已记账凭证</td><td>原始账簿只读，调整只进隔离模拟</td></tr>
+    <tr><td>第二十一条（二）（三）</td><td>防止电子会计凭证重复入账；提供不可逆的记账功能，不得删除、插入或修改已记账凭证</td><td>重复确认检测与冲回草稿；原始账簿只读，调整只进隔离模拟</td></tr>
     <tr><td>第三十二条</td><td>记录用户操作日志，可按操作人员、时间和内容查询</td><td>审计记录、快照绑定与复核失效</td></tr>
     <tr><td>第六条、第十八条</td><td>遵循电子凭证会计数据标准，解析符合标准的电子会计凭证</td><td>财政部数电发票标准样例的核验导入</td></tr>
     <tr><td>第二十九条、第四十一条</td><td>符合国家统一标准的数据接口，不得拒绝用户导出电子会计资料</td><td>开放 API 与 Markdown/JSON 底稿导出</td></tr>
     <tr><td>第三十八条</td><td>鼓励提供个性化、自动化、智能化核算处理功能</td><td>智能化在可核验的边界内进行</td></tr>
   </table>
-  <p>此外，财政部《会计信息化发展规划（2021－2025年）》把会计数据标准和数字化转型列为主线；国家税务总局公告2024年第11号自2024年12月1日起在全国推广数电发票。电子凭证进入账务后，如何在不改动原账的前提下自动复核、并让结论可追溯，是这些政策落地后的直接需求。</p>
+  <p>此外，财政部《会计信息化发展规划（2021－2025年）》（财会〔2021〕36号）以信息化支撑会计职能拓展为主线、以标准化为基础、以数字化为突破口，目标包括基本建立覆盖输入、处理、输出各环节的会计数据标准体系；国家税务总局公告2024年第11号自2024年12月1日起在全国推广数电发票。电子凭证进入账务后，如何在不改动原账的前提下自动复核、并让结论可追溯，是我们据此作出的需求判断。</p>
+  <p class="source">条款与要求摘自官方原文（会计软件规范按财政部发布的 PDF 逐条核对；数电发票见国家税务总局规范性文件库；规划见国务院政策文件库附件）；“本项目对应设计”一列与上段需求判断属于本项目的推断，不是官方要求。</p>
   <h3>2.3 目标用户与场景</h3>
   <ul>
     <li><strong>会计实训与复核教学（首个可落地场景）</strong>：用财政部公开样例和标注明确的教学变体（如故意加入的重复凭证）组织练习，学生能看到每条结论的证据和失效规则。</li>
@@ -114,20 +116,30 @@
     <figure><img src="{{asset:shot03}}" alt="证据关系图"><figcaption>图 4　证据关系图：记录、单据与规则的关联</figcaption></figure>
   </div>
   <div class="pair">
-    <figure><img src="{{asset:shot05}}" alt="隔离模拟"><figcaption>图 5　隔离模拟：调整草稿由程序逐分复算，原始账簿不变</figcaption></figure>
-    <figure><img src="{{asset:shot07}}" alt="复核失效"><figcaption>图 6　迟到资料生成新快照，旧复核自动失效</figcaption></figure>
+    <figure><img src="{{asset:shot05}}" alt="处理草稿与隔离模拟"><figcaption>图 5　处理草稿：由案件发现生成冲回分录，程序复算后本案发现已消除，原始账簿不变</figcaption></figure>
+    <figure><img src="{{asset:shot07}}" alt="复核失效"><figcaption>图 6　迟到资料生成新快照：旧复核失效，须在最新快照重新检查</figcaption></figure>
   </div>
-  <h3>4.1 七步复核闭环</h3>
+  <figure><img src="{{asset:shot07b}}" alt="接续核对"><figcaption>图 7　重新检查后同一发现接续到新案件；未再出现的缺口生成接续核对案件，不自动认定已解决</figcaption></figure>
+  <h3>4.1 复核闭环</h3>
   <ol>
     <li>建立账套（企业会计准则或小企业会计准则，制度建立后不能原地更换）。</li>
     <li>导入资料：CSV／JSON／XLSX、文本 PDF、财政部数电发票 XML 或扫描件（OCR 结果须人工逐字段核实）；先预览字段和错误，缺失金额不补零。</li>
-    <li>执行月结检查：16 条确定性规则生成案件，每条发现带来源记录和限制说明。</li>
-    <li>证据调查：规则模式不调用模型；模型模式需显式启动，且只能读取当前快照。</li>
-    <li>隔离模拟：输入调整草稿，程序复算余额变化，拦截不平衡、锁定期间与未知科目。</li>
-    <li>复核与底稿：保存复核意见，导出 Markdown／JSON 底稿；可选多用户模式下，调查、复核、审批由不同账户完成。</li>
-    <li>资料更新：迟到资料生成新快照，旧复核失效；历史底稿保留，不能用新资料改写旧判断。</li>
+    <li>执行月结检查：{{json:release#rules.catalog_rules}} 条确定性规则生成案件（导入银行流水后含 {{json:release#rules.funds_rules}} 条资金核对规则），每条发现带来源记录和限制说明。</li>
+    <li>证据调查：规则模式不调用模型；模型模式需显式启动，且只能读取当前快照；调查结论只作参考，不改变处理分录。</li>
+    <li>处理草稿与隔离模拟：能确定的修正直接生成分录，只能确定金额方向的留空必填，无法确定的只列所需资料；程序在副本上复算余额并重新检查，列出本案发现是否消除和新引入的问题。</li>
+    <li>补证与接续：登记补证事项；新资料形成新快照后重新检查，同一发现接续到新案件，未再出现的发现生成接续核对案件，候选资料须人工确认。</li>
+    <li>复核与底稿：选择所依据的模拟方案，冻结当时的未决事项；导出含接续、补证、草稿与对比、未决事项的 Markdown／JSON 底稿；可选多用户模式下调查、复核、审批由不同账户完成。</li>
   </ol>
-  <h3>4.2 政策检查与公开资料闭环</h3>
+  <h3>4.2 首版场景包验收</h3>
+  <p>首版三个场景包各按四种情况各做一份手写合成账套，预期结果先按规则定义写好，再经真实接口从导入走到复核与底稿；任何一步不符即整格失败。</p>
+  <table class="grid">
+    <tr><th></th><th>正常</th><th>确定异常</th><th>资料不足</th><th>冲突或多解</th></tr>
+    <tr><th>资金往来</th><td>合并付款与退款一致：{{json:release#scenario_packs.matrix.funds.normal}}</td><td>手续费未入账，补齐对方科目后消除：{{json:release#scenario_packs.matrix.funds.definite_anomaly}}</td><td>缺银行存款分录，补证后接续复核：{{json:release#scenario_packs.matrix.funds.insufficient}}</td><td>等额多笔无法区分，不自动核销：{{json:release#scenario_packs.matrix.funds.conflicting}}</td></tr>
+    <tr><th>采购费用</th><td>分批收货与分拆发票不判重复：{{json:release#scenario_packs.matrix.purchase.normal}}</td><td>重复确认，冲回草稿消除：{{json:release#scenario_packs.matrix.purchase.definite_anomaly}}</td><td>迟到收货单补齐后接续复核：{{json:release#scenario_packs.matrix.purchase.insufficient}}</td><td>同一发票两份金额冲突，保留意见：{{json:release#scenario_packs.matrix.purchase.conflicting}}</td></tr>
+    <tr><th>期间账表</th><td>期初加发生等于期末：{{json:release#scenario_packs.matrix.period.normal}}</td><td>漏记一行，补录后凭证与试算均衔接：{{json:release#scenario_packs.matrix.period.definite_anomaly}}</td><td>缺期初余额不按零处理：{{json:release#scenario_packs.matrix.period.insufficient}}</td><td>跨期：同年迟到不调账，跨年按制度分路径：{{json:release#scenario_packs.matrix.period.conflicting}}</td></tr>
+  </table>
+  <p class="source">逐步的预期与实际见仓库 docs/scenario-acceptance.json；冲突来源在只读原账中无法作废，只能以补证和保留意见处理。</p>
+  <h3>4.3 政策检查与公开资料闭环</h3>
   <p>政策检查来自 32 份财政部企业会计准则实施问答，编成 33 条有限规则。每条规则记录官方原文链接与哈希、适用与不适用条件；依赖专业判断的条件必须由人工确认并引用当前快照的资料。财政部 2025 推广应用版数电发票标准包中的两份 XML 样例可以一条命令完成采集、核验投影、隔离 API 与浏览器验收和证据哈希汇总；另有标注明确的重复凭证教学变体，用于实训。</p>
 </section>
 
@@ -137,7 +149,7 @@
   <table class="grid">
     <tr><th>创新点</th><th>做法</th><th>证据</th></tr>
     <tr><td>① 快照绑定的证据调查</td><td>每次调查固定账套、资料、规则版本与政策上下文；引用必须属于当前快照且已被读取；迟到资料生成新快照，旧复核失效</td><td>4 个独立时间挑战：保留快照时判断正确 4/4，混入后来资料时只有 2/4；端到端测试覆盖旧复核失效</td></tr>
-    <tr><td>② 模型提议与业务事实分离</td><td>模型只能提出待复核的解释和调整草稿；草稿进入隔离模拟，由程序逐分复算</td><td>6 份草稿（5 份有错）：程序复算拦住 4/5，直接采信建议则 5/5 全部放过；“合法科目间业务用途错误”仍会通过，作为已知缺口公开</td></tr>
+    <tr><td>② 模型提议与业务事实分离</td><td>模型只能提出待复核的解释；处理草稿由案件发现确定性生成，进入隔离模拟，由程序逐分复算并对比前后发现</td><td>6 份草稿（5 份有错）：程序复算拦住 4/5，直接采信建议则 5/5 全部放过；“合法科目间业务用途错误”仍会通过，作为已知缺口公开；场景包验收中 3 格经草稿模拟消除本案发现且未引入新问题</td></tr>
     <tr><td>③ 官方问答驱动的可审计规则包</td><td>32 份财政部实施问答编成 33 条有限规则，记录原文哈希、适用与不适用条件；专业判断一律人工确认</td><td>{{json:policy#official_projection.passed}} 个手写投影全部通过；AI 审阅发现的范围问题逐条整改，旧版失败反例留档</td></tr>
     <tr><td>④ 预注册封存评测</td><td>评测真值不进入运行中的 Agent；封存数据只用一次；与同预算确定性基线对比；付费运行有费用守护</td><td>v2、v3、v4 三次封存测试中单 Agent 均未超过基线（v3：0.508 对 0.563）；v4 混合方法高于单 Agent 但未超过最强基线，结果原样公开（见 5.2）</td></tr>
     <tr><td>⑤ 可离线核验的交付证据</td><td>一条命令完成公开样例采集、隔离 API 与浏览器验收和哈希清单；复制后的验收包可只用标准库核验</td><td>验收前后核对 {{json:policy#public_delivery.stages.3.sources}} 份源码与配置、{{json:policy#public_delivery.stages.3.evidence}} 份证据；篡改副本被拒绝</td></tr>
@@ -153,7 +165,7 @@
     <tr><td>确定性优先混合</td><td>{{json:v4#metrics.hybrid.category_macro_f1}}</td><td>{{json:v4#metrics.hybrid.conclusion_accuracy}}</td><td>{{json:v4#metrics.hybrid.failures}}/{{json:v4#metrics.hybrid.samples}}</td><td>{{json:v4#usage.hybrid.paid_requests_per_sample}}</td></tr>
     <tr><td>单 Agent</td><td>{{json:v4#metrics.single.category_macro_f1}}</td><td>{{json:v4#metrics.single.conclusion_accuracy}}</td><td>{{json:v4#metrics.single.failures}}/{{json:v4#metrics.single.samples}}</td><td>{{json:v4#usage.single.paid_requests_per_sample}}</td></tr>
   </table>
-  <p><strong>结论：预注册假设未获支持。</strong>混合方法与最强基线的宏 F1 差值，自助区间为 {{json:v4#bootstrap.macro_f1_difference.hybrid-keyword_request.lower}} 至 {{json:v4#bootstrap.macro_f1_difference.hybrid-keyword_request.upper}}，T1、T2 未达成。它明显好于单 Agent（差值区间 {{json:v4#bootstrap.macro_f1_difference.hybrid-single.lower}} 至 {{json:v4#bootstrap.macro_f1_difference.hybrid-single.upper}}），付费请求不到单 Agent 的一半，T3–T5 达成。事后核对发现，入选的 3 个文字线索案例恰好都含关键词；关键词基线在完整 90 例封存集上为 0.848。这只是事后描述，不改变结论。按预注册，混合方法不进入产品。两批实际花费约 ¥1.20。</p>
+  <p><strong>结论：预注册假设未获支持。</strong>混合方法与最强基线的宏 F1 差值，自助区间为 {{json:v4#bootstrap.macro_f1_difference.hybrid-keyword_request.lower}} 至 {{json:v4#bootstrap.macro_f1_difference.hybrid-keyword_request.upper}}，T1、T2 未达成。它明显好于单 Agent（差值区间 {{json:v4#bootstrap.macro_f1_difference.hybrid-single.lower}} 至 {{json:v4#bootstrap.macro_f1_difference.hybrid-single.upper}}），付费请求不到单 Agent 的一半，T3–T5 达成。事后核对发现，入选的 3 个文字线索案例恰好都含关键词；关键词基线在完整 90 例封存集上为 0.848。这只是事后描述，不改变结论。按预注册，混合方法不进入产品。两批实际花费约 ¥1.32。</p>
   <h3>5.3 与同类方案的比较</h3>
   <table class="grid compare">
     <tr><th></th><th>通用大模型对话</th><th>商业智能财务（用友 BIP、金蝶、BlackLine 等）</th><th>开源 ERP／记账（ERPNext、Odoo、Beancount）</th><th>账证智核</th></tr>
@@ -173,7 +185,9 @@
   <h3>6.2 可测试</h3>
   <table class="grid">
     <tr><th>项目</th><th>结果</th></tr>
-    <tr><td>后端自动化测试</td><td>{{json:policy#full_backend.passed}} 通过 / {{json:policy#full_backend.skipped}} 跳过（{{meta:test_date}}，本机；跳过项为 Windows 链接权限与可选服务条件）</td></tr>
+    <tr><td>后端自动化测试</td><td>{{json:release#backend.passed}} 通过 / {{json:release#backend.skipped}} 跳过（{{meta:test_date}}，发布提交，本机；跳过项为 Windows 链接权限与可选服务条件）；每次提交另在 CI 的 Linux 与 Windows 上全量运行</td></tr>
+    <tr><td>浏览器端到端</td><td>{{json:release#browser.passed}} 通过 / {{json:release#browser.skipped}} 跳过（隔离空库、无模型密钥；跳过项为需要可选数据集或多用户服务的用例）</td></tr>
+    <tr><td>首版场景包</td><td>{{json:scenario#passed}}/{{json:scenario#cell_count}} 格通过，见 4.2</td></tr>
     <tr><td>规则基准</td><td>480 个合成案例、30 个独立参考例全部通过，CI 每次重新生成数据并强制该契约</td></tr>
     <tr><td>政策规则</td><td>{{json:policy#official_projection.passed}} 个手写投影通过，{{json:policy#official_projection.source_verification.passed}} 份归档官方原文核验通过</td></tr>
     <tr><td>公开样例端到端</td><td>API {{json:policy#public_delivery.stages.1.checks}} 项、Chrome {{json:policy#public_delivery.stages.2.stats.expected}} 项全部通过，0 跳过</td></tr>
@@ -192,6 +206,7 @@
     <li>尚未在企业真实账套上试点；需要授权与脱敏流程，列为 v1.0 目标。</li>
     <li>会计专业人员的独立复核尚未取得：47 项完整材料和 12 项短版已备好；AI 审阅不等于专业意见。</li>
     <li>中文真实票据的 OCR 尚未实测；macOS 没有 CI 覆盖。</li>
+    <li>处理草稿只覆盖能由快照确定的修正；模型建议与模拟复核的闭环效果评测尚未进行，模型增益仍未证明。</li>
   </ul>
 </section>
 <section>

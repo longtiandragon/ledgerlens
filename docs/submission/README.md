@@ -7,6 +7,8 @@
 |作品介绍 PDF|`intro.template.html`、`meta.json`|`python scripts/build_submission_pdf.py --output .local/submission/账证智核-作品介绍.pdf`|
 |截图|`docs/images/*.png`|`python scripts/capture_demo.py --output .local/demo/shots`，人工挑选后复制到 `docs/images/`|
 |演示录像|`frontend/tests/demo-capture.spec.ts`|`python scripts/capture_demo.py --output .local/demo/video --video`，再配旁白与字幕|
+|版本验证摘要|`docs/release-v0.2.0-validation.json`|在发布提交上运行后端（JUnit）、浏览器（Playwright JSON）与场景包验收后，`python scripts/summarize_release.py ...` 汇总|
+|提交邮件草稿|`email.md`|发送前按组委会确认邮件的要求补齐单位、负责人与视频链接|
 
 规则：
 

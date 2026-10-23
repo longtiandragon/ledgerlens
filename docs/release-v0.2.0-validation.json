@@ -1,0 +1,80 @@
+{
+  "schema_version": "release-validation-v1",
+  "version": "0.2.0",
+  "generated_at": "2026-10-23T18:55:33.608078+00:00",
+  "commit": "87897ad5a7431fc356dded2100e48d9ca0f4257a",
+  "working_tree_clean": true,
+  "backend": {
+    "tests": 2755,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 25,
+    "passed": 2730,
+    "seconds": 280.6,
+    "source": "backend-junit.xml"
+  },
+  "browser": {
+    "passed": 59,
+    "skipped": 13,
+    "failed": 0,
+    "flaky": 0,
+    "source": "browser.json"
+  },
+  "scenario_packs": {
+    "passed": 12,
+    "cell_count": 12,
+    "failed": [],
+    "report_commit": "f668cffb2f5aa2a48f122145a662c9645f6553f8",
+    "matrix": {
+      "funds": {
+        "normal": "通过",
+        "definite_anomaly": "通过",
+        "insufficient": "通过",
+        "conflicting": "通过"
+      },
+      "purchase": {
+        "normal": "通过",
+        "definite_anomaly": "通过",
+        "insufficient": "通过",
+        "conflicting": "通过"
+      },
+      "period": {
+        "normal": "通过",
+        "definite_anomaly": "通过",
+        "insufficient": "通过",
+        "conflicting": "通过"
+      }
+    }
+  },
+  "rules": {
+    "execution_rules": {
+      "version": "0.2.0",
+      "source_sha256": "9e083ddf128183c07243eccde999c0224f664f048c2c97599cbdbc83f771f7b7"
+    },
+    "catalog_rules": 23,
+    "funds_rules": 10
+  },
+  "treatment": {
+    "version": "treatment-drafts-v1",
+    "source_sha256": "b9e91b9e7481597ad04addcdb8636d21c3ccbeec9eb0f262e54f8433b6158a6c"
+  },
+  "ci": {
+    "run_id": "40005859431",
+    "url": "https://github.com/longtiandragon/ledgerlens/actions/runs/40005859431",
+    "head_sha": "115bbb0a482157b444db9692c7b61dbf78d895e5",
+    "conclusion": "success",
+    "jobs": {
+      "licenses": "success",
+      "quickstart-unix": "success",
+      "frontend": "success",
+      "docker": "success",
+      "optional": "success",
+      "quickstart-windows": "success",
+      "reproduce": "success",
+      "backend": "success",
+      "cross-host-restore": "success"
+    }
+  },
+  "all_passed": true,
+  "scope": "本机与 CI 在该提交上的实测汇总；场景包为手写合成账套的流程验收，不代表真实企业效果或模型增益。"
+}

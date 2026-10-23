@@ -92,7 +92,7 @@ async def lifespan(app):
             task.cancel()
 
 
-app = FastAPI(title='账证智核 LedgerLens', version='0.1.0', lifespan=lifespan,
+app = FastAPI(title='账证智核 LedgerLens', version='0.2.0', lifespan=lifespan,
               description='本地会计复核研究与辅助平台；原账只读，调整仅限模拟。')
 app.include_router(process_router)
 app.include_router(numeric_evaluation_router)
