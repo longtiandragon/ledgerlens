@@ -1,0 +1,12 @@
+{
+  "scope": "backend regression after external evidence additions; continuation tests run separately",
+  "command": ".venv/Scripts/python.exe -m pytest backend/tests -q --disable-warnings",
+  "passed": 2682,
+  "skipped": 25,
+  "failed": 0,
+  "seconds": "343.39",
+  "log_sha256": "8d93feef7d8f60f1219ef1c462f93e468462027ac14235622b7f88e83979ae00",
+  "separate_continuation_and_verifier_tests": 4,
+  "ocr_status": "pending_not_counted_as_pass",
+  "external_model_requests": 0
+}

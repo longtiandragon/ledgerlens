@@ -1,5 +1,9 @@
 # 目标文档
 
+> 2026-10-24 补证结束：已完成FinRCA439案基线复现、FinLongEval80题阈值迁移、SIBR400张OCR及证据复算。[本轮结果](EXTERNAL_EVIDENCE_20261023.md)仍不支持AI增益已证明；OCR严格文字及位置段恢复率38.29%，不能换称字符准确率或自动入账准确率。原目标及未验证边界不变。
+
+> 2026-10-23 外部数据补证：新增[FinRCA基线复现、FinLongEval拒答迁移与SIBR全量OCR记录](EXTERNAL_EVIDENCE_20261023.md)。AI增益目标没有降标，也没有得到新的正面证明。FinBalance输入已隔离，但coverage与main重叠；不能把两者当独立开发/测试集。OCR中断接续尚在运行，未标为达标。企业账套与真人专业签字仍属于未来外部验证。
+
 > 2026-10-23 当前接续：公开资料学生首版的工程状态、测试范围及剩余边界以[本轮总览](PUBLIC_GAP_CLOSURE_20261022.md)和[机器摘要](public-gap-closure-validation.json)为准。[PR #57](https://github.com/longtiandragon/ledgerlens/pull/57)已创建，提交 `2d42f97` 的[CI运行39823414917](https://github.com/longtiandragon/ledgerlens/actions/runs/39823414917)九项任务全部通过，包括Windows→Linux合成SQLite停写恢复，PR仍为草稿、未合并。v4达到绝对F1门槛但未超过最强确定性基线；v5开发冒烟95次请求后8案因预算不足未派发，冒烟未通过，封存比较未启动。AI增益仍未证明。企业账套和真人专业签字属于未来外部验证，不阻塞公开资料首版交付。
 
 > 2026-10-22 历史接续：公开资料范围内的工程整改及未完成边界以[缺口整改总览](PUBLIC_GAP_CLOSURE_20261022.md)为准。v5已准备新合成数据、完整措辞覆盖和冻结方案，当时尚未进行真实模型运行；不替换v4负面结论。检索新增证据需求门控不等于语义拒答达标，中文空白票样不等于真实发票识别，离线ERP契约不等于源系统实跑，同机恢复不等于异机恢复。

@@ -59,18 +59,30 @@ def finrca(root):
     return {'status': 'verified', 'cases': 439, 'macro_f1': result['macro_f1']}
 
 
+def continuation_chain(root, report, visited=None):
+    visited = set() if visited is None else visited
+    if 'continuation' in report:
+        metadata = report['continuation']
+        directory = metadata.get('prior_directory', 'sibr-ocr-full-v1')
+        if directory in visited or Path(directory).name != directory:
+            raise ValueError('Invalid continuation chain')
+        visited.add(directory)
+        previous = root / directory / 'report.json'
+        check_hash(previous, metadata['prior_report_sha256'])
+        check_hash(ROOT / metadata.get('script_path', 'scripts/continue_sibr_ocr.py'), metadata['script_sha256'])
+        check_hash(ROOT / metadata.get('protocol_path', 'docs/SIBR_OCR_CONTINUATION.md'), metadata['protocol_sha256'])
+        prior = read(previous)
+        old = prior['cases']
+        prefix = [{k: v for k, v in row.items() if k != 'score'} for row in report['cases'][:len(old)]]
+        if prefix != old or len(old) != metadata['preserved_cases']:
+            raise ValueError('Original prefix changed during continuation')
+        continuation_chain(root, prior, visited)
+
+
 def sibr(root, run_name='sibr-ocr-full-v1'):
     report = read(root / run_name / 'report.json')
     check_codes(report)
-    if 'continuation' in report:
-        previous = root / 'sibr-ocr-full-v1/report.json'
-        check_hash(previous, report['continuation']['prior_report_sha256'])
-        check_hash(ROOT / 'scripts/continue_sibr_ocr.py', report['continuation']['script_sha256'])
-        check_hash(ROOT / 'docs/SIBR_OCR_CONTINUATION.md', report['continuation']['protocol_sha256'])
-        old = read(previous)['cases']
-        prefix = [{k: v for k, v in row.items() if k != 'score'} for row in report['cases'][:len(old)]]
-        if prefix != old or len(old) != report['continuation']['preserved_cases']:
-            raise ValueError('Original prefix changed during continuation')
+    continuation_chain(root, report)
     if report['status'] not in {'completed', 'completed_with_failures'}:
         return {'status': 'pending', 'predictions': len(report['cases']), 'expected': 400}
     # Annotation reads are deliberately unreachable until the full run has ended.
@@ -80,7 +92,7 @@ def sibr(root, run_name='sibr-ocr-full-v1'):
     check_hash(dataset / 'manifest.json', report['dataset_manifest_sha256'])
     if len(report['cases']) != 400 or len({r['id'] for r in report['cases']}) != 400:
         raise ValueError('Wrong SIBR population')
-    totals = Counter()
+    totals, labels, groups = Counter(), {}, {}
     for item, row in zip(manifest['items'], report['cases'], strict=True):
         if item['id'] != row['id']:
             raise ValueError('SIBR routing changed')
@@ -95,8 +107,18 @@ def sibr(root, run_name='sibr-ocr-full-v1'):
         if actual != row['score']:
             raise ValueError('SIBR per-case scoring changed')
         totals.update({key: actual[key] for key in ['total', 'localized_exact', 'text_exact']})
+        for label, values in actual['labels'].items():
+            labels.setdefault(label, Counter()).update(values)
+        group = groups.setdefault(item['id'].split('-')[0], Counter())
+        group.update({key: actual[key] for key in ['total', 'localized_exact', 'text_exact']})
+        group['documents'] += 1
+        group['failed'] += row['status'] == 'failed'
     if any(report['summary'][key] != value for key, value in totals.items()) or report['forbidden_access_attempts']:
         raise ValueError('SIBR summary/access mismatch')
+    if (report['summary']['by_label'] != labels or report['summary']['by_source_prefix'] != groups
+            or report['summary']['failed'] != sum(row['status'] == 'failed' for row in report['cases'])
+            or report['summary']['documents'] != 400):
+        raise ValueError('SIBR subgroup/failure summary mismatch')
     return {'status': 'verified', 'documents': 400, **totals}
 
 
@@ -128,7 +150,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=ROOT / '.local/external-research')
     parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--sibr-run', choices=['sibr-ocr-full-v1', 'sibr-ocr-continuation-v1'],
+    parser.add_argument('--sibr-run', choices=['sibr-ocr-full-v1', 'sibr-ocr-continuation-v1',
+                                             'sibr-ocr-continuation-v2'],
                         default='sibr-ocr-full-v1')
     args = parser.parse_args()
     result = {}
