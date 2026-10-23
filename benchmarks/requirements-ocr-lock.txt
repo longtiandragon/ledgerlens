@@ -33,7 +33,7 @@ modelscope-hub==0.4.6
 multidict==7.1.0
 networkx==3.7
 numpy==2.3.5
-opencv-contrib-python==4.10.0.84
+opencv-contrib-python==4.14.0.94
 opt-einsum==3.4.0
 packaging==26.3
 paddleocr==3.7.0
