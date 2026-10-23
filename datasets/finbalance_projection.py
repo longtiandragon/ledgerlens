@@ -5,6 +5,7 @@ this boundary. Inputs are still untrusted document text, not instructions.
 """
 import hashlib
 import json
+import argparse
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
@@ -71,3 +72,17 @@ def prepare(source: Path, output: Path):
                               'No model run or accuracy claim.']}
     (output / 'report.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
     return report
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--source', type=Path, required=True)
+    parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--split', choices=['main', 'coverage'], default='main')
+    args = parser.parse_args()
+    pins = json.loads((Path(__file__).resolve().parents[1] / 'docs/external-finbalance-source-pin.json')
+                      .read_text(encoding='utf-8'))
+    expected = pins['files'][args.split + '-records.jsonl']['sha256']
+    if hashlib.sha256(args.source.read_bytes()).hexdigest() != expected:
+        raise ValueError('Source differs from pinned author release')
+    print(json.dumps(prepare(args.source, args.output), indent=2))
