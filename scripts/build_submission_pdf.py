@@ -25,11 +25,12 @@ ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE = ROOT / 'docs/submission/intro.template.html'
 META = ROOT / 'docs/submission/meta.json'
 SOURCES = {'policy': 'docs/policy-v9-validation.json', 'audit': 'docs/publication-audit.json',
-           'rootcause': 'docs/root-cause-results.json', 'v4': 'docs/root-cause-v4-sealed-analysis.json'}
+           'rootcause': 'docs/root-cause-results.json', 'v4': 'docs/root-cause-v4-sealed-analysis.json',
+           'release': 'docs/release-v0.2.0-validation.json', 'scenario': 'docs/scenario-acceptance.json'}
 ASSETS = {'architecture': 'docs/images/architecture.svg', **{
     f'shot{n:02d}': f'docs/images/{name}.png' for n, name in enumerate(
         ['01-workbench', '02-investigation', '03-evidence', '04-source-record', '05-simulation', '06-review',
-         '07-review-invalidated', '08-policy', '09-evaluation'], 1)}}
+         '07-review-invalidated', '08-policy', '09-evaluation'], 1)}, 'shot07b': 'docs/images/07b-continuation.png'}
 PLACEHOLDER = re.compile(r'\{\{(json|meta|link|asset|lic|gh):([^}]+)\}\}')
 REPO = 'longtiandragon/ledgerlens'
 
